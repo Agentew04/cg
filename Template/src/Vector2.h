@@ -40,6 +40,10 @@ public:
        y /= norm;
    }
 
+   float distance(Vector2 point){
+       return std::sqrt(std::pow(point.x - this->x, 2) + std::pow(point.y - this->y, 2));
+   }
+
    Vector2 operator - (const Vector2& v)
    {
         Vector2 aux( x - v.x, y - v.y);

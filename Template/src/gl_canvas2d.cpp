@@ -85,6 +85,10 @@ void CV::rect( float x1, float y1, float x2, float y2 )
    glEnd();
 }
 
+void CV::rect( Vector2 p1, Vector2 p2 ){
+    CV::rect(p1.x,p1.y,p2.x,p2.y);
+}
+
 void CV::rectFill( float x1, float y1, float x2, float y2 )
 {
    glBegin(GL_QUADS);
@@ -240,6 +244,7 @@ void CV::color(int idx)
 void CV::color(float r, float g, float b, float alpha)
 {
    glColor4d(r, g, b, alpha);
+   //glTexImage2D(GL_TEXTURE_2D, 0, )
 }
 
 void CV::color(Vector3 rgb){

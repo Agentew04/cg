@@ -17,6 +17,7 @@
 #include <GL/freeglut_ext.h> //callback da wheel do mouse.
 
 #include <math.h>
+#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -31,50 +32,17 @@
 
 //largura e altura inicial da tela . Alteram com o redimensionamento de tela.
 int screenWidth = 500, screenHeight = 500;
+ButtonManager buttonManager;
 
-
-Bola    *b = NULL;
-Relogio *r = NULL;
-Botao   *bt = NULL; //se a aplicacao tiver varios botoes, sugiro implementar um manager de botoes.
-int opcao  = 50;//variavel global para selecao do que sera exibido na canvas.
 int mouseX, mouseY; //variaveis globais do mouse para poder exibir dentro da render().
 
-void DesenhaSenoide()
-{
-   float x=0, y;
-   CV::color(1);
-   CV::translate(20, 200); //desenha o objeto a partir da coordenada (200, 200)
-   for(float i=0; i < 68; i+=0.001)
-   {
-      y = sin(i)*50;
-      CV::point(x, y);
-      x+=0.01;
-   }
-   CV::translate(0, 0);
-}
-
-void DesenhaLinhaDegrade()
-{
-   Vector2 p;
-   for(float i=0; i<350; i++)
-   {
-	  CV::color(i/200, i/200, i/200);
-	  p.set(i+100, 240);
-	  CV::point(p);
-   }
-
-   //desenha paleta de cores predefinidas na Canvas2D.
-   for(int idx = 0; idx < 14; idx++)
-   {
-	  CV::color(idx);
-      CV::translate(20 + idx*30, 100);
-	  CV::rectFill(Vector2(0,0), Vector2(30, 30));
-   }
-   CV::translate(0, 0);
-}
+Vector2 posObj = Vector2(screenWidth/2, screenHeight/2);
+float objRadius = 25;
+bool holding = false;
 
 void DrawMouseScreenCoords()
 {
+    CV::color(Vector3(1,0,0));
     char str[150];
     sprintf(str, "Mouse: (%d,%d)\nScreen: (%d,%d)a", mouseX, mouseY, screenWidth, screenHeight);
     CV::text(10,300, str);
@@ -93,54 +61,33 @@ void DrawMouseScreenCoords()
 //Deve-se manter essa função com poucas linhas de codigo.
 void render()
 {
-   CV::text(20,500,"Programa Demo Canvas2D");
+    CV::text(20,500,"Programa Demo Canvas2D");
 
-   DrawMouseScreenCoords();
+    DrawMouseScreenCoords();
+    buttonManager.draw();
 
-   bt->Render();
+    //draw custom obj
+    CV::color(Vector3(0,0,1));
 
-   DesenhaLinhaDegrade();
+    if(holding){
+        posObj = Vector2(mouseX, mouseY);
+    }
 
-   if( opcao == 49 ) //'1' -> relogio
-   {
-      r->anima();
-   }
-   if( opcao == '2' ) //50 -> bola
-   {
-      b->anima();
-   }
-   if( opcao == 51 ) //'3' -> senoide
-   {
-       DesenhaSenoide();
-   }
+    CV::translate(0,0);
+    CV::circle(posObj.x, posObj.y, objRadius, 50);
 
-
-   Sleep(10); //nao eh controle de FPS. Somente um limitador de FPS.
+    Sleep(10); //nao eh controle de FPS. Somente um limitador de FPS.
 }
 
 //funcao chamada toda vez que uma tecla for pressionada.
 void keyboard(int key)
 {
    printf("\nTecla: %d" , key);
-   if( key < 200 )
-   {
-      opcao = key;
-   }
 
    switch(key)
    {
       case 27:
 	     exit(0);
-	  break;
-
-	  //seta para a esquerda
-      case 200:
-         b->move(-10);
-	  break;
-
-	  //seta para a direita
-	  case 202:
-         b->move(10);
 	  break;
    }
 }
@@ -154,30 +101,36 @@ void keyboardUp(int key)
 //funcao para tratamento de mouse: cliques, movimentos e arrastos
 void mouse(int button, int state, int wheel, int direction, int x, int y)
 {
+    // state 0 = mouse down
+    // state 1 = mouse up
    mouseX = x; //guarda as coordenadas do mouse para exibir dentro da render()
    mouseY = y;
+   Vector2 mouse = Vector2(x,y);
 
-   printf("\nmouse %d %d %d %d %d %d", button, state, wheel, direction,  x, y);
+    if(state == 0 && posObj.distance(mouse) <= objRadius){
+        holding = true;
+    }else if(state == 1){
+        holding = false;
+    }
 
-   if( state == 0 ) //clicou
-   {
-       if( bt->Colidiu(x, y) )
-       {
-           printf("\nClicou no botao\n");
-       }
-   }
+    if(state != -2){
+        //printa so quando clica
+        printf("\nmouse %d %d %d %d %d %d", button, state, wheel, direction,  x, y);
+    }
 }
 
 
 
 int main(void)
 {
-    ButtonManager buttonManager;
-    Button btn(50,50, "Teste", false);
-
-    b = new Bola();
-   r = new Relogio();
-   bt = new Botao(200, 400, 140, 50, "Sou um botao");
+    buttonManager = ButtonManager();
+    Button btn(Vector2(50,50), Vector2(200,100), "Teste", false, [](){
+        std::cout << "cliquei botao" << std::endl;
+    });
+    btn.foreground = Vector3(1, 1, 1);
+    btn.background = Vector3(0.5, 0.5, 0.5);
+    btn.borderColor = Vector3(1, 0, 0);
+    buttonManager.registerButton(btn);
 
    CV::init(&screenWidth, &screenHeight, "Titulo da Janela: Canvas 2D - Pressione 1, 2, 3");
    CV::run();

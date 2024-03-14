@@ -227,3 +227,87 @@
 
 1710294350 e:\universidade\trabalhos\template\src\vector3.h
 
+1710419547 source:d:\universidade\cg\template\src\gl_canvas2d.cpp
+	"gl_canvas2d.h"
+	<GL/glut.h>
+
+1710416652 d:\universidade\cg\template\src\gl_canvas2d.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	"Vector2.h"
+	"Vector3.h"
+
+1710416652 d:\universidade\cg\include\gl\glut.h
+	"freeglut_std.h"
+
+1710416652 d:\universidade\cg\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1710416652 d:\universidade\cg\include\gl\freeglut_ext.h
+	<stdarg.h>
+
+1710420599 d:\universidade\cg\template\src\vector2.h
+	<cmath>
+
+1710416652 d:\universidade\cg\template\src\vector3.h
+
+1710416652 source:d:\universidade\cg\template\src\relogio.cpp
+	"Relogio.h"
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+
+1710416652 d:\universidade\cg\template\src\relogio.h
+	"gl_canvas2d.h"
+
+1710418406 source:d:\universidade\cg\template\src\ui\buttonmanager.cpp
+	<vector>
+	<iostream>
+	"ButtonManager.h"
+
+1710416652 d:\universidade\cg\template\src\ui\buttonmanager.h
+	<vector>
+	"Button.h"
+
+1710419160 d:\universidade\cg\template\src\ui\button.h
+	<string>
+	<functional>
+	"../Vector2.h"
+	"../Vector3.h"
+
+1710420587 source:d:\universidade\cg\template\src\main.cpp
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	<math.h>
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	"gl_canvas2d.h"
+	"Bola.h"
+	"Relogio.h"
+	"Botao.h"
+	"UI/ButtonManager.h"
+	"UI/Button.h"
+
+1710416652 d:\universidade\cg\template\src\bola.h
+	"gl_canvas2d.h"
+
+1710416652 d:\universidade\cg\template\src\botao.h
+	"gl_canvas2d.h"
+
+1710419425 source:d:\universidade\cg\template\src\ui\button.cpp
+	"Button.h"
+	"../gl_canvas2d.h"
+

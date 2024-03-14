@@ -1,10 +1,11 @@
 #include "Button.h"
 #include "../gl_canvas2d.h"
 
-Button::Button(Vector3 pos, Vector3 sz, std::string text, bool relative) {
+Button::Button(Vector2 pos, Vector2 sz, std::string text, bool relative, std::function<void()> callback) {
     this->text = text;
     this->pos = pos;
     this->sz = sz;
+    this->callback = callback;
 }
 
 Button::~Button() {
@@ -12,6 +13,8 @@ Button::~Button() {
 }
 
 void Button::draw(){
+
+    CV::translate(pos);
 
     // draw background
     CV::color(background);
@@ -23,5 +26,9 @@ void Button::draw(){
 
     // draw text
     CV::color(foreground);
-    CV::text(30, 30, text);
+    CV::text(30, 30, text.c_str());
+}
+
+void Button::call(){
+    this->callback();
 }

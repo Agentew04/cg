@@ -16,8 +16,12 @@ public:
     ~ButtonManager();
 
     void draw();
-    void click();
+    void updateMousePos(Vector2 mousePos);
+    void mouseDown();
+    void mouseUp();
 private:
+    Vector2 mousePos;
+    Button* holdingButton;
     std::vector<Button> buttons;
 };
 
