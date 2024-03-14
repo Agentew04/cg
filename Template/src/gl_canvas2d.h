@@ -10,15 +10,19 @@
 #include <GL/freeglut_ext.h> //callback da wheel do mouse.
 
 #include "Vector2.h"
+#include "Vector3.h"
 
 #define PI_2 6.28318530717
 #define PI   3.14159265359
 
-#define Y_CANVAS_CRESCE_PARA_CIMA 1
+#define Y_CANVAS_CRESCE_PARA_CIMA 0
 
 class CV //classe Canvas2D
 {
 public:
+
+    static void getSize(int* w, int* h);
+
     //funcoes para desenho de ponto e linha
     static void point(float x, float y); //coordeandas do ponto
     static void point(Vector2 pos); //coordeandas do ponto
@@ -46,6 +50,8 @@ public:
 
     //especifica a cor de desenho e de limpeza de tela
     static void color(float r, float g, float b);
+    static void color(Vector3 rgb);
+    static void color(Vector3 rgb, float a);
     static void color(float r, float g, float b, float alpha);
     static void color(int index);
 
@@ -53,6 +59,7 @@ public:
 
     //desenha texto na coordenada (x,y)
     static void text(float x, float y, const char *t);
+    static void text(float x, float y, const char *t, void* font);
     static void text(Vector2 pos, const char *t);  //varias funcoes ainda nao tem implementacao. Faca como exercicio
     static void text(Vector2 pos, int valor);      //varias funcoes ainda nao tem implementacao. Faca como exercicio
     static void text(Vector2 pos, float valor);    //varias funcoes ainda nao tem implementacao. Faca como exercicio

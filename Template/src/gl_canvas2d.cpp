@@ -48,6 +48,11 @@ void mouseWheelCB(int wheel, int direction, int x, int y);
 void render();
 
 
+void CV::getSize(int* w, int* h){
+    *w = *scrWidth;
+    *h = *scrHeight;
+}
+
 void CV::point(float x, float y)
 {
    glBegin(GL_POINTS);
@@ -132,12 +137,43 @@ void CV::polygonFill(float vx[], float vy[], int elems)
 //  http://ftgl.sourceforge.net/docs/html/ftgl-tutorial.html
 void CV::text(float x, float y, const char *t)
 {
+    void* font = GLUT_BITMAP_8_BY_13;
+    CV::text(x,y,t, font);
+}
+
+void CV::text(float x, float y, const char *t, void* font)
+{
     int tam = (int)strlen(t);
+    int x0 = x;
     for(int c=0; c < tam; c++)
     {
-      glRasterPos2i(x + c*10, y);
-      glutBitmapCharacter(GLUT_BITMAP_8_BY_13, t[c]);
+        if(t[c] == '\n'){
+            x = x0;
+            y += glutBitmapHeight(font);
+            continue;
+        }
+
+        float charWidth = glutBitmapWidth(font, t[c]);
+        glRasterPos2i(x, y);
+        glutBitmapCharacter(font, t[c]);
+        x += charWidth;
     }
+}
+
+void CV::text(Vector2 pos, const char *t){
+    CV::text(pos.x, pos.y, t);
+}
+
+void CV::text(Vector2 pos, int valor){
+    char str[10];
+    snprintf(str, 10, "%d", valor);
+    CV::text(pos.x, pos.y, str);
+}
+
+void CV::text(Vector2 pos, float valor){
+    char str[10];
+    snprintf(str, 10, "%.2f", valor);
+    CV::text(pos.x, pos.y, str);
 }
 
 void CV::clear(float r, float g, float b)
@@ -204,6 +240,14 @@ void CV::color(int idx)
 void CV::color(float r, float g, float b, float alpha)
 {
    glColor4d(r, g, b, alpha);
+}
+
+void CV::color(Vector3 rgb){
+    glColor3d(rgb.x, rgb.y, rgb.z);
+}
+
+void color(Vector3 rgb, float a){
+    glColor4d(rgb.x, rgb.y, rgb.z, a);
 }
 
 void special(int key, int , int )

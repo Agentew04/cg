@@ -26,6 +26,9 @@
 #include "Relogio.h"
 #include "Botao.h"
 
+#include "UI/ButtonManager.h"
+#include "UI/Button.h"
+
 //largura e altura inicial da tela . Alteram com o redimensionamento de tela.
 int screenWidth = 500, screenHeight = 500;
 
@@ -72,11 +75,9 @@ void DesenhaLinhaDegrade()
 
 void DrawMouseScreenCoords()
 {
-    char str[100];
-    sprintf(str, "Mouse: (%d,%d)", mouseX, mouseY);
+    char str[150];
+    sprintf(str, "Mouse: (%d,%d)\nScreen: (%d,%d)a", mouseX, mouseY, screenWidth, screenHeight);
     CV::text(10,300, str);
-    sprintf(str, "Screen: (%d,%d)", screenWidth, screenHeight);
-    CV::text(10,320, str);
 }
 
 
@@ -167,9 +168,14 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
    }
 }
 
+
+
 int main(void)
 {
-   b = new Bola();
+    ButtonManager buttonManager;
+    Button btn(50,50, "Teste", false);
+
+    b = new Bola();
    r = new Relogio();
    bt = new Botao(200, 400, 140, 50, "Sou um botao");
 

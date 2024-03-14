@@ -22,19 +22,18 @@ public:
       CV::color(0, 1, 0);
       CV::rectFill(x, y, x + largura, y + altura);
       CV::color(0, 0, 0);
-      CV::text(x+5, y+altura/2, label); //escreve o label do botao mais ou menos ao centro.
+      CV::text(x+5, y+altura/2, label, GLUT_BITMAP_TIMES_ROMAN_24); //escreve o label do botao mais ou menos ao centro.
   }
 
   //recebe as coordenadas do mouse para tratar clique ou detectar quando o mouse esta em cima do botao
-  bool Colidiu(int mx, int my)
-  {
-      if( mx >= x && mx <= (x + largura) && my >= y && my <= (y + altura) )
-      {
-          return true;
-      }
-      return false;
-  }
-
+    bool Colidiu(int mx, int my)
+    {
+        if( mx >= x && mx <= (x + largura) && my >= y && my <= (y + altura) )
+        {
+            return true;
+        }
+        return false;
+    }
 };
 
 #endif

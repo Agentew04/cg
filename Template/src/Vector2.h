@@ -1,6 +1,7 @@
 #ifndef __VECTOR_2_H__
 #define __VECTOR_2_H__
 
+#include <cmath>
 
 class Vector2
 {
