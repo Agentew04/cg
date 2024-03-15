@@ -9,8 +9,8 @@
  */
 class ButtonManager {
 public:
-    void registerButton(Button button);
-    void unregisterButton(Button button);
+    void registerButton(Button *button);
+    void unregisterButton(Button *button);
 
     ButtonManager();
     ~ButtonManager();
@@ -22,7 +22,7 @@ public:
 private:
     Vector2 mousePos;
     Button* holdingButton;
-    std::vector<Button> buttons;
+    std::vector<Button*> buttons;
 };
 
 #endif // __BUTTON_MANAGER_H__

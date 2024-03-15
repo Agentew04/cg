@@ -149,11 +149,11 @@
 1632060794 d:\ufsm\disciplinas\computacao grafica\demos\include\gl\freeglut_ext.h
 	<stdarg.h>
 
-1710295044 source:e:\universidade\trabalhos\template\src\gl_canvas2d.cpp
+1710462391 source:e:\universidade\trabalhos\template\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
-1710295037 e:\universidade\trabalhos\template\src\gl_canvas2d.h
+1710461668 e:\universidade\trabalhos\template\src\gl_canvas2d.h
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
@@ -180,19 +180,22 @@
 1632060794 e:\universidade\trabalhos\include\gl\freeglut_ext.h
 	<stdarg.h>
 
-1710293305 e:\universidade\trabalhos\template\src\vector2.h
+1710461093 e:\universidade\trabalhos\template\src\vector2.h
 	<cmath>
 
-1710291624 source:e:\universidade\trabalhos\template\src\main.cpp
+1710464464 source:e:\universidade\trabalhos\template\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
+	<iostream>
 	<stdio.h>
 	<stdlib.h>
 	"gl_canvas2d.h"
 	"Bola.h"
 	"Relogio.h"
 	"Botao.h"
+	"UI/ButtonManager.h"
+	"UI/Button.h"
 
 1589214882 e:\universidade\trabalhos\template\src\bola.h
 	"gl_canvas2d.h"
@@ -209,23 +212,29 @@
 	<stdio.h>
 	<stdlib.h>
 
-1710294110 source:e:\universidade\trabalhos\template\src\ui\button.cpp
+1710465015 source:e:\universidade\trabalhos\template\src\ui\button.cpp
 	"Button.h"
+	"../gl_canvas2d.h"
+	<iostream>
 
-1710295022 e:\universidade\trabalhos\template\src\ui\button.h
+1710465017 e:\universidade\trabalhos\template\src\ui\button.h
 	<string>
+	<functional>
+	<map>
 	"../Vector2.h"
 	"../Vector3.h"
 
-1710294043 source:e:\universidade\trabalhos\template\src\ui\buttonmanager.cpp
+1710460408 source:e:\universidade\trabalhos\template\src\ui\buttonmanager.cpp
 	<vector>
+	<iostream>
 	"ButtonManager.h"
 
-1710294833 e:\universidade\trabalhos\template\src\ui\buttonmanager.h
+1710459406 e:\universidade\trabalhos\template\src\ui\buttonmanager.h
 	<vector>
 	"Button.h"
 
-1710294350 e:\universidade\trabalhos\template\src\vector3.h
+1710465049 e:\universidade\trabalhos\template\src\vector3.h
+	<iostream>
 
 1710419547 source:d:\universidade\cg\template\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"

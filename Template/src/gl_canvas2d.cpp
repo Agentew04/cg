@@ -145,6 +145,16 @@ void CV::text(float x, float y, const char *t)
     CV::text(x,y,t, font);
 }
 
+float CV::textWidth(const char *t, void* font){
+    int tam = (int)strlen(t);
+    float width = 0;
+    for(int c=0; c < tam; c++)
+    {
+        width += glutBitmapWidth(font, t[c]);
+    }
+    return width;
+}
+
 void CV::text(float x, float y, const char *t, void* font)
 {
     int tam = (int)strlen(t);
@@ -178,6 +188,18 @@ void CV::text(Vector2 pos, float valor){
     char str[10];
     snprintf(str, 10, "%.2f", valor);
     CV::text(pos.x, pos.y, str);
+}
+
+void CV::text(float x, float y, const char *t, void* font, TextAlign align){
+    float width = textWidth(t, font);
+
+    float finalX = x;
+    if(align == TextAlign::RIGHT){
+        finalX = x - width;
+    }else if(align == TextAlign::CENTER){
+        finalX = x - (width/2);
+    }
+    CV::text(finalX, y, t, font);
 }
 
 void CV::clear(float r, float g, float b)

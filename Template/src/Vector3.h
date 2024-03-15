@@ -1,6 +1,7 @@
 #ifndef __VECTOR_3_H__
 #define __VECTOR_3_H__
 
+#include <iostream>
 
 class Vector3
 {
@@ -81,7 +82,12 @@ public:
 
    //Adicionem os demais overloads de operadores aqui.
 
-
+    friend std::ostream& operator<<(std::ostream& os, const Vector3& obj){
+        os << "(" << obj.x << ", " << obj.y << ", " << obj.z << ")";
+        return os;
+    }
 };
+
+
 
 #endif

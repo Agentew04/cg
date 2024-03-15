@@ -19,6 +19,13 @@ public:
        y = _y;
    }
 
+   static Vector2 zero(){ return Vector2(0,0); }
+   static Vector2 one(){ return Vector2(1,1); }
+   static Vector2 left(){ return Vector2(-1,0); }
+   static Vector2 right(){ return Vector2(1,0); }
+   static Vector2 up(){ return Vector2(0,-1); }
+   static Vector2 down(){ return Vector2(0,1); }
+
    void set(float _x, float _y)
    {
        x = _x;

@@ -61,7 +61,9 @@ void DrawMouseScreenCoords()
 //Deve-se manter essa função com poucas linhas de codigo.
 void render()
 {
-    CV::text(20,500,"Programa Demo Canvas2D");
+    CV::text(100,50,"Programa Demo Canvas2D LEFT", GLUT_BITMAP_HELVETICA_10, TextAlign::LEFT);
+    CV::text(100,70,"Programa Demo Canvas2D CENTER", GLUT_BITMAP_HELVETICA_10, TextAlign::CENTER);
+    CV::text(100,90,"Programa Demo Canvas2D RIGHT", GLUT_BITMAP_HELVETICA_10, TextAlign::RIGHT);
 
     DrawMouseScreenCoords();
     buttonManager.draw();
@@ -113,6 +115,8 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
         holding = false;
     }
 
+    buttonManager.updateMousePos(mouse);
+
     if(state != -2){
         //printa so quando clica
         printf("\nmouse %d %d %d %d %d %d", button, state, wheel, direction,  x, y);
@@ -124,14 +128,16 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
 int main(void)
 {
     buttonManager = ButtonManager();
-    Button btn(Vector2(50,50), Vector2(200,100), "Teste", false, [](){
+    Button *btn = new Button(Vector2(50,150), Vector2(100,50), "Teste", false, [](){
         std::cout << "cliquei botao" << std::endl;
     });
-    btn.foreground = Vector3(1, 1, 1);
-    btn.background = Vector3(0.5, 0.5, 0.5);
-    btn.borderColor = Vector3(1, 0, 0);
+    std::cout << "setando style" << std::endl;
+    ButtonStyle style = ButtonStyle::Windows10();
+    std::cout << style.backgroundColor[btn.state] << std::endl;
+    std::cout << "style setado" << std::endl;
+
     buttonManager.registerButton(btn);
 
-   CV::init(&screenWidth, &screenHeight, "Titulo da Janela: Canvas 2D - Pressione 1, 2, 3");
-   CV::run();
+    CV::init(&screenWidth, &screenHeight, "Titulo da Janela: Canvas 2D - Pressione 1, 2, 3");
+    CV::run();
 }

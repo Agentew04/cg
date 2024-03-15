@@ -17,6 +17,12 @@
 
 #define Y_CANVAS_CRESCE_PARA_CIMA 0
 
+enum TextAlign {
+    LEFT,
+    CENTER,
+    RIGHT
+};
+
 class CV //classe Canvas2D
 {
 public:
@@ -58,8 +64,11 @@ public:
     static void clear(float r, float g, float b);
 
     //desenha texto na coordenada (x,y)
+    static float textWidth(const char *t, void* font);
     static void text(float x, float y, const char *t);
+    static void text(float x, float y, const char *t, TextAlign align);
     static void text(float x, float y, const char *t, void* font);
+    static void text(float x, float y, const char *t, void* font, TextAlign align);
     static void text(Vector2 pos, const char *t);  //varias funcoes ainda nao tem implementacao. Faca como exercicio
     static void text(Vector2 pos, int valor);      //varias funcoes ainda nao tem implementacao. Faca como exercicio
     static void text(Vector2 pos, float valor);    //varias funcoes ainda nao tem implementacao. Faca como exercicio
