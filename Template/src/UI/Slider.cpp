@@ -64,6 +64,7 @@ void Slider::draw(){
 
     // offsets declarations
     // retirados diretamente do Windows Forms
+    // TODO mover para Style, para ser customizavel
     Vector2 backSliderMargin(0,6);
     float backSliderHeight = 4;
     Vector2 tickMargin(5,11);

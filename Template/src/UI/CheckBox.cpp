@@ -53,13 +53,28 @@ void Checkbox::draw(){
     CV::color(1,0,0);
     CV::rect(Vector2::zero(), sz);
 
+    // offsets
+    Vector2 boxSize = Vector2(12,12);
+    Vector2 labelOffset = Vector2(7,-2); // offset de baixo direita da checkbox
+
     // draw background
+    CV::color(style->backgroundColor[state]);
+    CV::rectFill(Vector2::zero(), boxSize);
 
     // draw border
+    CV::color(style->borderColor[state]);
+    CV::rect(Vector2::zero(), boxSize);
 
     // draw checkbox
+    if(this->value){
+        CV::color(style->checkColor[state]);
+        CV::line(2,6, 5, 9);
+        CV::line(5,9, 10,3);
+    }
 
     // draw label
+    Vector2 labelPos = boxSize + labelOffset;
+    CV::text(labelPos.x, labelPos.y, this->label.c_str(), GLUT_BITMAP_HELVETICA_10, TextAlign::LEFT);
 }
 
 

@@ -149,11 +149,11 @@
 1632060794 d:\ufsm\disciplinas\computacao grafica\demos\include\gl\freeglut_ext.h
 	<stdarg.h>
 
-1710612261 source:e:\universidade\trabalhos\template\src\gl_canvas2d.cpp
+1710613276 source:e:\universidade\trabalhos\template\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
-1710607591 e:\universidade\trabalhos\template\src\gl_canvas2d.h
+1710613216 e:\universidade\trabalhos\template\src\gl_canvas2d.h
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
@@ -183,7 +183,7 @@
 1710596331 e:\universidade\trabalhos\template\src\vector2.h
 	<cmath>
 
-1710612458 source:e:\universidade\trabalhos\template\src\main.cpp
+1710612787 source:e:\universidade\trabalhos\template\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -342,7 +342,7 @@
 	<vector>
 	"Slider.h"
 
-1710609692 source:e:\universidade\trabalhos\template\src\ui\slider.cpp
+1710612873 source:e:\universidade\trabalhos\template\src\ui\slider.cpp
 	"Slider.h"
 	"../gl_canvas2d.h"
 	<iostream>
@@ -353,7 +353,7 @@
 	<iostream>
 	"SliderManager.h"
 
-1710611861 source:e:\universidade\trabalhos\template\src\ui\checkbox.cpp
+1710613996 source:e:\universidade\trabalhos\template\src\ui\checkbox.cpp
 	<iostream>
 	<cmath>
 	"CheckBox.h"

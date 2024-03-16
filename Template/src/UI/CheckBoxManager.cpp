@@ -87,5 +87,6 @@ void CheckboxManager::mouseUp(){
     }
 
     this->holdingCheckbox->state = Checkbox::State::NORMAL;
+    this->holdingCheckbox->setValue(!this->holdingCheckbox->getValue());
     holdingCheckbox = nullptr;
 }

@@ -76,6 +76,14 @@ void CV::line( float x1, float y1, float x2, float y2 )
    glEnd();
 }
 
+void CV::lines(float vx[], float vy[], int elems){
+    glBegin(GL_LINES);
+        for(int i=0;i<elems;i++){
+            glVertex2d(vx[i], vy[i]);
+        }
+    glEnd();
+}
+
 void CV::rect( float x1, float y1, float x2, float y2 )
 {
    glBegin(GL_LINE_LOOP);
