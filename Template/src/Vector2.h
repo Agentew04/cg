@@ -32,6 +32,10 @@ public:
        y = _y;
    }
 
+   Vector2 flip(){
+       return Vector2(y,x);
+   }
+
    void normalize()
    {
        float norm = (float)sqrt(x*x + y*y);

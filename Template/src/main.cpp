@@ -27,16 +27,19 @@
 #include "Relogio.h"
 #include "Botao.h"
 
-#include "UI/ButtonManager.h"
+#include "UI/UIManager.h"
 #include "UI/Button.h"
+#include "UI/Slider.h"
+#include "UI/CheckBox.h"
+
 
 //largura e altura inicial da tela . Alteram com o redimensionamento de tela.
 int screenWidth = 500, screenHeight = 500;
-ButtonManager buttonManager;
+UIManager *uiManager;
 
 int mouseX, mouseY; //variaveis globais do mouse para poder exibir dentro da render().
 
-Vector2 posObj = Vector2(screenWidth/2, screenHeight/2);
+Vector2 posObj = Vector2(400, 400);
 float objRadius = 25;
 bool holding = false;
 
@@ -66,7 +69,7 @@ void render()
     CV::text(100,90,"Programa Demo Canvas2D RIGHT", GLUT_BITMAP_HELVETICA_10, TextAlign::RIGHT);
 
     DrawMouseScreenCoords();
-    buttonManager.draw();
+    uiManager->draw();
 
     //draw custom obj
     CV::color(Vector3(0,0,1));
@@ -81,17 +84,22 @@ void render()
     Sleep(10); //nao eh controle de FPS. Somente um limitador de FPS.
 }
 
+void cleanup(){
+    delete uiManager;
+}
+
 //funcao chamada toda vez que uma tecla for pressionada.
 void keyboard(int key)
 {
-   printf("\nTecla: %d" , key);
+    printf("\nTecla: %d" , key);
 
-   switch(key)
-   {
-      case 27:
-	     exit(0);
-	  break;
-   }
+    switch(key)
+    {
+        case 27:
+            cleanup();
+            exit(0);
+        break;
+    }
 }
 
 //funcao chamada toda vez que uma tecla for liberada
@@ -105,21 +113,28 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
 {
     // state 0 = mouse down
     // state 1 = mouse up
-   mouseX = x; //guarda as coordenadas do mouse para exibir dentro da render()
-   mouseY = y;
-   Vector2 mouse = Vector2(x,y);
+    mouseX = x;
+    mouseY = y;
+    Vector2 mouse = Vector2(x,y);
 
+    // code for drag n drop
     if(state == 0 && posObj.distance(mouse) <= objRadius){
         holding = true;
     }else if(state == 1){
         holding = false;
     }
 
-    buttonManager.updateMousePos(mouse);
+    uiManager->updateMousePos(mouse);
+
+    if(state == 0){ // mouse down
+        uiManager->mouseDown();
+    }else if(state == 1){ // mouse up
+        uiManager->mouseUp();
+    }
 
     if(state != -2){
         //printa so quando clica
-        printf("\nmouse %d %d %d %d %d %d", button, state, wheel, direction,  x, y);
+        printf("mouse %d %d %d %d %d %d\n", button, state, wheel, direction,  x, y);
     }
 }
 
@@ -127,17 +142,34 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
 
 int main(void)
 {
-    buttonManager = ButtonManager();
-    Button *btn = new Button(Vector2(50,150), Vector2(100,50), "Teste", false, [](){
+    uiManager = new UIManager();
+
+    ButtonStyle* btnstyle = ButtonStyle::Windows10();
+    Button *btn = new Button(Vector2(50,150), Vector2(100,50), "Teste", [](){
         std::cout << "cliquei botao" << std::endl;
     });
-    std::cout << "setando style" << std::endl;
-    ButtonStyle style = ButtonStyle::Windows10();
-    std::cout << style.backgroundColor[btn.state] << std::endl;
-    std::cout << "style setado" << std::endl;
+    btn->style = btnstyle;
+    Button *sqrB = new Button(Vector2(50,250), Vector2(50,50), "X", [](){
+        std::cout << "segundo botao" << std::endl;
+    });
+    sqrB->style = btnstyle;
 
-    buttonManager.registerButton(btn);
+    Slider::Style *sldstyle = Slider::Style::Windows10();
+    Slider *sld1 = new Slider(Vector2(160, 150), Vector2(100,30), 0, 10, 5, Slider::Orientation::HORIZONTAL);
+    sld1->style = sldstyle;
+    Slider *sld2 = new Slider(Vector2(160, 190), Vector2(150,30), 0, 10, 5, Slider::Orientation::HORIZONTAL);
+    sld2->style = sldstyle;
 
-    CV::init(&screenWidth, &screenHeight, "Titulo da Janela: Canvas 2D - Pressione 1, 2, 3");
+    Checkbox::Style *chkstyle = Checkbox::Style::Windows10();
+    Checkbox *chk1 = new Checkbox(Vector2(160, 230), Vector2(80,20), "Checkbox", false);
+    chk1->style = chkstyle;
+
+    uiManager->add(btn);
+    uiManager->add(sqrB);
+    uiManager->add(sld1);
+    uiManager->add(sld2);
+    uiManager->add(chk1);
+
+    CV::init(&screenWidth, &screenHeight, "Canvas2D - Custom Template", false);
     CV::run();
 }

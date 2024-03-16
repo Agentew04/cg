@@ -368,39 +368,42 @@ void display (void)
 ////////////////////////////////////////////////////////////////////////////////////////
 //  inicializa o OpenGL
 ////////////////////////////////////////////////////////////////////////////////////////
-void CV::init(int *w, int *h, const char *title)
+void CV::init(int *w, int *h, const char *title, bool antiAliasing)
 {
-   int argc = 0;
-   glutInit(&argc, NULL);
+    int argc = 0;
+    glutInit(&argc, NULL);
 
-   scrHeight = h;
-   scrWidth = w;
+    scrHeight = h;
+    scrWidth = w;
 
-   //habilita MSAA
-   glutSetOption(GLUT_MULTISAMPLE, 8);
-   glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_MULTISAMPLE);
-   //glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
+    //habilita MSAA
+    if(antiAliasing){
+        glutSetOption(GLUT_MULTISAMPLE, 8);
+        glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_MULTISAMPLE);
+    }else{
+        glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
+    }
 
-   glutInitWindowSize (*w, *h);
-   glutInitWindowPosition (50, 50);
-   glutCreateWindow (title);
+    glutInitWindowSize (*w, *h);
+    glutInitWindowPosition (50, 50);
+    glutCreateWindow (title);
 
-   inicializa();
+    inicializa();
 
-   glutReshapeFunc(reshape);
-   glutDisplayFunc(display);
-   glutKeyboardFunc(keyb);
-   glutKeyboardUpFunc(keybUp);
-   glutSpecialUpFunc(specialUp);
-   glutSpecialFunc(special);
+    glutReshapeFunc(reshape);
+    glutDisplayFunc(display);
+    glutKeyboardFunc(keyb);
+    glutKeyboardUpFunc(keybUp);
+    glutSpecialUpFunc(specialUp);
+    glutSpecialFunc(special);
 
-   glutIdleFunc(display);
-   glutMouseFunc(mouseClick);
-   glutPassiveMotionFunc(motion);
-   glutMotionFunc(motion);
-   glutMouseWheelFunc(mouseWheelCB);
+    glutIdleFunc(display);
+    glutMouseFunc(mouseClick);
+    glutPassiveMotionFunc(motion);
+    glutMotionFunc(motion);
+    glutMouseWheelFunc(mouseWheelCB);
 
-   printf("GL Version: %s", glGetString(GL_VERSION));
+    printf("GL Version: %s\n", glGetString(GL_VERSION));
 }
 
 void CV::run()

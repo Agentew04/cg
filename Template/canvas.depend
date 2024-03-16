@@ -149,11 +149,11 @@
 1632060794 d:\ufsm\disciplinas\computacao grafica\demos\include\gl\freeglut_ext.h
 	<stdarg.h>
 
-1710462391 source:e:\universidade\trabalhos\template\src\gl_canvas2d.cpp
+1710607578 source:e:\universidade\trabalhos\template\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
-1710461668 e:\universidade\trabalhos\template\src\gl_canvas2d.h
+1710607591 e:\universidade\trabalhos\template\src\gl_canvas2d.h
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
@@ -180,10 +180,10 @@
 1632060794 e:\universidade\trabalhos\include\gl\freeglut_ext.h
 	<stdarg.h>
 
-1710461093 e:\universidade\trabalhos\template\src\vector2.h
+1710596331 e:\universidade\trabalhos\template\src\vector2.h
 	<cmath>
 
-1710464464 source:e:\universidade\trabalhos\template\src\main.cpp
+1710611676 source:e:\universidade\trabalhos\template\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -194,8 +194,10 @@
 	"Bola.h"
 	"Relogio.h"
 	"Botao.h"
-	"UI/ButtonManager.h"
+	"UI/UIManager.h"
 	"UI/Button.h"
+	"UI/Slider.h"
+	"UI/CheckBox.h"
 
 1589214882 e:\universidade\trabalhos\template\src\bola.h
 	"gl_canvas2d.h"
@@ -212,24 +214,24 @@
 	<stdio.h>
 	<stdlib.h>
 
-1710465015 source:e:\universidade\trabalhos\template\src\ui\button.cpp
+1710608531 source:e:\universidade\trabalhos\template\src\ui\button.cpp
 	"Button.h"
 	"../gl_canvas2d.h"
 	<iostream>
 
-1710465017 e:\universidade\trabalhos\template\src\ui\button.h
+1710608664 e:\universidade\trabalhos\template\src\ui\button.h
 	<string>
 	<functional>
 	<map>
 	"../Vector2.h"
 	"../Vector3.h"
 
-1710460408 source:e:\universidade\trabalhos\template\src\ui\buttonmanager.cpp
+1710608450 source:e:\universidade\trabalhos\template\src\ui\buttonmanager.cpp
 	<vector>
 	<iostream>
 	"ButtonManager.h"
 
-1710459406 e:\universidade\trabalhos\template\src\ui\buttonmanager.h
+1710597094 e:\universidade\trabalhos\template\src\ui\buttonmanager.h
 	<vector>
 	"Button.h"
 
@@ -319,4 +321,58 @@
 1710419425 source:d:\universidade\cg\template\src\ui\button.cpp
 	"Button.h"
 	"../gl_canvas2d.h"
+
+1710611716 e:\universidade\trabalhos\template\src\ui\uimanager.h
+	<vector>
+	"Button.h"
+	"Slider.h"
+	"CheckBox.h"
+	"ButtonManager.h"
+	"SliderManager.h"
+	"CheckBoxManager.h"
+
+1710610083 e:\universidade\trabalhos\template\src\ui\slider.h
+	<map>
+	"../Vector2.h"
+	"../Vector3.h"
+
+1710611871 source:e:\universidade\trabalhos\template\src\ui\uimanager.cpp
+	<vector>
+	<iostream>
+	"UIManager.h"
+
+1710598286 e:\universidade\trabalhos\template\src\ui\slidermanager.h
+	<vector>
+	"Slider.h"
+
+1710609692 source:e:\universidade\trabalhos\template\src\ui\slider.cpp
+	"Slider.h"
+	"../gl_canvas2d.h"
+	<iostream>
+	<cmath>
+
+1710609580 source:e:\universidade\trabalhos\template\src\ui\slidermanager.cpp
+	<vector>
+	<iostream>
+	"SliderManager.h"
+
+1710611861 source:e:\universidade\trabalhos\template\src\ui\checkbox.cpp
+	<iostream>
+	<cmath>
+	"CheckBox.h"
+	"../gl_canvas2d.h"
+
+1710611246 e:\universidade\trabalhos\template\src\ui\checkbox.h
+	<map>
+	"../Vector2.h"
+	"../Vector3.h"
+
+1710611264 source:e:\universidade\trabalhos\template\src\ui\checkboxmanager.cpp
+	<vector>
+	<iostream>
+	"CheckBoxManager.h"
+
+1710611069 e:\universidade\trabalhos\template\src\ui\checkboxmanager.h
+	<vector>
+	"CheckBox.h"
 

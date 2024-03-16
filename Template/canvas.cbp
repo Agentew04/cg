@@ -49,11 +49,27 @@
 		<Unit filename="src/UI/Button.h" />
 		<Unit filename="src/UI/ButtonManager.cpp" />
 		<Unit filename="src/UI/ButtonManager.h" />
+		<Unit filename="src/UI/Slider.cpp" />
+		<Unit filename="src/UI/Slider.h" />
+		<Unit filename="src/UI/SliderManager.cpp" />
+		<Unit filename="src/UI/SliderManager.h" />
+		<Unit filename="src/UI/UIManager.cpp" />
+		<Unit filename="src/UI/UIManager.h" />
 		<Unit filename="src/Vector2.h" />
 		<Unit filename="src/Vector3.h" />
 		<Unit filename="src/gl_canvas2d.cpp" />
 		<Unit filename="src/gl_canvas2d.h" />
 		<Unit filename="src/main.cpp" />
-		<Extensions />
+		<Extensions>
+			<DoxyBlocks>
+				<comment_style block="2" line="0" />
+				<doxyfile_project />
+				<doxyfile_build />
+				<doxyfile_warnings />
+				<doxyfile_output />
+				<doxyfile_dot />
+				<general />
+			</DoxyBlocks>
+		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

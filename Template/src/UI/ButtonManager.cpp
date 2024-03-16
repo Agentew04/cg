@@ -15,28 +15,29 @@ void ButtonManager::registerButton(Button *button){
 }
 
 void ButtonManager::unregisterButton(Button *button){
-    int idx = -1;
-    for(int i=0; i<this->buttons.size(); i++){
-        if(this->buttons[i] == button){
-            idx = i;
+    for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it) {
+        if (*it == button) {
+            this->buttons.erase(it);
             break;
         }
     }
-    this->buttons.erase(idx);
 }
+
 
 ButtonManager::ButtonManager(){
 
 }
 
 ButtonManager::~ButtonManager(){
-    for(int i=0; i<this->buttons.size(); i++){
+    for(size_t i=0; i<this->buttons.size(); i++){
+        delete this->buttons[i]->style;
         delete this->buttons[i];
     }
+    std::cout << "Deleting Button Manager" << std::endl;
 }
 
 void ButtonManager::draw(){
-    for(int i=0; i<this->buttons.size(); i++){
+    for(size_t i=0; i<this->buttons.size(); i++){
         this->buttons[i]->draw();
     }
 }
@@ -44,31 +45,41 @@ void ButtonManager::draw(){
 void ButtonManager::updateMousePos(Vector2 mousePos){
     this->mousePos = mousePos;
 
-    // foreach botao
-    // se esta dentro
-        // se estado n e click
-            // muda pra hover
-    // senao normal
-    for(int i=0; i<this->buttons.size(); i++){
+    for(size_t i=0; i<this->buttons.size(); i++){
         Button *b = this->buttons[i];
+
+        // no mouse
         if(inside(b->getPos(), b->getSize(), mousePos)){
             if(b->state != ButtonState::CLICK){
-                printf("Hover\n");
                 b->state = ButtonState::HOVER;
             }
         }else{
-            printf("Normal\n");
-            b->state = ButtonState::NORMAL;
+            if(b->state != ButtonState::CLICK){
+                b->state = ButtonState::NORMAL;
+            }
         }
     }
 }
 
 void ButtonManager::mouseDown(){
-
+    for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it) {
+        Button* button = *it;
+        if(inside(button->getPos(), button->getSize(), mousePos)){
+            this->holdingButton = button;
+            this->holdingButton->state = ButtonState::CLICK;
+            break;
+        }
+    }
 }
 
 void ButtonManager::mouseUp(){
-    this->holdingButton->call();
+    if(this->holdingButton == nullptr){
+        return;
+    }
+    if(inside(this->holdingButton->getPos(), this->holdingButton->getSize(), mousePos)){
+        this->holdingButton->call();
+    }
 
+    this->holdingButton->state = ButtonState::NORMAL;
     holdingButton = nullptr;
 }
