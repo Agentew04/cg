@@ -77,7 +77,6 @@ void SliderManager::updateMousePos(Vector2 mousePos){
         s->getValueBounds(&minv, &maxv);
         float delta = maxv-minv;
         float rate = delta / (s->getSize().x-10);
-        std::cout << "Delta: " << delta << " Rate: " << rate << " LocalX: " << localX << " Prod: " << localX*rate << std::endl;
         s->setValue(localX*rate);
     }
 }

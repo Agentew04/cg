@@ -45,7 +45,8 @@ void keyboardUp(int key);
 void specialUp(int key);
 void mouse(int bt, int st, int wheel, int direction, int x, int y);
 void mouseWheelCB(int wheel, int direction, int x, int y);
-void render();
+void render(float delta);
+void update(float delta);
 
 
 void CV::getSize(int* w, int* h){
@@ -352,14 +353,20 @@ void inicializa()
    glPolygonMode(GL_FRONT, GL_FILL);
 }
 
+static int lastTime = 0;
+
 void display (void)
 {
-   glClear(GL_COLOR_BUFFER_BIT );
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
+   int time = glutGet(GLUT_ELAPSED_TIME);
+   float delta = ((float)time - lastTime)/1000.0f;
+   lastTime = time;
 
-   render();
+   update(delta);
+   render(delta);
 
    glFlush();
    glutSwapBuffers();
