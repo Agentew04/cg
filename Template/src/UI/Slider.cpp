@@ -58,10 +58,6 @@ Slider::~Slider(){
 void Slider::draw(){
     CV::translate(pos);
 
-    // debug bounding box
-    CV::color(1,0,0);
-    CV::rect(Vector2::zero(), this->sz);
-
     // offsets declarations
     // retirados diretamente do Windows Forms
     // TODO mover para Style, para ser customizavel

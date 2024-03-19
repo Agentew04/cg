@@ -1,7 +1,7 @@
 #include <vector>
 #include <iostream>
 
-#include "CheckBoxManager.h"
+#include "ComboBoxManager.h"
 
 static float clamp(float value, float minValue, float maxValue){
     if(value >= maxValue){
@@ -20,7 +20,7 @@ static bool inside(Vector2 buttonPos, Vector2 buttonSize, Vector2 mousePos){
     return (mousePos.y >= buttonPos.y && mousePos.y <= buttonPos.y + buttonSize.y);
 }
 
-void CheckboxManager::registerCheckbox(Checkbox *checkbox){
+void ComboBoxManager::registerCheckbox(Checkbox *checkbox){
     this->checkboxes.push_back(checkbox);
 }
 
@@ -56,9 +56,6 @@ void CheckboxManager::updateMousePos(Vector2 mousePos){
 
     for(size_t i=0; i<this->checkboxes.size(); i++){
         Checkbox *s = this->checkboxes[i];
-        if(s == nullptr){
-            continue;
-        }
 
         // no mouse
         if(inside(s->getPos(), s->getSize(), mousePos)){

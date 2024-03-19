@@ -47,6 +47,9 @@ void ButtonManager::updateMousePos(Vector2 mousePos){
 
     for(size_t i=0; i<this->buttons.size(); i++){
         Button *b = this->buttons[i];
+        if(b == nullptr){
+            continue;
+        }
 
         // no mouse
         if(inside(b->getPos(), b->getSize(), mousePos)){

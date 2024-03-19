@@ -56,6 +56,9 @@ void SliderManager::updateMousePos(Vector2 mousePos){
 
     for(size_t i=0; i<this->sliders.size(); i++){
         Slider *s = this->sliders[i];
+        if(s == nullptr){
+            continue;
+        }
 
         // no mouse
         if(inside(s->getPos(), s->getSize(), mousePos)){

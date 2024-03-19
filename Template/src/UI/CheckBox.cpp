@@ -49,10 +49,6 @@ Checkbox::~Checkbox(){
 void Checkbox::draw(){
     CV::translate(pos);
 
-    // draw debug outline
-    CV::color(1,0,0);
-    CV::rect(Vector2::zero(), sz);
-
     // offsets
     Vector2 boxSize = Vector2(12,12);
     Vector2 labelOffset = Vector2(7,-2); // offset de baixo direita da checkbox
@@ -68,8 +64,8 @@ void Checkbox::draw(){
     // draw checkbox
     if(this->value){
         CV::color(style->checkColor[state]);
-        CV::line(2,6, 5, 9);
-        CV::line(5,9, 10,3);
+        CV::line(1,6, 5,9, 2.0f);
+        CV::line(5,9, 10,3, 2.0f);
     }
 
     // draw label

@@ -2,6 +2,7 @@
 #define __VECTOR_2_H__
 
 #include <cmath>
+#include <iostream>
 
 class Vector2
 {
@@ -42,7 +43,7 @@ public:
 
        if(norm==0.0)
        {
-          printf("\n\nNormalize::Divisao por zero");
+          std::cout << "\n\nNormalize::Divisao por zero" << std::endl;
           x = 1;
           y = 1;
           return;
@@ -67,8 +68,43 @@ public:
        return( aux );
    }
 
-   //Adicionem os demais overloads de operadores aqui.
+   Vector2 operator += (const Vector2& v)
+   {
+       Vector2 aux( x + v.x, y + v.y);
+       return( aux );
+   }
 
+   Vector2 operator -= (const Vector2& v)
+   {
+       Vector2 aux( x - v.x, y - v.y);
+       return( aux );
+   }
+
+   Vector2 operator *(const float f){
+       Vector2 aux(this->x*f, this->y*f);
+       return (aux);
+   }
+
+   Vector2 operator *= (const float f)
+   {
+       Vector2 aux(this->x*f, this->y*f);
+       return (aux);
+   }
+
+   bool operator == (const Vector2& v)
+   {
+       return (this->x == v.x && this->y == v.y);
+   }
+   bool operator != (const Vector2& v)
+   {
+       return !(*this == v);
+   }
+
+   //Adicionem os demais overloads de operadores aqui.
+    friend std::ostream& operator<<(std::ostream& os, const Vector2& obj){
+        os << "(" << obj.x << ", " << obj.y << ")";
+        return os;
+    }
 
 };
 

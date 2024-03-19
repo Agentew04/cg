@@ -26,10 +26,13 @@
 #include "UI/Slider.h"
 #include "UI/CheckBox.h"
 
+#include "Game/MovementController.h"
+
 
 //largura e altura inicial da tela . Alteram com o redimensionamento de tela.
 int screenWidth = 500, screenHeight = 500;
 UIManager *uiManager;
+MovementController *movController;
 
 Vector2 mousePos;
 
@@ -49,6 +52,7 @@ void update(float delta){
     if(holding){
         posObj = mousePos;
     }
+    movController->update(delta);
 }
 
 void render(float delta)
@@ -65,22 +69,29 @@ void render(float delta)
     CV::translate(0,0);
     CV::circle(posObj.x, posObj.y, objRadius, 50);
 
+    //draw person
+    CV::color(1,0,0);
+    CV::circleFill(movController->getPosition().x, movController->getPosition().y, 10, 50);
+
     Sleep(10); //nao eh controle de FPS. Somente um limitador de FPS.
 }
 
 void cleanup(){
-    delete uiManager; // deleta toda UI e estilos tbm
+    //delete uiManager; // deleta toda UI e estilos tbm
+    delete movController;
 }
 
 //funcao chamada toda vez que uma tecla for pressionada.
 void keyboard(int key)
 {
     printf("\nTecla: %d" , key);
+    movController->keyDown(key);
 
     switch(key)
     {
         case 27:
             cleanup();
+            std::cout << "Cleaned" << std::endl;
             exit(0);
         break;
     }
@@ -89,7 +100,8 @@ void keyboard(int key)
 //funcao chamada toda vez que uma tecla for liberada
 void keyboardUp(int key)
 {
-   printf("\nLiberou: %d" , key);
+   printf("Liberou: %d\n" , key);
+   movController->keyUp(key);
 }
 
 //funcao para tratamento de mouse: cliques, movimentos e arrastos
@@ -147,6 +159,8 @@ int main(void)
     uiManager->add(sld1);
     uiManager->add(sld2);
     uiManager->add(chk1);
+
+    movController = new MovementController(20, MovementType::ARROWS | MovementType::WASD);
 
     CV::init(&screenWidth, &screenHeight, "Canvas2D - Custom Template", false);
     CV::run();
