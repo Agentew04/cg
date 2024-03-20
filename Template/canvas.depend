@@ -184,7 +184,7 @@
 	<cmath>
 	<iostream>
 
-1710706752 source:e:\universidade\trabalhos\template\src\main.cpp
+1710893431 source:e:\universidade\trabalhos\template\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -196,7 +196,7 @@
 	"UI/Button.h"
 	"UI/Slider.h"
 	"UI/CheckBox.h"
-	"Game/MovementController.h"
+	"UI/Chart.h"
 
 1589214882 e:\universidade\trabalhos\template\src\bola.h
 	"gl_canvas2d.h"
@@ -321,7 +321,7 @@
 	"Button.h"
 	"../gl_canvas2d.h"
 
-1710611716 e:\universidade\trabalhos\template\src\ui\uimanager.h
+1710888411 e:\universidade\trabalhos\template\src\ui\uimanager.h
 	<vector>
 	"Button.h"
 	"Slider.h"
@@ -329,13 +329,14 @@
 	"ButtonManager.h"
 	"SliderManager.h"
 	"CheckBoxManager.h"
+	"Chart.h"
 
 1710610083 e:\universidade\trabalhos\template\src\ui\slider.h
 	<map>
 	"../Vector2.h"
 	"../Vector3.h"
 
-1710611871 source:e:\universidade\trabalhos\template\src\ui\uimanager.cpp
+1710888497 source:e:\universidade\trabalhos\template\src\ui\uimanager.cpp
 	<vector>
 	<iostream>
 	"UIManager.h"
@@ -384,10 +385,16 @@
 	<string>
 	<functional>
 
-1710707007 e:\universidade\trabalhos\template\src\game\movementcontroller.h
+1710888258 e:\universidade\trabalhos\template\src\game\movementcontroller.h
 	"../Vector2.h"
 
 1710706726 source:e:\universidade\trabalhos\template\src\game\movementcontroller.cpp
 	"MovementController.h"
 	<iostream>
+
+1710893340 e:\universidade\trabalhos\template\src\ui\chart.h
+	<vector>
+	<map>
+	"../Vector2.h"
+	"../Vector3.h"
 

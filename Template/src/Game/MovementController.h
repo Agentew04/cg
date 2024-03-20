@@ -14,12 +14,6 @@ enum MovementType {
     WASD = 2
 };
 
-inline MovementType operator|(MovementType a, MovementType b)
-{
-    return static_cast<MovementType>(static_cast<int>(a) | static_cast<int>(b));
-}
-
-
 // Classe usada para gerenciar a movimentacao com teclado
 // de um ponto arbitrario
 class MovementController{

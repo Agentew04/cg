@@ -27,6 +27,11 @@ void UIManager::remove(Checkbox *checkbox){
     this->checkboxMngr.unregisterCheckbox(checkbox);
 }
 
+void UIManager::add(Chart *chart){
+    this->charts.push_back(chart);
+}
+
+
 UIManager::UIManager(){
 
 }

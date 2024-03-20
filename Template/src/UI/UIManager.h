@@ -10,6 +10,7 @@
 #include "ButtonManager.h"
 #include "SliderManager.h"
 #include "CheckBoxManager.h"
+#include "Chart.h"
 
 // Classe para agregar gerenciadores de multiplas entidades
 class UIManager {
@@ -20,6 +21,8 @@ public:
     void remove(Slider *slider);
     void add(Checkbox *checkbox);
     void remove(Checkbox *checkbox);
+    void add(Chart *chart);
+    void remove(Chart *chart);
 
     UIManager();
     ~UIManager();
@@ -33,6 +36,7 @@ private:
     ButtonManager buttonMngr;
     SliderManager sliderMngr;
     CheckboxManager checkboxMngr;
+    std::vector<Chart*> charts;
     Vector2 mousePos;
 };
 
