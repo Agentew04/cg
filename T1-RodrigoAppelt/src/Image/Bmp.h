@@ -54,6 +54,7 @@ private:
 
 public:
    Bmp(const char *fileName);
+   ~Bmp();
    uchar* getImage();
    int    getWidth(void);
    int    getHeight(void);

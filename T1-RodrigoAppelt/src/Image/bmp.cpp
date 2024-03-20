@@ -55,6 +55,13 @@ void Bmp::convertBGRtoRGB()
   }
 }
 
+Bmp::~Bmp()
+{
+  if( data != NULL )
+  {
+     delete data;
+  }
+}
 
 void Bmp::load(const char *fileName)
 {

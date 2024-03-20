@@ -403,11 +403,11 @@
 	"Chart.h"
 	"../gl_canvas2d.h"
 
-1710641820 source:e:\universidade\trabalhos\t1\src\gl_canvas2d.cpp
+1710975823 source:e:\universidade\trabalhos\t1\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
-1710641838 e:\universidade\trabalhos\t1\src\gl_canvas2d.h
+1710975823 e:\universidade\trabalhos\t1\src\gl_canvas2d.h
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
@@ -417,7 +417,7 @@
 	"Vector2.h"
 	"Vector3.h"
 
-1710706464 e:\universidade\trabalhos\t1\src\vector2.h
+1710975823 e:\universidade\trabalhos\t1\src\vector2.h
 	<cmath>
 	<iostream>
 
@@ -495,7 +495,7 @@
 	<vector>
 	"Slider.h"
 
-1710973781 source:e:\universidade\trabalhos\t1\src\main.cpp
+1710975823 source:e:\universidade\trabalhos\t1\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -558,7 +558,7 @@
 	<iostream>
 	"lodepng.h"
 
-1710974498 source:e:\universidade\trabalhos\t1\src\specific\sidebar.cpp
+1710975892 source:e:\universidade\trabalhos\t1\src\specific\sidebar.cpp
 	"SideBar.h"
 	"../gl_canvas2d.h"
 

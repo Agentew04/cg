@@ -4,6 +4,7 @@
 #include "../Vector2.h"
 #include "../UI/Chart.h"
 #include "../UI/UIManager.h"
+#include "../Image/ImageManipulation.h"
 
 class SideBar {
 public:
@@ -34,6 +35,9 @@ public:
     void mouseUp();
 private:
 
+    void submitButtons();
+    void loadBmp(int n);
+    std::map<int,Image*> images;
     Vector2 pos, size;
     UIManager* uiManager;
     Chart* histogram;
