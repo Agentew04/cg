@@ -1,5 +1,6 @@
 #include <vector>
 #include <iostream>
+#include <algorithm>
 
 #include "CheckBoxManager.h"
 
@@ -38,8 +39,12 @@ CheckboxManager::CheckboxManager(){
 }
 
 CheckboxManager::~CheckboxManager(){
+    std::vector<Checkbox::Style*> deleted;
     for(size_t i=0; i<this->checkboxes.size(); i++){
-        delete this->checkboxes[i]->style;
+        if (std::find(deleted.begin(), deleted.end(), this->checkboxes[i]->style) == deleted.end()) {
+            deleted.push_back(this->checkboxes[i]->style);
+            delete this->checkboxes[i]->style;
+        }
         delete this->checkboxes[i];
     }
     std::cout << "Deleting Checkbox Manager" << std::endl;

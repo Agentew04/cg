@@ -45,8 +45,14 @@ void keyboardUp(int key);
 void specialUp(int key);
 void mouse(int bt, int st, int wheel, int direction, int x, int y);
 void mouseWheelCB(int wheel, int direction, int x, int y);
-void render();
+void render(float delta);
+void update(float delta);
 
+
+void CV::getSize(int* w, int* h){
+    *w = *scrWidth;
+    *h = *scrHeight;
+}
 
 void CV::point(float x, float y)
 {
@@ -70,6 +76,17 @@ void CV::line( float x1, float y1, float x2, float y2 )
    glEnd();
 }
 
+void CV::line( float x1, float y1, float x2, float y2, float width)
+{
+    glLineWidth((GLfloat)width);
+    glBegin(GL_LINES);
+        glVertex2d(x1, y1);
+        glVertex2d(x2, y2);
+    glEnd();
+    glLineWidth(1.0);
+}
+
+
 void CV::rect( float x1, float y1, float x2, float y2 )
 {
    glBegin(GL_LINE_LOOP);
@@ -78,6 +95,10 @@ void CV::rect( float x1, float y1, float x2, float y2 )
       glVertex2d(x2, y2);
       glVertex2d(x2, y1);
    glEnd();
+}
+
+void CV::rect( Vector2 p1, Vector2 p2 ){
+    CV::rect(p1.x,p1.y,p2.x,p2.y);
 }
 
 void CV::rectFill( float x1, float y1, float x2, float y2 )
@@ -132,12 +153,65 @@ void CV::polygonFill(float vx[], float vy[], int elems)
 //  http://ftgl.sourceforge.net/docs/html/ftgl-tutorial.html
 void CV::text(float x, float y, const char *t)
 {
+    void* font = GLUT_BITMAP_8_BY_13;
+    CV::text(x,y,t, font);
+}
+
+float CV::textWidth(const char *t, void* font){
     int tam = (int)strlen(t);
+    float width = 0;
     for(int c=0; c < tam; c++)
     {
-      glRasterPos2i(x + c*10, y);
-      glutBitmapCharacter(GLUT_BITMAP_8_BY_13, t[c]);
+        width += glutBitmapWidth(font, t[c]);
     }
+    return width;
+}
+
+void CV::text(float x, float y, const char *t, void* font)
+{
+    int tam = (int)strlen(t);
+    int x0 = x;
+    for(int c=0; c < tam; c++)
+    {
+        if(t[c] == '\n'){
+            x = x0;
+            y += glutBitmapHeight(font);
+            continue;
+        }
+
+        float charWidth = glutBitmapWidth(font, t[c]);
+        glRasterPos2i(x, y);
+        glutBitmapCharacter(font, t[c]);
+        x += charWidth;
+    }
+}
+
+void CV::text(Vector2 pos, const char *t){
+    CV::text(pos.x, pos.y, t);
+}
+
+void CV::text(Vector2 pos, int valor){
+    char str[10];
+    snprintf(str, 10, "%d", valor);
+    CV::text(pos.x, pos.y, str);
+}
+
+void CV::text(Vector2 pos, float valor){
+    char str[10];
+    snprintf(str, 10, "%.2f", valor);
+    CV::text(pos.x, pos.y, str);
+}
+
+void CV::text(float x, float y, const char *t, void* font, TextAlign align){
+    float width = textWidth(t, font);
+
+    float finalX = x;
+    if(align == TextAlign::RIGHT){
+        finalX = x - width;
+    }else if(align == TextAlign::CENTER){
+        finalX = x - (width/2);
+    }
+    CV::text(finalX, y, t, font);
 }
 
 void CV::clear(float r, float g, float b)
@@ -204,6 +278,15 @@ void CV::color(int idx)
 void CV::color(float r, float g, float b, float alpha)
 {
    glColor4d(r, g, b, alpha);
+   //glTexImage2D(GL_TEXTURE_2D, 0, )
+}
+
+void CV::color(Vector3 rgb){
+    glColor3d(rgb.x, rgb.y, rgb.z);
+}
+
+void color(Vector3 rgb, float a){
+    glColor4d(rgb.x, rgb.y, rgb.z, a);
 }
 
 void special(int key, int , int )
@@ -281,14 +364,20 @@ void inicializa()
    glPolygonMode(GL_FRONT, GL_FILL);
 }
 
+static int lastTime = 0;
+
 void display (void)
 {
-   glClear(GL_COLOR_BUFFER_BIT );
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
+   int time = glutGet(GLUT_ELAPSED_TIME);
+   float delta = ((float)time - lastTime)/1000.0f;
+   lastTime = time;
 
-   render();
+   update(delta);
+   render(delta);
 
    glFlush();
    glutSwapBuffers();
@@ -297,39 +386,42 @@ void display (void)
 ////////////////////////////////////////////////////////////////////////////////////////
 //  inicializa o OpenGL
 ////////////////////////////////////////////////////////////////////////////////////////
-void CV::init(int *w, int *h, const char *title)
+void CV::init(int *w, int *h, const char *title, bool antiAliasing)
 {
-   int argc = 0;
-   glutInit(&argc, NULL);
+    int argc = 0;
+    glutInit(&argc, NULL);
 
-   scrHeight = h;
-   scrWidth = w;
+    scrHeight = h;
+    scrWidth = w;
 
-   //habilita MSAA
-   glutSetOption(GLUT_MULTISAMPLE, 8);
-   glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_MULTISAMPLE);
-   //glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
+    //habilita MSAA
+    if(antiAliasing){
+        glutSetOption(GLUT_MULTISAMPLE, 8);
+        glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_MULTISAMPLE);
+    }else{
+        glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
+    }
 
-   glutInitWindowSize (*w, *h);
-   glutInitWindowPosition (50, 50);
-   glutCreateWindow (title);
+    glutInitWindowSize (*w, *h);
+    glutInitWindowPosition (50, 50);
+    glutCreateWindow (title);
 
-   inicializa();
+    inicializa();
 
-   glutReshapeFunc(reshape);
-   glutDisplayFunc(display);
-   glutKeyboardFunc(keyb);
-   glutKeyboardUpFunc(keybUp);
-   glutSpecialUpFunc(specialUp);
-   glutSpecialFunc(special);
+    glutReshapeFunc(reshape);
+    glutDisplayFunc(display);
+    glutKeyboardFunc(keyb);
+    glutKeyboardUpFunc(keybUp);
+    glutSpecialUpFunc(specialUp);
+    glutSpecialFunc(special);
 
-   glutIdleFunc(display);
-   glutMouseFunc(mouseClick);
-   glutPassiveMotionFunc(motion);
-   glutMotionFunc(motion);
-   glutMouseWheelFunc(mouseWheelCB);
+    glutIdleFunc(display);
+    glutMouseFunc(mouseClick);
+    glutPassiveMotionFunc(motion);
+    glutMotionFunc(motion);
+    glutMouseWheelFunc(mouseWheelCB);
 
-   printf("GL Version: %s", glGetString(GL_VERSION));
+    printf("GL Version: %s\n", glGetString(GL_VERSION));
 }
 
 void CV::run()

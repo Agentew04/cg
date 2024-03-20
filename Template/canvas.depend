@@ -184,7 +184,7 @@
 	<cmath>
 	<iostream>
 
-1710893431 source:e:\universidade\trabalhos\template\src\main.cpp
+1710970817 source:e:\universidade\trabalhos\template\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -225,7 +225,7 @@
 	"../Vector2.h"
 	"../Vector3.h"
 
-1710616278 source:e:\universidade\trabalhos\template\src\ui\buttonmanager.cpp
+1710970475 source:e:\universidade\trabalhos\template\src\ui\buttonmanager.cpp
 	<vector>
 	<iostream>
 	"ButtonManager.h"
@@ -351,7 +351,7 @@
 	<iostream>
 	<cmath>
 
-1710616258 source:e:\universidade\trabalhos\template\src\ui\slidermanager.cpp
+1710970435 source:e:\universidade\trabalhos\template\src\ui\slidermanager.cpp
 	<vector>
 	<iostream>
 	"SliderManager.h"
@@ -367,7 +367,7 @@
 	"../Vector2.h"
 	"../Vector3.h"
 
-1710616272 source:e:\universidade\trabalhos\template\src\ui\checkboxmanager.cpp
+1710970464 source:e:\universidade\trabalhos\template\src\ui\checkboxmanager.cpp
 	<vector>
 	<iostream>
 	"CheckBoxManager.h"
@@ -392,9 +392,43 @@
 	"MovementController.h"
 	<iostream>
 
-1710893340 e:\universidade\trabalhos\template\src\ui\chart.h
+1710971095 e:\universidade\trabalhos\template\src\ui\chart.h
 	<vector>
 	<map>
 	"../Vector2.h"
 	"../Vector3.h"
+
+1710971061 source:e:\universidade\trabalhos\template\src\ui\chart.cpp
+	<vector>
+	"Chart.h"
+	"../gl_canvas2d.h"
+
+1650887927 source:e:\universidade\trabalhos\template\src\image\bmp.cpp
+	"Bmp.h"
+	<string.h>
+
+1531759698 e:\universidade\trabalhos\template\src\image\bmp.h
+	<stdio.h>
+	<stdlib.h>
+
+1710969509 source:e:\universidade\trabalhos\template\src\image\imagemanipulation.cpp
+	<iostream>
+	"ImageManipulation.h"
+
+1710969513 e:\universidade\trabalhos\template\src\image\imagemanipulation.h
+	<cstdint>
+
+1710894317 source:e:\universidade\trabalhos\template\src\image\lodepng.cpp
+	"lodepng.h"
+	<limits.h>
+	<stdio.h>
+	<stdlib.h>
+
+1710894324 e:\universidade\trabalhos\template\src\image\lodepng.h
+	<string.h>
+	<vector>
+	<string>
+	"lodepng.h"
+	<iostream>
+	"lodepng.h"
 

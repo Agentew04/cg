@@ -1,5 +1,6 @@
 #include <vector>
 #include <iostream>
+#include <algorithm>
 
 #include "SliderManager.h"
 
@@ -38,8 +39,13 @@ SliderManager::SliderManager(){
 }
 
 SliderManager::~SliderManager(){
+    std::vector<Slider::Style*> deleted;
     for(size_t i=0; i<this->sliders.size(); i++){
-        delete this->sliders[i]->style;
+        if (std::find(deleted.begin(), deleted.end(), this->sliders[i]->style) == deleted.end()) {
+            deleted.push_back(this->sliders[i]->style);
+            delete this->sliders[i]->style;
+        }
+
         delete this->sliders[i];
     }
     std::cout << "Deleting Slider Manager" << std::endl;

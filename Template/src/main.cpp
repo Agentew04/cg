@@ -32,7 +32,6 @@
 //largura e altura inicial da tela . Alteram com o redimensionamento de tela.
 int screenWidth = 500, screenHeight = 500;
 UIManager *uiManager;
-//MovementController *movController;
 Chart *chart;
 
 Vector2 mousePos;
@@ -71,23 +70,17 @@ void render(float delta)
     CV::translate(0,0);
     CV::circle(posObj.x, posObj.y, objRadius, 50);
 
-    //draw person
-    CV::color(1,0,0);
-    //CV::circleFill(movController->getPosition().x, movController->getPosition().y, 10, 50);
-
     Sleep(10); //nao eh controle de FPS. Somente um limitador de FPS.
 }
 
 void cleanup(){
     //delete uiManager; // deleta toda UI e estilos tbm
-    //delete movController;
 }
 
 //funcao chamada toda vez que uma tecla for pressionada.
 void keyboard(int key)
 {
     printf("\nTecla: %d" , key);
-    //movController->keyDown(key);
 
     switch(key)
     {
@@ -103,7 +96,6 @@ void keyboard(int key)
 void keyboardUp(int key)
 {
    printf("Liberou: %d\n" , key);
-   //movController->keyUp(key);
 }
 
 //funcao para tratamento de mouse: cliques, movimentos e arrastos
@@ -156,23 +148,22 @@ int main(void)
     Checkbox *chk1 = new Checkbox(Vector2(160, 230), Vector2(80,20), "Checkbox", false);
     chk1->style = chkstyle;
 
-    chart = new Chart(Vector2(200, 300), Vector2(100,100));
+    chart = new Chart(Vector2(200, 300), Vector2(100,100), Chart::ChartType::LINE);
 
-    chart->x.push_back(1);
-    chart->y.push_back(1);
-    chart->x.push_back(2);
-    chart->y.push_back(2);
+    chart->x.push_back(1);chart->y.push_back(1);
+    chart->x.push_back(2);chart->y.push_back(1);
+    chart->x.push_back(3);chart->y.push_back(2);
+    chart->x.push_back(4);chart->y.push_back(4);
 
     chart->xBounds = Vector2(0, 5);
-    chart->yBounds = Vector2(0, 5);
+    chart->yBounds = Vector2(0, 10);
+    chart->color = Vector3(1,0,0);
 
     uiManager->add(btn);
     uiManager->add(sqrB);
     uiManager->add(sld1);
     uiManager->add(sld2);
     uiManager->add(chk1);
-
-    //movController = new MovementController(20, MovementType::WASD);
 
     CV::init(&screenWidth, &screenHeight, "Canvas2D - Custom Template", false);
     CV::run();

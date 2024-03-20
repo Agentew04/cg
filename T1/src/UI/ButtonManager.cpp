@@ -1,5 +1,6 @@
 #include <vector>
 #include <iostream>
+#include <algorithm>
 
 #include "ButtonManager.h"
 
@@ -29,8 +30,13 @@ ButtonManager::ButtonManager(){
 }
 
 ButtonManager::~ButtonManager(){
+    std::vector<ButtonStyle*> deleted;
     for(size_t i=0; i<this->buttons.size(); i++){
-        delete this->buttons[i]->style;
+        if (std::find(deleted.begin(), deleted.end(), this->buttons[i]->style) == deleted.end()) {
+            deleted.push_back(this->buttons[i]->style);
+            delete this->buttons[i]->style;
+        }
+            
         delete this->buttons[i];
     }
     std::cout << "Deleting Button Manager" << std::endl;
