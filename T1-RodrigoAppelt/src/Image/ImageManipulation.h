@@ -3,13 +3,17 @@
 
 #include <cstdint>
 
+#include "../Vector2.h"
 
-struct Image {
-    int width, height;
+class Image {
+public:
     uint8_t *pixels;
-
     Image(int width, int height);
     ~Image();
+    Vector2 getSize();
+    void getSize(int *w, int *h);
+private:
+    int width, height;
 };
 
 class ImageManipulation{

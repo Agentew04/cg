@@ -33,6 +33,7 @@ Button::Button(Vector2 pos, Vector2 sz, std::string text, std::function<void()> 
     this->pos = pos;
     this->sz = sz;
     this->callback = callback;
+    this->clickable = true;
 }
 
 Button::~Button() {
@@ -62,7 +63,9 @@ void Button::draw(){
 }
 
 void Button::call(){
-    this->callback();
+    if(this->clickable){
+        this->callback();
+    }
 }
 
 Vector2 Button::getPos(){

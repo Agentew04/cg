@@ -5,6 +5,7 @@
 #include "../UI/Chart.h"
 #include "../UI/UIManager.h"
 #include "../Image/ImageManipulation.h"
+#include "../UI/Button.h"
 
 class SideBar {
 public:
@@ -37,6 +38,7 @@ private:
 
     void submitButtons();
     void loadBmp(int n);
+    std::vector<Button*> buttons;
     std::map<int,Image*> images;
     Vector2 pos, size;
     UIManager* uiManager;
