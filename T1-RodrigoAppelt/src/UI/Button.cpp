@@ -28,7 +28,7 @@ ButtonStyle::~ButtonStyle(){
     std::cout << "Deleting Button Style" << std::endl;
 }
 
-Button::Button(Vector2 pos, Vector2 sz, std::string text, std::function<void()> callback) {
+Button::Button(Vector2 pos, Vector2 sz, std::string text, std::function<void(Button*)> callback) {
     this->text = text;
     this->pos = pos;
     this->sz = sz;
@@ -64,7 +64,7 @@ void Button::draw(){
 
 void Button::call(){
     if(this->clickable){
-        this->callback();
+        this->callback(this);
     }
 }
 

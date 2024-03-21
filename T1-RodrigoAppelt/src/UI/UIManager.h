@@ -24,8 +24,8 @@ public:
     void remove(Checkbox *checkbox);
     void add(Chart *chart);
     void remove(Chart *chart);
-    void add(Image *img);
-    void remove(Image *img);
+    void add(ImageRenderer *img);
+    void remove(ImageRenderer *img);
 
     UIManager();
     ~UIManager();
@@ -40,7 +40,7 @@ private:
     SliderManager sliderMngr;
     CheckboxManager checkboxMngr;
     std::vector<Chart*> charts;
-    std::vector<Image*> images;
+    std::vector<ImageRenderer*> images;
     Vector2 mousePos;
 };
 

@@ -40,11 +40,11 @@ void UIManager::remove(Chart *chart){
     }
 }
 
-void UIManager::add(Image *img){
+void UIManager::add(ImageRenderer *img){
     this->images.push_back(img);
 }
 
-void UIManager::remove(Image *img){
+void UIManager::remove(ImageRenderer *img){
     for(auto it = this->images.begin(); it != this->images.end(); it++){
         if(*it == img){
             this->images.erase(it);
@@ -60,12 +60,24 @@ UIManager::UIManager(){
 
 UIManager::~UIManager(){
     std::cout << "Deleting UI Manager" << std::endl;
+    for(auto chart : this->charts){
+        delete chart;
+    }
+    for(auto img : this->images){
+        delete img;
+    }
 }
 
 void UIManager::draw(){
     this->buttonMngr.draw();
     this->sliderMngr.draw();
     this->checkboxMngr.draw();
+    for(auto chart : this->charts){
+        chart->draw();
+    }
+    for(auto img : this->images){
+        img->draw();
+    }
 }
 
 void UIManager::updateMousePos(Vector2 mousePos){

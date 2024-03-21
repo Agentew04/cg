@@ -11,23 +11,23 @@ SideBar::SideBar(Vector2 pos, Vector2 size, int *scrW, int *scrH)
 
 void SideBar::submitButtons(){
     ButtonStyle *btnstl = ButtonStyle::Windows10();
-    Button *ldbtn1 = new Button(pos + Vector2(5,5), Vector2(100,50), "Load 1", [&, ldbtn1](){
+    Button *ldbtn1 = new Button(pos + Vector2(5,5), Vector2(100,50), "Load 1", [&](Button* but){
         loadBmp(0);
-        ldbtn1->clickable = false;
+        but->clickable = false;
     });
     ldbtn1->style = btnstl;
     this->uiManager->add(ldbtn1);
 
-    Button *ldbtn2 = new Button(pos + Vector2(110,5), Vector2(100,50), "Load 2", [&, ldbtn2](){
+    Button *ldbtn2 = new Button(pos + Vector2(110,5), Vector2(100,50), "Load 2", [&](Button* but){
         loadBmp(1);
-        ldbtn2->clickable = false;
+        but->clickable = false;
     });
     ldbtn2->style = btnstl;
     this->uiManager->add(ldbtn2);
 
-    Button *ldbtn3 = new Button(pos + Vector2(215,5), Vector2(100,50), "Load 3", [&, ldbtn3](){
+    Button *ldbtn3 = new Button(pos + Vector2(215,5), Vector2(100,50), "Load 3", [&](Button* but){
         loadBmp(2);
-        ldbtn3->clickable = false;
+        but->clickable = false;
     });
     ldbtn3->style = btnstl;
     this->uiManager->add(ldbtn3);
@@ -40,6 +40,7 @@ void SideBar::loadBmp(int n){
     std::string path = "./T1-RodrigoAppelt/images/" + std::string(1,'a'+n) + ".bmp";
     std::cout << "Loading bitmap: " << path << std::endl;
     Bmp *bmp = new Bmp(path.c_str());
+    bmp->convertBGRtoRGB();
 
     Image *img = new Image(bmp->getWidth(), bmp->getHeight());
     memmove(img->pixels, bmp->getImage(), bmp->getWidth()*bmp->getHeight()*3);
@@ -48,6 +49,8 @@ void SideBar::loadBmp(int n){
     img->getSize(&w, &h);
     std::cout << "Image size: " << w << "x" << h << "(" << bmp->getWidth()*bmp->getHeight()*3 << ")"<< std::endl;
     images[n] = img;
+    ImageRenderer *imgrnd = new ImageRenderer(Vector2(5+n*20,5+n*20), Vector2::zero(), images[0]);
+    this->uiManager->add(imgrnd);
     delete bmp;
 }
 

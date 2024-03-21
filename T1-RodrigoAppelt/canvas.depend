@@ -622,7 +622,7 @@
 	"../Vector2.h"
 	"../Vector3.h"
 
-1710980246 e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\uimanager.h
+1710985834 e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\uimanager.h
 	<vector>
 	"Button.h"
 	"Slider.h"
@@ -633,7 +633,7 @@
 	"Chart.h"
 	"ImageRenderer.h"
 
-1710608664 e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\button.h
+1710987803 e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\button.h
 	<string>
 	<functional>
 	<map>
@@ -701,12 +701,12 @@
 	<algorithm>
 	"SliderManager.h"
 
-1710980251 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\uimanager.cpp
+1710985871 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\uimanager.cpp
 	<vector>
 	<iostream>
 	"UIManager.h"
 
-1710979815 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\image\imagemanipulation.cpp
+1710986135 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\image\imagemanipulation.cpp
 	<iostream>
 	<cstring>
 	"ImageManipulation.h"
@@ -726,7 +726,7 @@
 	<iostream>
 	"lodepng.h"
 
-1710980590 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\sidebar.cpp
+1710987621 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\sidebar.cpp
 	"SideBar.h"
 	"../gl_canvas2d.h"
 	"../Image/Bmp.h"
@@ -739,7 +739,17 @@
 	"Bmp.h"
 	<string.h>
 
-1710980129 e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\imagerenderer.h
+1710987473 e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\imagerenderer.h
 	"../Image/ImageManipulation.h"
 	"../Vector2.h"
+
+1710987464 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\imagerenderer.cpp
+	"ImageRenderer.h"
+	"../gl_canvas2d.h"
+	<iostream>
+
+1710971061 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\chart.cpp
+	<vector>
+	"Chart.h"
+	"../gl_canvas2d.h"
 

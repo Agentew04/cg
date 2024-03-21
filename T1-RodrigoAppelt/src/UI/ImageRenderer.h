@@ -9,10 +9,12 @@
 class ImageRenderer {
 public:
 
-    /// @brief Desenha a imagem na tela
-    /// @param pos A posicao onde a imagem sera desenhada
-    /// @param img A imagem a ser desenhada
-    static void draw(Vector2 pos, Image *img);
+    ImageRenderer(Vector2 pos, Vector2 size, Image *img);
+    ~ImageRenderer();
+    void draw();
+private:
+    Vector2 pos,size;
+    Image *img;
 };
 
 #endif

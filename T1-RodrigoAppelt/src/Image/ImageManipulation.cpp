@@ -11,6 +11,8 @@ Image::Image(int width, int height){
     std::cout << "aloquei uma imagem de " << width << "x" << height << std::endl;
 }
 
+
+
 Image::~Image(){
     delete[] this->pixels;
     std::cout << "desalocando uma imagem de " << this->width << "x" << this->height << std::endl;
