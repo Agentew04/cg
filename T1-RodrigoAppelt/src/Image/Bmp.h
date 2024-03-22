@@ -51,6 +51,7 @@ private:
    INFOHEADER info;
 
    void load(const char *fileName);
+   void pad(int delta);
 
 public:
    Bmp(const char *fileName);

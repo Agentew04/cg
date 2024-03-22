@@ -9,12 +9,12 @@
 class ImageRenderer {
 public:
 
-    ImageRenderer(Vector2 pos, Vector2 size, Image *img);
+    ImageRenderer(Vector2 pos, Image *img);
     ~ImageRenderer();
     void draw();
-private:
     Vector2 pos,size;
     Image *img;
+private:
 };
 
 #endif

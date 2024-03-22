@@ -38,9 +38,30 @@ private:
 
     void submitButtons();
     void loadBmp(int n);
+
+    /// @brief Organiza as imagens na ordem de prioridade
+    /// dentro do uiManager;
+    void sortImages();
+
     std::vector<Button*> buttons;
-    std::map<int,Image*> images;
-    Vector2 pos, size;
+
+    /// @brief Vetor dos objetos de imagens. Tem posicao e tamanho.
+    /// Ele esta ordenado na ordem de prioridade de click e de render.
+    std::vector<ImageRenderer*> imgrenderers;
+
+    /// @brief Mapa para saber quais imagens já foram carregadas
+    std::map<int,bool> loadedImages;
+
+    /// @brief Vetor com todas as imagens carregadas
+    std::vector<Image*> images;
+
+    /// @brief So um atalho pra achar o img renderer 
+    /// de uma imagem sem ter q fazer uma busca toda hora
+    std::map<Image*, ImageRenderer*> imgToRenderer;
+
+    Image* selectedImage = nullptr;
+
+    Vector2 pos, size, mousePos;
     UIManager* uiManager;
     Chart* histogram;
 };

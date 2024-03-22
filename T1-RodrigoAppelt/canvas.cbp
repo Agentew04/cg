@@ -43,14 +43,25 @@
 		</Linker>
 		<Unit filename="src/Game/MovementController.cpp" />
 		<Unit filename="src/Game/MovementController.h" />
+		<Unit filename="src/Image/Bmp.h" />
+		<Unit filename="src/Image/ImageManipulation.cpp" />
+		<Unit filename="src/Image/ImageManipulation.h" />
+		<Unit filename="src/Image/bmp.cpp" />
+		<Unit filename="src/Image/lodepng.cpp" />
+		<Unit filename="src/Image/lodepng.h" />
+		<Unit filename="src/Specific/SideBar.cpp" />
+		<Unit filename="src/Specific/SideBar.h" />
 		<Unit filename="src/UI/Button.cpp" />
 		<Unit filename="src/UI/Button.h" />
 		<Unit filename="src/UI/ButtonManager.cpp" />
 		<Unit filename="src/UI/ButtonManager.h" />
+		<Unit filename="src/UI/Chart.cpp" />
 		<Unit filename="src/UI/CheckBox.cpp" />
 		<Unit filename="src/UI/CheckBox.h" />
 		<Unit filename="src/UI/CheckBoxManager.cpp" />
 		<Unit filename="src/UI/CheckBoxManager.h" />
+		<Unit filename="src/UI/ImageRenderer.cpp" />
+		<Unit filename="src/UI/ImageRenderer.h" />
 		<Unit filename="src/UI/MenuStrip.cpp" />
 		<Unit filename="src/UI/MenuStrip.h" />
 		<Unit filename="src/UI/Slider.cpp" />

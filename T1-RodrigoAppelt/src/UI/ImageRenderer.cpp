@@ -3,12 +3,15 @@
 
 #include <iostream>
 
-ImageRenderer::ImageRenderer(Vector2 pos, Vector2 size, Image *img)
+ImageRenderer::ImageRenderer(Vector2 pos, Image *img)
     : pos(pos), size(size), img(img){
+        this->size = img->getSize();
 }
 
 ImageRenderer::~ImageRenderer(){
     std::cout << "Deleting ImageRenderer" << std::endl;
+    // NAO DESALOCAR A IMAGEM AQUI
+    // essa classe nao eh dona do ponteiro
 }
 
 void ImageRenderer::draw(){

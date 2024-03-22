@@ -63,9 +63,6 @@ UIManager::~UIManager(){
     for(auto chart : this->charts){
         delete chart;
     }
-    for(auto img : this->images){
-        delete img;
-    }
 }
 
 void UIManager::draw(){

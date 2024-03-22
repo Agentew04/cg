@@ -2,49 +2,9 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="src\UI\Button.cpp" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1075" topLine="6" />
-		</Cursor>
-	</File>
-	<File name="src\UI\ButtonManager.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="368" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src\UI\MenuStrip.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="26" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src\UI\SliderManager.cpp" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1540" topLine="26" />
-		</Cursor>
-	</File>
-	<File name="src\UI\Slider.cpp" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3370" topLine="84" />
-		</Cursor>
-	</File>
-	<File name="src\Vector3.h" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1320" topLine="62" />
-		</Cursor>
-	</File>
 	<File name="src\UI\CheckBox.cpp" open="0" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="2132" topLine="48" />
-		</Cursor>
-	</File>
-	<File name="src\UI\UIManager.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="480" topLine="6" />
-		</Cursor>
-	</File>
-	<File name="src\gl_canvas2d.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="940" topLine="20" />
 		</Cursor>
 	</File>
 	<File name="src\UI\SliderManager.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -52,24 +12,14 @@
 			<Cursor1 position="490" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="src\UI\CheckBox.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\UI\ImageRenderer.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="647" topLine="20" />
+			<Cursor1 position="461" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="src\UI\UIManager.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\UI\MenuStrip.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1392" topLine="34" />
-		</Cursor>
-	</File>
-	<File name="src\Game\MovementController.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="338" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src\Vector2.h" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1751" topLine="74" />
+			<Cursor1 position="26" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="src\UI\MenuStrip.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -77,9 +27,9 @@
 			<Cursor1 position="274" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="src\main.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\UI\UIManager.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1032" topLine="30" />
+			<Cursor1 position="480" topLine="6" />
 		</Cursor>
 	</File>
 	<File name="src\UI\Button.h" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -87,19 +37,19 @@
 			<Cursor1 position="781" topLine="29" />
 		</Cursor>
 	</File>
+	<File name="src\UI\SliderManager.cpp" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1540" topLine="26" />
+		</Cursor>
+	</File>
 	<File name="src\Game\MovementController.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="1994" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="src\UI\CheckBoxManager.cpp" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\Specific\SideBar.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1611" topLine="40" />
-		</Cursor>
-	</File>
-	<File name="src\gl_canvas2d.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1909" topLine="64" />
+			<Cursor1 position="4467" topLine="112" />
 		</Cursor>
 	</File>
 	<File name="src\UI\ButtonManager.cpp" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -107,14 +57,69 @@
 			<Cursor1 position="887" topLine="4" />
 		</Cursor>
 	</File>
-	<File name="src\Specific\SideBar.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\Vector2.h" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="918" topLine="9" />
+			<Cursor1 position="1751" topLine="74" />
 		</Cursor>
 	</File>
 	<File name="src\UI\Slider.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="396" topLine="10" />
+		</Cursor>
+	</File>
+	<File name="src\UI\Button.cpp" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1075" topLine="6" />
+		</Cursor>
+	</File>
+	<File name="src\UI\CheckBox.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="647" topLine="20" />
+		</Cursor>
+	</File>
+	<File name="src\Game\MovementController.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="338" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src\Vector3.h" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1320" topLine="62" />
+		</Cursor>
+	</File>
+	<File name="src\gl_canvas2d.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1909" topLine="64" />
+		</Cursor>
+	</File>
+	<File name="src\UI\ButtonManager.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="368" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src\gl_canvas2d.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="940" topLine="20" />
+		</Cursor>
+	</File>
+	<File name="src\UI\Slider.cpp" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3370" topLine="84" />
+		</Cursor>
+	</File>
+	<File name="src\UI\CheckBoxManager.cpp" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1611" topLine="40" />
+		</Cursor>
+	</File>
+	<File name="src\main.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1032" topLine="30" />
+		</Cursor>
+	</File>
+	<File name="src\UI\UIManager.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1710" topLine="50" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

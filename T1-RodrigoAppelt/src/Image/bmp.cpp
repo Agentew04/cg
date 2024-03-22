@@ -9,6 +9,7 @@
 
 #include "Bmp.h"
 #include <string.h>
+#include <cstdint>
 
 Bmp::Bmp(const char *fileName)
 {
@@ -68,11 +69,14 @@ void Bmp::load(const char *fileName)
   FILE *fp = fopen(fileName, "rb");
   if( fp == NULL )
   {
-     printf("\nErro ao abrir arquivo %s para leitura", fileName);
+     printf("Erro ao abrir arquivo %s para leitura\n", fileName);
+     printf("Voce mudou o nome da pasta do projeto? O path das imagens esta hardcoded para\n");
+      printf("o nome da pasta ser T1-RodrigoAppelt. Se foi mudado, atualizar o caminho em SideBar.cpp\n");
+      printf("na funcao void SideBar::loadBmp(int n)\n");
      return;
   }
 
-  printf("\n\nCarregando arquivo %s", fileName);
+  //printf("\n\nCarregando arquivo %s", fileName);
 
   //le o HEADER componente a componente devido ao problema de alinhamento de bytes. Usando
   //o comando fread(header, sizeof(HEADER),1,fp) sao lidos 16 bytes ao inves de 14
@@ -102,11 +106,11 @@ void Bmp::load(const char *fileName)
   imagesize    = bytesPerLine*height;
   int delta    = bytesPerLine - (3 * width);
 
-  printf("\nImagem: %dx%d - Bits: %d", width, height, bits);
-  printf("\nbytesPerLine: %d", bytesPerLine);
-  printf("\nbytesPerLine: %d", width * 3);
-  printf("\ndelta: %d", delta);
-  printf("\nimagesize: %d %d", imagesize, info.imagesize);
+  //printf("\nImagem: %dx%d - Bits: %d", width, height, bits);
+  //printf("\nbytesPerLineIdeal: %d", bytesPerLine);
+  //printf("\nbytesPerLineActual: %d", width * 3);
+  //printf("\ndelta: %d", delta);
+  //printf("\nimagesize: %d %d", imagesize, info.imagesize);
 
   //realiza diversas verificacoes de erro e compatibilidade
   if( header.type != 19778 )
@@ -118,8 +122,8 @@ void Bmp::load(const char *fileName)
 
   if( width*height*3 != imagesize )
   {
-     printf("\nWarning: Arquivo BMP nao tem largura multipla de 4");
-     getchar();
+     //printf("\nWarning: Arquivo BMP nao tem largura multipla de 4\n");
+     //getchar();
   }
 
   if( info.compression != 0 )
@@ -142,9 +146,39 @@ void Bmp::load(const char *fileName)
      return;
   }
 
-  data = new unsigned char[imagesize];
-  fseek(fp, header.offset, SEEK_SET);
-  fread(data, sizeof(unsigned char), imagesize, fp);
+   data = new unsigned char[imagesize];
+   fseek(fp, header.offset, SEEK_SET);
+   fread(data, sizeof(unsigned char), imagesize, fp);
+   if(delta!=0){
+      width = width + (delta/3);
+      pad(delta);
+   }
+
+  
 
   fclose(fp);
+}
+
+void Bmp::pad(int delta)
+{
+   int bytesLineWidth = width * 3; // width é em pixels n em bytes
+
+   // temos que adiconar padding para cada linha
+   for(int y=1; y<=height; y++){
+      
+      uint8_t r = data[y*bytesLineWidth - delta - 3];
+      uint8_t g = data[y*bytesLineWidth - delta - 2];
+      uint8_t b = data[y*bytesLineWidth - delta - 1];
+
+      int padIdx = y*bytesLineWidth - delta;
+      for(int x=0; x<delta; x++){
+         if(x%3==0){
+            data[padIdx + x] = r;
+         }else if(x%3==1){
+            data[padIdx + x] = g;
+         }else {
+            data[padIdx + x] = b;
+         }
+      }
+   }
 }
