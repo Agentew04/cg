@@ -67,7 +67,7 @@ void SideBar::loadBmp(int n){
     imgToRenderer[img] = imgrnd;
     images.push_back(img);
     this->uiManager->add(imgrnd);
-    //sortImages();
+    sortImages();
 }
 
 SideBar::~SideBar(){
@@ -114,17 +114,12 @@ void SideBar::updateMousePos(Vector2 mousePos){
 bool inside(Vector2 buttonPos, Vector2 buttonSize, Vector2 mousePos);
 
 void SideBar::sortImages(){
-    std::cout << "tirando" << std::endl;
     for(auto ir : this->imgrenderers){
         this->uiManager->remove(ir);
     }
-    std::cout << "tirei" << std::endl;
-    std::cout << "colocando n=" << std::to_string(this->imgrenderers.size()) << std::endl;
     for(int i=this->imgrenderers.size()-1; i>=0; i--){
-        std::cout << "colocando i=" << std::to_string(i) << std::endl;
         this->uiManager->add(this->imgrenderers[i]);
     }
-    std::cout << "coloquei" << std::endl;
 }
 
 void SideBar::mouseDown(){
@@ -134,12 +129,17 @@ void SideBar::mouseDown(){
     // ja esta em ordem de prioridade
     for(auto imgrnd : this->imgrenderers){
         if(inside(imgrnd->pos, imgrnd->size, mousePos)){
-            std::cout << "Clicked on image" << std::endl;
+            std::cout << "Clicked on image " << imgrnd->img << std::endl;
             
             this->selectedImage = imgrnd->img;
 
             // tira a imagem da lista
-            this->imgrenderers.erase(std::remove(this->imgrenderers.begin(), this->imgrenderers.end(), imgrnd), this->imgrenderers.end());
+            for(auto it = this->imgrenderers.begin(); it != this->imgrenderers.end(); it++){
+                if(*it == imgrnd){
+                    this->imgrenderers.erase(it);
+                    break;
+                }
+            }
             this->imgrenderers.emplace(this->imgrenderers.begin(), imgrnd);
 
             sortImages();
