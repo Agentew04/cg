@@ -22,22 +22,24 @@
 #include "gl_canvas2d.h"
 #include "Keyboard.h"
 #include "Specific/SideBar.h"
+#include "Specific/ImageCanvas.h"
 
 
 //largura e altura inicial da tela . Alteram com o redimensionamento de tela.
 int screenWidth = 1280, screenHeight = 720;
 SideBar *sideBar;
+ImageCanvas *imgCanvas;
 
 // mudanca na canvas para jogos
 void update(float delta){
-    
+    imgCanvas->update();
 }
 
 // render normal
 void render(float delta)
 {
     sideBar->draw();
-    // imgCanvas.draw() ou algo assim
+    imgCanvas->draw();
 
     Sleep(10);
 }
@@ -45,7 +47,7 @@ void render(float delta)
 void cleanup(){
     // deleta toda side bar e seus componentes
     delete sideBar;
-    // delete imgcanvas
+    delete imgCanvas;
 }
 
 //funcao chamada toda vez que uma tecla for pressionada.
@@ -81,20 +83,22 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
     // }
 
     sideBar->updateMousePos(mousePos);
-    // notify imgcanvas
+    imgCanvas->updateMousePos(mousePos);
 
     if(state == 0){ // mouse down
         sideBar->mouseDown();
-        // notify imgcanvas
+        imgCanvas->mouseDown();
     }else if(state == 1){ // mouse up
         sideBar->mouseUp();
-        // notify imgcanvas
+        imgCanvas->mouseUp();
     }
 }
 
 int main(void)
 {
+    imgCanvas = new ImageCanvas();
     sideBar = new SideBar(Vector2((screenWidth/4.0f)*3,0), Vector2((screenWidth/4.0f), screenHeight), &screenWidth, &screenHeight);
+    sideBar->imgCanvas = imgCanvas;
     // imgCanvas new
 
     CV::init(&screenWidth, &screenHeight, "T1 - Rodrigo Appelt", true);

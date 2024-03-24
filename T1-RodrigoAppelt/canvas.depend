@@ -596,7 +596,7 @@
 1710465049 e:\universidade\trabalhos\t1-rodrigoappelt\src\vector3.h
 	<iostream>
 
-1710977090 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\main.cpp
+1711320575 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -606,15 +606,17 @@
 	"gl_canvas2d.h"
 	"Keyboard.h"
 	"Specific/SideBar.h"
+	"Specific/ImageCanvas.h"
 
 1710973732 e:\universidade\trabalhos\t1-rodrigoappelt\src\keyboard.h
 
-1711138951 e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\sidebar.h
+1711321606 e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\sidebar.h
 	"../Vector2.h"
 	"../UI/Chart.h"
 	"../UI/UIManager.h"
 	"../Image/ImageManipulation.h"
 	"../UI/Button.h"
+	"ImageCanvas.h"
 
 1710971095 e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\chart.h
 	<vector>
@@ -726,7 +728,7 @@
 	<iostream>
 	"lodepng.h"
 
-1711139456 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\sidebar.cpp
+1711321641 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\sidebar.cpp
 	<iterator>
 	"SideBar.h"
 	"../gl_canvas2d.h"
@@ -760,4 +762,15 @@
 	"../UI/Button.h"
 	"../UI/Chart.h"
 	"../UI/CheckBox.h"
+
+1711321427 e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\imagecanvas.h
+	<vector>
+	<map>
+	"../UI/ImageRenderer.h"
+	"../Image/ImageManipulation.h"
+	"../UI/UIManager.h"
+
+1711321389 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\imagecanvas.cpp
+	"ImageCanvas.h"
+	"../gl_canvas2d.h"
 

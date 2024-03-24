@@ -8,7 +8,6 @@ SideBar::SideBar(Vector2 pos, Vector2 size, int *scrW, int *scrH)
     : pos(pos), size(size){
     this->uiManager = new UIManager();
 
-    selectedImage = nullptr;
     submitButtons();
     //submitHistogram();
     //submitImagePreview();
@@ -33,49 +32,13 @@ void SideBar::loadBmp(int n){
     int w,h;
     img->getSize(&w, &h);
 
-    // atualiza as referencias e tals
-    // imgrnd nao vai ser o dono do ponteiro img, a gente desaloca nessa classe mesmo
-    ImageRenderer *imgrnd = new ImageRenderer(Vector2(5+n*20,5+n*20), img);
-
-    if(selectedImage == nullptr){
-        selectedImage = img;
-    }
-    imgrenderers.push_back(imgrnd);
-    loadedImages[n] = true;
-    imgToRenderer[img] = imgrnd;
-    images.push_back(img);
-    this->uiManager->add(imgrnd);
-    sortImages();
+    this->imgCanvas->submitImage(img);
 }
 
 SideBar::~SideBar(){
     delete this->uiManager;
-    for(auto img : images){
-        delete img;
-    }
-    for(auto imgrnd : imgrenderers){
-        delete imgrnd;
-    }
-    loadedImages.clear();
-    imgrenderers.clear();
 }
 
-void SideBar::drawFrame(){
-    if(selectedImage != nullptr){
-        int margin = 5;
-        ImageRenderer* selectedRenderer = imgToRenderer[selectedImage];
-        CV::translate(selectedRenderer->pos);
-        CV::color(150/255.0f, 102/255.0f, 12/255.0f);
-        // top
-        CV::rectFill(Vector2(-margin,-margin), Vector2(selectedRenderer->size.x+margin,0));
-        // left
-        CV::rectFill(Vector2(-margin,0), Vector2(0,selectedRenderer->size.y+margin));
-        // right
-        CV::rectFill(Vector2(selectedRenderer->size.x,0), Vector2(selectedRenderer->size.x+margin, selectedRenderer->size.y+margin));
-        // bottom
-        CV::rectFill(Vector2(-margin,selectedRenderer->size.y), Vector2(selectedRenderer->size.x+margin, selectedRenderer->size.y+margin));
-    }
-}
 
 void SideBar::draw(){
     CV::translate(pos);
@@ -83,8 +46,6 @@ void SideBar::draw(){
     CV::rectFill(Vector2::zero(), this->size);
 
     this->uiManager->draw();
-
-    drawFrame();
 }
 
 void SideBar::updateMousePos(Vector2 mousePos){
@@ -92,41 +53,8 @@ void SideBar::updateMousePos(Vector2 mousePos){
     this->uiManager->updateMousePos(mousePos);
 }
 
-bool inside(Vector2 buttonPos, Vector2 buttonSize, Vector2 mousePos);
-
-void SideBar::sortImages(){
-    for(auto ir : this->imgrenderers){
-        this->uiManager->remove(ir);
-    }
-    for(int i=this->imgrenderers.size()-1; i>=0; i--){
-        this->uiManager->add(this->imgrenderers[i]);
-    }
-}
-
 void SideBar::mouseDown(){
     this->uiManager->mouseDown();
-
-    // procurar se o click foi em uma das imagens
-    // ja esta em ordem de prioridade
-    for(auto imgrnd : this->imgrenderers){
-        if(inside(imgrnd->pos, imgrnd->size, mousePos)){
-            std::cout << "Clicked on image " << imgrnd->img << std::endl;
-            
-            this->selectedImage = imgrnd->img;
-
-            // tira a imagem da lista
-            for(auto it = this->imgrenderers.begin(); it != this->imgrenderers.end(); it++){
-                if(*it == imgrnd){
-                    this->imgrenderers.erase(it);
-                    break;
-                }
-            }
-            this->imgrenderers.emplace(this->imgrenderers.begin(), imgrnd);
-
-            sortImages();
-            break;
-        }
-    }
 }
 
 void SideBar::mouseUp(){
