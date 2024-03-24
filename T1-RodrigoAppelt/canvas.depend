@@ -609,7 +609,7 @@
 
 1710973732 e:\universidade\trabalhos\t1-rodrigoappelt\src\keyboard.h
 
-1711066046 e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\sidebar.h
+1711138951 e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\sidebar.h
 	"../Vector2.h"
 	"../UI/Chart.h"
 	"../UI/UIManager.h"
@@ -726,7 +726,8 @@
 	<iostream>
 	"lodepng.h"
 
-1711066230 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\sidebar.cpp
+1711139456 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\sidebar.cpp
+	<iterator>
 	"SideBar.h"
 	"../gl_canvas2d.h"
 	"../Image/Bmp.h"
@@ -753,4 +754,10 @@
 	<vector>
 	"Chart.h"
 	"../gl_canvas2d.h"
+
+1711140303 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\sidebar.ui.cpp
+	"SideBar.h"
+	"../UI/Button.h"
+	"../UI/Chart.h"
+	"../UI/CheckBox.h"
 

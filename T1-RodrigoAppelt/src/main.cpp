@@ -97,6 +97,6 @@ int main(void)
     sideBar = new SideBar(Vector2((screenWidth/4.0f)*3,0), Vector2((screenWidth/4.0f), screenHeight), &screenWidth, &screenHeight);
     // imgCanvas new
 
-    CV::init(&screenWidth, &screenHeight, "T1 - Rodrigo Appelt", false);
+    CV::init(&screenWidth, &screenHeight, "T1 - Rodrigo Appelt", true);
     CV::run();
 }

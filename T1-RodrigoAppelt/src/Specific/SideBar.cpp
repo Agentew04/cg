@@ -14,29 +14,7 @@ SideBar::SideBar(Vector2 pos, Vector2 size, int *scrW, int *scrH)
     //submitImagePreview();
 }
 
-void SideBar::submitButtons(){
-    ButtonStyle *btnstl = ButtonStyle::Windows10();
-    Button *ldbtn1 = new Button(pos + Vector2(5,5), Vector2(100,50), "Load 1", [&](Button* but){
-        loadBmp(0);
-        but->clickable = false;
-    });
-    ldbtn1->style = btnstl;
-    this->uiManager->add(ldbtn1);
 
-    Button *ldbtn2 = new Button(pos + Vector2(110,5), Vector2(100,50), "Load 2", [&](Button* but){
-        loadBmp(1);
-        but->clickable = false;
-    });
-    ldbtn2->style = btnstl;
-    this->uiManager->add(ldbtn2);
-
-    Button *ldbtn3 = new Button(pos + Vector2(215,5), Vector2(100,50), "Load 3", [&](Button* but){
-        loadBmp(2);
-        but->clickable = false;
-    });
-    ldbtn3->style = btnstl;
-    this->uiManager->add(ldbtn3);
-}
 
 void SideBar::loadBmp(int n){
     if(loadedImages[n]){
@@ -82,14 +60,7 @@ SideBar::~SideBar(){
     imgrenderers.clear();
 }
 
-void SideBar::draw(){
-    CV::translate(pos);
-    CV::color(0,1,0);
-    CV::rectFill(Vector2::zero(), this->size);
-
-    this->uiManager->draw();
-
-    // desenha a moldura
+void SideBar::drawFrame(){
     if(selectedImage != nullptr){
         int margin = 5;
         ImageRenderer* selectedRenderer = imgToRenderer[selectedImage];
@@ -104,6 +75,16 @@ void SideBar::draw(){
         // bottom
         CV::rectFill(Vector2(-margin,selectedRenderer->size.y), Vector2(selectedRenderer->size.x+margin, selectedRenderer->size.y+margin));
     }
+}
+
+void SideBar::draw(){
+    CV::translate(pos);
+    CV::color(0,1,0);
+    CV::rectFill(Vector2::zero(), this->size);
+
+    this->uiManager->draw();
+
+    drawFrame();
 }
 
 void SideBar::updateMousePos(Vector2 mousePos){

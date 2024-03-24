@@ -49,6 +49,7 @@
 		<Unit filename="src/Image/bmp.cpp" />
 		<Unit filename="src/Image/lodepng.cpp" />
 		<Unit filename="src/Image/lodepng.h" />
+		<Unit filename="src/Specific/SideBar.UI.cpp" />
 		<Unit filename="src/Specific/SideBar.cpp" />
 		<Unit filename="src/Specific/SideBar.h" />
 		<Unit filename="src/UI/Button.cpp" />

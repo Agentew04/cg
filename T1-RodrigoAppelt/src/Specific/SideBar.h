@@ -38,6 +38,7 @@ private:
 
     void submitButtons();
     void loadBmp(int n);
+    void drawFrame();
 
     /// @brief Organiza as imagens na ordem de prioridade
     /// dentro do uiManager;
