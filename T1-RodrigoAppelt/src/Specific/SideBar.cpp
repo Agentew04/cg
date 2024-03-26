@@ -29,9 +29,7 @@ void SideBar::loadBmp(int n){
     Image *img = new Image(bmp->getWidth(), bmp->getHeight());
     memmove(img->pixels, bmp->getImage(), bmp->getWidth()*bmp->getHeight()*3);
     delete bmp;
-    int w,h;
-    img->getSize(&w, &h);
-
+    
     this->imgCanvas->submitImage(img);
 }
 

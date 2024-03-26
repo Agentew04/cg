@@ -55,7 +55,7 @@ void SideBar::submitButtons(){
         quadButtonSize, 
         "R", 
         [&](Button* but){
-            std::cout << "mini img to R" << std::endl;
+            imgCanvas->requestChannel(ImageManipulation::Channel::RED, false);
     });
     rbtn->style = btnstl;
     this->uiManager->add(rbtn);
@@ -66,7 +66,7 @@ void SideBar::submitButtons(){
         quadButtonSize, 
         "G", 
         [&](Button* but){
-            std::cout << "mini img to G" << std::endl;
+            imgCanvas->requestChannel(ImageManipulation::Channel::GREEN, false);
     });
     gbtn->style = btnstl;
     this->uiManager->add(gbtn);
@@ -77,7 +77,7 @@ void SideBar::submitButtons(){
         quadButtonSize, 
         "B", 
         [&](Button* but){
-            std::cout << "mini img to B" << std::endl;
+            imgCanvas->requestChannel(ImageManipulation::Channel::BLUE, false);
     });
     bbtn->style = btnstl;
     this->uiManager->add(bbtn);
@@ -88,7 +88,7 @@ void SideBar::submitButtons(){
         quadButtonSize, 
         "Y", 
         [&](Button* but){
-            std::cout << "mini img to Y" << std::endl;
+            imgCanvas->requestChannel(ImageManipulation::Channel::RED, true);
     });
     ybtn->style = btnstl;
     this->uiManager->add(ybtn);
@@ -103,7 +103,7 @@ void SideBar::submitButtons(){
         flipButtonSize, 
         "Flip Horizontal", 
         [&](Button* but){
-            std::cout << "flip H" << std::endl;
+            imgCanvas->requestFlip(false);
     });
     fhbtn->style = btnstl;
     this->uiManager->add(fhbtn);
@@ -114,7 +114,7 @@ void SideBar::submitButtons(){
         flipButtonSize, 
         "Flip Vertical", 
         [&](Button* but){
-            std::cout << "flip V" << std::endl;
+            imgCanvas->requestFlip(true);
     });
     fvbtn->style = btnstl;
     this->uiManager->add(fvbtn);

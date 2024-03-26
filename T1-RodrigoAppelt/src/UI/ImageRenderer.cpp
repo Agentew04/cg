@@ -19,7 +19,7 @@ void ImageRenderer::draw(){
     int w,h;
     img->getSize(&w, &h);
     for(int y = 0; y < h; y++){
-        int yinv = h - y - 1;
+        int yinv = h - y - 1; // pq o y cresce p baixo
         for(int x = 0; x < w; x++){
             int pxStart = (yinv * w + x) * (int)ImageManipulation::Channel::COUNT;
             uint8_t r = img->pixels[pxStart + (int)ImageManipulation::Channel::RED];
