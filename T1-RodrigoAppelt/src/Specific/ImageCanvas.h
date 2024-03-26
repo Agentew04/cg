@@ -61,11 +61,12 @@ public:
     /// na quarta imagem
     void requestFlip(bool vertical);
 
-    /// @brief Calcula o histograma de um canal da imagem selecionada
-    /// @param channel o canal a ser calculado
-    /// @param histogramArray o array onde o histograma sera armazenado.
-    /// Deve ter pelo menos 256 posicoes(sizeof(uint32_t)*256)
-    void getHistogram(ImageManipulation::Channel channel, uint32_t *histogramArray);
+    /// @brief Define os vetores onde o histograma de cada imagem sera guardado
+    /// @param histR O histograma do canal vermelho
+    /// @param histG O histograma do canal verde
+    /// @param histB O histograma do canal azul
+    /// @param histLum O histograma da luminancia
+    void setHistograms(uint32_t *histR, uint32_t *histG, uint32_t *histB, uint32_t *histLum);
 private:
 
     /// @brief Desenha uma moldura em volta da imagem selecionada
@@ -75,7 +76,9 @@ private:
 
     Vector2 mousePos;
     bool dragging;
+    Vector2 dragPivot;
 
+    uint32_t *histR, *histG, *histB, *histLum;
 };
 
 #endif

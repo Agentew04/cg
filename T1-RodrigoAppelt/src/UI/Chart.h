@@ -23,8 +23,9 @@ public:
     };
 
     struct Series {
-        std::vector<float> x;
-        std::vector<float> y;
+        uint32_t *x;
+        uint32_t *y;
+        int elements;
         Vector3 color;
         Vector2 xBounds, yBounds;
     };

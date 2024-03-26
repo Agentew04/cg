@@ -59,7 +59,7 @@ public:
     /// Deve ter 256 espaços
     /// @param channel O canal a ser contado
     /// @param luminance Se verdadeiro, calcula o histograma da luminancia
-    static void Histogram(Image *source, uint8_t* histogram, Channel channel, bool luminance);
+    static void Histogram(Image *source, uint32_t* histogram, Channel channel, bool luminance);
 };
 
 #endif

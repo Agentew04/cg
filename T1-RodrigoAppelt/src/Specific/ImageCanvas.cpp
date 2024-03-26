@@ -1,3 +1,5 @@
+#include <string.h>
+
 #include "ImageCanvas.h"
 #include "../gl_canvas2d.h"
 #include "../Image/ImageManipulation.h"
@@ -8,7 +10,8 @@ ImageCanvas::ImageCanvas() :
     mousePos(Vector2(0,0)), 
     dragging(false),
     selectedImageRenderer(nullptr),
-    editionImageRenderer(nullptr){
+    editionImageRenderer(nullptr),
+    histR(nullptr), histG(nullptr), histB(nullptr), histLum(nullptr){
 
 }
 
@@ -44,6 +47,8 @@ void ImageCanvas::mouseDown(){
             // entao a gente tira ela da lista
             // e add na frente
             selectImage(imageRenderer);
+            dragging = true;
+            dragPivot = this->mousePos - selectedImageRenderer->pos;
             break;
         }
     }
@@ -54,11 +59,14 @@ void ImageCanvas::mouseDown(){
 
 void ImageCanvas::mouseUp(){
     // se esta arrastando, para de arrastar
+    this->dragging = false;
 }
 
 void ImageCanvas::update(){
-    // if dragging
-    //   move selected image to mousePos
+    if(this->dragging && this->selectedImageRenderer != nullptr){
+        // TODO contabilizar ponto de pivo
+        this->selectedImageRenderer->pos = this->mousePos - dragPivot;
+    }
 }
 
 void ImageCanvas::drawFrame(){
@@ -84,6 +92,10 @@ void ImageCanvas::submitImage(Image* image){
     ImageRenderer *imgrnd = new ImageRenderer(Vector2(5+n*20,5+n*20), image);
     if(selectedImageRenderer == nullptr){
         selectedImageRenderer = imgrnd;
+        int w,h;
+        image->getSize(&w, &h);
+        editionImageRenderer = new ImageRenderer(Vector2(500,300), new Image(w,h));
+        ImageManipulation::CopyImage(imgrnd->img, editionImageRenderer->img);
     }
     imgrenderers.push_back(imgrnd);
     imgToRenderer[image] = imgrnd;
@@ -112,6 +124,25 @@ void ImageCanvas::selectImage(ImageRenderer* imgrnd){
     }
     this->imgrenderers.emplace(this->imgrenderers.begin(), imgrnd);
 
+    // calcula os histogramas de cada canal
+    int w,h;
+    imgrnd->img->getSize(&w, &h);
+    if(histR != nullptr){
+        memset(histR, 0, sizeof(uint32_t)*(UINT8_MAX+1));
+        ImageManipulation::Histogram(imgrnd->img, histR, ImageManipulation::Channel::RED, false);
+    }
+    if(histG != nullptr){
+        memset(histG, 0, sizeof(uint32_t)*(UINT8_MAX+1));
+        ImageManipulation::Histogram(imgrnd->img, histG, ImageManipulation::Channel::GREEN, false);
+    }
+    if(histB != nullptr){
+        memset(histB, 0, sizeof(uint32_t)*(UINT8_MAX+1));
+        ImageManipulation::Histogram(imgrnd->img, histB, ImageManipulation::Channel::BLUE, false);
+    }
+    if(histLum != nullptr){
+        memset(histLum, 0, sizeof(uint32_t)*(UINT8_MAX+1));
+        ImageManipulation::Histogram(imgrnd->img, histLum, ImageManipulation::Channel::RED, true);
+    }
 }
 
 void ImageCanvas::requestChannel(ImageManipulation::Channel channel, bool luminance){
@@ -155,4 +186,11 @@ void ImageCanvas::requestFlip(bool vertical){
 
     }
 
+}
+
+void ImageCanvas::setHistograms(uint32_t *histR, uint32_t *histG, uint32_t *histB, uint32_t *histLum){
+    this->histR = histR;
+    this->histG = histG;
+    this->histB = histB;
+    this->histLum = histLum;
 }

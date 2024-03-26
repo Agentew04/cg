@@ -94,7 +94,7 @@ void ImageManipulation::FlipVertical(Image *source, Image *destination){
     }
 }
 
-void ImageManipulation::Histogram(Image *source, uint8_t* histogram, Channel channel, bool luminance){
+void ImageManipulation::Histogram(Image *source, uint32_t* histogram, Channel channel, bool luminance){
     int w,h;
     source->getSize(&w, &h);
     int n = w * h;
@@ -109,7 +109,8 @@ void ImageManipulation::Histogram(Image *source, uint8_t* histogram, Channel cha
         }
     }else{
         for(int i = 0; i < n; i++){
-            histogram[source->pixels[i * (int)Channel::COUNT + (int)channel]]++;
+            int value = source->pixels[i * (int)Channel::COUNT + (int)channel];
+            histogram[value]++;
         }
     }
 }

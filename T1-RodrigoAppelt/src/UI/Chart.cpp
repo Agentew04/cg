@@ -33,7 +33,7 @@ void Chart::draw(){
 
 void Chart::drawSeries(Series& series){
     // draw points
-    int n = series.x.size();
+    int n = series.elements;
 
     // stack allocated, n precisa dar free
     Vector2 actualCoords[1000]; // max points(histogram usa 256 pts)

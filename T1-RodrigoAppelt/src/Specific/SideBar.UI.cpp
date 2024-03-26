@@ -1,3 +1,5 @@
+#include <string.h>
+
 #include "SideBar.h"
 #include "../UI/Button.h"
 #include "../UI/Chart.h"
@@ -93,8 +95,6 @@ void SideBar::submitButtons(){
     ybtn->style = btnstl;
     this->uiManager->add(ybtn);
 
-
-
     // botoes de flip(h,v)
     Vector2 flipButtonSize = Vector2((this->size.x-(margin*3))/2, 50);
 
@@ -118,7 +118,12 @@ void SideBar::submitButtons(){
     });
     fvbtn->style = btnstl;
     this->uiManager->add(fvbtn);
+}
 
+void SideBar::submitHistogram(){
+    int margin = 5;
+    Vector2 tripButtonSize = Vector2((this->size.x-(margin*4))/3 ,50);
+    Vector2 quadButtonSize = Vector2((this->size.x-(margin*5))/4, 50);
 
 
     // histograma
@@ -166,4 +171,44 @@ void SideBar::submitButtons(){
     yckbx->style = chkstl;
     this->uiManager->add(yckbx);
 
+    // alocar os arrays dos histogramas
+    histR = new uint32_t[UINT8_MAX+1];
+    histG = new uint32_t[UINT8_MAX+1];
+    histB = new uint32_t[UINT8_MAX+1];
+    histLum = new uint32_t[UINT8_MAX+1];
+    memset(histR, 0, sizeof(uint32_t)*(UINT8_MAX+1));
+    memset(histG, 0, sizeof(uint32_t)*(UINT8_MAX+1));
+    memset(histB, 0, sizeof(uint32_t)*(UINT8_MAX+1));
+    memset(histLum, 0, sizeof(uint32_t)*(UINT8_MAX+1));
+
+    // criar as series do grafico
+    uint32_t *sharedX = new uint32_t[UINT8_MAX+1];
+    for(int i = 0; i < UINT8_MAX+1; i++){
+        sharedX[i] = i;
+    }
+    Chart::Series series;
+    series.xBounds = Vector2(0, UINT8_MAX);
+    series.yBounds = Vector2(0, 750);
+    series.elements = UINT8_MAX+1;
+    series.x = sharedX;
+    series.y = histR;
+    series.color = Vector3(1,0,0);
+    histogram->series.push_back(series); // by value
+
+    series.y = histG;
+    series.color = Vector3(0,1,0);
+    histogram->series.push_back(series);
+
+    series.y = histB;
+    series.color = Vector3(0,0,1);
+    histogram->series.push_back(series);
+
+    series.y = histLum;
+    series.color = Vector3(0.5f, 0.5f, 0.5f);
+    histogram->series.push_back(series);
+
+}
+
+void SideBar::linkImageCanvas(){
+    imgCanvas->setHistograms(histR, histG, histB, histLum);
 }

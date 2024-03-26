@@ -37,13 +37,19 @@ public:
     void mouseUp();
 
     ImageCanvas *imgCanvas;
+
+    /// @brief Linka propriedades com a canvas de imagens
+    void linkImageCanvas();
 private:
 
     void submitButtons();
+    void submitHistogram();
     void loadBmp(int n);
 
     /// @brief Mapa para saber quais imagens já foram carregadas
     std::map<int,bool> loadedImages;
+
+    uint32_t *histR, *histG, *histB, *histLum;
 
     Vector2 pos, size, mousePos;
     UIManager* uiManager;

@@ -99,8 +99,8 @@ int main(void)
     imgCanvas = new ImageCanvas();
     sideBar = new SideBar(Vector2((screenWidth/4.0f)*3,0), Vector2((screenWidth/4.0f), screenHeight), &screenWidth, &screenHeight);
     sideBar->imgCanvas = imgCanvas;
-    // imgCanvas new
+    sideBar->linkImageCanvas();
 
-    CV::init(&screenWidth, &screenHeight, "T1 - Rodrigo Appelt", true);
+    CV::init(&screenWidth, &screenHeight, "T1 - Rodrigo Appelt", false);
     CV::run();
 }
