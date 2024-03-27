@@ -63,6 +63,8 @@
 		<Unit filename="src/UI/CheckBox.h" />
 		<Unit filename="src/UI/CheckBoxManager.cpp" />
 		<Unit filename="src/UI/CheckBoxManager.h" />
+		<Unit filename="src/UI/CursorManager.cpp" />
+		<Unit filename="src/UI/CursorManager.h" />
 		<Unit filename="src/UI/ImageRenderer.cpp" />
 		<Unit filename="src/UI/ImageRenderer.h" />
 		<Unit filename="src/UI/MenuStrip.cpp" />
