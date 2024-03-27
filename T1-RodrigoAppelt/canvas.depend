@@ -596,7 +596,7 @@
 1710465049 e:\universidade\trabalhos\t1-rodrigoappelt\src\vector3.h
 	<iostream>
 
-1711492636 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\main.cpp
+1711508400 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -607,6 +607,7 @@
 	"Keyboard.h"
 	"Specific/SideBar.h"
 	"Specific/ImageCanvas.h"
+	"UI/CursorManager.h"
 
 1710973732 e:\universidade\trabalhos\t1-rodrigoappelt\src\keyboard.h
 
@@ -708,7 +709,7 @@
 	<iostream>
 	"UIManager.h"
 
-1711492028 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\image\imagemanipulation.cpp
+1711508526 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\image\imagemanipulation.cpp
 	<iostream>
 	<cstring>
 	"ImageManipulation.h"
@@ -728,7 +729,7 @@
 	<iostream>
 	"lodepng.h"
 
-1711492380 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\sidebar.cpp
+1711493639 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\sidebar.cpp
 	<iterator>
 	"SideBar.h"
 	"../gl_canvas2d.h"
@@ -976,4 +977,14 @@
 	"SideBar.h"
 	"../gl_canvas2d.h"
 	"../Image/Bmp.h"
+
+1711507551 e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\cursormanager.h
+	<windows.h>
+	<map>
+
+1711508410 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\cursormanager.cpp
+	<windows.h>
+	<map>
+	<iostream>
+	"CursorManager.h"
 

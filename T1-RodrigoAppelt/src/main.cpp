@@ -23,6 +23,7 @@
 #include "Keyboard.h"
 #include "Specific/SideBar.h"
 #include "Specific/ImageCanvas.h"
+#include "UI/CursorManager.h"
 
 
 //largura e altura inicial da tela . Alteram com o redimensionamento de tela.
@@ -38,6 +39,8 @@ void update(float delta){
 // render normal
 void render(float delta)
 {
+    CursorManager::setCursor(CursorManager::CursorType::CLICKABLE);
+
     sideBar->draw();
     imgCanvas->draw();
 
@@ -100,6 +103,7 @@ int main(void)
     sideBar = new SideBar(Vector2((screenWidth/4.0f)*3,0), Vector2((screenWidth/4.0f), screenHeight), &screenWidth, &screenHeight);
     sideBar->imgCanvas = imgCanvas;
     sideBar->linkImageCanvas();
+
 
     CV::init(&screenWidth, &screenHeight, "T1 - Rodrigo Appelt", false);
     CV::run();

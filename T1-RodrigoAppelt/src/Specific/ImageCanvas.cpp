@@ -21,6 +21,8 @@ ImageCanvas::~ImageCanvas(){
         delete img->img; // deleta a imagem em si
         delete img; // deleta a entidade imagem c posicao e tamanho
     }
+    delete editionImageRenderer->img;
+    delete editionImageRenderer;
 }
 
 void ImageCanvas::draw(){
