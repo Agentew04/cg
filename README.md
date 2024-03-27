@@ -9,7 +9,7 @@ A pasta Template tem um projeto vazio que contém muitas funções de apoio
 e de UI.
 
 ## Trabalhos:
-* [T1](./T1): Manipulação e renderização de imagens BMP
+* [T1](./T1-RodrigoAppelt): Manipulação e renderização de imagens BMP
 * T2: Não divulgado
 * T3: Não divulgado
 * T4: Não divulgado
