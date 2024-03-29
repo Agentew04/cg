@@ -47,10 +47,12 @@ public:
 
     bool getValue();
     void setValue(bool value);
+    void setBinding(bool *target);
 private:
     Vector2 pos;
     Vector2 sz;
     bool value;
+    bool *bindingTarget;
     std::string label;
 };
 

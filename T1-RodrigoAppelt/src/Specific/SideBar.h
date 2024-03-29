@@ -49,11 +49,12 @@ private:
     /// @brief Mapa para saber quais imagens já foram carregadas
     std::map<int,bool> loadedImages;
 
-    uint32_t *histR, *histG, *histB, *histLum;
+    Chart::Series *histR, *histG, *histB, *histLum;
 
     Vector2 pos, size, mousePos;
     UIManager* uiManager;
     Chart* histogram;
+    Slider *histogramMaxSlider;
 };
 
 #endif 

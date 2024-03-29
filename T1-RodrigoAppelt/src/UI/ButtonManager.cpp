@@ -3,6 +3,7 @@
 #include <algorithm>
 
 #include "ButtonManager.h"
+#include "CursorManager.h"
 
 bool inside(Vector2 buttonPos, Vector2 buttonSize, Vector2 mousePos){
     if(!(mousePos.x >= buttonPos.x && mousePos.x <= buttonPos.x + buttonSize.x)){
@@ -44,7 +45,8 @@ ButtonManager::~ButtonManager(){
 
 void ButtonManager::draw(){
     for(size_t i=0; i<this->buttons.size(); i++){
-        this->buttons[i]->draw();
+        Button* b = this->buttons[i];
+        b->draw();
     }
 }
 
@@ -55,6 +57,10 @@ void ButtonManager::updateMousePos(Vector2 mousePos){
         Button *b = this->buttons[i];
         if(b == nullptr){
             continue;
+        }
+
+        if(b->state == ButtonState::HOVER){
+            CursorManager::setCursor(CursorManager::CursorType::CLICKABLE);
         }
 
         // no mouse

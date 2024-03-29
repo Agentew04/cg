@@ -10,7 +10,6 @@ SideBar::SideBar(Vector2 pos, Vector2 size, int *scrW, int *scrH)
 
     submitButtons();
     submitHistogram();
-    //submitImagePreview();
 }
 
 void SideBar::loadBmp(int n){
@@ -38,7 +37,7 @@ SideBar::~SideBar(){
 
 void SideBar::draw(){
     CV::translate(pos);
-    CV::color(173/255.0f, 173/255.0f, 173/255.0f);
+    CV::color(0.255f, 0.353f, 0.467f);
     CV::rectFill(Vector2::zero(), this->size);
 
     this->uiManager->draw();

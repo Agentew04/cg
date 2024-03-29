@@ -37,6 +37,7 @@ Checkbox::Style::~Style(){
 Checkbox::Checkbox(Vector2 pos, Vector2 size, std::string label, bool defaultValue) {
     this->pos = pos;
     this->sz = size;
+    this->bindingTarget = nullptr;
 
     this->value = defaultValue;
     this->label = label;
@@ -88,4 +89,11 @@ bool Checkbox::getValue(){
 
 void Checkbox::setValue(bool value){
     this->value = value;
+    if(this->bindingTarget != nullptr){
+        *this->bindingTarget = value;
+    }
+}
+
+void Checkbox::setBinding(bool *target){
+    this->bindingTarget = target;
 }

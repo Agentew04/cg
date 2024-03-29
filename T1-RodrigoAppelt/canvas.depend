@@ -596,7 +596,7 @@
 1710465049 e:\universidade\trabalhos\t1-rodrigoappelt\src\vector3.h
 	<iostream>
 
-1711508400 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\main.cpp
+1711670141 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -611,7 +611,7 @@
 
 1710973732 e:\universidade\trabalhos\t1-rodrigoappelt\src\keyboard.h
 
-1711492608 e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\sidebar.h
+1711673564 e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\sidebar.h
 	"../Vector2.h"
 	"../UI/Chart.h"
 	"../UI/UIManager.h"
@@ -619,7 +619,7 @@
 	"../UI/Button.h"
 	"ImageCanvas.h"
 
-1711492910 e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\chart.h
+1711671583 e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\chart.h
 	<vector>
 	<map>
 	"../Vector2.h"
@@ -643,12 +643,13 @@
 	"../Vector2.h"
 	"../Vector3.h"
 
-1710610083 e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\slider.h
+1711674024 e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\slider.h
 	<map>
+	<functional>
 	"../Vector2.h"
 	"../Vector3.h"
 
-1710611246 e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\checkbox.h
+1711671557 e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\checkbox.h
 	<map>
 	"../Vector2.h"
 	"../Vector3.h"
@@ -674,25 +675,27 @@
 	"../gl_canvas2d.h"
 	<iostream>
 
-1710972728 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\buttonmanager.cpp
+1711670059 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\buttonmanager.cpp
 	<vector>
 	<iostream>
 	<algorithm>
 	"ButtonManager.h"
+	"CursorManager.h"
 
-1710641904 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\checkbox.cpp
+1711671542 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\checkbox.cpp
 	<iostream>
 	<cmath>
 	"CheckBox.h"
 	"../gl_canvas2d.h"
 
-1710972732 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\checkboxmanager.cpp
+1711670432 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\checkboxmanager.cpp
 	<vector>
 	<iostream>
 	<algorithm>
 	"CheckBoxManager.h"
+	"CursorManager.h"
 
-1710614959 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\slider.cpp
+1711674035 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\slider.cpp
 	"Slider.h"
 	"../gl_canvas2d.h"
 	<iostream>
@@ -729,7 +732,7 @@
 	<iostream>
 	"lodepng.h"
 
-1711493639 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\sidebar.cpp
+1711671358 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\sidebar.cpp
 	<iterator>
 	"SideBar.h"
 	"../gl_canvas2d.h"
@@ -739,7 +742,7 @@
 	<stdio.h>
 	<stdlib.h>
 
-1711063833 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\image\bmp.cpp
+1711508638 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\image\bmp.cpp
 	"Bmp.h"
 	<string.h>
 	<cstdint>
@@ -753,30 +756,32 @@
 	"../gl_canvas2d.h"
 	<iostream>
 
-1711493395 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\chart.cpp
+1711673729 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\chart.cpp
 	<vector>
 	"Chart.h"
 	"../gl_canvas2d.h"
 
-1711493370 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\sidebar.ui.cpp
+1711674270 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\sidebar.ui.cpp
 	<string.h>
+	<limits>
 	"SideBar.h"
 	"../UI/Button.h"
 	"../UI/Chart.h"
 	"../UI/CheckBox.h"
 
-1711492168 e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\imagecanvas.h
+1711673775 e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\imagecanvas.h
 	<vector>
 	<map>
 	"../UI/ImageRenderer.h"
 	"../Image/ImageManipulation.h"
 	"../UI/UIManager.h"
 
-1711493469 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\imagecanvas.cpp
+1711673725 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\imagecanvas.cpp
 	<string.h>
 	"ImageCanvas.h"
 	"../gl_canvas2d.h"
 	"../Image/ImageManipulation.h"
+	"../UI/CursorManager.h"
 
 1711296660 source:d:\universidade\cg\t1-rodrigoappelt\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
@@ -978,11 +983,11 @@
 	"../gl_canvas2d.h"
 	"../Image/Bmp.h"
 
-1711507551 e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\cursormanager.h
+1711669734 e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\cursormanager.h
 	<windows.h>
 	<map>
 
-1711508410 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\cursormanager.cpp
+1711670896 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\cursormanager.cpp
 	<windows.h>
 	<map>
 	<iostream>

@@ -1,4 +1,5 @@
 #include <string.h>
+#include <limits>
 
 #include "SideBar.h"
 #include "../UI/Button.h"
@@ -171,44 +172,68 @@ void SideBar::submitHistogram(){
     yckbx->style = chkstl;
     this->uiManager->add(yckbx);
 
+    Slider::Style *slstl = Slider::Style::Windows10();
+    this->histogramMaxSlider = new Slider(
+        pos + Vector2(margin, tripButtonSize.y+margin*5+quadButtonSize.y*2+150+20), 
+        Vector2(this->size.x-margin*2, 20),
+        std::numeric_limits<float>::min(), 
+        1.0f, 
+        0.75f,
+        Slider::Orientation::HORIZONTAL
+    );
+    this->histogramMaxSlider->setCallback([&](float value){
+        imgCanvas->updateSelectedHistograms();
+    });
+    this->histogramMaxSlider->style = slstl;
+    this->uiManager->add(this->histogramMaxSlider);
+    
     // alocar os arrays dos histogramas
-    histR = new uint32_t[UINT8_MAX+1];
-    histG = new uint32_t[UINT8_MAX+1];
-    histB = new uint32_t[UINT8_MAX+1];
-    histLum = new uint32_t[UINT8_MAX+1];
-    memset(histR, 0, sizeof(uint32_t)*(UINT8_MAX+1));
-    memset(histG, 0, sizeof(uint32_t)*(UINT8_MAX+1));
-    memset(histB, 0, sizeof(uint32_t)*(UINT8_MAX+1));
-    memset(histLum, 0, sizeof(uint32_t)*(UINT8_MAX+1));
+    auto histRArr = new uint32_t[UINT8_MAX+1];
+    auto histGArr = new uint32_t[UINT8_MAX+1];
+    auto histBArr = new uint32_t[UINT8_MAX+1];
+    auto histLumArr = new uint32_t[UINT8_MAX+1];
+    memset(histRArr, 0, sizeof(uint32_t)*(UINT8_MAX+1));
+    memset(histGArr, 0, sizeof(uint32_t)*(UINT8_MAX+1));
+    memset(histBArr, 0, sizeof(uint32_t)*(UINT8_MAX+1));
+    memset(histLumArr, 0, sizeof(uint32_t)*(UINT8_MAX+1));
 
     // criar as series do grafico
     uint32_t *sharedX = new uint32_t[UINT8_MAX+1];
     for(int i = 0; i < UINT8_MAX+1; i++){
         sharedX[i] = i;
     }
-    Chart::Series series;
-    series.xBounds = Vector2(0, UINT8_MAX);
-    series.yBounds = Vector2(0, 750);
-    series.elements = UINT8_MAX+1;
-    series.x = sharedX;
-    series.y = histR;
-    series.color = Vector3(1,0,0);
-    histogram->series.push_back(series); // by value
+    histR = new Chart::Series;
+    histG = new Chart::Series;
+    histB = new Chart::Series;
+    histLum = new Chart::Series;
 
-    series.y = histG;
-    series.color = Vector3(0,1,0);
-    histogram->series.push_back(series);
+    histR->xBounds = histG->xBounds = histB->xBounds = histLum->xBounds = Vector2(0, UINT8_MAX);
+    histR->yBounds = histG->yBounds = histB->yBounds = histLum->yBounds = Vector2(0, 1000);
+    histR->elements = histG->elements = histB->elements = histLum->elements = UINT8_MAX+1;
+    histR->x = histG->x = histB->x = histLum->x = sharedX;
 
-    series.y = histB;
-    series.color = Vector3(0,0,1);
-    histogram->series.push_back(series);
+    histR->y = histRArr;
+    histG->y = histGArr;
+    histB->y = histBArr;
+    histLum->y = histLumArr;
 
-    series.y = histLum;
-    series.color = Vector3(0.5f, 0.5f, 0.5f);
-    histogram->series.push_back(series);
+    histR->color = Vector3(1,0,0);
+    histG->color = Vector3(0,1,0);
+    histB->color = Vector3(0,0,1);
+    histLum->color = Vector3(0.5f, 0.5f, 0.5f);
 
+    histogram->series.push_back(histR);
+    histogram->series.push_back(histG);
+    histogram->series.push_back(histB);
+    histogram->series.push_back(histLum);
+    
+    rckbx->setBinding(&histR->visible);
+    gckbx->setBinding(&histG->visible);
+    bckbx->setBinding(&histB->visible);
+    yckbx->setBinding(&histLum->visible);
 }
 
 void SideBar::linkImageCanvas(){
     imgCanvas->setHistograms(histR, histG, histB, histLum);
+    histogramMaxSlider->setBinding(&imgCanvas->maxHistogramValueRatio);
 }

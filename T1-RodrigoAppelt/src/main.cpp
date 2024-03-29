@@ -39,10 +39,11 @@ void update(float delta){
 // render normal
 void render(float delta)
 {
-    CursorManager::setCursor(CursorManager::CursorType::CLICKABLE);
+    CV::clear(0.467f, 0.553f, 0.663f);
 
     sideBar->draw();
     imgCanvas->draw();
+
 
     Sleep(10);
 }
@@ -75,15 +76,8 @@ void keyboardUp(int key)
 //funcao para tratamento de mouse: cliques, movimentos e arrastos
 void mouse(int button, int state, int wheel, int direction, int x, int y)
 {
+    CursorManager::startFrame();
     Vector2 mousePos = Vector2(x,y);
-
-    // TODO mover para um ImageCanvas.cpp!!
-    // code for drag n drop
-    // if(state == 0 && posObj.distance(mousePos) <= objRadius){
-    //     holding = true;
-    // }else if(state == 1){
-    //     holding = false;
-    // }
 
     sideBar->updateMousePos(mousePos);
     imgCanvas->updateMousePos(mousePos);
@@ -95,6 +89,7 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
         sideBar->mouseUp();
         imgCanvas->mouseUp();
     }
+    CursorManager::applyCursor();
 }
 
 int main(void)

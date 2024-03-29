@@ -22,12 +22,14 @@ public:
         POINT
     };
 
-    struct Series {
+    class Series {
+    public:
         uint32_t *x;
         uint32_t *y;
         int elements;
         Vector3 color;
         Vector2 xBounds, yBounds;
+        bool visible = false;
     };
 
     void draw();
@@ -36,11 +38,11 @@ public:
     ~Chart();
 
     ChartType type;
-    std::vector<Series> series;
+    std::vector<Series*> series;
     Vector2 pos,size;
     
 private:
-    void drawSeries(Series& series);
+    void drawSeries(Series *series);
 };
 
 #endif // __CHART_H__

@@ -3,6 +3,7 @@
 #include <algorithm>
 
 #include "CheckBoxManager.h"
+#include "CursorManager.h"
 
 static float clamp(float value, float minValue, float maxValue){
     if(value >= maxValue){
@@ -63,6 +64,10 @@ void CheckboxManager::updateMousePos(Vector2 mousePos){
         Checkbox *s = this->checkboxes[i];
         if(s == nullptr){
             continue;
+        }
+
+        if(s->state == Checkbox::State::HOVER){
+            CursorManager::setCursor(CursorManager::CursorType::CLICKABLE);
         }
 
         // no mouse

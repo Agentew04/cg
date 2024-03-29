@@ -5,33 +5,34 @@
 #include "CursorManager.h"
 
 std::map<CursorManager::CursorType, bool> CursorManager::loaded;
-std::map<CursorManager::CursorType, HANDLE> CursorManager::cursors;
+std::map<CursorManager::CursorType, HCURSOR> CursorManager::cursors;
+CursorManager::CursorType CursorManager::currentType = CursorManager::CursorType::DEFAULT;
+bool CursorManager::hasMouseSet = false;
 
 void CursorManager::loadCursor(CursorType type){
     if(loaded[type]){
         return;
     }
-    HANDLE cursor = NULL;
+    HCURSOR cursor = NULL;
 
-    if(type != CursorType::ROTATE){
-        LPCTSTR cursorName = cursorTypeToString(type);
-        cursor = LoadCursor(NULL, cursorName);
-        if(cursor == nullptr){
-            std::cout << "Error loading cursor <" << cursorName << ">: " << GetLastError() << std::endl;
-            return;
-        }
-    }else{
-        HANDLE image = LoadImageW(NULL, // hInst
-            L"./T1-RodrigoAppelt/images/rotate-cursor-icon.cur", // name
-            IMAGE_CURSOR, // type
-            0, // cx
-            0, // cy
-            LR_LOADFROMFILE | LR_DEFAULTSIZE | LR_SHARED// fuload
+    LPCTSTR cursorName;
+    if(type == CursorType::ROTATE){
+        cursor = (HCURSOR)LoadImageA(
+            nullptr,
+            ".\\T1-RodrigoAppelt\\images\\rotate-cursor-icon.cur",
+            IMAGE_CURSOR,
+            0,
+            0,
+            LR_LOADFROMFILE
         );
-        if (image == nullptr){
-            std::cout << "Error loading cursor <rotate>: " << GetLastError() << std::endl;
-            return;
-        }
+    }else{
+        cursorName = cursorTypeToString(type);
+        cursor = LoadCursor(NULL, cursorName);
+    }
+
+    if(cursor == nullptr){
+        std::cout << "Error loading cursor <" << cursorName << ">: " << GetLastError() << std::endl;
+        return;
     }
 
     cursors[type] = cursor;
@@ -63,14 +64,30 @@ LPCTSTR CursorManager::cursorTypeToString(CursorType type){
 }
 
 void CursorManager::setCursor(CursorType type){
-    loadCursor(type);
-    SetCursor((HCURSOR)cursors[type]);
+    hasMouseSet = true;
+    if(currentType == type){
+        return;
+    }
+    currentType = type;
+}
+
+void CursorManager::applyCursor(){
+    loadCursor(currentType);
+    if(!hasMouseSet){
+        loadCursor(CursorType::DEFAULT);
+    }
+    HCURSOR cursor = cursors[hasMouseSet ? currentType : CursorType::DEFAULT];
+    SetCursor(cursor);
+}
+
+void CursorManager::startFrame(){
+    hasMouseSet = false;
 }
 
 void CursorManager::freeResources(){
     for(auto it = cursors.begin(); it != cursors.end(); it++){
         if(it->second != nullptr){
-            DestroyCursor((HCURSOR)it->second);
+            DestroyCursor(it->second);
             loaded[it->first] = false;
         }
     }

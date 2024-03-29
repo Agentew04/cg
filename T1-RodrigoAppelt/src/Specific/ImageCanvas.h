@@ -66,11 +66,20 @@ public:
     /// @param histG O histograma do canal verde
     /// @param histB O histograma do canal azul
     /// @param histLum O histograma da luminancia
-    void setHistograms(uint32_t *histR, uint32_t *histG, uint32_t *histB, uint32_t *histLum);
+    void setHistograms(Chart::Series *histR, Chart::Series *histG, Chart::Series *histB, Chart::Series *histLum);
+
+    /// @brief Solicita uma atualizacao dos histogramas
+    void updateSelectedHistograms();
+
+    /// @brief Taxa do maximo valor que vai ser o maximo do grafico
+    float maxHistogramValueRatio = 0.5f;
 private:
 
     /// @brief Desenha uma moldura em volta da imagem selecionada
     void drawFrame();
+
+    /// @brief Atualiza qual mouse deve ser mostrado
+    void updateCursor();
 
     void selectImage(ImageRenderer* imgrnd);
 
@@ -78,7 +87,7 @@ private:
     bool dragging;
     Vector2 dragPivot;
 
-    uint32_t *histR, *histG, *histB, *histLum;
+    Chart::Series *histR, *histG, *histB, *histLum;
 };
 
 #endif
