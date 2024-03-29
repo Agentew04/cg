@@ -732,7 +732,7 @@
 	<iostream>
 	"lodepng.h"
 
-1711671358 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\sidebar.cpp
+1711730693 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\sidebar.cpp
 	<iterator>
 	"SideBar.h"
 	"../gl_canvas2d.h"
@@ -742,10 +742,11 @@
 	<stdio.h>
 	<stdlib.h>
 
-1711508638 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\image\bmp.cpp
+1711730680 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\image\bmp.cpp
 	"Bmp.h"
 	<string.h>
 	<cstdint>
+	<iostream>
 
 1711064659 e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\imagerenderer.h
 	"../Image/ImageManipulation.h"

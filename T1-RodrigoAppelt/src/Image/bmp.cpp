@@ -10,6 +10,7 @@
 #include "Bmp.h"
 #include <string.h>
 #include <cstdint>
+#include <iostream>
 
 Bmp::Bmp(const char *fileName)
 {
@@ -48,7 +49,7 @@ void Bmp::convertBGRtoRGB()
      for(int y=0; y<height; y++)
      for(int x=0; x<width*3; x+=3)
      {
-        int pos = y*bytesPerLine + x;
+        int pos = y*width*3 + x;
         tmp = data[pos];
         data[pos] = data[pos+2];
         data[pos+2] = tmp;
@@ -146,17 +147,17 @@ void Bmp::load(const char *fileName)
      return;
   }
 
-   data = new unsigned char[imagesize];
-   fseek(fp, header.offset, SEEK_SET);
-   fread(data, sizeof(unsigned char), imagesize, fp);
-   if(delta!=0){
-      width = width + (delta/3);
-      pad(delta);
+   std::cout << "imagesize: " << imagesize << ". alocated: " << 3*width*height << std::endl;
+   data = new unsigned char[3*width*height];
+   for(int y=0; y<height; y++)
+   {
+      std::cout << "lendo linha y=" << y << std::endl;
+      int pos = y*bytesPerLine;
+      fseek(fp, header.offset + pos, SEEK_SET);
+      fread(data + width*3*y, sizeof(unsigned char), width*3, fp);
    }
 
-  
-
-  fclose(fp);
+   fclose(fp);
 }
 
 void Bmp::pad(int delta)
