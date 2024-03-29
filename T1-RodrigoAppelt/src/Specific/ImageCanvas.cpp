@@ -8,10 +8,10 @@
 bool inside(Vector2 buttonPos, Vector2 buttonSize, Vector2 mousePos);
 
 ImageCanvas::ImageCanvas() :
-    mousePos(Vector2(0,0)),
-    dragging(false),
     selectedImageRenderer(nullptr),
     editionImageRenderer(nullptr),
+    mousePos(Vector2(0,0)),
+    dragging(false),
     histR(nullptr), histG(nullptr), histB(nullptr), histLum(nullptr){
 
 }
@@ -48,12 +48,23 @@ void ImageCanvas::draw(){
 void ImageCanvas::updateMousePos(Vector2 mousePos){
     this->mousePos = mousePos;
     updateCursor();
+    if(holdingScaleH || holdingScaleV){
+        checkScaleMovement();
+    }
 }
 
 void ImageCanvas::mouseDown(){
     // selecionar imagem clicada
     for(auto imageRenderer : this->imgrenderers){
-        if(inside(imageRenderer->pos, imageRenderer->size, this->mousePos)){
+        auto scale = imageRenderer->scaling;
+        std::vector<Vector2> points = {
+            Vector2::zero(),
+            Vector2(imageRenderer->realsize.x*scale.x, 0),
+            imageRenderer->realsize*scale,
+            Vector2(0, imageRenderer->realsize.y*scale.y)
+        };
+        Polygon2D imgCollider(points);
+        if (imgCollider.pointInside(mousePos - imageRenderer->pos)) {
             // clicou na imagem
             // entao a gente tira ela da lista
             // e add na frente
@@ -65,12 +76,21 @@ void ImageCanvas::mouseDown(){
     }
 
     // comecar a dar drag na imagem
-
+    if(selectedImageRenderer != nullptr){
+        if(frameRight.pointInside(mousePos - selectedImageRenderer->pos)){
+            holdingScaleH = true;
+        }
+        if(frameBottom.pointInside(mousePos - selectedImageRenderer->pos)){
+            holdingScaleV = true;
+        }
+    }
 }
 
 void ImageCanvas::mouseUp(){
     // se esta arrastando, para de arrastar
     this->dragging = false;
+    holdingScaleH = false;
+    holdingScaleV = false;
 }
 
 void ImageCanvas::update(){
@@ -103,22 +123,21 @@ void ImageCanvas::drawFrame(){
 
     // rotation knob
     CV::color(rotationKnobColor);
-    CV::circleFill(sizeX + margin/2.0f, sizeY + margin/2.0f, margin*2, 10);
+    CV::circleFill(
+        (selectedImageRenderer->realsize*selectedImageRenderer->scaling)
+        + Vector2(margin/2.0f, margin/2.0f), 
+        margin*2, 10);
 }
 
 void ImageCanvas::submitImage(Image* image){
-    std::cout << image << std::endl;
+    std::cout << "submitted: " << image << std::endl;
     int n = imgrenderers.size();
     ImageRenderer *imgrnd = new ImageRenderer(Vector2(5+n*20,5+n*20), image);
     if(selectedImageRenderer == nullptr){
         selectImage(imgrnd);
-        // selectedImageRenderer = imgrnd;
-        // int w,h;
-        // image->getSize(&w, &h);
-        // editionImageRenderer = new ImageRenderer(Vector2(500,300), new Image(w,h));
-        // ImageManipulation::CopyImage(imgrnd->img, editionImageRenderer->img);
+    }else{
+        imgrenderers.emplace_back(imgrnd);
     }
-    //imgrenderers.push_back(imgrnd);
     imgToRenderer[image] = imgrnd;
 }
 
@@ -150,42 +169,13 @@ void ImageCanvas::selectImage(ImageRenderer* imgrnd){
     updateBrightness(1.0);
 
     // cria os poligonos do frame
-    int margin = 5;
-    frameLeft = Polygon2D({
-        Vector2(-margin,-margin),
-        Vector2(0, -margin),
-        Vector2(0, imgrnd->size.y),
-        Vector2(-margin, imgrnd->size.y)
-    });
-    frameRight = Polygon2D({
-        Vector2(imgrnd->size.x, 0),
-        Vector2(imgrnd->size.x+margin, 0),
-        Vector2(imgrnd->size.x+margin, imgrnd->size.y),
-        Vector2(imgrnd->size.x, imgrnd->size.y)
-    });
-    frameTop = Polygon2D({
-        Vector2(0, -margin),
-        Vector2(imgrnd->size.x + margin, -margin),
-        Vector2(imgrnd->size.x + margin, 0),
-        Vector2(0, 0)
-    });
-    frameBottom = Polygon2D({
-        Vector2(-margin,imgrnd->size.y),
-        Vector2(imgrnd->size.x, imgrnd->size.y),
-        Vector2(imgrnd->size.x, imgrnd->size.y + margin),
-        Vector2(-margin, imgrnd->size.y + margin)
-    });
-
-
+    calculateFrames();
 }
 
 void ImageCanvas::requestChannel(ImageManipulation::Channel channel, bool luminance){
     if(selectedImageRenderer == nullptr){
         return;
     }
-
-    // aqui n precisa desalocar a img pq o formato n muda
-    // e o tamanho vai atualizar quando a img for selecionada
 
     Image *source = selectedImageRenderer->img;
     Image *target = editionImageRenderer->img;
@@ -194,6 +184,41 @@ void ImageCanvas::requestChannel(ImageManipulation::Channel channel, bool lumina
     }else{
         ImageManipulation::ToGrayscale(source, target);
     }
+}
+
+void ImageCanvas::calculateFrames(){
+    if(selectedImageRenderer == nullptr){
+        return;
+    }
+
+    auto imgrnd = selectedImageRenderer;
+
+    int margin = 5;
+    auto scale = imgrnd->scaling;
+    frameLeft = Polygon2D({
+        Vector2(-margin,-margin),
+        Vector2(0, -margin),
+        Vector2(0, imgrnd->realsize.y*scale.y),
+        Vector2(-margin, imgrnd->realsize.y*scale.y)
+    });
+    frameRight = Polygon2D({
+        Vector2(imgrnd->realsize.x*scale.x, 0),
+        Vector2(imgrnd->realsize.x*scale.x+margin, 0),
+        Vector2(imgrnd->realsize.x*scale.x+margin, imgrnd->realsize.y*scale.y),
+        Vector2(imgrnd->realsize.x*scale.x, imgrnd->realsize.y*scale.y)
+    });
+    frameTop = Polygon2D({
+        Vector2(0, -margin),
+        Vector2(imgrnd->realsize.x*scale.x + margin, -margin),
+        Vector2(imgrnd->realsize.x*scale.x + margin, 0),
+        Vector2(0, 0)
+    });
+    frameBottom = Polygon2D({
+        Vector2(-margin,imgrnd->realsize.y*scale.y),
+        Vector2(imgrnd->realsize.x*scale.x, imgrnd->realsize.y*scale.y),
+        Vector2(imgrnd->realsize.x*scale.x, imgrnd->realsize.y*scale.y + margin),
+        Vector2(-margin, imgrnd->realsize.y*scale.y + margin)
+    });
 }
 
 void ImageCanvas::requestFlip(bool vertical){
@@ -228,7 +253,7 @@ void ImageCanvas::updateCursor(){
 
     // possibilidade de click se passar mouse nas imagem
     for(auto imageRenderer : this->imgrenderers){
-        if(inside(imageRenderer->pos, imageRenderer->size, this->mousePos)){
+        if(inside(imageRenderer->pos, imageRenderer->realsize*imageRenderer->scaling, this->mousePos)){
             CursorManager::setCursor(CursorManager::CursorType::CLICKABLE);
         }
     }
@@ -236,38 +261,35 @@ void ImageCanvas::updateCursor(){
     if(selectedImageRenderer == nullptr){
         return;
     }
-    if(inside(selectedImageRenderer->pos, selectedImageRenderer->size, this->mousePos)){
+    if(inside(selectedImageRenderer->pos, selectedImageRenderer->realsize*selectedImageRenderer->scaling, this->mousePos)){
         CursorManager::setCursor(CursorManager::CursorType::MOVE);
     }
 
     int margin = 5;
     // na borda da esq ou direita
 
-    if(frameLeft.pointInside(mousePos - selectedImageRenderer->pos)
-    || frameRight.pointInside(mousePos - selectedImageRenderer->pos)){
-        std::cout << "borda horizontal" << std::endl;
+    if(/*frameLeft.pointInside(mousePos - selectedImageRenderer->pos)
+    || */frameRight.pointInside(mousePos - selectedImageRenderer->pos)){
         CursorManager::setCursor(CursorManager::CursorType::RESIZE_HORIZONTAL);
     }
 
     // na borda de cima ou de baixo
-    if(frameTop.pointInside(mousePos - selectedImageRenderer->pos)
-        || frameBottom.pointInside(mousePos - selectedImageRenderer->pos)){
-        std::cout << "borda vertical" << std::endl;
+    if(/*frameTop.pointInside(mousePos - selectedImageRenderer->pos)
+        || */frameBottom.pointInside(mousePos - selectedImageRenderer->pos)){
         CursorManager::setCursor(CursorManager::CursorType::RESIZE_VERTICAL);
     }
 
     // no knob de rotacao
-    if(Vector2(
-        selectedImageRenderer->pos.x + selectedImageRenderer->size.x + margin/2.0f,
-        selectedImageRenderer->pos.y + selectedImageRenderer->size.y + margin/2.0f
-        ).distance(mousePos) <= margin*2){
-        std::cout << "knob de rotacao" << std::endl;
+    if((selectedImageRenderer->pos +
+        (selectedImageRenderer->realsize*selectedImageRenderer->scaling) + 
+        Vector2(margin/2.0f, margin/2.0f)
+    ).distance(mousePos) <= margin*2){
         CursorManager::setCursor(CursorManager::CursorType::ROTATE);
     }
 }
 
 inline int getMax(uint32_t *begin, uint32_t *end){
-    int max = 0;
+    uint32_t max = 0;
     for(uint32_t *it = begin; it != end; it++){
         if(*it > max){
             max = *it;
@@ -313,4 +335,32 @@ void ImageCanvas::updateBrightness(float value){
         return;
     }
     ImageManipulation::Brightness(selectedImageRenderer->img, editionImageRenderer->img, value);
+}
+
+void ImageCanvas::checkScaleMovement(){
+    if(selectedImageRenderer == nullptr){
+        return;
+    }
+
+    // Vector2 relativePos = Vector2(mousePos.x - selectedImageRenderer->pos.x, mousePos.y - selectedImageRenderer->pos.y);
+    if(holdingScaleH){
+        // redimensionar horizontal p/ direito
+        float scalePerPixel = 1.0/selectedImageRenderer->realsize.x;
+        int newPixels = mousePos.x - selectedImageRenderer->pos.x - selectedImageRenderer->realsize.x;
+        float newScale = scalePerPixel * newPixels + 1.0;
+        std::cout << "new scale " << newScale << " newPixels: " << newPixels << std::endl;
+        selectedImageRenderer->scaling.x = newScale;
+        selectedImageRenderer->size.x = newPixels + selectedImageRenderer->size.x;
+    }
+    if(holdingScaleV){
+        // redimensionar vertical
+        float scalePerPixel = 1.0/selectedImageRenderer->realsize.y;
+        int newPixels = mousePos.y - selectedImageRenderer->pos.y - selectedImageRenderer->realsize.y;
+        float newScale = scalePerPixel * newPixels + 1.0;
+        selectedImageRenderer->scaling.y = newScale;
+        selectedImageRenderer->size.y = newPixels + selectedImageRenderer->size.y;
+    }
+    if(holdingScaleH || holdingScaleV){
+        calculateFrames();
+    }
 }

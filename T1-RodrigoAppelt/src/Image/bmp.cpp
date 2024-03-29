@@ -105,7 +105,7 @@ void Bmp::load(const char *fileName)
   bits   = info.bits;
   bytesPerLine =(3 * (width + 1) / 4) * 4;
   imagesize    = bytesPerLine*height;
-  int delta    = bytesPerLine - (3 * width);
+  //int delta    = bytesPerLine - (3 * width);
 
   //printf("\nImagem: %dx%d - Bits: %d", width, height, bits);
   //printf("\nbytesPerLineIdeal: %d", bytesPerLine);

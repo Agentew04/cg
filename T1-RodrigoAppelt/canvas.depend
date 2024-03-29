@@ -575,7 +575,7 @@
 1710973478 e:\universidade\trabalhos\t1\src\image\imagemanipulation.h
 	<cstdint>
 
-1711736367 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\gl_canvas2d.cpp
+1711747849 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
@@ -590,7 +590,7 @@
 	"Vector3.h"
 	"Math/Polygon.h"
 
-1710975823 e:\universidade\trabalhos\t1-rodrigoappelt\src\vector2.h
+1711751580 e:\universidade\trabalhos\t1-rodrigoappelt\src\vector2.h
 	<cmath>
 	<iostream>
 
@@ -713,7 +713,7 @@
 	<iostream>
 	"UIManager.h"
 
-1711735335 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\image\imagemanipulation.cpp
+1711750993 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\image\imagemanipulation.cpp
 	<iostream>
 	<cstring>
 	"ImageManipulation.h"
@@ -743,19 +743,19 @@
 	<stdio.h>
 	<stdlib.h>
 
-1711736508 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\image\bmp.cpp
+1711747818 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\image\bmp.cpp
 	"Bmp.h"
 	<string.h>
 	<cstdint>
 	<iostream>
 
-1711734958 e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\imagerenderer.h
+1711750783 e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\imagerenderer.h
 	<vector>
 	"../Image/ImageManipulation.h"
 	"../Vector2.h"
 	"../Math/Matrix.h"
 
-1711734524 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\imagerenderer.cpp
+1711750794 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\imagerenderer.cpp
 	"ImageRenderer.h"
 	"../gl_canvas2d.h"
 	<iostream>
@@ -773,7 +773,7 @@
 	"../UI/Chart.h"
 	"../UI/CheckBox.h"
 
-1711739263 e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\imagecanvas.h
+1711750935 e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\imagecanvas.h
 	<vector>
 	<map>
 	"../UI/ImageRenderer.h"
@@ -781,7 +781,7 @@
 	"../UI/UIManager.h"
 	"../Math/Polygon.h"
 
-1711744788 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\imagecanvas.cpp
+1711752392 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\imagecanvas.cpp
 	<string.h>
 	"ImageCanvas.h"
 	"../gl_canvas2d.h"
@@ -998,13 +998,13 @@
 	<iostream>
 	"CursorManager.h"
 
-1711743493 e:\universidade\trabalhos\t1-rodrigoappelt\src\math\matrix.h
+1711746689 e:\universidade\trabalhos\t1-rodrigoappelt\src\math\matrix.h
 	<string.h>
 	<iostream>
 	"../Vector2.h"
 	"../Vector3.h"
 
-1711744779 e:\universidade\trabalhos\t1-rodrigoappelt\src\math\polygon.h
+1711747733 e:\universidade\trabalhos\t1-rodrigoappelt\src\math\polygon.h
 	<vector>
 	"../Vector2.h"
 

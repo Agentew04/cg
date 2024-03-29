@@ -83,12 +83,20 @@ private:
     /// @brief Atualiza qual mouse deve ser mostrado
     void updateCursor();
 
+    /// @brief Checa se a imagem selecionada esta sendo movida
+    void checkScaleMovement();
+
     void selectImage(ImageRenderer* imgrnd);
+
+    /// @brief recalcula o tamanho do frame da imagem selecionada
+    void calculateFrames();
 
     Vector2 mousePos;
     bool dragging;
     Vector2 dragPivot;
 
+    bool holdingScaleH = false;
+    bool holdingScaleV = false;
     Polygon2D frameLeft, frameRight, frameTop, frameBottom;
 
     Chart::Series *histR, *histG, *histB, *histLum;

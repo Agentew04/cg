@@ -15,7 +15,7 @@ public:
     ImageRenderer(Vector2 pos, Image *img);
     ~ImageRenderer();
     void draw();
-    Vector2 pos,size;
+    Vector2 pos,size, realsize;
     Image *img;
 
     Vector2 scaling = Vector2::one();

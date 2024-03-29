@@ -41,8 +41,6 @@
 			<Add library="../lib/libopengl32.a" />
 			<Add library="../lib/libglu32.a" />
 		</Linker>
-		<Unit filename="src/Game/MovementController.cpp" />
-		<Unit filename="src/Game/MovementController.h" />
 		<Unit filename="src/Image/Bmp.h" />
 		<Unit filename="src/Image/ImageManipulation.cpp" />
 		<Unit filename="src/Image/ImageManipulation.h" />
@@ -67,8 +65,6 @@
 		<Unit filename="src/UI/CursorManager.h" />
 		<Unit filename="src/UI/ImageRenderer.cpp" />
 		<Unit filename="src/UI/ImageRenderer.h" />
-		<Unit filename="src/UI/MenuStrip.cpp" />
-		<Unit filename="src/UI/MenuStrip.h" />
 		<Unit filename="src/UI/Slider.cpp" />
 		<Unit filename="src/UI/Slider.h" />
 		<Unit filename="src/UI/SliderManager.cpp" />

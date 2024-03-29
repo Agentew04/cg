@@ -4,8 +4,9 @@
 #include <iostream>
 
 ImageRenderer::ImageRenderer(Vector2 pos, Image *img)
-    : pos(pos), size(size), img(img){
+    : pos(pos), img(img){
         this->size = img->getSize();
+        this->realsize = size;
 }
 
 ImageRenderer::~ImageRenderer(){

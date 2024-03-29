@@ -145,7 +145,7 @@ void CV::polygonFill(float vx[], float vy[], int elems)
 
 void CV::polygonFill(Vector2 pos, Polygon2D *polygon){
    glBegin(GL_POLYGON);
-   for(int cont=0; cont<polygon->vertices.size(); cont++)
+   for(size_t cont=0; cont<polygon->vertices.size(); cont++)
    {
       glVertex2d(
          pos.x + polygon->vertices[cont].x, 
@@ -157,7 +157,7 @@ void CV::polygonFill(Vector2 pos, Polygon2D *polygon){
 
 void CV::polygon(Vector2 pos, Polygon2D *polygon){
    glBegin(GL_LINE_LOOP);
-   for(int cont=0; cont<polygon->vertices.size(); cont++)
+   for(size_t cont=0; cont<polygon->vertices.size(); cont++)
    {
       glVertex2d(
          pos.x + polygon->vertices[cont].x, 
@@ -271,6 +271,10 @@ void CV::circleFill( float x, float y, float radius, int div )
          ang+=inc;
       }
    glEnd();
+}
+
+void CV::circleFill( Vector2 pos, float radius, int div ){
+   CV::circleFill(pos.x, pos.y, radius, div);
 }
 
 //coordenada de offset para desenho de objetos.

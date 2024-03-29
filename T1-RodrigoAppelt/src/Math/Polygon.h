@@ -23,7 +23,8 @@ public:
 
     bool pointInside(Vector2 point){
         // Check for empty polygon
-        int i, j, c = 0;
+        unsigned int i, j;
+        bool c = false;
         for (i = 0, j = vertices.size()-1; i < vertices.size(); j = i++) {
             if ( ((vertices[i].y>point.y) != (vertices[j].y>point.y)) &&
             (point.x < (vertices[j].x-vertices[i].x) * (point.y-vertices[i].y) / (vertices[j].y-vertices[i].y) + vertices[i].x) )
