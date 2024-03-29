@@ -5,31 +5,31 @@
 
 #include "../Vector2.h"
 
-class Polygon {
+class Polygon2D {
 public:
 
-    Polygon(std::vector<Vector2> vertices){
+    Polygon2D(){
+
+    }
+    Polygon2D(std::vector<Vector2> vertices){
         this->vertices = vertices;
     }
-    Polygon(Polygon &p){
+    Polygon2D(Polygon2D &p){
         this->vertices = p.vertices;
     }
-    ~Polygon(){
+    ~Polygon2D(){
         this->vertices.clear();
     }
 
     bool pointInside(Vector2 point){
-        int prev_orient = 0;
-        for (int i = 0; i < vertices.size(); i++) {
-            int next_i = (i + 1) % vertices.size();
-            int orient = orientation(vertices[i], vertices[next_i], point);
-            
-            if (i == 0 || orient != prev_orient) {
-                return false;
-            }
-            prev_orient = orient;
+        // Check for empty polygon
+        int i, j, c = 0;
+        for (i = 0, j = vertices.size()-1; i < vertices.size(); j = i++) {
+            if ( ((vertices[i].y>point.y) != (vertices[j].y>point.y)) &&
+            (point.x < (vertices[j].x-vertices[i].x) * (point.y-vertices[i].y) / (vertices[j].y-vertices[i].y) + vertices[i].x) )
+            c = !c;
         }
-        return true;
+        return c;
     }
 
     std::vector<Vector2> vertices;

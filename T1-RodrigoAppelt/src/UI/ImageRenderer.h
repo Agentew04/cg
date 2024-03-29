@@ -1,8 +1,11 @@
 #ifndef __IMAGE_RENDERER_H__
 #define __IMAGE_RENDERER_H__
 
+#include <vector>
+
 #include "../Image/ImageManipulation.h"
 #include "../Vector2.h"
+#include "../Math/Matrix.h"
 
 /// @brief Classe responsavel por renderizar uma
 /// imagem na tela
@@ -14,6 +17,9 @@ public:
     void draw();
     Vector2 pos,size;
     Image *img;
+
+    Vector2 scaling = Vector2::one();
+    float rotation = 0;
 private:
 };
 

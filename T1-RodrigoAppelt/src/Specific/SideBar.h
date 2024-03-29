@@ -55,6 +55,7 @@ private:
     UIManager* uiManager;
     Chart* histogram;
     Slider *histogramMaxSlider;
+    Slider *brighnessSlider;
 };
 
 #endif 

@@ -114,3 +114,20 @@ void ImageManipulation::Histogram(Image *source, uint32_t* histogram, Channel ch
         }
     }
 }
+
+void ImageManipulation::Brightness(Image *source, Image *destination, float value){
+    int w,h;
+    source->getSize(&w, &h);
+    int n = w * h;
+    for(int i = 0; i < n; i++){
+        for(int c = 0; c < (int)Channel::COUNT; c++){
+            int pixelStart = i * (int)Channel::COUNT;
+            int newValue = source->pixels[pixelStart + c] * value;
+            if(newValue > UINT8_MAX){
+                newValue = UINT8_MAX;
+            }
+            destination->pixels[pixelStart + c] = newValue;
+        }
+    }
+
+}

@@ -7,6 +7,7 @@
 #include "../Vector2.h"
 #include "../Vector3.h"
 
+/// @brief Classe que implementa operacoes sobre matrizes
 class Matrix{
 public:
     /// @brief Cria nova matrix nxn
@@ -15,16 +16,14 @@ public:
         this->n = n;
         data = new float[n*n];
         memset(data, 0, n*n*sizeof(float));
-        std::cout << "Alloc matrix " << n << std::endl;
     }
 
     /// @brief Copia uma matriz
     /// @param m A matriz a ser copiada
-    Matrix(Matrix &m){
+    Matrix(const Matrix &m){
         this->n = m.n;
         data = new float[n*n];
         memcpy(data, m.data, n*n*sizeof(float));
-        std::cout << "Alloc matrix " << n << std::endl;
     }
 
     /// @brief Cria uma nova matriz nxn com dados
@@ -34,7 +33,6 @@ public:
         this->n = n;
         this->data = new float[n*n];
         memcpy(this->data, data, n*n*sizeof(float));
-        std::cout << "Alloc matrix " << n << std::endl;
         if(dealloc){
             delete[] data;
         }
@@ -43,7 +41,6 @@ public:
     /// @brief Destroi a matriz
     ~Matrix(){
         delete[] data;
-        std::cout << "Dealloc matrix " << n << std::endl;
     }
 
     /// @brief Retorna o elemento em uma posicao
@@ -68,6 +65,36 @@ public:
             data[i*n + i] = 1;
         }
         return Matrix(n, data);
+    }
+
+    /// @brief Cria uma matriz de rotacao 2D
+    /// @param angle Angulo em radianos
+    static Matrix rotation2D(float angle){
+        float data[] = {
+            (float)cos(angle), (float)-sin(angle),
+            (float)sin(angle), (float)cos(angle)
+        };
+        return Matrix(2, data);
+    }
+
+    /// @brief Cria uma matriz de escala 2D
+    /// @param x Fator de escala em x
+    /// @param y Fator de escala em y
+    static Matrix translation2D(float x, float y){
+        float data[] = {
+            1, 0, x,
+            0, 1, y,
+            0, 0, 1
+        };
+        return Matrix(3, data);
+    }
+
+    static Matrix scale2D(float x, float y){
+        float data[] = {
+            x, 0,
+            0, y
+        };
+        return Matrix(2, data);
     }
 
     /// @brief Retorna a dimensao da matriz quadrada
@@ -103,6 +130,17 @@ public:
             res += data[i] * sub.det() * (i%2==0?1:-1);
         }
         return res;
+    }
+
+    /// @brief Cria uma matriz transposta desta
+    Matrix transpose() const {
+        float *data = new float[n*n];
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                data[j*n + i] = this->data[i*n + j];
+            }
+        }
+        return Matrix(n, data, true);
     }
 
     /// @brief Printa a matriz em uma stream
@@ -202,7 +240,7 @@ public:
         }
         return res;
     }
-    
+
 
 private:
     float *data;

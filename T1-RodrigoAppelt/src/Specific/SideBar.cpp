@@ -40,6 +40,18 @@ void SideBar::draw(){
     CV::color(0.255f, 0.353f, 0.467f);
     CV::rectFill(Vector2::zero(), this->size);
 
+
+    int margin = 5;
+    Vector2 tripButtonSize = Vector2((this->size.x-(margin*4))/3 ,50);
+    Vector2 quadButtonSize = Vector2((this->size.x-(margin*5))/4, 50);
+    CV::color(0,0,0);
+    CV::text(
+        margin, 
+        tripButtonSize.y+margin*5+quadButtonSize.y*2+150+20+20+20,
+        "Brightness",
+        GLUT_BITMAP_HELVETICA_10
+    );
+
     this->uiManager->draw();
 }
 

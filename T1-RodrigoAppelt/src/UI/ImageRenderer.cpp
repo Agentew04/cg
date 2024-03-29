@@ -18,6 +18,7 @@ void ImageRenderer::draw(){
     CV::translate(pos);
     int w,h;
     img->getSize(&w, &h);
+    Matrix rotM = Matrix::scale2D(scaling.x,scaling.y);
     for(int y = 0; y < h; y++){
         int yinv = h - y - 1; // pq o y cresce p baixo
         for(int x = 0; x < w; x++){
@@ -26,7 +27,8 @@ void ImageRenderer::draw(){
             uint8_t g = img->pixels[pxStart + (int)ImageManipulation::Channel::GREEN];
             uint8_t b = img->pixels[pxStart + (int)ImageManipulation::Channel::BLUE];
             CV::color((float)r/255.0f, (float)g/255.0f, (float)b/255.0f);
-            CV::rectFill(Vector2(x,y), Vector2(x+1,y+1));
+            Vector2 pos = rotM*(Vector2(x,y));
+            CV::rectFill(pos, Vector2(pos.x+scaling.x,pos.y+scaling.y));
         }
     }
 }

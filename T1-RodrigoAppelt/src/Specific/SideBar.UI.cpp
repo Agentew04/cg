@@ -231,6 +231,20 @@ void SideBar::submitHistogram(){
     gckbx->setBinding(&histG->visible);
     bckbx->setBinding(&histB->visible);
     yckbx->setBinding(&histLum->visible);
+
+    this->brighnessSlider = new Slider(
+        pos + Vector2(margin, tripButtonSize.y+margin*5+quadButtonSize.y*2+150+20+20+20), 
+        Vector2(this->size.x-margin*2, 20),
+        0.0f, 
+        1.0f, 
+        1.0f,
+        Slider::Orientation::HORIZONTAL
+    );
+    this->brighnessSlider->style = slstl;
+    this->uiManager->add(this->brighnessSlider);
+    this->brighnessSlider->setCallback([&](float value){
+        imgCanvas->updateBrightness(value);
+    });
 }
 
 void SideBar::linkImageCanvas(){

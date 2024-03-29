@@ -7,6 +7,7 @@
 #include "../UI/ImageRenderer.h"
 #include "../Image/ImageManipulation.h"
 #include "../UI/UIManager.h"
+#include "../Math/Polygon.h"
 
 
 
@@ -70,6 +71,7 @@ public:
 
     /// @brief Solicita uma atualizacao dos histogramas
     void updateSelectedHistograms();
+    void updateBrightness(float value);
 
     /// @brief Taxa do maximo valor que vai ser o maximo do grafico
     float maxHistogramValueRatio = 0.5f;
@@ -86,6 +88,8 @@ private:
     Vector2 mousePos;
     bool dragging;
     Vector2 dragPivot;
+
+    Polygon2D frameLeft, frameRight, frameTop, frameBottom;
 
     Chart::Series *histR, *histG, *histB, *histLum;
 };

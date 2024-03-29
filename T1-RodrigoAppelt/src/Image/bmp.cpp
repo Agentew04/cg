@@ -147,39 +147,13 @@ void Bmp::load(const char *fileName)
      return;
   }
 
-   std::cout << "imagesize: " << imagesize << ". alocated: " << 3*width*height << std::endl;
    data = new unsigned char[3*width*height];
    for(int y=0; y<height; y++)
    {
-      std::cout << "lendo linha y=" << y << std::endl;
       int pos = y*bytesPerLine;
       fseek(fp, header.offset + pos, SEEK_SET);
       fread(data + width*3*y, sizeof(unsigned char), width*3, fp);
    }
 
    fclose(fp);
-}
-
-void Bmp::pad(int delta)
-{
-   int bytesLineWidth = width * 3; // width é em pixels n em bytes
-
-   // temos que adiconar padding para cada linha
-   for(int y=1; y<=height; y++){
-      
-      uint8_t r = data[y*bytesLineWidth - delta - 3];
-      uint8_t g = data[y*bytesLineWidth - delta - 2];
-      uint8_t b = data[y*bytesLineWidth - delta - 1];
-
-      int padIdx = y*bytesLineWidth - delta;
-      for(int x=0; x<delta; x++){
-         if(x%3==0){
-            data[padIdx + x] = r;
-         }else if(x%3==1){
-            data[padIdx + x] = g;
-         }else {
-            data[padIdx + x] = b;
-         }
-      }
-   }
 }

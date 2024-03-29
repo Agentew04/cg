@@ -60,6 +60,12 @@ public:
     /// @param channel O canal a ser contado
     /// @param luminance Se verdadeiro, calcula o histograma da luminancia
     static void Histogram(Image *source, uint32_t* histogram, Channel channel, bool luminance);
+
+    /// @brief Ajusta o brilho de uma imagem
+    /// @param source A imagem fonte
+    /// @param destination A imagem que recebera o resultado
+    /// @param value O valor do brilho. 1.0 eh o valor normal
+    static void Brightness(Image *source, Image *destination, float value);
 };
 
 #endif

@@ -7,8 +7,8 @@
 
 bool inside(Vector2 buttonPos, Vector2 buttonSize, Vector2 mousePos);
 
-ImageCanvas::ImageCanvas() : 
-    mousePos(Vector2(0,0)), 
+ImageCanvas::ImageCanvas() :
+    mousePos(Vector2(0,0)),
     dragging(false),
     selectedImageRenderer(nullptr),
     editionImageRenderer(nullptr),
@@ -22,6 +22,7 @@ ImageCanvas::~ImageCanvas(){
         delete img->img; // deleta a imagem em si
         delete img; // deleta a entidade imagem c posicao e tamanho
     }
+
     if(editionImageRenderer != nullptr){
         delete editionImageRenderer->img;
         delete editionImageRenderer;
@@ -90,13 +91,13 @@ void ImageCanvas::drawFrame(){
     CV::translate(selectedImageRenderer->pos);
     CV::color(frameColor);
     // top
-    CV::rectFill(Vector2(0,-margin), Vector2(sizeX+margin,0));
+    CV::polygonFill(Vector2::zero(), &frameTop);
     // right
-    CV::rectFill(Vector2(sizeX,0), Vector2(sizeX+margin, sizeY));
+    CV::polygonFill(Vector2::zero(), &frameRight);
     // bottom
-    CV::rectFill(Vector2(-margin, sizeY), Vector2(sizeX, sizeY+margin));
+    CV::polygonFill(Vector2::zero(), &frameBottom);
     // left
-    CV::rectFill(Vector2(-margin, -margin), Vector2(0, sizeY));
+    CV::polygonFill(Vector2::zero(), &frameLeft);
 
     // rotation knob
     CV::color(rotationKnobColor);
@@ -104,15 +105,16 @@ void ImageCanvas::drawFrame(){
 }
 
 void ImageCanvas::submitImage(Image* image){
-
+    std::cout << image << std::endl;
     int n = imgrenderers.size();
     ImageRenderer *imgrnd = new ImageRenderer(Vector2(5+n*20,5+n*20), image);
     if(selectedImageRenderer == nullptr){
-        selectedImageRenderer = imgrnd;
-        int w,h;
-        image->getSize(&w, &h);
-        editionImageRenderer = new ImageRenderer(Vector2(500,300), new Image(w,h));
-        ImageManipulation::CopyImage(imgrnd->img, editionImageRenderer->img);
+        selectImage(imgrnd);
+        // selectedImageRenderer = imgrnd;
+        // int w,h;
+        // image->getSize(&w, &h);
+        // editionImageRenderer = new ImageRenderer(Vector2(500,300), new Image(w,h));
+        // ImageManipulation::CopyImage(imgrnd->img, editionImageRenderer->img);
     }
     imgrenderers.push_back(imgrnd);
     imgToRenderer[image] = imgrnd;
@@ -143,6 +145,36 @@ void ImageCanvas::selectImage(ImageRenderer* imgrnd){
 
     // calcula os histogramas de cada canal
     updateSelectedHistograms();
+    updateBrightness(1.0);
+
+    // cria os poligonos do frame
+    int margin = 5;
+    frameLeft = Polygon2D({
+        Vector2(-margin,-margin),
+        Vector2(0, -margin),
+        Vector2(0, imgrnd->size.y),
+        Vector2(-margin, imgrnd->size.y)
+    });
+    frameRight = Polygon2D({
+        Vector2(imgrnd->size.x, 0),
+        Vector2(imgrnd->size.x+margin, 0),
+        Vector2(imgrnd->size.x+margin, imgrnd->size.y),
+        Vector2(imgrnd->size.x, imgrnd->size.y)
+    });
+    frameTop = Polygon2D({
+        Vector2(0, -margin),
+        Vector2(imgrnd->size.x + margin, -margin),
+        Vector2(imgrnd->size.x + margin, 0),
+        Vector2(0, 0)
+    });
+    frameBottom = Polygon2D({
+        Vector2(-margin,imgrnd->size.y),
+        Vector2(imgrnd->size.x, imgrnd->size.y),
+        Vector2(imgrnd->size.x, imgrnd->size.y + margin),
+        Vector2(-margin, imgrnd->size.y + margin)
+    });
+
+
 }
 
 void ImageCanvas::requestChannel(ImageManipulation::Channel channel, bool luminance){
@@ -174,7 +206,6 @@ void ImageCanvas::requestFlip(bool vertical){
     Image *target = editionImageRenderer->img;
     ImageManipulation::CopyImage(target,temp);
 
-    std::cout << "Flipando imagem " << (vertical ? "vertical" : "horizontal") << std::endl;
     if(!vertical){
         ImageManipulation::FlipHorizontal(temp, target);
     }else{
@@ -207,28 +238,28 @@ void ImageCanvas::updateCursor(){
         CursorManager::setCursor(CursorManager::CursorType::MOVE);
     }
 
-    // na borda da esq ou direita
     int margin = 5;
-    if(inside(Vector2(selectedImageRenderer->pos.x - margin, selectedImageRenderer->pos.y), Vector2(5, selectedImageRenderer->size.y), this->mousePos)){
-        CursorManager::setCursor(CursorManager::CursorType::RESIZE_HORIZONTAL);
-    }
-    if(inside(Vector2(selectedImageRenderer->pos.x + selectedImageRenderer->size.x, selectedImageRenderer->pos.y), Vector2(margin, selectedImageRenderer->size.y), this->mousePos)){
+    // na borda da esq ou direita
+
+    if(frameLeft.pointInside(mousePos - selectedImageRenderer->pos)
+    || frameRight.pointInside(mousePos - selectedImageRenderer->pos)){
+        std::cout << "borda horizontal" << std::endl;
         CursorManager::setCursor(CursorManager::CursorType::RESIZE_HORIZONTAL);
     }
 
     // na borda de cima ou de baixo
-    if(inside(Vector2(selectedImageRenderer->pos.x, selectedImageRenderer->pos.y - margin), Vector2(selectedImageRenderer->size.x, margin), this->mousePos)){
-        CursorManager::setCursor(CursorManager::CursorType::RESIZE_VERTICAL);
-    }
-    if(inside(Vector2(selectedImageRenderer->pos.x, selectedImageRenderer->pos.y + selectedImageRenderer->size.y), Vector2(selectedImageRenderer->size.x, margin), this->mousePos)){
+    if(frameTop.pointInside(mousePos - selectedImageRenderer->pos)
+        || frameBottom.pointInside(mousePos - selectedImageRenderer->pos)){
+        std::cout << "borda vertical" << std::endl;
         CursorManager::setCursor(CursorManager::CursorType::RESIZE_VERTICAL);
     }
 
     // no knob de rotacao
     if(Vector2(
-        selectedImageRenderer->pos.x + selectedImageRenderer->size.x + margin/2.0f, 
+        selectedImageRenderer->pos.x + selectedImageRenderer->size.x + margin/2.0f,
         selectedImageRenderer->pos.y + selectedImageRenderer->size.y + margin/2.0f
         ).distance(mousePos) <= margin*2){
+        std::cout << "knob de rotacao" << std::endl;
         CursorManager::setCursor(CursorManager::CursorType::ROTATE);
     }
 }
@@ -275,3 +306,9 @@ void ImageCanvas::updateSelectedHistograms(){
     }
 }
 
+void ImageCanvas::updateBrightness(float value){
+    if(selectedImageRenderer == nullptr){
+        return;
+    }
+    ImageManipulation::Brightness(selectedImageRenderer->img, editionImageRenderer->img, value);
+}
