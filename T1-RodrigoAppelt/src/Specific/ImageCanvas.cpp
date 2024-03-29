@@ -18,7 +18,9 @@ ImageCanvas::ImageCanvas() :
 
 ImageCanvas::~ImageCanvas(){
     std::cout << "Deleting ImageCanvas" << std::endl;
+    std::cout << imgrenderers.size() << std::endl;
     for(auto img : imgrenderers){
+        std::cout << img << " " << img->img << std::endl;
         delete img->img; // deleta a imagem em si
         delete img; // deleta a entidade imagem c posicao e tamanho
     }
@@ -116,7 +118,7 @@ void ImageCanvas::submitImage(Image* image){
         // editionImageRenderer = new ImageRenderer(Vector2(500,300), new Image(w,h));
         // ImageManipulation::CopyImage(imgrnd->img, editionImageRenderer->img);
     }
-    imgrenderers.push_back(imgrnd);
+    //imgrenderers.push_back(imgrnd);
     imgToRenderer[image] = imgrnd;
 }
 
