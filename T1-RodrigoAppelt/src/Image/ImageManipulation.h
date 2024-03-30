@@ -66,6 +66,12 @@ public:
     /// @param destination A imagem que recebera o resultado
     /// @param value O valor do brilho. 1.0 eh o valor normal
     static void Brightness(Image *source, Image *destination, float value);
+
+    /// @brief Aplica um desfoque gaussiano na imagem
+    /// @param source A imagem fonte
+    /// @param destination A imagem que recebera o resultado
+    /// @param radius O raio do desfoque
+    static void GaussianBlur(Image *source, Image *destination, float radius);
 };
 
 #endif

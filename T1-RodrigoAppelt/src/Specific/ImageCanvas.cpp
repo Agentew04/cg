@@ -20,7 +20,6 @@ ImageCanvas::~ImageCanvas(){
     std::cout << "Deleting ImageCanvas" << std::endl;
     std::cout << imgrenderers.size() << std::endl;
     for(auto img : imgrenderers){
-        std::cout << img << " " << img->img << std::endl;
         delete img->img; // deleta a imagem em si
         delete img; // deleta a entidade imagem c posicao e tamanho
     }
@@ -121,16 +120,15 @@ void ImageCanvas::drawFrame(){
     // left
     CV::polygonFill(Vector2::zero(), &frameLeft);
 
-    // rotation knob
-    CV::color(rotationKnobColor);
-    CV::circleFill(
-        (selectedImageRenderer->realsize*selectedImageRenderer->scaling)
-        + Vector2(margin/2.0f, margin/2.0f), 
-        margin*2, 10);
+    // rotation knob <== desligado, nao consegui implementar rotacao
+    //CV::color(rotationKnobColor);
+    // CV::circleFill(
+    //     (selectedImageRenderer->realsize*selectedImageRenderer->scaling)
+    //     + Vector2(margin/2.0f, margin/2.0f), 
+    //     margin*2, 10);
 }
 
 void ImageCanvas::submitImage(Image* image){
-    std::cout << "submitted: " << image << std::endl;
     int n = imgrenderers.size();
     ImageRenderer *imgrnd = new ImageRenderer(Vector2(5+n*20,5+n*20), image);
     if(selectedImageRenderer == nullptr){
@@ -204,8 +202,8 @@ void ImageCanvas::calculateFrames(){
     frameRight = Polygon2D({
         Vector2(imgrnd->realsize.x*scale.x, 0),
         Vector2(imgrnd->realsize.x*scale.x+margin, 0),
-        Vector2(imgrnd->realsize.x*scale.x+margin, imgrnd->realsize.y*scale.y),
-        Vector2(imgrnd->realsize.x*scale.x, imgrnd->realsize.y*scale.y)
+        Vector2(imgrnd->realsize.x*scale.x+margin, imgrnd->realsize.y*scale.y+margin),
+        Vector2(imgrnd->realsize.x*scale.x, imgrnd->realsize.y*scale.y+margin)
     });
     frameTop = Polygon2D({
         Vector2(0, -margin),
@@ -279,13 +277,13 @@ void ImageCanvas::updateCursor(){
         CursorManager::setCursor(CursorManager::CursorType::RESIZE_VERTICAL);
     }
 
-    // no knob de rotacao
-    if((selectedImageRenderer->pos +
-        (selectedImageRenderer->realsize*selectedImageRenderer->scaling) + 
-        Vector2(margin/2.0f, margin/2.0f)
-    ).distance(mousePos) <= margin*2){
-        CursorManager::setCursor(CursorManager::CursorType::ROTATE);
-    }
+    // no knob de rotacao <== desabilitado, n implementado
+    // if((selectedImageRenderer->pos +
+    //     (selectedImageRenderer->realsize*selectedImageRenderer->scaling) + 
+    //     Vector2(margin/2.0f, margin/2.0f)
+    // ).distance(mousePos) <= margin*2){
+    //     CursorManager::setCursor(CursorManager::CursorType::ROTATE);
+    // }
 }
 
 inline int getMax(uint32_t *begin, uint32_t *end){
@@ -303,7 +301,6 @@ void ImageCanvas::updateSelectedHistograms(){
     int w,h;
     auto imgrnd = this->selectedImageRenderer;
     imgrnd->img->getSize(&w, &h);
-    std::cout << "rate " << maxHistogramValueRatio << std::endl;
     if(histR != nullptr){
         memset(histR->y, 0, sizeof(uint32_t)*(UINT8_MAX+1));
         ImageManipulation::Histogram(imgrnd->img, histR->y, ImageManipulation::Channel::RED, false);
@@ -348,7 +345,6 @@ void ImageCanvas::checkScaleMovement(){
         float scalePerPixel = 1.0/selectedImageRenderer->realsize.x;
         int newPixels = mousePos.x - selectedImageRenderer->pos.x - selectedImageRenderer->realsize.x;
         float newScale = scalePerPixel * newPixels + 1.0;
-        std::cout << "new scale " << newScale << " newPixels: " << newPixels << std::endl;
         selectedImageRenderer->scaling.x = newScale;
         selectedImageRenderer->size.x = newPixels + selectedImageRenderer->size.x;
     }
@@ -363,4 +359,11 @@ void ImageCanvas::checkScaleMovement(){
     if(holdingScaleH || holdingScaleV){
         calculateFrames();
     }
+}
+
+void ImageCanvas::updateGaussian(float value){
+    if(selectedImageRenderer == nullptr){
+        return;
+    }
+    ImageManipulation::GaussianBlur(selectedImageRenderer->img, editionImageRenderer->img, value);
 }

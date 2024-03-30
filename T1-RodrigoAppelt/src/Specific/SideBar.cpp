@@ -51,6 +51,12 @@ void SideBar::draw(){
         "Brightness",
         GLUT_BITMAP_HELVETICA_10
     );
+    CV::text(
+        margin, 
+        tripButtonSize.y+margin*5+quadButtonSize.y*2+150+20+20+20+20+20,
+        "Gaussian Blur",
+        GLUT_BITMAP_HELVETICA_10
+    );
 
     this->uiManager->draw();
 }

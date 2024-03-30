@@ -245,6 +245,20 @@ void SideBar::submitHistogram(){
     this->brighnessSlider->setCallback([&](float value){
         imgCanvas->updateBrightness(value);
     });
+
+    this->gaussianSlider = new Slider(
+        pos + Vector2(margin, tripButtonSize.y+margin*5+quadButtonSize.y*2+150+20+20+20+20+20), 
+        Vector2(this->size.x-margin*2, 20),
+        0.0f, 
+        20.0f,
+        0.0f,
+        Slider::Orientation::HORIZONTAL
+    );
+    this->gaussianSlider->style = slstl;
+    this->uiManager->add(this->gaussianSlider);
+    this->gaussianSlider->setCallback([&](float value){
+        imgCanvas->updateGaussian(value);
+    });
 }
 
 void SideBar::linkImageCanvas(){

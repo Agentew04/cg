@@ -129,5 +129,55 @@ void ImageManipulation::Brightness(Image *source, Image *destination, float valu
             destination->pixels[pixelStart + c] = newValue;
         }
     }
+}
 
+void ImageManipulation::GaussianBlur(Image *source, Image *destination, float radius){
+    float sigma = std::max(radius/2.0f, 1.0f);
+    int kernelWidth = 2 * ((int)radius) + 1; // obriga a ser impar p/ ter centro
+
+    float **kernel = new float*[kernelWidth];
+    for(int i = 0; i < kernelWidth; i++){
+        kernel[i] = new float[kernelWidth];
+    }
+    float sum = 0.0f;
+
+    // popular o kernel
+    for(int x = -(int)radius; x <= radius; x++){
+        for(int y = -(int)radius; y <= radius; y++){
+            float value = exp(-(x*x + y*y)/(2*sigma*sigma));
+            float kernelValue = value / (2 * 3.1415 * sigma * sigma);
+            kernel[x + (int)radius][y + (int)radius] = kernelValue;
+            sum += kernelValue;
+        }
+    }
+
+    // agora normaliza o kernel para somar 1
+    for(int x = 0; x < kernelWidth; x++){
+        for(int y = 0; y < kernelWidth; y++){
+            kernel[x][y] /= sum;
+        }
+    }
+
+    int w,h;
+    source->getSize(&w, &h);
+    int n = w * h;
+    for(int i = 0; i < n; i++){
+        int x = i % w;
+        int y = i / w;
+        for(int c = 0; c < (int)Channel::COUNT; c++){
+            float newValue = 0.0f;
+            for(int kx = 0; kx < kernelWidth; kx++){
+                for(int ky = 0; ky < kernelWidth; ky++){
+                    int px = x + kx - (int)radius;
+                    int py = y + ky - (int)radius;
+                    if(px < 0 || px >= w || py < 0 || py >= h){
+                        continue;
+                    }
+                    int pixelStart = (py * w + px) * (int)Channel::COUNT;
+                    newValue += source->pixels[pixelStart + c] * kernel[kx][ky];
+                }
+            }
+            destination->pixels[i * (int)Channel::COUNT + c] = newValue;
+        }
+    }
 }

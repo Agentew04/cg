@@ -56,6 +56,7 @@ private:
     Chart* histogram;
     Slider *histogramMaxSlider;
     Slider *brighnessSlider;
+    Slider *gaussianSlider;
 };
 
 #endif 

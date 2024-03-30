@@ -575,7 +575,7 @@
 1710973478 e:\universidade\trabalhos\t1\src\image\imagemanipulation.h
 	<cstdint>
 
-1711747849 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\gl_canvas2d.cpp
+1711818023 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
@@ -612,7 +612,7 @@
 
 1710973732 e:\universidade\trabalhos\t1-rodrigoappelt\src\keyboard.h
 
-1711735022 e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\sidebar.h
+1711818216 e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\sidebar.h
 	"../Vector2.h"
 	"../UI/Chart.h"
 	"../UI/UIManager.h"
@@ -667,7 +667,7 @@
 	<vector>
 	"CheckBox.h"
 
-1711735302 e:\universidade\trabalhos\t1-rodrigoappelt\src\image\imagemanipulation.h
+1711818938 e:\universidade\trabalhos\t1-rodrigoappelt\src\image\imagemanipulation.h
 	<cstdint>
 	"../Vector2.h"
 
@@ -713,7 +713,7 @@
 	<iostream>
 	"UIManager.h"
 
-1711750993 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\image\imagemanipulation.cpp
+1711819316 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\image\imagemanipulation.cpp
 	<iostream>
 	<cstring>
 	"ImageManipulation.h"
@@ -733,7 +733,7 @@
 	<iostream>
 	"lodepng.h"
 
-1711735647 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\sidebar.cpp
+1711819501 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\sidebar.cpp
 	<iterator>
 	"SideBar.h"
 	"../gl_canvas2d.h"
@@ -749,13 +749,13 @@
 	<cstdint>
 	<iostream>
 
-1711750783 e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\imagerenderer.h
+1711818023 e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\imagerenderer.h
 	<vector>
 	"../Image/ImageManipulation.h"
 	"../Vector2.h"
 	"../Math/Matrix.h"
 
-1711750794 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\imagerenderer.cpp
+1711818023 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\ui\imagerenderer.cpp
 	"ImageRenderer.h"
 	"../gl_canvas2d.h"
 	<iostream>
@@ -765,7 +765,7 @@
 	"Chart.h"
 	"../gl_canvas2d.h"
 
-1711735454 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\sidebar.ui.cpp
+1711819561 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\sidebar.ui.cpp
 	<string.h>
 	<limits>
 	"SideBar.h"
@@ -773,7 +773,7 @@
 	"../UI/Chart.h"
 	"../UI/CheckBox.h"
 
-1711750935 e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\imagecanvas.h
+1711818274 e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\imagecanvas.h
 	<vector>
 	<map>
 	"../UI/ImageRenderer.h"
@@ -781,7 +781,7 @@
 	"../UI/UIManager.h"
 	"../Math/Polygon.h"
 
-1711752392 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\imagecanvas.cpp
+1711819467 source:e:\universidade\trabalhos\t1-rodrigoappelt\src\specific\imagecanvas.cpp
 	<string.h>
 	"ImageCanvas.h"
 	"../gl_canvas2d.h"
@@ -1004,7 +1004,7 @@
 	"../Vector2.h"
 	"../Vector3.h"
 
-1711747733 e:\universidade\trabalhos\t1-rodrigoappelt\src\math\polygon.h
+1711818023 e:\universidade\trabalhos\t1-rodrigoappelt\src\math\polygon.h
 	<vector>
 	"../Vector2.h"
 
