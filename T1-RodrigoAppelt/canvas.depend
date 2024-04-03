@@ -1041,3 +1041,254 @@
 	<iostream>
 	"CursorManager.h"
 
+1712187209 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\gl_canvas2d.cpp
+	"gl_canvas2d.h"
+	<GL/glut.h>
+
+1712185559 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\gl_canvas2d.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	"Vector2.h"
+	"Vector3.h"
+	"Math/Polygon.h"
+
+1632060799 e:\universidade\cg\trabalhos\include\gl\glut.h
+	"freeglut_std.h"
+
+1632060797 e:\universidade\cg\trabalhos\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1632060794 e:\universidade\cg\trabalhos\include\gl\freeglut_ext.h
+	<stdarg.h>
+
+1711751580 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\vector2.h
+	<cmath>
+	<iostream>
+
+1710465049 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\vector3.h
+	<iostream>
+
+1711818023 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\math\polygon.h
+	<vector>
+	"../Vector2.h"
+
+1711747818 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\image\bmp.cpp
+	"Bmp.h"
+	<string.h>
+	<cstdint>
+	<iostream>
+
+1711736493 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\image\bmp.h
+	<stdio.h>
+	<stdlib.h>
+
+1712184445 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\image\imagemanipulation.cpp
+	<iostream>
+	<cstring>
+	"ImageManipulation.h"
+	"../Vector2.h"
+
+1712184356 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\image\imagemanipulation.h
+	<cstdint>
+	"../Vector2.h"
+
+1710894317 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\image\lodepng.cpp
+	"lodepng.h"
+	<limits.h>
+	<stdio.h>
+	<stdlib.h>
+
+1710894324 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\image\lodepng.h
+	<string.h>
+	<vector>
+	<string>
+	"lodepng.h"
+	<iostream>
+	"lodepng.h"
+
+1712187269 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\main.cpp
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	<math.h>
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	"gl_canvas2d.h"
+	"Keyboard.h"
+	"Specific/SideBar.h"
+	"Specific/ImageCanvas.h"
+	"UI/CursorManager.h"
+
+1710973732 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\keyboard.h
+
+1712183704 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\specific\sidebar.h
+	"../Vector2.h"
+	"../UI/Chart.h"
+	"../UI/UIManager.h"
+	"../Image/ImageManipulation.h"
+	"../UI/Button.h"
+	"ImageCanvas.h"
+
+1711671583 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\ui\chart.h
+	<vector>
+	<map>
+	"../Vector2.h"
+	"../Vector3.h"
+
+1710985834 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\ui\uimanager.h
+	<vector>
+	"Button.h"
+	"Slider.h"
+	"CheckBox.h"
+	"ButtonManager.h"
+	"SliderManager.h"
+	"CheckBoxManager.h"
+	"Chart.h"
+	"ImageRenderer.h"
+
+1710987803 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\ui\button.h
+	<string>
+	<functional>
+	<map>
+	"../Vector2.h"
+	"../Vector3.h"
+
+1711674024 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\ui\slider.h
+	<map>
+	<functional>
+	"../Vector2.h"
+	"../Vector3.h"
+
+1711671557 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\ui\checkbox.h
+	<map>
+	"../Vector2.h"
+	"../Vector3.h"
+
+1710597094 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\ui\buttonmanager.h
+	<vector>
+	"Button.h"
+
+1710598286 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\ui\slidermanager.h
+	<vector>
+	"Slider.h"
+
+1710611069 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\ui\checkboxmanager.h
+	<vector>
+	"CheckBox.h"
+
+1711818023 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\ui\imagerenderer.h
+	<vector>
+	"../Image/ImageManipulation.h"
+	"../Vector2.h"
+	"../Math/Matrix.h"
+
+1711746689 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\math\matrix.h
+	<string.h>
+	<iostream>
+	"../Vector2.h"
+	"../Vector3.h"
+
+1712184504 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\specific\imagecanvas.h
+	<vector>
+	<map>
+	"../UI/ImageRenderer.h"
+	"../Image/ImageManipulation.h"
+	"../UI/UIManager.h"
+	"../Math/Polygon.h"
+
+1711669734 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\ui\cursormanager.h
+	<windows.h>
+	<map>
+
+1712184506 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\specific\imagecanvas.cpp
+	<string.h>
+	"ImageCanvas.h"
+	"../gl_canvas2d.h"
+	"../Image/ImageManipulation.h"
+	"../UI/CursorManager.h"
+
+1712184833 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\specific\sidebar.cpp
+	<iterator>
+	"SideBar.h"
+	"../gl_canvas2d.h"
+	"../Image/Bmp.h"
+
+1711839238 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\ui\button.cpp
+	"Button.h"
+	"../gl_canvas2d.h"
+	<iostream>
+
+1711839244 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\ui\buttonmanager.cpp
+	<vector>
+	<iostream>
+	<algorithm>
+	"ButtonManager.h"
+	"CursorManager.h"
+
+1712183619 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\ui\chart.cpp
+	<algorithm>
+	<vector>
+	"Chart.h"
+	"../gl_canvas2d.h"
+
+1711839347 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\ui\checkbox.cpp
+	<iostream>
+	<cmath>
+	"CheckBox.h"
+	"../gl_canvas2d.h"
+
+1711839354 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\ui\checkboxmanager.cpp
+	<vector>
+	<iostream>
+	<algorithm>
+	"CheckBoxManager.h"
+	"CursorManager.h"
+
+1711670896 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\ui\cursormanager.cpp
+	<windows.h>
+	<map>
+	<iostream>
+	"CursorManager.h"
+
+1711839376 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\ui\imagerenderer.cpp
+	"ImageRenderer.h"
+	"../gl_canvas2d.h"
+	<iostream>
+
+1712183635 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\ui\slider.cpp
+	"Slider.h"
+	"../gl_canvas2d.h"
+	<iostream>
+	<cmath>
+
+1710972737 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\ui\slidermanager.cpp
+	<vector>
+	<iostream>
+	<algorithm>
+	"SliderManager.h"
+
+1711066903 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\ui\uimanager.cpp
+	<vector>
+	<iostream>
+	"UIManager.h"
+
+1712184957 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\specific\sidebar.ui.cpp
+	<string.h>
+	<limits>
+	"SideBar.h"
+	"../UI/Button.h"
+	"../UI/Chart.h"
+	"../UI/CheckBox.h"
+

@@ -17,8 +17,6 @@ ImageCanvas::ImageCanvas() :
 }
 
 ImageCanvas::~ImageCanvas(){
-    std::cout << "Deleting ImageCanvas" << std::endl;
-    std::cout << imgrenderers.size() << std::endl;
     for(auto img : imgrenderers){
         delete img->img; // deleta a imagem em si
         delete img; // deleta a entidade imagem c posicao e tamanho
@@ -332,6 +330,13 @@ void ImageCanvas::updateBrightness(float value){
         return;
     }
     ImageManipulation::Brightness(selectedImageRenderer->img, editionImageRenderer->img, value);
+}
+
+void ImageCanvas::updateContrast(float value){
+    if(selectedImageRenderer == nullptr){
+        return;
+    }
+    ImageManipulation::Contrast(selectedImageRenderer->img, editionImageRenderer->img, value);
 }
 
 void ImageCanvas::checkScaleMovement(){

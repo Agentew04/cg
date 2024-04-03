@@ -25,7 +25,6 @@ ButtonStyle* ButtonStyle::Windows10(){
 ButtonStyle::~ButtonStyle(){
     backgroundColor.clear();
     borderColor.clear();
-    std::cout << "Deleting Button Style" << std::endl;
 }
 
 Button::Button(Vector2 pos, Vector2 sz, std::string text, std::function<void(Button*)> callback) {
@@ -37,10 +36,6 @@ Button::Button(Vector2 pos, Vector2 sz, std::string text, std::function<void(But
 }
 
 Button::~Button() {
-    // nao podemos deletar o estilo quando o botao sai do escopo pois
-    // ele deve ser compartilhado entre todos os botoes
-    //delete this->style;
-    std::cout << "Deleting button" << std::endl;
 }
 
 void Button::draw(){

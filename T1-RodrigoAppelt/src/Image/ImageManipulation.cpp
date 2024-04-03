@@ -8,14 +8,12 @@ Image::Image(int width, int height){
     this->width = width;
     this->height = height;
     this->pixels = new uint8_t[width * height * (int)ImageManipulation::Channel::COUNT];
-    std::cout << "aloquei uma imagem de " << width << "x" << height << std::endl;
 }
 
 
 
 Image::~Image(){
     delete[] this->pixels;
-    std::cout << "desalocando uma imagem de " << this->width << "x" << this->height << std::endl;
 }
 
 Vector2 Image::getSize(){
@@ -122,7 +120,31 @@ void ImageManipulation::Brightness(Image *source, Image *destination, float valu
     for(int i = 0; i < n; i++){
         for(int c = 0; c < (int)Channel::COUNT; c++){
             int pixelStart = i * (int)Channel::COUNT;
-            int newValue = source->pixels[pixelStart + c] * value;
+            // casts para perdermos a precisao mais tarde possivel
+            int newValue = (int)((float)source->pixels[pixelStart + c] + value);
+            if(newValue < 0){
+                newValue = 0;
+            }
+            if(newValue > UINT8_MAX){
+                newValue = UINT8_MAX;
+            }
+            destination->pixels[pixelStart + c] = newValue;
+        }
+    }
+}
+
+void ImageManipulation::Contrast(Image *source, Image *destination, float value){
+    int w,h;
+    source->getSize(&w, &h);
+    int n = w * h;
+    for(int i = 0; i < n; i++){
+        for(int c = 0; c < (int)Channel::COUNT; c++){
+            int pixelStart = i * (int)Channel::COUNT;
+            // subtraimos e somamos 127 para termos um intervalo de -127 a 127
+            int newValue = (int)(((float)source->pixels[pixelStart + c]) * value);
+            if(newValue < 0){
+                newValue = 0;
+            }
             if(newValue > UINT8_MAX){
                 newValue = UINT8_MAX;
             }

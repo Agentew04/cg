@@ -1,15 +1,36 @@
-/*********************************************************************
-// Canvas para desenho, criada sobre a API OpenGL. Nao eh necessario conhecimentos de OpenGL para usar.
-//  Autor: Cesar Tadeu Pozzer
-//         05/2024
-//
-//  Pode ser utilizada para fazer desenhos, animacoes, e jogos simples.
-//  Tem tratamento de mouse e teclado
-//  Estude o OpenGL antes de tentar compreender o arquivo gl_canvas.cpp
-//
-//  Versao 2.0
-//
-// *********************************************************************/
+/*
+ * Computacao Grafica - Trabalho 1
+ * Autor: Rodrigo Appelt
+ * 
+ * Recursos Implementadas:
+ *  - Carregar imagens bmp
+ *  - Separar em canais: R, G, B, Y(luminância)
+ *  - Espelhar(flip) na horizontal e vertical
+ *  - Histograma de cada canal separado
+ *    * Controlado por checkboxes abaixo do grafico
+ *    * Regulagem do maximo valor do grafico por slider
+ *  - Brilho
+ *  - Contraste
+ *  - Desfoque gaussiano
+ * 
+ * Manual:
+ *  - Carregar imagem: clicar nos botoes Load 1, Load 2 ou Load 3
+ *  - Mostrar canal individual na imagem de edicao:
+ *    * Clicar nos botoes R, G, B ou Y
+ *  - Espelhar imagem: clicar nos botoes Flip Horizontal ou Flip Vertical
+ *  - Ver o histograma de cada canal da imagem selecionada:
+ *    * Marcar cada checkbox abaixo do grafico
+ *    * Regular o maximo p/ mais detalhes com o primeiro slider abaixo
+ *  - Aplicar processamento nas imagens:
+ *    * Desfoque gaussiano: ajustar o slider 'Gaussian Blur', o programa
+ *      pode travar temporariamente pois e uma operacao pesada
+ *    * Brilho: ajustar o slider 'Brightness'. Valores maiores vao deixar
+ *      a imagem totalmente branca
+ *    * Contraste: ajustar o slider 'Contrast'. Valores maiores aumentam
+ *      o destaque entre as cores. Se o slider for zerado, ha 0 contraste
+ *      e as cores ficam iguais(pretas).
+ *     
+ */
 
 #include <GL/glut.h>
 #include <GL/freeglut_ext.h> //callback da wheel do mouse.
@@ -24,6 +45,7 @@
 #include "Specific/SideBar.h"
 #include "Specific/ImageCanvas.h"
 #include "UI/CursorManager.h"
+#include "PersistentStorage.h"
 
 
 //largura e altura inicial da tela . Alteram com o redimensionamento de tela.
@@ -49,9 +71,10 @@ void render(float delta)
 }
 
 void cleanup(){
-    // deleta toda side bar e seus componentes
     delete sideBar;
     delete imgCanvas;
+    std::cout << "Cleaned" << std::endl;
+    std::cout << "saida" << std::endl;
 }
 
 //funcao chamada toda vez que uma tecla for pressionada.
@@ -60,9 +83,7 @@ void keyboard(int key)
     switch(key)
     {
         case ESC:
-            cleanup();
-            std::cout << "Cleaned" << std::endl;
-            exit(0);
+            CV::close();
         break;
     }
 }
@@ -99,7 +120,8 @@ int main(void)
     sideBar->imgCanvas = imgCanvas;
     sideBar->linkImageCanvas();
 
-
+    PersistentStorage::
     CV::init(&screenWidth, &screenHeight, "T1 - Rodrigo Appelt", false);
     CV::run();
+    cleanup();
 }

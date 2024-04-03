@@ -250,7 +250,7 @@ void SideBar::submitHistogram(){
         pos + Vector2(margin, tripButtonSize.y+margin*5+quadButtonSize.y*2+150+20*5), 
         Vector2(this->size.x-margin*2, 20),
         0.0f, 
-        100.0f, 
+        255.0f, 
         0.0f,
         Slider::Orientation::HORIZONTAL
     );

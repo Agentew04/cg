@@ -48,7 +48,6 @@ CheckboxManager::~CheckboxManager(){
         }
         delete this->checkboxes[i];
     }
-    std::cout << "Deleting Checkbox Manager" << std::endl;
 }
 
 void CheckboxManager::draw(){

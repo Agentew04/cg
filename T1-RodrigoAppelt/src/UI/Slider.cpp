@@ -26,7 +26,6 @@ Slider::Style* Slider::Style::Windows10(){
 
 Slider::Style::~Style(){
     handleColor.clear();
-    std::cout << "Deleting Slider Style" << std::endl;
 }
 
 
@@ -52,6 +51,7 @@ Slider::Slider(Vector2 pos, Vector2 size, float minValue, float maxValue, float 
 }
 
 Slider::~Slider(){
+    //this->callback = default;
     std::cout << "Deleting Slider" << std::endl;
 }
 

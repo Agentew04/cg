@@ -10,9 +10,7 @@ ImageRenderer::ImageRenderer(Vector2 pos, Image *img)
 }
 
 ImageRenderer::~ImageRenderer(){
-    std::cout << "Deleting ImageRenderer" << std::endl;
-    // NAO DESALOCAR A IMAGEM AQUI
-    // essa classe nao eh dona do ponteiro
+    // nao desalocar Image aqui, pois ela eh compartilhada
 }
 
 void ImageRenderer::draw(){

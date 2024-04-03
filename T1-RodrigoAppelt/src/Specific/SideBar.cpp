@@ -42,19 +42,25 @@ void SideBar::draw(){
 
 
     int margin = 5;
-    Vector2 tripButtonSize = Vector2((this->size.x-(margin*4))/3 ,50);
+    Vector2 tripButtonSize = Vector2((this->size.x-(margin*4))/3, 50);
     Vector2 quadButtonSize = Vector2((this->size.x-(margin*5))/4, 50);
     CV::color(0,0,0);
     CV::text(
         margin, 
-        tripButtonSize.y+margin*5+quadButtonSize.y*2+150+20+20+20,
+        tripButtonSize.y+margin*5+quadButtonSize.y*2+150+margin*11,
+        "Gaussian Blur",
+        GLUT_BITMAP_HELVETICA_10
+    );
+    CV::text(
+        margin, 
+        tripButtonSize.y+margin*5+quadButtonSize.y*2+150+margin*19,
         "Brightness",
         GLUT_BITMAP_HELVETICA_10
     );
     CV::text(
         margin, 
-        tripButtonSize.y+margin*5+quadButtonSize.y*2+150+20+20+20+20+20,
-        "Gaussian Blur",
+        tripButtonSize.y+margin*5+quadButtonSize.y*2+150+margin*27,
+        "Contrast",
         GLUT_BITMAP_HELVETICA_10
     );
 

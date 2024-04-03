@@ -84,6 +84,8 @@ public:
     //funcao de inicializacao da Canvas2D. Recebe a largura, altura, e um titulo para a janela
     static void init(int *w, int *h, const char *title, bool antiAliasing);
 
+    // inicia processo de saida do programa
+    static void close();
     //funcao para executar a Canvas2D
     static void run();
 };

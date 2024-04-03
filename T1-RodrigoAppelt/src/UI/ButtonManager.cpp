@@ -40,7 +40,6 @@ ButtonManager::~ButtonManager(){
             
         delete this->buttons[i];
     }
-    std::cout << "Deleting Button Manager" << std::endl;
 }
 
 void ButtonManager::draw(){

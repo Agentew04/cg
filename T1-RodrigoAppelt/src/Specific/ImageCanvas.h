@@ -72,6 +72,7 @@ public:
     /// @brief Solicita uma atualizacao dos histogramas
     void updateSelectedHistograms();
     void updateBrightness(float value);
+    void updateContrast(float value);
     void updateGaussian(float value);
 
     /// @brief Taxa do maximo valor que vai ser o maximo do grafico

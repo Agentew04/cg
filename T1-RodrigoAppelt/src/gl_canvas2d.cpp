@@ -429,6 +429,7 @@ void CV::init(int *w, int *h, const char *title, bool antiAliasing)
     }else{
         glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
     }
+    glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE,GLUT_ACTION_CONTINUE_EXECUTION);
 
     glutInitWindowSize (*w, *h);
     glutInitWindowPosition (50, 50);
@@ -457,3 +458,6 @@ void CV::run()
    glutMainLoop();
 }
 
+void CV::close(){
+   glutLeaveMainLoop();
+}

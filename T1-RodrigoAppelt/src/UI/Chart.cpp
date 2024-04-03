@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <vector>
 
 #include "Chart.h"
@@ -15,6 +16,19 @@ Chart::Chart(Vector2 pos, Vector2 size, Chart::ChartType type){
 }
 
 Chart::~Chart(){
+    std::vector<uint32_t*> deleted;
+    for(auto& series : this->series){
+        if(std::find(deleted.begin(), deleted.end(), series->x) == deleted.end()){
+            deleted.push_back(series->x);
+            delete series->x;
+        }
+        if(std::find(deleted.begin(), deleted.end(), series->y) == deleted.end()){
+            deleted.push_back(series->y);
+            delete series->y;
+        }
+        delete series;
+    }
+    series.clear();
 }
 
 void Chart::draw(){

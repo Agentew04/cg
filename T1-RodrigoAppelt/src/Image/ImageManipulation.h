@@ -67,6 +67,13 @@ public:
     /// @param value O valor do brilho. 1.0 eh o valor normal
     static void Brightness(Image *source, Image *destination, float value);
 
+    /// @brief Ajusta o contraste da imagem
+    /// @param source A imagem fonte
+    /// @param destination A imagem que recebera o resultado
+    /// @param value O valor do contraste. 1.0 eh o valor normal.
+    /// Valores maiores aumentam o contraste, menores diminuem
+    static void Contrast(Image *source, Image *destination, float value);
+
     /// @brief Aplica um desfoque gaussiano na imagem
     /// @param source A imagem fonte
     /// @param destination A imagem que recebera o resultado

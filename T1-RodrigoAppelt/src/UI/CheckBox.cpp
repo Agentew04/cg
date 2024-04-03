@@ -30,7 +30,6 @@ Checkbox::Style::~Style(){
     backgroundColor.clear();
     borderColor.clear();
     checkColor.clear();
-    std::cout << "Deleting Checkbox Style" << std::endl;
 }
 
 
@@ -44,7 +43,6 @@ Checkbox::Checkbox(Vector2 pos, Vector2 size, std::string label, bool defaultVal
 }
 
 Checkbox::~Checkbox(){
-    std::cout << "Deleting Checkbox" << std::endl;
 }
 
 void Checkbox::draw(){
