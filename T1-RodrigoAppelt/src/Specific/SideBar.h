@@ -55,8 +55,10 @@ private:
     UIManager* uiManager;
     Chart* histogram;
     Slider *histogramMaxSlider;
-    Slider *brighnessSlider;
     Slider *gaussianSlider;
+    Slider *brighnessSlider;
+    Slider *contrastSlider;
+    //Slider *gammaCorrectionSlider; nao implementado
 };
 
 #endif 

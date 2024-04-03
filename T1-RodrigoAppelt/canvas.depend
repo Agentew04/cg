@@ -788,11 +788,11 @@
 	"../Image/ImageManipulation.h"
 	"../UI/CursorManager.h"
 
-1711296660 source:d:\universidade\cg\t1-rodrigoappelt\src\gl_canvas2d.cpp
+1711753050 source:d:\universidade\cg\t1-rodrigoappelt\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
-1711296660 d:\universidade\cg\t1-rodrigoappelt\src\gl_canvas2d.h
+1711753050 d:\universidade\cg\t1-rodrigoappelt\src\gl_canvas2d.h
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
@@ -801,30 +801,32 @@
 	<GL/freeglut_ext.h>
 	"Vector2.h"
 	"Vector3.h"
+	"Math/Polygon.h"
 
-1711296660 d:\universidade\cg\t1-rodrigoappelt\src\vector2.h
+1711753050 d:\universidade\cg\t1-rodrigoappelt\src\vector2.h
 	<cmath>
 	<iostream>
 
 1711296660 d:\universidade\cg\t1-rodrigoappelt\src\vector3.h
 	<iostream>
 
-1711296659 source:d:\universidade\cg\t1-rodrigoappelt\src\image\bmp.cpp
+1711753050 source:d:\universidade\cg\t1-rodrigoappelt\src\image\bmp.cpp
 	"Bmp.h"
 	<string.h>
 	<cstdint>
+	<iostream>
 
-1711296659 d:\universidade\cg\t1-rodrigoappelt\src\image\bmp.h
+1711753050 d:\universidade\cg\t1-rodrigoappelt\src\image\bmp.h
 	<stdio.h>
 	<stdlib.h>
 
-1711296659 source:d:\universidade\cg\t1-rodrigoappelt\src\image\imagemanipulation.cpp
+1711904004 source:d:\universidade\cg\t1-rodrigoappelt\src\image\imagemanipulation.cpp
 	<iostream>
 	<cstring>
 	"ImageManipulation.h"
 	"../Vector2.h"
 
-1711296659 d:\universidade\cg\t1-rodrigoappelt\src\image\imagemanipulation.h
+1711904004 d:\universidade\cg\t1-rodrigoappelt\src\image\imagemanipulation.h
 	<cstdint>
 	"../Vector2.h"
 
@@ -842,13 +844,15 @@
 	<iostream>
 	"lodepng.h"
 
-1711472602 source:d:\universidade\cg\t1-rodrigoappelt\src\specific\sidebar.ui.cpp
+1712164077 source:d:\universidade\cg\t1-rodrigoappelt\src\specific\sidebar.ui.cpp
+	<string.h>
+	<limits>
 	"SideBar.h"
 	"../UI/Button.h"
 	"../UI/Chart.h"
 	"../UI/CheckBox.h"
 
-1711391014 d:\universidade\cg\t1-rodrigoappelt\src\specific\sidebar.h
+1711904005 d:\universidade\cg\t1-rodrigoappelt\src\specific\sidebar.h
 	"../Vector2.h"
 	"../UI/Chart.h"
 	"../UI/UIManager.h"
@@ -856,7 +860,7 @@
 	"../UI/Button.h"
 	"ImageCanvas.h"
 
-1711296659 d:\universidade\cg\t1-rodrigoappelt\src\ui\chart.h
+1711753050 d:\universidade\cg\t1-rodrigoappelt\src\ui\chart.h
 	<vector>
 	<map>
 	"../Vector2.h"
@@ -880,12 +884,13 @@
 	"../Vector2.h"
 	"../Vector3.h"
 
-1711296659 d:\universidade\cg\t1-rodrigoappelt\src\ui\slider.h
+1711753050 d:\universidade\cg\t1-rodrigoappelt\src\ui\slider.h
 	<map>
+	<functional>
 	"../Vector2.h"
 	"../Vector3.h"
 
-1711296659 d:\universidade\cg\t1-rodrigoappelt\src\ui\checkbox.h
+1711753050 d:\universidade\cg\t1-rodrigoappelt\src\ui\checkbox.h
 	<map>
 	"../Vector2.h"
 	"../Vector3.h"
@@ -902,51 +907,56 @@
 	<vector>
 	"CheckBox.h"
 
-1711296659 d:\universidade\cg\t1-rodrigoappelt\src\ui\imagerenderer.h
+1711753050 d:\universidade\cg\t1-rodrigoappelt\src\ui\imagerenderer.h
+	<vector>
 	"../Image/ImageManipulation.h"
 	"../Vector2.h"
+	"../Math/Matrix.h"
 
-1711471717 d:\universidade\cg\t1-rodrigoappelt\src\specific\imagecanvas.h
+1711904005 d:\universidade\cg\t1-rodrigoappelt\src\specific\imagecanvas.h
 	<vector>
 	<map>
 	"../UI/ImageRenderer.h"
 	"../Image/ImageManipulation.h"
 	"../UI/UIManager.h"
+	"../Math/Polygon.h"
 
 1711296659 source:d:\universidade\cg\t1-rodrigoappelt\src\ui\button.cpp
 	"Button.h"
 	"../gl_canvas2d.h"
 	<iostream>
 
-1711296659 source:d:\universidade\cg\t1-rodrigoappelt\src\ui\buttonmanager.cpp
+1711753050 source:d:\universidade\cg\t1-rodrigoappelt\src\ui\buttonmanager.cpp
 	<vector>
 	<iostream>
 	<algorithm>
 	"ButtonManager.h"
+	"CursorManager.h"
 
-1711296659 source:d:\universidade\cg\t1-rodrigoappelt\src\ui\chart.cpp
+1711753050 source:d:\universidade\cg\t1-rodrigoappelt\src\ui\chart.cpp
 	<vector>
 	"Chart.h"
 	"../gl_canvas2d.h"
 
-1711296659 source:d:\universidade\cg\t1-rodrigoappelt\src\ui\checkbox.cpp
+1711753050 source:d:\universidade\cg\t1-rodrigoappelt\src\ui\checkbox.cpp
 	<iostream>
 	<cmath>
 	"CheckBox.h"
 	"../gl_canvas2d.h"
 
-1711296659 source:d:\universidade\cg\t1-rodrigoappelt\src\ui\checkboxmanager.cpp
+1711753050 source:d:\universidade\cg\t1-rodrigoappelt\src\ui\checkboxmanager.cpp
 	<vector>
 	<iostream>
 	<algorithm>
 	"CheckBoxManager.h"
+	"CursorManager.h"
 
-1711470864 source:d:\universidade\cg\t1-rodrigoappelt\src\ui\imagerenderer.cpp
+1711753050 source:d:\universidade\cg\t1-rodrigoappelt\src\ui\imagerenderer.cpp
 	"ImageRenderer.h"
 	"../gl_canvas2d.h"
 	<iostream>
 
-1711296659 source:d:\universidade\cg\t1-rodrigoappelt\src\ui\slider.cpp
+1711753050 source:d:\universidade\cg\t1-rodrigoappelt\src\ui\slider.cpp
 	"Slider.h"
 	"../gl_canvas2d.h"
 	<iostream>
@@ -963,7 +973,7 @@
 	<iostream>
 	"UIManager.h"
 
-1711470572 source:d:\universidade\cg\t1-rodrigoappelt\src\main.cpp
+1711753050 source:d:\universidade\cg\t1-rodrigoappelt\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -974,15 +984,18 @@
 	"Keyboard.h"
 	"Specific/SideBar.h"
 	"Specific/ImageCanvas.h"
+	"UI/CursorManager.h"
 
 1711296659 d:\universidade\cg\t1-rodrigoappelt\src\keyboard.h
 
-1711473034 source:d:\universidade\cg\t1-rodrigoappelt\src\specific\imagecanvas.cpp
+1711904004 source:d:\universidade\cg\t1-rodrigoappelt\src\specific\imagecanvas.cpp
+	<string.h>
 	"ImageCanvas.h"
 	"../gl_canvas2d.h"
 	"../Image/ImageManipulation.h"
+	"../UI/CursorManager.h"
 
-1711470687 source:d:\universidade\cg\t1-rodrigoappelt\src\specific\sidebar.cpp
+1711904005 source:d:\universidade\cg\t1-rodrigoappelt\src\specific\sidebar.cpp
 	<iterator>
 	"SideBar.h"
 	"../gl_canvas2d.h"
@@ -1007,4 +1020,24 @@
 1711818023 e:\universidade\trabalhos\t1-rodrigoappelt\src\math\polygon.h
 	<vector>
 	"../Vector2.h"
+
+1711753050 d:\universidade\cg\t1-rodrigoappelt\src\math\polygon.h
+	<vector>
+	"../Vector2.h"
+
+1711753050 d:\universidade\cg\t1-rodrigoappelt\src\math\matrix.h
+	<string.h>
+	<iostream>
+	"../Vector2.h"
+	"../Vector3.h"
+
+1711753050 d:\universidade\cg\t1-rodrigoappelt\src\ui\cursormanager.h
+	<windows.h>
+	<map>
+
+1711753050 source:d:\universidade\cg\t1-rodrigoappelt\src\ui\cursormanager.cpp
+	<windows.h>
+	<map>
+	<iostream>
+	"CursorManager.h"
 

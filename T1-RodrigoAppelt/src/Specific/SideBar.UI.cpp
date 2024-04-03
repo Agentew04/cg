@@ -232,22 +232,8 @@ void SideBar::submitHistogram(){
     bckbx->setBinding(&histB->visible);
     yckbx->setBinding(&histLum->visible);
 
-    this->brighnessSlider = new Slider(
-        pos + Vector2(margin, tripButtonSize.y+margin*5+quadButtonSize.y*2+150+20+20+20), 
-        Vector2(this->size.x-margin*2, 20),
-        0.0f, 
-        1.0f, 
-        1.0f,
-        Slider::Orientation::HORIZONTAL
-    );
-    this->brighnessSlider->style = slstl;
-    this->uiManager->add(this->brighnessSlider);
-    this->brighnessSlider->setCallback([&](float value){
-        imgCanvas->updateBrightness(value);
-    });
-
     this->gaussianSlider = new Slider(
-        pos + Vector2(margin, tripButtonSize.y+margin*5+quadButtonSize.y*2+150+20+20+20+20+20), 
+        pos + Vector2(margin, tripButtonSize.y+margin*5+quadButtonSize.y*2+150+20+20+20), 
         Vector2(this->size.x-margin*2, 20),
         0.0f, 
         20.0f,
@@ -259,6 +245,35 @@ void SideBar::submitHistogram(){
     this->gaussianSlider->setCallback([&](float value){
         imgCanvas->updateGaussian(value);
     });
+
+    this->brighnessSlider = new Slider(
+        pos + Vector2(margin, tripButtonSize.y+margin*5+quadButtonSize.y*2+150+20*5), 
+        Vector2(this->size.x-margin*2, 20),
+        0.0f, 
+        100.0f, 
+        0.0f,
+        Slider::Orientation::HORIZONTAL
+    );
+    this->brighnessSlider->style = slstl;
+    this->uiManager->add(this->brighnessSlider);
+    this->brighnessSlider->setCallback([&](float value){
+        imgCanvas->updateBrightness(value);
+    });
+
+    this->contrastSlider = new Slider(
+        pos + Vector2(margin, tripButtonSize.y+margin*5+quadButtonSize.y*2+150+20*7),
+        Vector2(this->size.x-margin*2, 20),
+        0.0f,
+        2.0f,
+        1.0f,
+        Slider::Orientation::HORIZONTAL
+    );
+    this->contrastSlider->style = slstl;
+    this->uiManager->add(this->contrastSlider);
+    this->contrastSlider->setCallback([&](float value){
+        imgCanvas->updateContrast(value);
+    });
+
 }
 
 void SideBar::linkImageCanvas(){
