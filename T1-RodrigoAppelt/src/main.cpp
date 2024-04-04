@@ -120,7 +120,6 @@ int main(void)
     sideBar->imgCanvas = imgCanvas;
     sideBar->linkImageCanvas();
 
-    PersistentStorage::
     CV::init(&screenWidth, &screenHeight, "T1 - Rodrigo Appelt", false);
     CV::run();
     cleanup();
