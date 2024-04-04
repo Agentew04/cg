@@ -1,7 +1,7 @@
 /*
  * Computacao Grafica - Trabalho 1
  * Autor: Rodrigo Appelt
- * 
+ *
  * Recursos Implementadas:
  *  - Carregar imagens bmp
  *  - Separar em canais: R, G, B, Y(luminância)
@@ -12,7 +12,7 @@
  *  - Brilho
  *  - Contraste
  *  - Desfoque gaussiano
- * 
+ *
  * Manual:
  *  - Carregar imagem: clicar nos botoes Load 1, Load 2 ou Load 3
  *  - Mostrar canal individual na imagem de edicao:
@@ -29,7 +29,7 @@
  *    * Contraste: ajustar o slider 'Contrast'. Valores maiores aumentam
  *      o destaque entre as cores. Se o slider for zerado, ha 0 contraste
  *      e as cores ficam iguais(pretas).
- *     
+ *
  */
 
 #include <GL/glut.h>
@@ -45,7 +45,7 @@
 #include "Specific/SideBar.h"
 #include "Specific/ImageCanvas.h"
 #include "UI/CursorManager.h"
-#include "PersistentStorage.h"
+#include "Storage/PersistentStorage.h"
 
 
 //largura e altura inicial da tela . Alteram com o redimensionamento de tela.
@@ -91,7 +91,7 @@ void keyboard(int key)
 //funcao chamada toda vez que uma tecla for liberada
 void keyboardUp(int key)
 {
-   
+
 }
 
 //funcao para tratamento de mouse: cliques, movimentos e arrastos
@@ -115,6 +115,7 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
 
 int main(void)
 {
+    PersistentStorage::load();
     imgCanvas = new ImageCanvas();
     sideBar = new SideBar(Vector2((screenWidth/4.0f)*3,0), Vector2((screenWidth/4.0f), screenHeight), &screenWidth, &screenHeight);
     sideBar->imgCanvas = imgCanvas;
@@ -122,5 +123,6 @@ int main(void)
 
     CV::init(&screenWidth, &screenHeight, "T1 - Rodrigo Appelt", false);
     CV::run();
+    PersistentStorage::save();
     cleanup();
 }

@@ -4,6 +4,7 @@
 #include "../gl_canvas2d.h"
 #include "../Image/ImageManipulation.h"
 #include "../UI/CursorManager.h"
+#include "../Storage/PersistentStorage.h"
 
 bool inside(Vector2 buttonPos, Vector2 buttonSize, Vector2 mousePos);
 
@@ -92,8 +93,9 @@ void ImageCanvas::mouseUp(){
 
 void ImageCanvas::update(){
     if(this->dragging && this->selectedImageRenderer != nullptr){
-        // TODO contabilizar ponto de pivo
         this->selectedImageRenderer->pos = this->mousePos - dragPivot;
+        std::cout << "update::selectedImageRenderer::imageIndex = " << selectedImageRenderer->imageIndex << std::endl;
+        PersistentStorage::setVec2("imgState", "pos"+std::to_string(selectedImageRenderer->imageIndex), selectedImageRenderer->pos);
     }
 }
 
@@ -122,13 +124,20 @@ void ImageCanvas::drawFrame(){
     //CV::color(rotationKnobColor);
     // CV::circleFill(
     //     (selectedImageRenderer->realsize*selectedImageRenderer->scaling)
-    //     + Vector2(margin/2.0f, margin/2.0f), 
+    //     + Vector2(margin/2.0f, margin/2.0f),
     //     margin*2, 10);
 }
 
-void ImageCanvas::submitImage(Image* image){
+void ImageCanvas::submitImage(Image* image, int imageId){
     int n = imgrenderers.size();
-    ImageRenderer *imgrnd = new ImageRenderer(Vector2(5+n*20,5+n*20), image);
+    std::cout << "id: " << imageId << std::endl;
+
+    PersistentStorage::setIfNotVec2("imgState", "pos"+std::to_string(imageId), Vector2(5+n*20,5+n*20));
+
+    Vector2 imgpos;
+    PersistentStorage::getVec2("imgState", "pos"+std::to_string(imageId), &imgpos);
+    ImageRenderer *imgrnd = new ImageRenderer(imgpos, image);
+    imgrnd->imageIndex = imageId;
     if(selectedImageRenderer == nullptr){
         selectImage(imgrnd);
     }else{
@@ -277,7 +286,7 @@ void ImageCanvas::updateCursor(){
 
     // no knob de rotacao <== desabilitado, n implementado
     // if((selectedImageRenderer->pos +
-    //     (selectedImageRenderer->realsize*selectedImageRenderer->scaling) + 
+    //     (selectedImageRenderer->realsize*selectedImageRenderer->scaling) +
     //     Vector2(margin/2.0f, margin/2.0f)
     // ).distance(mousePos) <= margin*2){
     //     CursorManager::setCursor(CursorManager::CursorType::ROTATE);
@@ -361,6 +370,11 @@ void ImageCanvas::checkScaleMovement(){
         selectedImageRenderer->scaling.y = newScale;
         selectedImageRenderer->size.y = newPixels + selectedImageRenderer->size.y;
     }
+    PersistentStorage::setVec2(
+        "imgState", 
+        "scale"+std::to_string(selectedImageRenderer->imageIndex), 
+        selectedImageRenderer->scaling    
+    );
     if(holdingScaleH || holdingScaleV){
         calculateFrames();
     }

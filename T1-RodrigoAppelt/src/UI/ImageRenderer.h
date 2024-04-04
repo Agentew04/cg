@@ -17,6 +17,7 @@ public:
     void draw();
     Vector2 pos,size, realsize;
     Image *img;
+    int imageIndex = -1;
 
     Vector2 scaling = Vector2::one();
     float rotation = 0;

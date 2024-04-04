@@ -1,5 +1,6 @@
 #include <string.h>
 #include <limits>
+#include <string>
 
 #include "SideBar.h"
 #include "../UI/Button.h"
@@ -279,4 +280,5 @@ void SideBar::submitHistogram(){
 void SideBar::linkImageCanvas(){
     imgCanvas->setHistograms(histR, histG, histB, histLum);
     histogramMaxSlider->setBinding(&imgCanvas->maxHistogramValueRatio);
+    load();
 }

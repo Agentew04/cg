@@ -17,7 +17,7 @@ void PersistentStorage::setFloat(std::string container, std::string key, float v
         containers[container] = new Container();
     }
     containers[container]->floats[key] = value;
-    save();
+    // save();
 }
 
 bool PersistentStorage::hasFloat(std::string container, std::string key){
@@ -40,7 +40,7 @@ void PersistentStorage::removeFloat(std::string container, std::string key){
         return;
     }
     containers[container]->floats.erase(key);
-    save();
+    // save();
 }
 
 void PersistentStorage::setIfNotFloat(std::string container, std::string key, float value){
@@ -50,7 +50,7 @@ void PersistentStorage::setIfNotFloat(std::string container, std::string key, fl
     }
     if(containers[container]->floats.find(key) == containers[container]->floats.end()){
         containers[container]->floats[key] = value;
-        save();
+        // save();
     }
 }
 

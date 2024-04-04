@@ -51,7 +51,7 @@ public:
 
     /// @brief Adiciona uma imagem na canvas
     /// @param image a imagem a ser adicionada
-    void submitImage(Image *image);
+    void submitImage(Image *image, int imageId);
 
     /// @brief Sinaliza para mostrar apenas o canal definido
     ///da imagem selecionada na quarta imagem

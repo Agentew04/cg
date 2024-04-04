@@ -17,7 +17,7 @@ void PersistentStorage::setVec2(std::string container, std::string key, Vector2 
         containers[container] = new Container();
     }
     containers[container]->vec2s[key] = value;
-    save();
+    // save();
 }
 
 bool PersistentStorage::hasVec2(std::string container, std::string key){
@@ -40,7 +40,7 @@ void PersistentStorage::removeVec2(std::string container, std::string key){
         return;
     }
     containers[container]->vec2s.erase(key);
-    save();
+    // save();
 }
 
 void PersistentStorage::setIfNotVec2(std::string container, std::string key, Vector2 value){
@@ -50,7 +50,7 @@ void PersistentStorage::setIfNotVec2(std::string container, std::string key, Vec
     }
     if(containers[container]->vec2s.find(key) == containers[container]->vec2s.end()){
         containers[container]->vec2s[key] = value;
-        save();
+        // save();
     }
 }
 

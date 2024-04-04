@@ -17,7 +17,7 @@ void PersistentStorage::setInt(std::string container, std::string key, int value
         containers[container] = new Container();
     }
     containers[container]->ints[key] = value;
-    save();
+    // save();
 }
 
 bool PersistentStorage::hasInt(std::string container, std::string key){
@@ -40,7 +40,7 @@ void PersistentStorage::removeInt(std::string container, std::string key){
         return;
     }
     containers[container]->ints.erase(key);
-    save();
+    // save();
 }
 
 void PersistentStorage::setIfNotInt(std::string container, std::string key, int value){
@@ -50,7 +50,7 @@ void PersistentStorage::setIfNotInt(std::string container, std::string key, int 
     }
     if(containers[container]->ints.find(key) == containers[container]->ints.end()){
         containers[container]->ints[key] = value;
-        save();
+        // save();
     }
 }
 

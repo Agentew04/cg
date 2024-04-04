@@ -1,6 +1,8 @@
 #ifndef __SIDE_BAR_H__
 #define __SIDE_BAR_H__
 
+#include <map>
+
 #include "../Vector2.h"
 #include "../UI/Chart.h"
 #include "../UI/UIManager.h"
@@ -45,6 +47,7 @@ private:
     void submitButtons();
     void submitHistogram();
     void loadBmp(int n);
+    void load();
 
     /// @brief Mapa para saber quais imagens já foram carregadas
     std::map<int,bool> loadedImages;

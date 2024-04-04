@@ -17,7 +17,7 @@ void PersistentStorage::setVec3(std::string container, std::string key, Vector3 
         containers[container] = new Container();
     }
     containers[container]->vec3s[key] = value;
-    save();
+    // save();
 }
 
 bool PersistentStorage::hasVec3(std::string container, std::string key){
@@ -40,7 +40,7 @@ void PersistentStorage::removeVec3(std::string container, std::string key){
         return;
     }
     containers[container]->vec3s.erase(key);
-    save();
+    // save();
 }
 
 void PersistentStorage::setIfNotVec3(std::string container, std::string key, Vector3 value){
@@ -50,7 +50,7 @@ void PersistentStorage::setIfNotVec3(std::string container, std::string key, Vec
     }
     if(containers[container]->vec3s.find(key) == containers[container]->vec3s.end()){
         containers[container]->vec3s[key] = value;
-        save();
+        // save();
     }
 }
 
