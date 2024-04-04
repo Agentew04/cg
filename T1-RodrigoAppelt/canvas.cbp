@@ -52,6 +52,12 @@
 		<Unit filename="src/Specific/SideBar.UI.cpp" />
 		<Unit filename="src/Specific/SideBar.cpp" />
 		<Unit filename="src/Specific/SideBar.h" />
+		<Unit filename="src/Storage/PersistentStorage.cpp" />
+		<Unit filename="src/Storage/PersistentStorage.float.cpp" />
+		<Unit filename="src/Storage/PersistentStorage.h" />
+		<Unit filename="src/Storage/PersistentStorage.int.cpp" />
+		<Unit filename="src/Storage/PersistentStorage.vec2.cpp" />
+		<Unit filename="src/Storage/PersistentStorage.vec3.cpp" />
 		<Unit filename="src/UI/Button.cpp" />
 		<Unit filename="src/UI/Button.h" />
 		<Unit filename="src/UI/ButtonManager.cpp" />
