@@ -85,13 +85,22 @@ bool Checkbox::getValue(){
     return this->value;
 }
 
-void Checkbox::setValue(bool value){
+void Checkbox::setValue(bool value, bool notify){
     this->value = value;
     if(this->bindingTarget != nullptr){
         *this->bindingTarget = value;
+    }
+
+    if(hasCallback && notify){
+        this->callback(value);
     }
 }
 
 void Checkbox::setBinding(bool *target){
     this->bindingTarget = target;
+}
+
+void Checkbox::setCallback(std::function<void(bool)> callback){
+    this->callback = callback;
+    hasCallback = true;
 }

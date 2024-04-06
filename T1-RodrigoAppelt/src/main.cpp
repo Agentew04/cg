@@ -12,6 +12,14 @@
  *  - Brilho
  *  - Contraste
  *  - Desfoque gaussiano
+ *  - Persistencia do estado do programa em arquivos
+ *    * Vai ser gerado um 'save-rodrigoappelt-t1.dat' no diretorio de execucao
+ *    * Salvamento das seguintes caracteristicas:
+ *      -> Imagens carregadas
+ *      -> Posicao dela no canvas e sua escala
+ *      -> Imagem selecionada
+ *      -> Canais visiveis no histograma
+ *      -> Ultima operacao realizada
  *
  * Manual:
  *  - Carregar imagem: clicar nos botoes Load 1, Load 2 ou Load 3

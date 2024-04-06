@@ -94,7 +94,6 @@ void ImageCanvas::mouseUp(){
 void ImageCanvas::update(){
     if(this->dragging && this->selectedImageRenderer != nullptr){
         this->selectedImageRenderer->pos = this->mousePos - dragPivot;
-        std::cout << "update::selectedImageRenderer::imageIndex = " << selectedImageRenderer->imageIndex << std::endl;
         PersistentStorage::setVec2("imgState", "pos"+std::to_string(selectedImageRenderer->imageIndex), selectedImageRenderer->pos);
     }
 }
@@ -120,23 +119,24 @@ void ImageCanvas::drawFrame(){
     // left
     CV::polygonFill(Vector2::zero(), &frameLeft);
 
-    // rotation knob <== desligado, nao consegui implementar rotacao
-    //CV::color(rotationKnobColor);
-    // CV::circleFill(
-    //     (selectedImageRenderer->realsize*selectedImageRenderer->scaling)
-    //     + Vector2(margin/2.0f, margin/2.0f),
-    //     margin*2, 10);
 }
 
 void ImageCanvas::submitImage(Image* image, int imageId){
     int n = imgrenderers.size();
-    std::cout << "id: " << imageId << std::endl;
 
     PersistentStorage::setIfNotVec2("imgState", "pos"+std::to_string(imageId), Vector2(5+n*20,5+n*20));
 
     Vector2 imgpos;
     PersistentStorage::getVec2("imgState", "pos"+std::to_string(imageId), &imgpos);
     ImageRenderer *imgrnd = new ImageRenderer(imgpos, image);
+
+    // aplicar escala
+    PersistentStorage::setIfNotVec2("imgState", "scale"+std::to_string(imageId), Vector2::one());
+    Vector2 scale;
+    PersistentStorage::getVec2("imgState", "scale"+std::to_string(imageId), &scale);
+    imgrnd->scaling = scale;
+
+
     imgrnd->imageIndex = imageId;
     if(selectedImageRenderer == nullptr){
         selectImage(imgrnd);
@@ -171,15 +171,38 @@ void ImageCanvas::selectImage(ImageRenderer* imgrnd){
 
     // calcula os histogramas de cada canal
     updateSelectedHistograms();
-    updateBrightness(1.0);
+    //updateBrightness(1.0);
 
     // cria os poligonos do frame
     calculateFrames();
+
+    // persiste qual imagem ta selecionada
+    if(loadedFromFileYet){
+        PersistentStorage::setInt("imgState", "selected", imgrnd->imageIndex);
+    }
 }
 
 void ImageCanvas::requestChannel(ImageManipulation::Channel channel, bool luminance){
     if(selectedImageRenderer == nullptr){
         return;
+    }
+
+    // persiste operacao no disco
+    if(luminance) PersistentStorage::setInt("sidebar","lastOp", (int)Operation::EXTRACT_Y);
+    else {
+        Operation val = Operation::NONE;
+        switch (channel) {
+        case ImageManipulation::Channel::RED:
+            val = Operation::EXTRACT_R;
+            break;
+        case ImageManipulation::Channel::GREEN:
+            val = Operation::EXTRACT_G;
+            break;
+        case ImageManipulation::Channel::BLUE:
+            val = Operation::EXTRACT_B;
+            break;
+        }
+        PersistentStorage::setInt("sidebar", "lastOp", (int)val);
     }
 
     Image *source = selectedImageRenderer->img;
@@ -230,6 +253,7 @@ void ImageCanvas::requestFlip(bool vertical){
     if(selectedImageRenderer == nullptr){
         return;
     }
+    PersistentStorage::setInt("sidebar", "lastOp", vertical ? (int)Operation::FLIP_V : (int)Operation::FLIP_H);
 
     int w,h;
     selectedImageRenderer->img->getSize(&w, &h);
@@ -237,6 +261,7 @@ void ImageCanvas::requestFlip(bool vertical){
     Image *temp = new Image(w,h);
     Image *target = editionImageRenderer->img;
     ImageManipulation::CopyImage(target,temp);
+
 
     if(!vertical){
         ImageManipulation::FlipHorizontal(temp, target);
@@ -303,7 +328,6 @@ inline int getMax(uint32_t *begin, uint32_t *end){
     return max;
 }
 
-
 void ImageCanvas::updateSelectedHistograms(){
     int w,h;
     auto imgrnd = this->selectedImageRenderer;
@@ -338,6 +362,8 @@ void ImageCanvas::updateBrightness(float value){
     if(selectedImageRenderer == nullptr){
         return;
     }
+    PersistentStorage::setInt("sidebar", "lastOp", (int)Operation::BRIGHTNESS);
+    PersistentStorage::setFloat("sidebar", "brightnessValue", value);
     ImageManipulation::Brightness(selectedImageRenderer->img, editionImageRenderer->img, value);
 }
 
@@ -345,6 +371,8 @@ void ImageCanvas::updateContrast(float value){
     if(selectedImageRenderer == nullptr){
         return;
     }
+    PersistentStorage::setInt("sidebar", "lastOp", (int)Operation::CONTRAST);
+    PersistentStorage::setFloat("sidebar", "contrastValue", value);
     ImageManipulation::Contrast(selectedImageRenderer->img, editionImageRenderer->img, value);
 }
 
@@ -371,9 +399,9 @@ void ImageCanvas::checkScaleMovement(){
         selectedImageRenderer->size.y = newPixels + selectedImageRenderer->size.y;
     }
     PersistentStorage::setVec2(
-        "imgState", 
-        "scale"+std::to_string(selectedImageRenderer->imageIndex), 
-        selectedImageRenderer->scaling    
+        "imgState",
+        "scale"+std::to_string(selectedImageRenderer->imageIndex),
+        selectedImageRenderer->scaling
     );
     if(holdingScaleH || holdingScaleV){
         calculateFrames();
@@ -384,5 +412,29 @@ void ImageCanvas::updateGaussian(float value){
     if(selectedImageRenderer == nullptr){
         return;
     }
+    PersistentStorage::setInt("sidebar", "lastOp", (int)Operation::GAUSSIAN_BLUR);
+    PersistentStorage::setFloat("sidebar", "gaussianValue", value);
     ImageManipulation::GaussianBlur(selectedImageRenderer->img, editionImageRenderer->img, value);
+}
+
+void ImageCanvas::readLocalSelected(){
+    loadedFromFileYet = true;
+    if(!PersistentStorage::hasInt("imgState", "selected")){
+        if(selectedImageRenderer != nullptr){
+            selectImage(selectedImageRenderer);
+        }else{
+            std::cout << "nao tinha local nem imagem carregada!" << std::endl;
+        }
+        return;
+    }
+
+    int id;
+    PersistentStorage::getInt("imgState", "selected", &id);
+
+    for(auto img : imgrenderers){
+        if(img->imageIndex == id){
+            selectImage(img);
+            break;
+        }
+    }
 }

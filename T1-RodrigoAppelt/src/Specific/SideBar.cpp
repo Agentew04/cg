@@ -19,9 +19,8 @@ void SideBar::load(){
     PersistentStorage::setIfNotInt("sidebar", "loadedbmp0", 0);
     PersistentStorage::getInt("sidebar", "loadedbmp0", &tmp);
     if(tmp){
-        std::cout << "0 era true" << std::endl;
         loadBmp(0);
-    }else std::cout << "0 era false" << std::endl;
+    }
     PersistentStorage::setIfNotInt("sidebar", "loadedbmp1", 0);
     PersistentStorage::getInt("sidebar", "loadedbmp1", &tmp);
     if(tmp){
@@ -33,12 +32,69 @@ void SideBar::load(){
         loadBmp(2);
     }
 
+    imgCanvas->readLocalSelected();
+
+    ImageCanvas::Operation lastOp = ImageCanvas::Operation::NONE;
+    PersistentStorage::getInt("sidebar", "lastOp", (int*)&lastOp);
+    switch (lastOp)
+    {
+    case ImageCanvas::Operation::EXTRACT_R:
+        imgCanvas->requestChannel(ImageManipulation::Channel::RED, false);
+        break;
+    case ImageCanvas::Operation::EXTRACT_G:
+        imgCanvas->requestChannel(ImageManipulation::Channel::GREEN, false);
+        break;
+    case ImageCanvas::Operation::EXTRACT_B:
+        imgCanvas->requestChannel(ImageManipulation::Channel::BLUE, false);
+        break;
+    case ImageCanvas::Operation::EXTRACT_Y:
+        imgCanvas->requestChannel(ImageManipulation::Channel::RED, true);
+        break;
+    case ImageCanvas::Operation::FLIP_H:
+        imgCanvas->requestFlip(false);
+        break;
+    case ImageCanvas::Operation::FLIP_V:
+        imgCanvas->requestFlip(true);
+        break;
+    case ImageCanvas::Operation::GAUSSIAN_BLUR:
+    {
+        float gaussian = 0;
+        PersistentStorage::getFloat("sidebar", "gaussianValue", &gaussian);
+        gaussianSlider->setValue(gaussian);
+        break;
+    }
+    case ImageCanvas::Operation::BRIGHTNESS:
+    {
+        float brightness = 0;
+        PersistentStorage::getFloat("sidebar", "brightnessValue", &brightness);
+        brighnessSlider->setValue(brightness);
+        break;
+    }
+    case ImageCanvas::Operation::CONTRAST:
+    {
+        float contrast = 1;
+        PersistentStorage::getFloat("sidebar", "contrastValue", &contrast);
+        contrastSlider->setValue(contrast);
+        break;
+    }
+    }
+
+
+    PersistentStorage::getInt("sidebar", "histRVisible", &tmp);
+    std::cout << "Red Checkbox: " << tmp << std::endl;
+    redCheckbox->setValue(tmp, false);
+    PersistentStorage::getInt("sidebar", "histGVisible", &tmp);
+    std::cout << "Green Checkbox: " << tmp << std::endl;
+    greenCheckbox->setValue(tmp, false);
+    PersistentStorage::getInt("sidebar", "histBVisible", &tmp);
+    std::cout << "Blue Checkbox: " << tmp << std::endl;
+    blueCheckbox->setValue(tmp, false);
+    PersistentStorage::getInt("sidebar", "histLumVisible", &tmp);
+    std::cout << "Luminance Checkbox: " << tmp << std::endl;
+    luminanceCheckbox->setValue(tmp, false);
 }
 
 void SideBar::loadBmp(int n){
-    // int tmp;
-    // PersistentStorage::getInt("sidebar","loadedbmp"+std::to_string(n), &tmp);
-    // loadedImages[n] = (bool)tmp;
     if(loadedImages[n]){
         return;
     }

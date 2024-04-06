@@ -75,8 +75,25 @@ public:
     void updateContrast(float value);
     void updateGaussian(float value);
 
+    /// @brief Mais um callback para a ImageCanvas e SideBar se linkarem.
+    /// Serve para ler o valor local de qual imagem esta selecionada.
+    void readLocalSelected();
+
     /// @brief Taxa do maximo valor que vai ser o maximo do grafico
     float maxHistogramValueRatio = 0.5f;
+
+    enum class Operation {
+        NONE,
+        EXTRACT_R,
+        EXTRACT_G,
+        EXTRACT_B,
+        EXTRACT_Y,
+        FLIP_H,
+        FLIP_V,
+        GAUSSIAN_BLUR,
+        BRIGHTNESS,
+        CONTRAST
+    };
 private:
 
     /// @brief Desenha uma moldura em volta da imagem selecionada
@@ -102,6 +119,9 @@ private:
     Polygon2D frameLeft, frameRight, frameTop, frameBottom;
 
     Chart::Series *histR, *histG, *histB, *histLum;
+    bool loadedFromFileYet = false;
+
+    
 };
 
 #endif

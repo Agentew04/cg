@@ -61,6 +61,8 @@ private:
     Slider *gaussianSlider;
     Slider *brighnessSlider;
     Slider *contrastSlider;
+
+    Checkbox *redCheckbox, *greenCheckbox, *blueCheckbox, *luminanceCheckbox;
     //Slider *gammaCorrectionSlider; nao implementado
 };
 

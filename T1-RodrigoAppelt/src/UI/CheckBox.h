@@ -2,6 +2,7 @@
 #define __CHECKBOX_H__
 
 #include <map>
+#include <functional>
 
 #include "../Vector2.h"
 #include "../Vector3.h"
@@ -46,14 +47,18 @@ public:
     State state;
 
     bool getValue();
-    void setValue(bool value);
+    void setValue(bool value, bool notify = true);
     void setBinding(bool *target);
+
+    void setCallback(std::function<void(bool)> callback);
 private:
     Vector2 pos;
     Vector2 sz;
     bool value;
     bool *bindingTarget;
     std::string label;
+    bool hasCallback = false;
+    std::function<void(bool)> callback;
 };
 
 #endif // __CHECKBOX_H__

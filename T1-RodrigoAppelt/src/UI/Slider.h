@@ -53,7 +53,7 @@ public:
 
     void getValueBounds(float *minValue, float *maxValue);
     float getValue();
-    void setValue(float value);
+    void setValue(float value, bool notify = true);
 
     void setBinding(float *target);
     void setCallback(std::function<void(float)> callback);

@@ -6,6 +6,7 @@
 #include "../UI/Button.h"
 #include "../UI/Chart.h"
 #include "../UI/CheckBox.h"
+#include "../Storage/PersistentStorage.h"
 
 void SideBar::submitButtons(){
     int margin = 5;
@@ -141,37 +142,50 @@ void SideBar::submitHistogram(){
     Vector2 histCheckboxSz = Vector2((this->size.x-(margin*5))/4, 20);
 
     Checkbox::Style *chkstl = Checkbox::Style::Windows10();
-    Checkbox *rckbx = new Checkbox(
+    redCheckbox = new Checkbox(
         pos + Vector2(margin, tripButtonSize.y+margin*5+quadButtonSize.y*2+150), 
         histCheckboxSz,
         "Red", 
         false);
-    rckbx->style = chkstl;
-    this->uiManager->add(rckbx);
+    redCheckbox->style = chkstl;
+    this->uiManager->add(redCheckbox);
+    redCheckbox->setCallback([&](bool value){
+        PersistentStorage::setInt("sidebar", "histRVisible", value);
+        //imgCanvas->updateSelectedHistograms();
+    });
 
-    Checkbox *gckbx = new Checkbox(
+    greenCheckbox = new Checkbox(
         pos + Vector2(histCheckboxSz.x+margin*2, tripButtonSize.y+margin*5+quadButtonSize.y*2+150), 
         histCheckboxSz,
         "Green", 
         false);
-    gckbx->style = chkstl;
-    this->uiManager->add(gckbx);
+    greenCheckbox->style = chkstl;
+    this->uiManager->add(greenCheckbox);
+    greenCheckbox->setCallback([&](bool value){
+        PersistentStorage::setInt("sidebar", "histGVisible", value);
+    });
 
-    Checkbox *bckbx = new Checkbox(
+    blueCheckbox = new Checkbox(
         pos + Vector2(histCheckboxSz.x*2+margin*3, tripButtonSize.y+margin*5+quadButtonSize.y*2+150), 
         histCheckboxSz,
         "Blue", 
         false);
-    bckbx->style = chkstl;
-    this->uiManager->add(bckbx);
+    blueCheckbox->style = chkstl;
+    this->uiManager->add(blueCheckbox);
+    blueCheckbox->setCallback([&](bool value){
+        PersistentStorage::setInt("sidebar", "histBVisible", value);
+    });
 
-    Checkbox *yckbx = new Checkbox(
+    luminanceCheckbox = new Checkbox(
         pos + Vector2(histCheckboxSz.x*3+margin*4, tripButtonSize.y+margin*5+quadButtonSize.y*2+150), 
         histCheckboxSz,
         "Luminance", 
         false);
-    yckbx->style = chkstl;
-    this->uiManager->add(yckbx);
+    luminanceCheckbox->style = chkstl;
+    this->uiManager->add(luminanceCheckbox);
+    luminanceCheckbox->setCallback([&](bool value){
+        PersistentStorage::setInt("sidebar", "histLumVisible", value);
+    });
 
     Slider::Style *slstl = Slider::Style::Windows10();
     this->histogramMaxSlider = new Slider(
@@ -228,10 +242,10 @@ void SideBar::submitHistogram(){
     histogram->series.push_back(histB);
     histogram->series.push_back(histLum);
     
-    rckbx->setBinding(&histR->visible);
-    gckbx->setBinding(&histG->visible);
-    bckbx->setBinding(&histB->visible);
-    yckbx->setBinding(&histLum->visible);
+    redCheckbox->setBinding(&histR->visible);
+    greenCheckbox->setBinding(&histG->visible);
+    blueCheckbox->setBinding(&histB->visible);
+    luminanceCheckbox->setBinding(&histLum->visible);
 
     this->gaussianSlider = new Slider(
         pos + Vector2(margin, tripButtonSize.y+margin*5+quadButtonSize.y*2+150+20+20+20), 
@@ -244,6 +258,8 @@ void SideBar::submitHistogram(){
     this->gaussianSlider->style = slstl;
     this->uiManager->add(this->gaussianSlider);
     this->gaussianSlider->setCallback([&](float value){
+        this->brighnessSlider->setValue(0, false);
+        this->contrastSlider->setValue(1, false);
         imgCanvas->updateGaussian(value);
     });
 
@@ -258,6 +274,8 @@ void SideBar::submitHistogram(){
     this->brighnessSlider->style = slstl;
     this->uiManager->add(this->brighnessSlider);
     this->brighnessSlider->setCallback([&](float value){
+        this->contrastSlider->setValue(1, false);
+        this->gaussianSlider->setValue(0, false);
         imgCanvas->updateBrightness(value);
     });
 
@@ -272,6 +290,8 @@ void SideBar::submitHistogram(){
     this->contrastSlider->style = slstl;
     this->uiManager->add(this->contrastSlider);
     this->contrastSlider->setCallback([&](float value){
+        this->brighnessSlider->setValue(0, false);
+        this->gaussianSlider->setValue(0, false);
         imgCanvas->updateContrast(value);
     });
 

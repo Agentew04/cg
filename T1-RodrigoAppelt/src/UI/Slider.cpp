@@ -112,7 +112,7 @@ float Slider::getValue(){
     return this->value;
 }
 
-void Slider::setValue(float value){
+void Slider::setValue(float value, bool notify){
     // clamp
     if(value < this->minValue){
         value = this->minValue;
@@ -124,7 +124,7 @@ void Slider::setValue(float value){
     if(this->bindingTarget != nullptr){
         *this->bindingTarget = value;
     }
-    if(hasCallback){
+    if(hasCallback && notify){
         this->callback(value);
     }
 }

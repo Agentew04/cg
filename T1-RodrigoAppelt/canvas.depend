@@ -1100,7 +1100,7 @@
 	<stdio.h>
 	<stdlib.h>
 
-1712184445 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\image\imagemanipulation.cpp
+1712362638 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\image\imagemanipulation.cpp
 	<iostream>
 	<cstring>
 	"ImageManipulation.h"
@@ -1124,7 +1124,7 @@
 	<iostream>
 	"lodepng.h"
 
-1712187269 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\main.cpp
+1712363835 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -1136,10 +1136,12 @@
 	"Specific/SideBar.h"
 	"Specific/ImageCanvas.h"
 	"UI/CursorManager.h"
+	"Storage/PersistentStorage.h"
 
 1710973732 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\keyboard.h
 
-1712183704 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\specific\sidebar.h
+1712363399 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\specific\sidebar.h
+	<map>
 	"../Vector2.h"
 	"../UI/Chart.h"
 	"../UI/UIManager.h"
@@ -1171,14 +1173,15 @@
 	"../Vector2.h"
 	"../Vector3.h"
 
-1711674024 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\ui\slider.h
+1712360048 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\ui\slider.h
 	<map>
 	<functional>
 	"../Vector2.h"
 	"../Vector3.h"
 
-1711671557 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\ui\checkbox.h
+1712363591 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\ui\checkbox.h
 	<map>
+	<functional>
 	"../Vector2.h"
 	"../Vector3.h"
 
@@ -1194,7 +1197,7 @@
 	<vector>
 	"CheckBox.h"
 
-1711818023 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\ui\imagerenderer.h
+1712353573 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\ui\imagerenderer.h
 	<vector>
 	"../Image/ImageManipulation.h"
 	"../Vector2.h"
@@ -1206,7 +1209,7 @@
 	"../Vector2.h"
 	"../Vector3.h"
 
-1712184504 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\specific\imagecanvas.h
+1712361307 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\specific\imagecanvas.h
 	<vector>
 	<map>
 	"../UI/ImageRenderer.h"
@@ -1218,18 +1221,20 @@
 	<windows.h>
 	<map>
 
-1712184506 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\specific\imagecanvas.cpp
+1712362629 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\specific\imagecanvas.cpp
 	<string.h>
 	"ImageCanvas.h"
 	"../gl_canvas2d.h"
 	"../Image/ImageManipulation.h"
 	"../UI/CursorManager.h"
+	"../Storage/PersistentStorage.h"
 
-1712184833 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\specific\sidebar.cpp
+1712363747 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\specific\sidebar.cpp
 	<iterator>
 	"SideBar.h"
 	"../gl_canvas2d.h"
 	"../Image/Bmp.h"
+	"../Storage/PersistentStorage.h"
 
 1711839238 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\ui\button.cpp
 	"Button.h"
@@ -1249,7 +1254,7 @@
 	"Chart.h"
 	"../gl_canvas2d.h"
 
-1711839347 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\ui\checkbox.cpp
+1712363607 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\ui\checkbox.cpp
 	<iostream>
 	<cmath>
 	"CheckBox.h"
@@ -1273,7 +1278,7 @@
 	"../gl_canvas2d.h"
 	<iostream>
 
-1712183635 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\ui\slider.cpp
+1712360550 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\ui\slider.cpp
 	"Slider.h"
 	"../gl_canvas2d.h"
 	<iostream>
@@ -1290,13 +1295,15 @@
 	<iostream>
 	"UIManager.h"
 
-1712184957 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\specific\sidebar.ui.cpp
+1712363487 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\specific\sidebar.ui.cpp
 	<string.h>
 	<limits>
+	<string>
 	"SideBar.h"
 	"../UI/Button.h"
 	"../UI/Chart.h"
 	"../UI/CheckBox.h"
+	"../Storage/PersistentStorage.h"
 
 1712230874 source:d:\universidade\cg\t1-rodrigoappelt\src\storage\persistentstorage.cpp
 	<fstream>
@@ -1321,5 +1328,30 @@
 	"PersistentStorage.h"
 
 1712250157 source:d:\universidade\cg\t1-rodrigoappelt\src\storage\persistentstorage.vec3.cpp
+	"PersistentStorage.h"
+
+1712191909 e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\storage\persistentstorage.h
+	<string>
+	<map>
+	"../Vector2.h"
+	"../Vector3.h"
+
+1712354749 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\storage\persistentstorage.cpp
+	<fstream>
+	<algorithm>
+	<iterator>
+	<iostream>
+	"PersistentStorage.h"
+
+1712353573 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\storage\persistentstorage.float.cpp
+	"PersistentStorage.h"
+
+1712355129 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\storage\persistentstorage.int.cpp
+	"PersistentStorage.h"
+
+1712353573 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\storage\persistentstorage.vec2.cpp
+	"PersistentStorage.h"
+
+1712353573 source:e:\universidade\cg\trabalhos\t1-rodrigoappelt\src\storage\persistentstorage.vec3.cpp
 	"PersistentStorage.h"
 
