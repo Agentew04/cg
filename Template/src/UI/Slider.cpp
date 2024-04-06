@@ -26,7 +26,6 @@ Slider::Style* Slider::Style::Windows10(){
 
 Slider::Style::~Style(){
     handleColor.clear();
-    std::cout << "Deleting Slider Style" << std::endl;
 }
 
 
@@ -52,6 +51,7 @@ Slider::Slider(Vector2 pos, Vector2 size, float minValue, float maxValue, float 
 }
 
 Slider::~Slider(){
+    //this->callback = default;
     std::cout << "Deleting Slider" << std::endl;
 }
 
@@ -112,6 +112,28 @@ float Slider::getValue(){
     return this->value;
 }
 
-void Slider::setValue(float value){
+void Slider::setValue(float value, bool notify){
+    // clamp
+    if(value < this->minValue){
+        value = this->minValue;
+    }else if(value > this->maxValue){
+        value = this->maxValue;
+    }
+
     this->value = value;
+    if(this->bindingTarget != nullptr){
+        *this->bindingTarget = value;
+    }
+    if(hasCallback && notify){
+        this->callback(value);
+    }
+}
+
+void Slider::setBinding(float *target){
+    this->bindingTarget = target;
+}
+
+void Slider::setCallback(std::function<void(float)> callback){
+    hasCallback = true;
+    this->callback = callback;
 }

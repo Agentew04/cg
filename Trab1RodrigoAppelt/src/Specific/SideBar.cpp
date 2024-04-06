@@ -103,7 +103,7 @@ void SideBar::loadBmp(int n){
 
 
     // carrega o bitmap
-    std::string path = "./T1-RodrigoAppelt/images/" + std::string(1,'a'+n) + ".bmp";
+    std::string path = "./Trab1RodrigoAppelt/images/" + std::string(1,'a'+n) + ".bmp";
     Bmp *bmp = new Bmp(path.c_str());
     bmp->convertBGRtoRGB();
 

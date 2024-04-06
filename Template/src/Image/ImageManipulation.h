@@ -3,13 +3,17 @@
 
 #include <cstdint>
 
+#include "../Vector2.h"
 
-struct Image {
-    int width, height;
+class Image {
+public:
     uint8_t *pixels;
-
     Image(int width, int height);
     ~Image();
+    Vector2 getSize();
+    void getSize(int *w, int *h);
+private:
+    int width, height;
 };
 
 class ImageManipulation{
@@ -48,6 +52,33 @@ public:
     /// @param source 
     /// @param destination 
     static void FlipVertical(Image *source, Image *destination);
+
+    /// @brief Calcula o histograma de uma imagem
+    /// @param source A imagem fonte
+    /// @param histogram Um vetor onde vai ser guardado o resultado.
+    /// Deve ter 256 espaços
+    /// @param channel O canal a ser contado
+    /// @param luminance Se verdadeiro, calcula o histograma da luminancia
+    static void Histogram(Image *source, uint32_t* histogram, Channel channel, bool luminance);
+
+    /// @brief Ajusta o brilho de uma imagem
+    /// @param source A imagem fonte
+    /// @param destination A imagem que recebera o resultado
+    /// @param value O valor do brilho. 1.0 eh o valor normal
+    static void Brightness(Image *source, Image *destination, float value);
+
+    /// @brief Ajusta o contraste da imagem
+    /// @param source A imagem fonte
+    /// @param destination A imagem que recebera o resultado
+    /// @param value O valor do contraste. 1.0 eh o valor normal.
+    /// Valores maiores aumentam o contraste, menores diminuem
+    static void Contrast(Image *source, Image *destination, float value);
+
+    /// @brief Aplica um desfoque gaussiano na imagem
+    /// @param source A imagem fonte
+    /// @param destination A imagem que recebera o resultado
+    /// @param radius O raio do desfoque
+    static void GaussianBlur(Image *source, Image *destination, float radius);
 };
 
 #endif

@@ -1,7 +1,9 @@
 #include <vector>
 #include <iostream>
+#include <algorithm>
 
 #include "CheckBoxManager.h"
+#include "CursorManager.h"
 
 static float clamp(float value, float minValue, float maxValue){
     if(value >= maxValue){
@@ -38,11 +40,14 @@ CheckboxManager::CheckboxManager(){
 }
 
 CheckboxManager::~CheckboxManager(){
+    std::vector<Checkbox::Style*> deleted;
     for(size_t i=0; i<this->checkboxes.size(); i++){
-        delete this->checkboxes[i]->style;
+        if (std::find(deleted.begin(), deleted.end(), this->checkboxes[i]->style) == deleted.end()) {
+            deleted.push_back(this->checkboxes[i]->style);
+            delete this->checkboxes[i]->style;
+        }
         delete this->checkboxes[i];
     }
-    std::cout << "Deleting Checkbox Manager" << std::endl;
 }
 
 void CheckboxManager::draw(){
@@ -58,6 +63,10 @@ void CheckboxManager::updateMousePos(Vector2 mousePos){
         Checkbox *s = this->checkboxes[i];
         if(s == nullptr){
             continue;
+        }
+
+        if(s->state == Checkbox::State::HOVER){
+            CursorManager::setCursor(CursorManager::CursorType::CLICKABLE);
         }
 
         // no mouse

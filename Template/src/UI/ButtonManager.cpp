@@ -1,7 +1,9 @@
 #include <vector>
 #include <iostream>
+#include <algorithm>
 
 #include "ButtonManager.h"
+#include "CursorManager.h"
 
 bool inside(Vector2 buttonPos, Vector2 buttonSize, Vector2 mousePos){
     if(!(mousePos.x >= buttonPos.x && mousePos.x <= buttonPos.x + buttonSize.x)){
@@ -29,16 +31,21 @@ ButtonManager::ButtonManager(){
 }
 
 ButtonManager::~ButtonManager(){
+    std::vector<ButtonStyle*> deleted;
     for(size_t i=0; i<this->buttons.size(); i++){
-        delete this->buttons[i]->style;
+        if (std::find(deleted.begin(), deleted.end(), this->buttons[i]->style) == deleted.end()) {
+            deleted.push_back(this->buttons[i]->style);
+            delete this->buttons[i]->style;
+        }
+            
         delete this->buttons[i];
     }
-    std::cout << "Deleting Button Manager" << std::endl;
 }
 
 void ButtonManager::draw(){
     for(size_t i=0; i<this->buttons.size(); i++){
-        this->buttons[i]->draw();
+        Button* b = this->buttons[i];
+        b->draw();
     }
 }
 
@@ -49,6 +56,10 @@ void ButtonManager::updateMousePos(Vector2 mousePos){
         Button *b = this->buttons[i];
         if(b == nullptr){
             continue;
+        }
+
+        if(b->state == ButtonState::HOVER){
+            CursorManager::setCursor(CursorManager::CursorType::CLICKABLE);
         }
 
         // no mouse

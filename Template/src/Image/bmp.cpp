@@ -9,6 +9,8 @@
 
 #include "Bmp.h"
 #include <string.h>
+#include <cstdint>
+#include <iostream>
 
 Bmp::Bmp(const char *fileName)
 {
@@ -47,7 +49,7 @@ void Bmp::convertBGRtoRGB()
      for(int y=0; y<height; y++)
      for(int x=0; x<width*3; x+=3)
      {
-        int pos = y*bytesPerLine + x;
+        int pos = y*width*3 + x;
         tmp = data[pos];
         data[pos] = data[pos+2];
         data[pos+2] = tmp;
@@ -55,17 +57,27 @@ void Bmp::convertBGRtoRGB()
   }
 }
 
+Bmp::~Bmp()
+{
+  if( data != NULL )
+  {
+     delete[] data;
+  }
+}
 
 void Bmp::load(const char *fileName)
 {
   FILE *fp = fopen(fileName, "rb");
   if( fp == NULL )
   {
-     printf("\nErro ao abrir arquivo %s para leitura", fileName);
+     printf("Erro ao abrir arquivo %s para leitura\n", fileName);
+     printf("Voce mudou o nome da pasta do projeto? O path das imagens esta hardcoded para\n");
+      printf("o nome da pasta ser T1-RodrigoAppelt. Se foi mudado, atualizar o caminho em SideBar.cpp\n");
+      printf("na funcao void SideBar::loadBmp(int n)\n");
      return;
   }
 
-  printf("\n\nCarregando arquivo %s", fileName);
+  //printf("\n\nCarregando arquivo %s", fileName);
 
   //le o HEADER componente a componente devido ao problema de alinhamento de bytes. Usando
   //o comando fread(header, sizeof(HEADER),1,fp) sao lidos 16 bytes ao inves de 14
@@ -93,13 +105,13 @@ void Bmp::load(const char *fileName)
   bits   = info.bits;
   bytesPerLine =(3 * (width + 1) / 4) * 4;
   imagesize    = bytesPerLine*height;
-  int delta    = bytesPerLine - (3 * width);
+  //int delta    = bytesPerLine - (3 * width);
 
-  printf("\nImagem: %dx%d - Bits: %d", width, height, bits);
-  printf("\nbytesPerLine: %d", bytesPerLine);
-  printf("\nbytesPerLine: %d", width * 3);
-  printf("\ndelta: %d", delta);
-  printf("\nimagesize: %d %d", imagesize, info.imagesize);
+  //printf("\nImagem: %dx%d - Bits: %d", width, height, bits);
+  //printf("\nbytesPerLineIdeal: %d", bytesPerLine);
+  //printf("\nbytesPerLineActual: %d", width * 3);
+  //printf("\ndelta: %d", delta);
+  //printf("\nimagesize: %d %d", imagesize, info.imagesize);
 
   //realiza diversas verificacoes de erro e compatibilidade
   if( header.type != 19778 )
@@ -111,8 +123,8 @@ void Bmp::load(const char *fileName)
 
   if( width*height*3 != imagesize )
   {
-     printf("\nWarning: Arquivo BMP nao tem largura multipla de 4");
-     getchar();
+     //printf("\nWarning: Arquivo BMP nao tem largura multipla de 4\n");
+     //getchar();
   }
 
   if( info.compression != 0 )
@@ -135,9 +147,13 @@ void Bmp::load(const char *fileName)
      return;
   }
 
-  data = new unsigned char[imagesize];
-  fseek(fp, header.offset, SEEK_SET);
-  fread(data, sizeof(unsigned char), imagesize, fp);
+   data = new unsigned char[3*width*height];
+   for(int y=0; y<height; y++)
+   {
+      int pos = y*bytesPerLine;
+      fseek(fp, header.offset + pos, SEEK_SET);
+      fread(data + width*3*y, sizeof(unsigned char), width*3, fp);
+   }
 
-  fclose(fp);
+   fclose(fp);
 }

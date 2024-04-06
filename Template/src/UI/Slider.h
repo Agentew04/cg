@@ -2,6 +2,7 @@
 #define __SLIDER_H__
 
 #include <map>
+#include <functional>
 
 #include "../Vector2.h"
 #include "../Vector3.h"
@@ -52,7 +53,10 @@ public:
 
     void getValueBounds(float *minValue, float *maxValue);
     float getValue();
-    void setValue(float value);
+    void setValue(float value, bool notify = true);
+
+    void setBinding(float *target);
+    void setCallback(std::function<void(float)> callback);
 private:
     Vector2 pos;
     Vector2 sz;
@@ -60,6 +64,10 @@ private:
     float minValue;
     float maxValue;
     float value;
+
+    float *bindingTarget = nullptr;
+    bool hasCallback = false;
+    std::function<void(float)> callback;
 };
 
 

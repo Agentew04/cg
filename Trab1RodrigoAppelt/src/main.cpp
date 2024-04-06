@@ -90,7 +90,7 @@ void keyboard(int key)
 {
     switch(key)
     {
-        case ESC:
+        case 27:
             CV::close();
         break;
     }

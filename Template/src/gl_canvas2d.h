@@ -11,6 +11,7 @@
 
 #include "Vector2.h"
 #include "Vector3.h"
+#include "Math/Polygon.h"
 
 #define PI_2 6.28318530717
 #define PI   3.14159265359
@@ -47,6 +48,8 @@ public:
     //desenha um poligono CONVEXO. Para um retangulo, deve-se passar 4 vertices
     static void polygon(float vx[], float vy[], int n_elems);
     static void polygonFill(float vx[], float vy[], int n_elems);
+    static void polygonFill(Vector2 pos, Polygon2D *poly);
+    static void polygon(Vector2 pos, Polygon2D *poly);
 
     //centro e raio do circulo
     static void circle( float x, float y, float radius, int div );
@@ -81,6 +84,8 @@ public:
     //funcao de inicializacao da Canvas2D. Recebe a largura, altura, e um titulo para a janela
     static void init(int *w, int *h, const char *title, bool antiAliasing);
 
+    // inicia processo de saida do programa
+    static void close();
     //funcao para executar a Canvas2D
     static void run();
 };

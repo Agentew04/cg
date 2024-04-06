@@ -30,20 +30,19 @@ Checkbox::Style::~Style(){
     backgroundColor.clear();
     borderColor.clear();
     checkColor.clear();
-    std::cout << "Deleting Checkbox Style" << std::endl;
 }
 
 
 Checkbox::Checkbox(Vector2 pos, Vector2 size, std::string label, bool defaultValue) {
     this->pos = pos;
     this->sz = size;
+    this->bindingTarget = nullptr;
 
     this->value = defaultValue;
     this->label = label;
 }
 
 Checkbox::~Checkbox(){
-    std::cout << "Deleting Checkbox" << std::endl;
 }
 
 void Checkbox::draw(){
@@ -86,6 +85,22 @@ bool Checkbox::getValue(){
     return this->value;
 }
 
-void Checkbox::setValue(bool value){
+void Checkbox::setValue(bool value, bool notify){
     this->value = value;
+    if(this->bindingTarget != nullptr){
+        *this->bindingTarget = value;
+    }
+
+    if(hasCallback && notify){
+        this->callback(value);
+    }
+}
+
+void Checkbox::setBinding(bool *target){
+    this->bindingTarget = target;
+}
+
+void Checkbox::setCallback(std::function<void(bool)> callback){
+    this->callback = callback;
+    hasCallback = true;
 }

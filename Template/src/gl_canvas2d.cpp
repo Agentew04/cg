@@ -143,6 +143,30 @@ void CV::polygonFill(float vx[], float vy[], int elems)
 
 }
 
+void CV::polygonFill(Vector2 pos, Polygon2D *polygon){
+   glBegin(GL_POLYGON);
+   for(size_t cont=0; cont<polygon->vertices.size(); cont++)
+   {
+      glVertex2d(
+         pos.x + polygon->vertices[cont].x, 
+         pos.y + polygon->vertices[cont].y
+      );
+   }
+   glEnd();
+}
+
+void CV::polygon(Vector2 pos, Polygon2D *polygon){
+   glBegin(GL_LINE_LOOP);
+   for(size_t cont=0; cont<polygon->vertices.size(); cont++)
+   {
+      glVertex2d(
+         pos.x + polygon->vertices[cont].x, 
+         pos.y + polygon->vertices[cont].y
+      );
+   }
+   glEnd();
+}
+
 //existem outras fontes de texto que podem ser usadas
 //  GLUT_BITMAP_9_BY_15
 //  GLUT_BITMAP_TIMES_ROMAN_10
@@ -247,6 +271,10 @@ void CV::circleFill( float x, float y, float radius, int div )
          ang+=inc;
       }
    glEnd();
+}
+
+void CV::circleFill( Vector2 pos, float radius, int div ){
+   CV::circleFill(pos.x, pos.y, radius, div);
 }
 
 //coordenada de offset para desenho de objetos.
@@ -401,6 +429,7 @@ void CV::init(int *w, int *h, const char *title, bool antiAliasing)
     }else{
         glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
     }
+    glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE,GLUT_ACTION_CONTINUE_EXECUTION);
 
     glutInitWindowSize (*w, *h);
     glutInitWindowPosition (50, 50);
@@ -429,3 +458,6 @@ void CV::run()
    glutMainLoop();
 }
 
+void CV::close(){
+   glutLeaveMainLoop();
+}

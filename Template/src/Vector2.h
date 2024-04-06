@@ -85,6 +85,11 @@ public:
        return (aux);
    }
 
+   Vector2 operator *(const Vector2& v){
+       Vector2 aux(this->x*v.x, this->y*v.y);
+       return (aux);
+   }
+
    Vector2 operator *= (const float f)
    {
        Vector2 aux(this->x*f, this->y*f);
