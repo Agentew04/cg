@@ -102,10 +102,7 @@ void ImageCanvas::drawFrame(){
     if(selectedImageRenderer == nullptr){
         return;
     }
-    int margin = 5;
 
-    int sizeX = selectedImageRenderer->size.x;
-    int sizeY = selectedImageRenderer->size.y;
     Vector3 frameColor = Vector3(0.051f, 0.106f, 0.165f);
     Vector3 rotationKnobColor = Vector3(0.878f, 0.882f, 0.867f);
     CV::translate(selectedImageRenderer->pos);
@@ -422,8 +419,6 @@ void ImageCanvas::readLocalSelected(){
     if(!PersistentStorage::hasInt("imgState", "selected")){
         if(selectedImageRenderer != nullptr){
             selectImage(selectedImageRenderer);
-        }else{
-            std::cout << "nao tinha local nem imagem carregada!" << std::endl;
         }
         return;
     }

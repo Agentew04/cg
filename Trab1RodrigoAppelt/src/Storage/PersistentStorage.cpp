@@ -23,7 +23,6 @@ void PersistentStorage::load(){
     std::ifstream file(savePath);
 
     if(!file.is_open()){
-        std::cout << "Nao consegui abrir o arquivo " << savePath << std::endl;
         file.close();
         return;
     }
@@ -96,7 +95,7 @@ void PersistentStorage::save(){
     std::ofstream file(savePath);
 
     if(!file.is_open()){
-        std::cout << "Nao consegui abrir o arquivo " << savePath << std::endl;
+        std::cout << "Nao consegui abrir o arquivo " << savePath << " para salvar o progresso"<<  std::endl;
         file.close();
         return;
     }

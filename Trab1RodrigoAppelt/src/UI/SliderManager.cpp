@@ -48,7 +48,6 @@ SliderManager::~SliderManager(){
 
         delete this->sliders[i];
     }
-    std::cout << "Deleting Slider Manager" << std::endl;
 }
 
 void SliderManager::draw(){

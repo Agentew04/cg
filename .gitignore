@@ -1,6 +1,7 @@
 # Prerequisites
 *.d
 
+save*.dat
 .vscode/
 CmakeFiles
 

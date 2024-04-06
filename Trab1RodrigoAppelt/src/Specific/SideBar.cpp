@@ -81,16 +81,12 @@ void SideBar::load(){
 
 
     PersistentStorage::getInt("sidebar", "histRVisible", &tmp);
-    std::cout << "Red Checkbox: " << tmp << std::endl;
     redCheckbox->setValue(tmp, false);
     PersistentStorage::getInt("sidebar", "histGVisible", &tmp);
-    std::cout << "Green Checkbox: " << tmp << std::endl;
     greenCheckbox->setValue(tmp, false);
     PersistentStorage::getInt("sidebar", "histBVisible", &tmp);
-    std::cout << "Blue Checkbox: " << tmp << std::endl;
     blueCheckbox->setValue(tmp, false);
     PersistentStorage::getInt("sidebar", "histLumVisible", &tmp);
-    std::cout << "Luminance Checkbox: " << tmp << std::endl;
     luminanceCheckbox->setValue(tmp, false);
 }
 

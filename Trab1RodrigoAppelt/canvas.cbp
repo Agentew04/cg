@@ -45,8 +45,6 @@
 		<Unit filename="src/Image/ImageManipulation.cpp" />
 		<Unit filename="src/Image/ImageManipulation.h" />
 		<Unit filename="src/Image/bmp.cpp" />
-		<Unit filename="src/Image/lodepng.cpp" />
-		<Unit filename="src/Image/lodepng.h" />
 		<Unit filename="src/Specific/ImageCanvas.cpp" />
 		<Unit filename="src/Specific/ImageCanvas.h" />
 		<Unit filename="src/Specific/SideBar.UI.cpp" />

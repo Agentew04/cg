@@ -51,8 +51,6 @@ Slider::Slider(Vector2 pos, Vector2 size, float minValue, float maxValue, float 
 }
 
 Slider::~Slider(){
-    //this->callback = default;
-    std::cout << "Deleting Slider" << std::endl;
 }
 
 void Slider::draw(){

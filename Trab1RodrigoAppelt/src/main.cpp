@@ -49,7 +49,6 @@
 #include <stdlib.h>
 
 #include "gl_canvas2d.h"
-#include "Keyboard.h"
 #include "Specific/SideBar.h"
 #include "Specific/ImageCanvas.h"
 #include "UI/CursorManager.h"
@@ -81,8 +80,6 @@ void render(float delta)
 void cleanup(){
     delete sideBar;
     delete imgCanvas;
-    std::cout << "Cleaned" << std::endl;
-    std::cout << "saida" << std::endl;
 }
 
 //funcao chamada toda vez que uma tecla for pressionada.
