@@ -1,5 +1,7 @@
 #include "App.h"
 
+#include <random>
+
 #include "../gl_canvas2d.h"
 #include "../Storage/PersistentStorage.h"
 
@@ -13,8 +15,15 @@ App::App(int *scrW, int *scrH)
 
     // create persistent unique user id
     if(!PersistentStorage::hasInt("user","uniqueid")){
-        PersistentStorage::setInt("user","uniqueid",rand());
+        std::random_device r;
+        std::mt19937 rgen(r());
+        int uniqueId = rgen();
+        PersistentStorage::setInt("user","uniqueid",uniqueId);
     }
+
+    // load user data
+    PersistentStorage::getOrDefaultInt("user","coins", &coins, 0);
+    PersistentStorage::getOrDefaultInt("user","highscore", &highscore, 0);
 }
 
 App::~App()
@@ -30,6 +39,24 @@ void App::update(float delta)
 
 void App::mouseUp()
 {
+    switch (currentMenu)
+    {
+    case MenuState::MAIN_MENU:
+        mainMenuButtons.mouseUp();
+        break;
+    case MenuState::PAUSED:
+        pauseButtons.mouseUp();
+        break;
+    case MenuState::GAME:
+        gameButtons.mouseUp();
+        break;
+    case MenuState::GAME_OVER:
+        gameOverButtons.mouseUp();
+        break;
+    case MenuState::POST_GAME_STATS:
+        postGameStatsButtons.mouseUp();
+        break;
+    }
 }
 
 void App::mouseDown()
@@ -117,6 +144,7 @@ void App::renderMainMenu()
 
 void App::renderGame()
 {
+    CV::clear(1,1,1);
     // draw game
 }
 
@@ -141,7 +169,22 @@ void App::renderPostGameStats()
 // REGION UI
 
 void App::submitButtons(){
-    // render
+    // mainmenu
+    auto mainmenuPlay = new Button(
+        [&](){ 
+            return Vector2((*screenWidth)/2, 5*(*screenHeight)/11);
+        },
+        [](){ 
+            return Vector2(200, 50);
+        },
+        "Play",
+        [this](Button*){
+            std::cout << "Play button clicked" << std::endl;
+            currentMenu = MenuState::GAME;
+        }
+    );
+    mainmenuPlay->style = ButtonStyle::FlatLightBlue();
+    mainMenuButtons.registerButton(mainmenuPlay);
 }
 
 // ENDREGION UI

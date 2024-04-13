@@ -23,6 +23,7 @@ public:
     void mouseUp();
     void mouseDown();
     void updateMousePos(Vector2 pos);
+
 private:
     enum class MenuState{
         MAIN_MENU,
@@ -59,6 +60,10 @@ private:
     ButtonManager gameButtons;
     ButtonManager gameOverButtons;
     ButtonManager postGameStatsButtons;
+
+    // user data
+    int coins;
+    int highscore;
 };
 
 #endif

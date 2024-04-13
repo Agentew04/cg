@@ -42,30 +42,30 @@ struct ButtonStyle{
     ~ButtonStyle();
 };
 
-// classe que representa um botao na aplicacao, com uma callback
-class Button{
+/// @brief Classe que representa um botao na aplicacao, com uma callback
+class Button {
 public:
-    Button(Vector2 pos, Vector2 sz, std::string text, std::function<void(Button*)> callback);
+    Button(
+        std::function<Vector2()> positionFunc,
+        std::function<Vector2()> sizeFunc, 
+        std::string text, 
+        std::function<void(Button*)> callback);
     ~Button();
 
-    void draw();
+    void render();
 
     void call();
 
     bool clickable;
 
+    bool inside(Vector2 mousePos);
+
     ButtonStyle *style;
     ButtonState state;
-
-    Vector2 getPos();
-    Vector2 getSize();
-
-
 private:
+    std::function<Vector2()> positionFunc;
+    std::function<Vector2()> sizeFunc;
 
-
-    Vector2 pos;
-    Vector2 sz;
     std::string text;
     std::function<void(Button*)> callback;
 };

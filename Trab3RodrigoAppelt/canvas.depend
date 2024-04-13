@@ -471,19 +471,19 @@
 1712981618 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\math\vector3.h
 	<iostream>
 
-1712983079 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\button.cpp
+1712987235 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\button.cpp
 	"Button.h"
 	"../gl_canvas2d.h"
 	<iostream>
 
-1712983066 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\button.h
+1712986526 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\button.h
 	<string>
 	<functional>
 	<map>
 	"../Math/Vector2.h"
 	"../Math/Vector3.h"
 
-1712983006 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\buttonmanager.cpp
+1712987239 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\buttonmanager.cpp
 	<vector>
 	<iostream>
 	<algorithm>
@@ -634,7 +634,7 @@
 	"ImageManipulation.h"
 	"../Math/Vector2.h"
 
-1712985168 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\main.cpp
+1712985381 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -785,13 +785,14 @@
 1712983962 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\game.h
 	"../Math/Vector2.h"
 
-1712984014 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\app.h
+1712986713 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\app.h
 	"../Math/Vector2.h"
 	"Game.h"
 	"../UI/ButtonManager.h"
 
-1712984000 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\app.cpp
+1712987474 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\app.cpp
 	"App.h"
+	<random>
 	"../gl_canvas2d.h"
 	"../Storage/PersistentStorage.h"
 

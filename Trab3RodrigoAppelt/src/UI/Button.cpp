@@ -125,25 +125,29 @@ void ButtonStyle::freeStyles(){
     }
 }
 
-
 ButtonStyle::~ButtonStyle(){
     backgroundColor.clear();
     borderColor.clear();
 }
 
-Button::Button(Vector2 pos, Vector2 sz, std::string text, std::function<void(Button*)> callback) {
-    this->text = text;
-    this->pos = pos;
-    this->sz = sz;
-    this->callback = callback;
+
+Button::Button(std::function<Vector2()> positionFunc,
+        std::function<Vector2()> sizeFunc, 
+        std::string text, 
+        std::function<void(Button*)> callback) :
+        positionFunc(positionFunc), 
+        sizeFunc(sizeFunc),
+        text(text),
+        callback(callback){
     this->clickable = true;
 }
 
 Button::~Button() {
 }
 
-void Button::draw(){
-
+void Button::render(){
+    Vector2 pos = positionFunc();
+    Vector2 sz = sizeFunc();
     CV::translate(pos);
 
     // draw background
@@ -167,10 +171,9 @@ void Button::call(){
     }
 }
 
-Vector2 Button::getPos(){
-    return this->pos;
-}
-
-Vector2 Button::getSize(){
-    return this->sz;
+bool Button::inside(Vector2 mousePos){
+    Vector2 pos = positionFunc();
+    Vector2 sz = sizeFunc();
+    return (mousePos.x >= pos.x && mousePos.x <= pos.x + sz.x) &&
+           (mousePos.y >= pos.y && mousePos.y <= pos.y + sz.y);
 }

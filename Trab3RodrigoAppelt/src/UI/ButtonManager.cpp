@@ -42,7 +42,7 @@ ButtonManager::~ButtonManager(){
 void ButtonManager::draw(){
     for(size_t i=0; i<this->buttons.size(); i++){
         Button* b = this->buttons[i];
-        b->draw();
+        b->render();
     }
 }
 
@@ -60,7 +60,7 @@ void ButtonManager::updateMousePos(Vector2 mousePos){
         }
 
         // no mouse
-        if(inside(b->getPos(), b->getSize(), mousePos)){
+        if(b->inside(mousePos)){
             if(b->state != ButtonState::CLICK){
                 b->state = ButtonState::HOVER;
             }
@@ -75,22 +75,23 @@ void ButtonManager::updateMousePos(Vector2 mousePos){
 void ButtonManager::mouseDown(){
     for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it) {
         Button* button = *it;
-        if(inside(button->getPos(), button->getSize(), mousePos)){
-            this->holdingButton = button;
-            this->holdingButton->state = ButtonState::CLICK;
+        if(button->inside(mousePos)){
+            holdingButton = button;
+            holdingButton->state = ButtonState::CLICK;
             break;
         }
     }
 }
 
 void ButtonManager::mouseUp(){
-    if(this->holdingButton == nullptr){
+    if(holdingButton == nullptr){
         return;
     }
-    if(inside(this->holdingButton->getPos(), this->holdingButton->getSize(), mousePos)){
-        this->holdingButton->call();
+
+    if(holdingButton->inside(mousePos)){
+        holdingButton->call();
     }
 
-    this->holdingButton->state = ButtonState::NORMAL;
+    holdingButton->state = ButtonState::NORMAL;
     holdingButton = nullptr;
 }
