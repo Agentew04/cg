@@ -28,18 +28,15 @@ void ButtonManager::unregisterButton(Button *button){
 
 ButtonManager::ButtonManager(){
     this->holdingButton = nullptr;
+    ButtonStyle::startUsing();
 }
 
 ButtonManager::~ButtonManager(){
-    std::vector<ButtonStyle*> deleted;
     for(size_t i=0; i<this->buttons.size(); i++){
-        if (std::find(deleted.begin(), deleted.end(), this->buttons[i]->style) == deleted.end()) {
-            deleted.push_back(this->buttons[i]->style);
-            delete this->buttons[i]->style;
-        }
-            
         delete this->buttons[i];
     }
+    this->buttons.clear();
+    ButtonStyle::freeStyles();
 }
 
 void ButtonManager::draw(){

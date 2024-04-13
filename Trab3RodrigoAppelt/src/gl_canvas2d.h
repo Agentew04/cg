@@ -66,6 +66,7 @@ public:
     static void color(int index);
 
     static void clear(float r, float g, float b);
+    static void clear(Vector3 rgb);
 
     //desenha texto na coordenada (x,y)
     static float textWidth(const char *t, void* font);
@@ -80,6 +81,9 @@ public:
     //coordenada de offset para desenho de objetos.
     static void translate(float x, float y);
     static void translate(Vector2 pos);
+
+    /// @brief Retorna uma media do FPS
+    static float fps();
 
     //funcao de inicializacao da Canvas2D. Recebe a largura, altura, e um titulo para a janela
     static void init(int *w, int *h, const char *title, bool antiAliasing);

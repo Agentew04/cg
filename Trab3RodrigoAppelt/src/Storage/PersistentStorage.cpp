@@ -11,15 +11,15 @@ bool PersistentStorage::initialized = false;
 std::map<std::string, PersistentStorage::Container*> PersistentStorage::containers;
 
 void PersistentStorage::init(){
-    savePath = ".\\save-rodrigoappelt-t1.dat";
     initialized = true;
 }
 
-void PersistentStorage::load(){
+void PersistentStorage::load(std::string path){
     init();
 
     // o arquivo vai estar formatado
     // estilo ini
+    savePath = path;
     std::ifstream file(savePath);
 
     if(!file.is_open()){
@@ -50,8 +50,8 @@ void PersistentStorage::load(){
             if(currentContainer.empty()){
                 continue;
             }
-            int div1Idx = line.find(':');
-            int div2Idx = line.find('=');
+            uint32_t div1Idx = line.find(':');
+            uint32_t div2Idx = line.find('=');
             if(div1Idx == std::string::npos || div2Idx == std::string::npos){
                 continue;
             }
@@ -64,7 +64,7 @@ void PersistentStorage::load(){
             }else if(type == "float"){
                 containers[currentContainer]->floats[key] = std::stof(value);
             }else if(type == "vec2"){
-                int div3Idx = value.find(',');
+                uint32_t div3Idx = value.find(',');
                 if(div3Idx == std::string::npos){
                     continue;
                 }
@@ -72,8 +72,8 @@ void PersistentStorage::load(){
                 std::string y = value.substr(div3Idx+1);
                 containers[currentContainer]->vec2s[key] = Vector2(std::stof(x), std::stof(y));
             }else if(type == "vec3"){
-                int div3Idx = value.find(',');
-                int div4Idx = value.find(',', div3Idx+1);
+                uint32_t div3Idx = value.find(',');
+                uint32_t div4Idx = value.find(',', div3Idx+1);
                 if(div3Idx == std::string::npos || div4Idx == std::string::npos){
                     continue;
                 }

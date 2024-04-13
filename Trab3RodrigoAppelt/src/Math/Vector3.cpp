@@ -171,3 +171,10 @@ bool Vector3::operator != (const Vector3& v)
 {
     return( !(*this == v) );
 }
+
+Vector3 Vector3::fromHex(uint32_t hex){
+    int r = (hex >> 16) & 0xFF;
+    int g = (hex >> 8) & 0xFF;
+    int b = hex & 0xFF;
+    return Vector3(r/255.0, g/255.0, b/255.0);
+}

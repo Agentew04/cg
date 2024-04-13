@@ -5,16 +5,6 @@
 #include "CheckBoxManager.h"
 #include "CursorManager.h"
 
-static float clamp(float value, float minValue, float maxValue){
-    if(value >= maxValue){
-        return maxValue;
-    }
-    if(value <= minValue){
-        return minValue;
-    }
-    return value;
-}
-
 static bool inside(Vector2 buttonPos, Vector2 buttonSize, Vector2 mousePos){
     if(!(mousePos.x >= buttonPos.x && mousePos.x <= buttonPos.x + buttonSize.x)){
         return false;

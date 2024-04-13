@@ -27,6 +27,17 @@ struct ButtonStyle{
     Vector3 foreground;
 
     static ButtonStyle* Windows10();
+    static ButtonStyle* FlatLightBlue();
+    static ButtonStyle* FlatDarkBlue();
+    static ButtonStyle* FlatWhite();
+    static ButtonStyle* FlatGreen();
+    static ButtonStyle* FlatRed();
+
+    /// @brief Registra mais um observador dos estilos.
+    static void startUsing();
+    /// @brief Libera todos os estilos compartilhados de botoes
+    /// se nao houver mais observadores
+    static void freeStyles();
 
     ~ButtonStyle();
 };

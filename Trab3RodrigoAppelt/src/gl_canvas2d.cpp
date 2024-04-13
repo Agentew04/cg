@@ -45,7 +45,7 @@ void keyboardUp(int key);
 void specialUp(int key);
 void mouse(int bt, int st, int wheel, int direction, int x, int y);
 void mouseWheelCB(int wheel, int direction, int x, int y);
-void render(float delta);
+void render();
 void update(float delta);
 
 
@@ -238,9 +238,18 @@ void CV::text(float x, float y, const char *t, void* font, TextAlign align){
     CV::text(finalX, y, t, font);
 }
 
+void CV::text(float x, float y, const char *t, TextAlign align){
+   CV::text(x, y, t, GLUT_BITMAP_8_BY_13, align);
+}
+
 void CV::clear(float r, float g, float b)
 {
    glClearColor( r, g, b, 1 );
+}
+
+void CV::clear(Vector3 rgb)
+{
+   glClearColor( rgb.x, rgb.y, rgb.z, 1 );
 }
 
 void CV::circle( float x, float y, float radius, int div )
@@ -393,6 +402,9 @@ void inicializa()
 }
 
 static int lastTime = 0;
+// buffer of deltas to calculate FPS
+#define FPS_BUFFER_SIZE 60
+static float deltas[FPS_BUFFER_SIZE] = {};
 
 void display (void)
 {
@@ -404,11 +416,26 @@ void display (void)
    float delta = ((float)time - lastTime)/1000.0f;
    lastTime = time;
 
+   // shift all elements to the left
+   for(int i = 0; i < FPS_BUFFER_SIZE-1; i++){
+      deltas[i] = deltas[i+1];
+   }
+   deltas[FPS_BUFFER_SIZE-1] = delta;
+
    update(delta);
-   render(delta);
+   render();
 
    glFlush();
    glutSwapBuffers();
+}
+
+float CV::fps(){
+      // calcular media dos deltas no vetor
+      float sum = 0;
+      for(int i = 0; i < FPS_BUFFER_SIZE; i++){
+         sum += deltas[i];
+      }
+      return ((float)FPS_BUFFER_SIZE)/sum;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////

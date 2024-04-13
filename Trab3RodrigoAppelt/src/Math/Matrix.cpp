@@ -2,7 +2,7 @@
 #include <string.h>
 #include <iostream>
 
-Matrix::Matrix(int n)
+Matrix::Matrix(size_t n)
 {
     this->n = n;
     data = new float[n * n];
@@ -16,7 +16,7 @@ Matrix::Matrix(const Matrix &m)
     memcpy(data, m.data, n * n * sizeof(float));
 }
 
-Matrix::Matrix(int n, float *data, bool dealloc)
+Matrix::Matrix(size_t n, float *data, bool dealloc)
 {
     this->n = n;
     this->data = new float[n * n];
@@ -32,9 +32,9 @@ Matrix::~Matrix()
     delete[] data;
 }
 
-float Matrix::at(int i, int j) const
+float Matrix::at(uint32_t i, uint32_t j) const
 {
-    if (i < 0 || i >= n || j < 0 || j >= n)
+    if (i >= n || j >= n)
     {
         std::cout << "Matrix::at: Indice fora dos limites" << std::endl;
         return 0;
@@ -42,9 +42,9 @@ float Matrix::at(int i, int j) const
     return data[i * n + j];
 }
 
-void Matrix::set(int i, int j, float val)
+void Matrix::set(uint32_t i, uint32_t j, float val)
 {
-    if (i < 0 || i >= n || j < 0 || j >= n)
+    if (i >= n || j >= n)
     {
         std::cout << "Matrix::set: Indice fora dos limites" << std::endl;
         return;
@@ -53,11 +53,11 @@ void Matrix::set(int i, int j, float val)
 }
 
 // static identity
-Matrix Matrix::identity(int n)
+Matrix Matrix::identity(size_t n)
 {
     float *data = new float[n * n];
     memset(data, 0, n * n * sizeof(float));
-    for (int i = 0; i < n; i++)
+    for (uint32_t i = 0; i < n; i++)
     {
         data[i * n + i] = 1;
     }
@@ -107,7 +107,7 @@ Matrix Matrix::scale2DHomo(float x, float y)
     return Matrix(3, data);
 }
 
-int Matrix::dim() const
+size_t Matrix::dim() const
 {
     return n;
 }
@@ -129,12 +129,12 @@ float Matrix::det() const
     }
     // recursivo
     float res = 0;
-    for (int i = 0; i < n; i++)
+    for (uint32_t i = 0; i < n; i++)
     {
         Matrix sub(n - 1);
-        for (int j = 1; j < n; j++)
+        for (uint32_t j = 1; j < n; j++)
         {
-            for (int k = 0; k < n; k++)
+            for (uint32_t k = 0; k < n; k++)
             {
                 if (k < i)
                 {
@@ -154,9 +154,9 @@ float Matrix::det() const
 Matrix Matrix::transpose() const
 {
     float *data = new float[n * n];
-    for (int i = 0; i < n; i++)
+    for (uint32_t i = 0; i < n; i++)
     {
-        for (int j = 0; j < n; j++)
+        for (uint32_t j = 0; j < n; j++)
         {
             data[j * n + i] = this->data[i * n + j];
         }
@@ -168,7 +168,8 @@ Matrix Matrix::transpose() const
 // {
 //     /*
 //     chatgpt me deu essa resposta, no projeto de testes
-//     eu testo se esse codigo esta certo com varios casos
+//     eu testo se esse codigo esta certo com varios casos.
+//     ... nao ta funcionando, vou comentar so, vai q vou usar dps
 //     */
 
 //     // Create a new matrix that is the identity matrix of the same size as the original matrix.
@@ -238,9 +239,9 @@ Matrix Matrix::operator+(const Matrix &m)
         return *this;
     }
     Matrix res(n);
-    for (int i = 0; i < n; i++)
+    for (uint32_t i = 0; i < n; i++)
     {
-        for (int j = 0; j < n; j++)
+        for (uint32_t j = 0; j < n; j++)
         {
             res.data[i * n + j] = data[i * n + j] + m.data[i * n + j];
         }
@@ -255,9 +256,9 @@ Matrix &Matrix::operator+=(const Matrix &m)
         std::cout << "Matrix::operator+=: Matrizes de tamanhos diferentes" << std::endl;
         return *this;
     }
-    for (int i = 0; i < n; i++)
+    for (uint32_t i = 0; i < n; i++)
     {
-        for (int j = 0; j < n; j++)
+        for (uint32_t j = 0; j < n; j++)
         {
             data[i * n + j] += m.data[i * n + j];
         }
@@ -273,9 +274,9 @@ Matrix Matrix::operator-(const Matrix &m)
         return *this;
     }
     Matrix res(n);
-    for (int i = 0; i < n; i++)
+    for (uint32_t i = 0; i < n; i++)
     {
-        for (int j = 0; j < n; j++)
+        for (uint32_t j = 0; j < n; j++)
         {
             res.data[i * n + j] = data[i * n + j] - m.data[i * n + j];
         }
@@ -286,9 +287,9 @@ Matrix Matrix::operator-(const Matrix &m)
 Matrix Matrix::operator-()
 {
     Matrix res(n);
-    for (int i = 0; i < n; i++)
+    for (uint32_t i = 0; i < n; i++)
     {
-        for (int j = 0; j < n; j++)
+        for (uint32_t j = 0; j < n; j++)
         {
             res.data[i * n + j] = -data[i * n + j];
         }
@@ -303,9 +304,9 @@ Matrix &Matrix::operator-=(const Matrix &m)
         std::cout << "Matrix::operator-=: Matrizes de tamanhos diferentes" << std::endl;
         return *this;
     }
-    for (int i = 0; i < n; i++)
+    for (uint32_t i = 0; i < n; i++)
     {
-        for (int j = 0; j < n; j++)
+        for (uint32_t j = 0; j < n; j++)
         {
             data[i * n + j] -= m.data[i * n + j];
         }
@@ -316,9 +317,9 @@ Matrix &Matrix::operator-=(const Matrix &m)
 Matrix Matrix::operator*(const float a)
 {
     Matrix res(n);
-    for (int i = 0; i < n; i++)
+    for (uint32_t i = 0; i < n; i++)
     {
-        for (int j = 0; j < n; j++)
+        for (uint32_t j = 0; j < n; j++)
         {
             res.data[i * n + j] = data[i * n + j] * a;
         }
@@ -328,9 +329,9 @@ Matrix Matrix::operator*(const float a)
 
 Matrix &Matrix::operator*=(const float a)
 {
-    for (int i = 0; i < n; i++)
+    for (uint32_t i = 0; i < n; i++)
     {
-        for (int j = 0; j < n; j++)
+        for (uint32_t j = 0; j < n; j++)
         {
             data[i * n + j] *= a;
         }
@@ -346,11 +347,11 @@ Matrix Matrix::operator*(const Matrix &m)
         return *this;
     }
     Matrix res(n);
-    for (int i = 0; i < n; i++)
+    for (uint32_t i = 0; i < n; i++)
     {
-        for (int j = 0; j < n; j++)
+        for (uint32_t j = 0; j < n; j++)
         {
-            for (int k = 0; k < n; k++)
+            for (uint32_t k = 0; k < n; k++)
             {
                 res.data[i * n + j] += data[i * n + k] * m.data[k * n + j];
             }
@@ -367,11 +368,11 @@ Matrix &Matrix::operator*=(const Matrix &m)
         return *this;
     }
     Matrix res(n);
-    for (int i = 0; i < n; i++)
+    for (uint32_t i = 0; i < n; i++)
     {
-        for (int j = 0; j < n; j++)
+        for (uint32_t j = 0; j < n; j++)
         {
-            for (int k = 0; k < n; k++)
+            for (uint32_t k = 0; k < n; k++)
             {
                 res.data[i * n + j] += data[i * n + k] * m.data[k * n + j];
             }
@@ -418,10 +419,10 @@ std::vector<float> Matrix::operator*(const std::vector<float> &v)
     }
     std::vector<float> res(n, 0);
     // for linha do vetor
-    for (int i = 0; i < n; i++)
+    for (uint32_t i = 0; i < n; i++)
     {
         // for coluna da matriz
-        for (int j = 0; j < n; j++)
+        for (uint32_t j = 0; j < n; j++)
         {
             res[i] += data[i * n + j] * v[j];
         }
@@ -432,9 +433,9 @@ std::vector<float> Matrix::operator*(const std::vector<float> &v)
 
 std::ostream &operator<<(std::ostream &os, const Matrix &m)
 {
-    for (int i = 0; i < m.n; i++)
+    for (uint32_t i = 0; i < m.n; i++)
     {
-        for (int j = 0; j < m.n; j++)
+        for (uint32_t j = 0; j < m.n; j++)
         {
             os << m.at(i, j) << " ";
         }

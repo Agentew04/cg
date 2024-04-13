@@ -3,6 +3,14 @@
 
 #include <iostream>
 
+int styleObserverCount = 0;
+ButtonStyle* windows10Style = nullptr;
+ButtonStyle* flatLightBlueStyle = nullptr;
+ButtonStyle* flatDarkBlueStyle = nullptr;
+ButtonStyle* flatWhiteStyle = nullptr;
+ButtonStyle* flatGreenStyle = nullptr;
+ButtonStyle* flatRedStyle = nullptr;
+
 void ButtonStyle::setState(ButtonState state, Vector3 background, Vector3 border){
     this->backgroundColor[state] = background;
     this->borderColor[state] = border;
@@ -14,13 +22,109 @@ void ButtonStyle::getState(ButtonState state, Vector3 *background, Vector3 *bord
 }
 
 ButtonStyle* ButtonStyle::Windows10(){
-    ButtonStyle *stl = new ButtonStyle;
-    stl->foreground = Vector3(0,0,0);
-    stl->setState(ButtonState::NORMAL, Vector3(0.882,0.882,0.882), Vector3(0.678,0.678,0.678));
-    stl->setState(ButtonState::HOVER, Vector3(0.898, 0.945, 0.984), Vector3(0.000, 0.470, 0.843));
-    stl->setState(ButtonState::CLICK, Vector3(0.800, 0.894, 0.968), Vector3(0.000, 0.329, 0.600));
-    return stl;
+    if(windows10Style == nullptr){
+        windows10Style = new ButtonStyle;
+        windows10Style->foreground = Vector3::fromHex(0x000000);
+        windows10Style->setState(ButtonState::NORMAL, Vector3(0.882,0.882,0.882), Vector3(0.678,0.678,0.678));
+        windows10Style->setState(ButtonState::HOVER, Vector3(0.898, 0.945, 0.984), Vector3(0.000, 0.470, 0.843));
+        windows10Style->setState(ButtonState::CLICK, Vector3(0.800, 0.894, 0.968), Vector3(0.000, 0.329, 0.600));   
+    }
+    return windows10Style;
 }
+
+ButtonStyle* ButtonStyle::FlatLightBlue(){
+    if(flatLightBlueStyle == nullptr){
+        flatLightBlueStyle = new ButtonStyle;
+        flatLightBlueStyle->foreground = Vector3::fromHex(0xFFFFFF);
+        flatLightBlueStyle->setState(ButtonState::NORMAL, Vector3::fromHex(0x28ABE3), Vector3::fromHex(0x28ABE3));
+        flatLightBlueStyle->setState(ButtonState::HOVER, Vector3::fromHex(0x1C7BA0), Vector3::fromHex(0x1C7BA0));
+        flatLightBlueStyle->setState(ButtonState::CLICK, Vector3::fromHex(0x13536B), Vector3::fromHex(0x13536B));
+    }
+    return flatLightBlueStyle;
+}
+
+ButtonStyle* ButtonStyle::FlatDarkBlue(){
+    if(flatDarkBlueStyle == nullptr){
+        flatDarkBlueStyle = new ButtonStyle;
+        flatDarkBlueStyle->foreground = Vector3::fromHex(0xFFFFFF);
+        flatDarkBlueStyle->setState(ButtonState::NORMAL, Vector3::fromHex(0x3D66FE), Vector3::fromHex(0x3D66FE));
+        flatDarkBlueStyle->setState(ButtonState::HOVER, Vector3::fromHex(0x385CE0), Vector3::fromHex(0x385CE0));
+        flatDarkBlueStyle->setState(ButtonState::CLICK, Vector3::fromHex(0x2D4BB7), Vector3::fromHex(0x2D4BB7));
+    }
+    return flatDarkBlueStyle;
+}
+
+ButtonStyle* ButtonStyle::FlatWhite(){
+    if(flatWhiteStyle == nullptr){
+        flatWhiteStyle = new ButtonStyle;
+        flatWhiteStyle->foreground = Vector3::fromHex(0x000000);
+        flatWhiteStyle->setState(ButtonState::NORMAL, Vector3::fromHex(0xFFFFFF), Vector3::fromHex(0xFFFFFF));
+        flatWhiteStyle->setState(ButtonState::HOVER, Vector3::fromHex(0xC6C6C6), Vector3::fromHex(0xC6C6C6));
+        flatWhiteStyle->setState(ButtonState::CLICK, Vector3::fromHex(0x969696), Vector3::fromHex(0x969696));
+    }
+    return flatWhiteStyle;
+}
+
+ButtonStyle* ButtonStyle::FlatGreen(){
+    if(flatGreenStyle == nullptr){
+        flatGreenStyle = new ButtonStyle;
+        flatGreenStyle->foreground = Vector3::fromHex(0xFFFFFF);
+        flatGreenStyle->setState(ButtonState::NORMAL, Vector3::fromHex(0x1EAA79), Vector3::fromHex(0x1EAA79));
+        flatGreenStyle->setState(ButtonState::HOVER, Vector3::fromHex(0x18895E), Vector3::fromHex(0x18895E));
+        flatGreenStyle->setState(ButtonState::CLICK, Vector3::fromHex(0x116042), Vector3::fromHex(0x116042));
+    }
+    return flatGreenStyle;
+}
+
+ButtonStyle* ButtonStyle::FlatRed(){
+    if(flatRedStyle == nullptr){
+        flatRedStyle = new ButtonStyle;
+        flatRedStyle->foreground = Vector3::fromHex(0xFFFFFF);
+        flatRedStyle->setState(ButtonState::NORMAL, Vector3::fromHex(0xD41E59), Vector3::fromHex(0xD41E59));
+        flatRedStyle->setState(ButtonState::HOVER, Vector3::fromHex(0x991642), Vector3::fromHex(0x991642));
+        flatRedStyle->setState(ButtonState::CLICK, Vector3::fromHex(0x630E2C), Vector3::fromHex(0x630E2C));
+    }
+    return flatRedStyle;
+}
+
+void ButtonStyle::startUsing(){
+    styleObserverCount++;
+}
+
+void ButtonStyle::freeStyles(){
+    if(styleObserverCount > 0){
+        styleObserverCount--;
+    }
+    if(styleObserverCount > 0){
+        return;
+    }
+    std::cout << "Clearing all Button styles" << std::endl;
+    if(windows10Style != nullptr){
+        delete windows10Style;
+        windows10Style = nullptr;
+    }
+    if(flatLightBlueStyle != nullptr){
+        delete flatLightBlueStyle;
+        flatLightBlueStyle = nullptr;
+    }
+    if(flatDarkBlueStyle != nullptr){
+        delete flatDarkBlueStyle;
+        flatDarkBlueStyle = nullptr;
+    }
+    if(flatWhiteStyle != nullptr){
+        delete flatWhiteStyle;
+        flatWhiteStyle = nullptr;
+    }
+    if(flatGreenStyle != nullptr){
+        delete flatGreenStyle;
+        flatGreenStyle = nullptr;
+    }
+    if(flatRedStyle != nullptr){
+        delete flatRedStyle;
+        flatRedStyle = nullptr;
+    }
+}
+
 
 ButtonStyle::~ButtonStyle(){
     backgroundColor.clear();

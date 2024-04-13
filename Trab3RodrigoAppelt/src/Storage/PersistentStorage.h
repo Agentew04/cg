@@ -4,8 +4,8 @@
 #include <string>
 #include <map>
 
-#include "../Vector2.h"
-#include "../Vector3.h"
+#include "../Math/Vector2.h"
+#include "../Math/Vector3.h"
 
 /// @brief Classe que controla a persistencia de dados.
 /// Segmenta eles em 'containers' nomeados e permite
@@ -17,7 +17,7 @@ public:
     
     /// @brief Carrega dados salvos do disco ou
     /// inicia um novo save.
-    static void load();
+    static void load(std::string savePath);
     /// @brief Salva o estado atual dos dados
     /// no disco para ser usado em outra run.
     static void save();
