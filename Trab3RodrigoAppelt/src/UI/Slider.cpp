@@ -42,7 +42,7 @@ Slider::Slider(Vector2 pos, Vector2 size, float minValue, float maxValue, float 
     if(orientation == Slider::Orientation::HORIZONTAL){
         if(size.y > size.x){
             std::cout << "Wrong size for Horizontal Slider, fixing."<< std::endl;
-            size = size.flip();
+            size = size.flipped();
         }
     }
     this->orientation = orientation;

@@ -31,9 +31,15 @@ public:
     /// @brief Troca x e y 
     Vector2 flipped();
 
-
     /// @brief Calcula a distancia entre dois pontos
-    float distance(Vector2 point);
+    float distance(const Vector2& point) const;
+
+    /// @brief Calcula o menor angulo entre dois vetores
+    /// @param v O outro vetor a ser comparado
+    /// @return O angulo em radianos
+    float angle(const Vector2& v) const;
+
+    bool isClockwise(const Vector2& v) const;
 
     // OPERADORES
     /// @brief Adiciona dois vetores
@@ -53,7 +59,7 @@ public:
     Vector2 operator/=(const float f);
 
     /// @brief Produtor escalar
-    float operator*(const Vector2 &v);
+    float operator*(const Vector2 &v) const;
     float dot(const Vector2 &v);
 
     /// @brief Multiplica componente a componente 2 vetores

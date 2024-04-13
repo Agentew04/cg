@@ -432,3 +432,296 @@
 	<iostream>
 	"lodepng.h"
 
+1712187209 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\gl_canvas2d.cpp
+	"gl_canvas2d.h"
+	<GL/glut.h>
+
+1712890368 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\gl_canvas2d.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	"Math/Vector2.h"
+	"Math/Vector3.h"
+	"Math/Polygon2D.h"
+
+1632060799 e:\universidade\cg\trabalhos\include\gl\glut.h
+	"freeglut_std.h"
+
+1632060797 e:\universidade\cg\trabalhos\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1632060794 e:\universidade\cg\trabalhos\include\gl\freeglut_ext.h
+	<stdarg.h>
+
+1712974536 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\math\vector2.h
+	<cmath>
+	<iostream>
+
+1712873297 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\math\vector3.h
+	<iostream>
+
+1711839238 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\button.cpp
+	"Button.h"
+	"../gl_canvas2d.h"
+	<iostream>
+
+1712889734 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\button.h
+	<string>
+	<functional>
+	<map>
+	"../Math/Vector2.h"
+	"../Math/Vector3.h"
+
+1711839244 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\buttonmanager.cpp
+	<vector>
+	<iostream>
+	<algorithm>
+	"ButtonManager.h"
+	"CursorManager.h"
+
+1710597094 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\buttonmanager.h
+	<vector>
+	"Button.h"
+
+1711669734 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\cursormanager.h
+	<windows.h>
+	<map>
+
+1712183619 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\chart.cpp
+	<algorithm>
+	<vector>
+	"Chart.h"
+	"../gl_canvas2d.h"
+
+1712889803 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\chart.h
+	<vector>
+	<map>
+	"../Math/Vector2.h"
+	"../Math/Vector3.h"
+
+1712363607 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\checkbox.cpp
+	<iostream>
+	<cmath>
+	"CheckBox.h"
+	"../gl_canvas2d.h"
+
+1712889744 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\checkbox.h
+	<map>
+	<functional>
+	"../Math/Vector2.h"
+	"../Math/Vector3.h"
+
+1711839354 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\checkboxmanager.cpp
+	<vector>
+	<iostream>
+	<algorithm>
+	"CheckBoxManager.h"
+	"CursorManager.h"
+
+1710611069 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\checkboxmanager.h
+	<vector>
+	"CheckBox.h"
+
+1711670896 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\cursormanager.cpp
+	<windows.h>
+	<map>
+	<iostream>
+	"CursorManager.h"
+
+1711839376 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\imagerenderer.cpp
+	"ImageRenderer.h"
+	"../gl_canvas2d.h"
+	<iostream>
+
+1712889792 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\imagerenderer.h
+	<vector>
+	"../Image/ImageManipulation.h"
+	"../Math/Vector2.h"
+	"../Math/Matrix.h"
+
+1712890381 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\image\imagemanipulation.h
+	<cstdint>
+	"../Math/Vector2.h"
+
+1712887163 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\math\matrix.h
+	<string.h>
+	<iostream>
+	<vector>
+	"Vector2.h"
+	"Vector3.h"
+
+1712890394 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\slider.cpp
+	"Slider.h"
+	"../gl_canvas2d.h"
+	<iostream>
+	<cmath>
+
+1712889759 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\slider.h
+	<map>
+	<functional>
+	"../Math/Vector2.h"
+	"../Math/Vector3.h"
+
+1710972737 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\slidermanager.cpp
+	<vector>
+	<iostream>
+	<algorithm>
+	"SliderManager.h"
+
+1710598286 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\slidermanager.h
+	<vector>
+	"Slider.h"
+
+1711066903 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\uimanager.cpp
+	<vector>
+	<iostream>
+	"UIManager.h"
+
+1710985834 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\uimanager.h
+	<vector>
+	"Button.h"
+	"Slider.h"
+	"CheckBox.h"
+	"ButtonManager.h"
+	"SliderManager.h"
+	"CheckBoxManager.h"
+	"Chart.h"
+	"ImageRenderer.h"
+
+1712874829 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\math\polygon2d.h
+	<vector>
+	"Vector2.h"
+
+1712887152 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\math\matrix.cpp
+	"Matrix.h"
+	<string.h>
+	<iostream>
+
+1712887700 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\math\polygon2d.cpp
+	"Polygon2D.h"
+
+1712974547 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\math\vector2.cpp
+	"Vector2.h"
+
+1712873384 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\math\vector3.cpp
+	<cmath>
+	"Vector3.h"
+
+1711747818 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\image\bmp.cpp
+	"Bmp.h"
+	<string.h>
+	<cstdint>
+	<iostream>
+
+1711736493 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\image\bmp.h
+	<stdio.h>
+	<stdlib.h>
+
+1712976324 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\image\imagemanipulation.cpp
+	<iostream>
+	<cstring>
+	"ImageManipulation.h"
+	"../Math/Vector2.h"
+
+1712977630 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\main.cpp
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	<math.h>
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	"Keyboard.h"
+	"gl_canvas2d.h"
+	"Web/httplib.h"
+
+1712890162 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\keyboard.h
+
+1712977520 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\web\httplib.h
+	<io.h>
+	<winsock2.h>
+	<ws2tcpip.h>
+	<arpa/inet.h>
+	<ifaddrs.h>
+	<strings.h>
+	<net/if.h>
+	<netdb.h>
+	<netinet/in.h>
+	<resolv.h>
+	<netinet/tcp.h>
+	<poll.h>
+	<csignal>
+	<pthread.h>
+	<sys/mman.h>
+	<sys/select.h>
+	<sys/socket.h>
+	<sys/un.h>
+	<unistd.h>
+	<algorithm>
+	<array>
+	<atomic>
+	<cassert>
+	<cctype>
+	<climits>
+	<condition_variable>
+	<cstring>
+	<errno.h>
+	<exception>
+	<fcntl.h>
+	<fstream>
+	<functional>
+	<iomanip>
+	<iostream>
+	<list>
+	<map>
+	<memory>
+	<mutex>
+	<random>
+	<regex>
+	<set>
+	<sstream>
+	<string>
+	<sys/stat.h>
+	<thread>
+	<unordered_map>
+	<unordered_set>
+	<utility>
+	<wincrypt.h>
+	<TargetConditionals.h>
+	<CoreFoundation/CoreFoundation.h>
+	<Security/Security.h>
+	<openssl/err.h>
+	<openssl/evp.h>
+	<openssl/ssl.h>
+	<openssl/x509v3.h>
+	<openssl/applink.c>
+	<iostream>
+	<sstream>
+	<zlib.h>
+	<brotli/decode.h>
+	<brotli/encode.h>
+
+1710894317 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\image\lodepng.cpp
+	"lodepng.h"
+	<limits.h>
+	<stdio.h>
+	<stdlib.h>
+
+1710894324 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\image\lodepng.h
+	<string.h>
+	<vector>
+	<string>
+	"lodepng.h"
+	<iostream>
+	"lodepng.h"
+

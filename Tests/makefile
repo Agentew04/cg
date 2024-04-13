@@ -5,13 +5,13 @@ vector3.o: Math/Vector3.cpp Math/Vector3.h
 	g++ -c Math/Vector3.cpp -o vector3.o
 
 vector3test.o: Tests/Vector3Test.cpp Math/Vector3.h
-	g++ -c Math/Vector3Test.cpp -o vector3test.o
+	g++ -c Tests/Vector3Test.cpp -o vector3test.o
 
 vector2.o: Math/Vector2.cpp Math/Vector2.h
 	g++ -c Math/Vector2.cpp -o vector2.o
 
 vector2test.o: Tests/Vector2Test.cpp Math/Vector2.h
-	g++ -c Math/Vector2Test.cpp -o vector2test.o
+	g++ -c Tests/Vector2Test.cpp -o vector2test.o
 
 polygon2d.o: Math/Polygon2D.cpp Math/Polygon2D.h
 	g++ -c Math/Polygon2D.cpp -o polygon2d.o

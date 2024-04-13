@@ -11,7 +11,7 @@
 
 #include "Math/Vector2.h"
 #include "Math/Vector3.h"
-#include "Math/Polygon.h"
+#include "Math/Polygon2D.h"
 
 #define PI_2 6.28318530717
 #define PI   3.14159265359

@@ -53,7 +53,7 @@ void Vector2::flip()
     y = temp;
 }
 
-float Vector2::distance(Vector2 point)
+float Vector2::distance(const Vector2& point) const
 {
     return std::sqrt( ((point.x - x)*(point.x - x)) + ((point.y - y)*(point.y - y)));
 }
@@ -106,7 +106,7 @@ Vector2 Vector2::operator/=(const float f)
     return *this;
 }
 
-float Vector2::operator*(const Vector2 &v)
+float Vector2::operator*(const Vector2 &v) const
 {
     return x * v.x + y * v.y;
 }
@@ -136,4 +136,15 @@ std::ostream &operator<<(std::ostream &os, const Vector2 &obj)
 {
     os << "(" << obj.x << ", " << obj.y << ")";
     return os;
+}
+
+float Vector2::angle(const Vector2& v) const{
+    return std::acos((*this * v) / (magnitude * v.magnitude));
+}
+
+bool Vector2::isClockwise(const Vector2& v) const{
+    if(this->y*v.x > this->x*v.y){
+        return false;
+    }
+    return true;
 }

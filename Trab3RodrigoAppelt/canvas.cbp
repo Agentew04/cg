@@ -32,15 +32,23 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add option="-fexceptions" />
 			<Add option="-std=c++11" />
+			<Add option="-fexceptions" />
 			<Add directory="../include" />
 		</Compiler>
 		<Linker>
 			<Add library="../lib/libfreeglut32.a" />
 			<Add library="../lib/libopengl32.a" />
 			<Add library="../lib/libglu32.a" />
+			<Add library="ws2_32" />
 		</Linker>
+		<Unit filename="src/Image/Bmp.h" />
+		<Unit filename="src/Image/ImageManipulation.cpp" />
+		<Unit filename="src/Image/ImageManipulation.h" />
+		<Unit filename="src/Image/bmp.cpp" />
+		<Unit filename="src/Image/lodepng.cpp" />
+		<Unit filename="src/Image/lodepng.h" />
+		<Unit filename="src/Keyboard.h" />
 		<Unit filename="src/Math/Matrix.cpp" />
 		<Unit filename="src/Math/Matrix.h" />
 		<Unit filename="src/Math/Polygon2D.cpp" />
@@ -69,6 +77,7 @@
 		<Unit filename="src/UI/SliderManager.h" />
 		<Unit filename="src/UI/UIManager.cpp" />
 		<Unit filename="src/UI/UIManager.h" />
+		<Unit filename="src/Web/httplib.h" />
 		<Unit filename="src/gl_canvas2d.cpp" />
 		<Unit filename="src/gl_canvas2d.h" />
 		<Unit filename="src/main.cpp" />
