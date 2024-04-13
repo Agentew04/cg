@@ -31,6 +31,7 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-Wextra" />
 			<Add option="-Wall" />
 			<Add option="-std=c++11" />
 			<Add option="-fexceptions" />
@@ -42,6 +43,12 @@
 			<Add library="../lib/libglu32.a" />
 			<Add library="ws2_32" />
 		</Linker>
+		<Unit filename="src/Fonts/FontManager.cpp" />
+		<Unit filename="src/Fonts/FontManager.h" />
+		<Unit filename="src/Fonts/schrift.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/Fonts/schrift.h" />
 		<Unit filename="src/Image/Bmp.h" />
 		<Unit filename="src/Image/ImageManipulation.cpp" />
 		<Unit filename="src/Image/ImageManipulation.h" />
@@ -57,6 +64,12 @@
 		<Unit filename="src/Math/Vector2.h" />
 		<Unit filename="src/Math/Vector3.cpp" />
 		<Unit filename="src/Math/Vector3.h" />
+		<Unit filename="src/Specific/App.cpp" />
+		<Unit filename="src/Specific/App.h" />
+		<Unit filename="src/Specific/Game.cpp" />
+		<Unit filename="src/Specific/Game.h" />
+		<Unit filename="src/Storage/PersistentStorage.cpp" />
+		<Unit filename="src/Storage/PersistentStorage.h" />
 		<Unit filename="src/UI/Button.cpp" />
 		<Unit filename="src/UI/Button.h" />
 		<Unit filename="src/UI/ButtonManager.cpp" />

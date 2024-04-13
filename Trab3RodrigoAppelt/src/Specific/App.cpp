@@ -6,7 +6,7 @@
 #include "../Storage/PersistentStorage.h"
 
 App::App(int *scrW, int *scrH)
-    : 
+    :
     currentMenu(MenuState::MAIN_MENU),
     screenWidth(scrW), screenHeight(scrH),
     mousePos(0,0)
@@ -14,16 +14,19 @@ App::App(int *scrW, int *scrH)
     submitButtons();
 
     // create persistent unique user id
-    if(!PersistentStorage::hasInt("user","uniqueid")){
+    if(!PersistentStorage::has("user","uniqueid")){
         std::random_device r;
         std::mt19937 rgen(r());
         int uniqueId = rgen();
-        PersistentStorage::setInt("user","uniqueid",uniqueId);
+        PersistentStorage::set<int>("user","uniqueid",uniqueId);
     }
 
     // load user data
-    PersistentStorage::getOrDefaultInt("user","coins", &coins, 0);
-    PersistentStorage::getOrDefaultInt("user","highscore", &highscore, 0);
+    coins = PersistentStorage::getOrSetDefault<int>("user","coins", 0);
+    highscore = PersistentStorage::getOrSetDefault<int>("user","highscore", 0);
+
+    std::string name = PersistentStorage::getOrSetDefault<std::string>("user","name", "carlos");
+    std::cout << "Name: " << name << std::endl;
 }
 
 App::~App()
@@ -134,13 +137,13 @@ void App::renderMainMenu()
 {
     CV::clear(Vector3::fromHex(0x1D1E30));
 
-    CV::text((*screenWidth)/2, 3*(*screenHeight)/11, 
-        "BALL BOUNCE", 
+    CV::text((*screenWidth)/2, 3*(*screenHeight)/11,
+        "BALL BOUNCE",
         GLUT_BITMAP_TIMES_ROMAN_24,
         TextAlign::CENTER
     );
-    CV::text((*screenWidth)/2, 5*(*screenHeight)/11, 
-        ("Coins: " + std::to_string(highscore)).c_str(), 
+    CV::text((*screenWidth)/2, 5*(*screenHeight)/11,
+        ("Coins: " + std::to_string(coins)).c_str(),
         GLUT_BITMAP_HELVETICA_18,
         TextAlign::CENTER
     );
@@ -176,10 +179,10 @@ void App::renderPostGameStats()
 void App::submitButtons(){
     // mainmenu
     auto mainmenuPlay = new Button(
-        [&](){ 
+        [&](){
             return Vector2((*screenWidth)/2, 6.5*(*screenHeight)/11);
         },
-        [](){ 
+        [](){
             return Vector2(200, 50);
         },
         Button::ButtonPlacement::CENTER,

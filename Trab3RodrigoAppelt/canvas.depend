@@ -727,9 +727,11 @@
 	<iostream>
 	"lodepng.h"
 
-1712978059 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\storage\persistentstorage.h
+1713036992 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\storage\persistentstorage.h
 	<string>
 	<map>
+	<iostream>
+	<iomanip>
 	"../Math/Vector2.h"
 	"../Math/Vector3.h"
 
@@ -775,22 +777,24 @@
 1712983967 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\game.cpp
 	"Game.h"
 
-1712984054 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\storage\persistentstorage.cpp
+1713037531 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\storage\persistentstorage.cpp
 	<fstream>
 	<algorithm>
 	<iterator>
 	<iostream>
+	<sstream>
+	<iomanip>
 	"PersistentStorage.h"
 
 1712983962 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\game.h
 	"../Math/Vector2.h"
 
-1712987961 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\app.h
+1712989021 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\app.h
 	"../Math/Vector2.h"
 	"Game.h"
 	"../UI/ButtonManager.h"
 
-1712988831 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\app.cpp
+1713031312 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\app.cpp
 	"App.h"
 	<random>
 	"../gl_canvas2d.h"
