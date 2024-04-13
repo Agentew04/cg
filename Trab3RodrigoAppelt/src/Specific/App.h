@@ -3,7 +3,9 @@
 
 #include "../Math/Vector2.h"
 #include "Game.h"
+#include "../Keyboard.h"
 #include "../UI/ButtonManager.h"
+#include "../UI/TextBox.h"
 
 /// @brief Classe que vai guardar o estado atual
 /// da aplicacao.(qual menu esta, os dados do jogo,
@@ -20,6 +22,7 @@ public:
     // event forwarding
     void update(float delta);
     void render();
+    void keyDown(Key key);
     void mouseUp();
     void mouseDown();
     void updateMousePos(Vector2 pos);
@@ -50,6 +53,7 @@ private:
 
     // render functions
     void renderMainMenu();
+    void renderIdentification();
     void renderGame();
     void renderPauseMenu();
     void renderGameOver();
@@ -57,6 +61,7 @@ private:
 
     // per screen variables
     ButtonManager mainMenuButtons;
+    TextBox *idTextBox;
     ButtonManager pauseButtons;
     ButtonManager gameButtons;
     ButtonManager gameOverButtons;
@@ -65,6 +70,7 @@ private:
     // user data
     int coins;
     int highscore;
+    std::string username;
 };
 
 #endif

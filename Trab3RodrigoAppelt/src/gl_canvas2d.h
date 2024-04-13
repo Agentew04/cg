@@ -12,17 +12,13 @@
 #include "Math/Vector2.h"
 #include "Math/Vector3.h"
 #include "Math/Polygon2D.h"
+#include "UI/UIDefinitions.h"
 
 #define PI_2 6.28318530717
 #define PI   3.14159265359
 
 #define Y_CANVAS_CRESCE_PARA_CIMA 0
 
-enum TextAlign {
-    LEFT,
-    CENTER,
-    RIGHT
-};
 
 class CV //classe Canvas2D
 {
@@ -70,6 +66,7 @@ public:
 
     //desenha texto na coordenada (x,y)
     static float textWidth(const char *t, void* font);
+    static float fontHeight(void* font);
     static void text(float x, float y, const char *t);
     static void text(float x, float y, const char *t, TextAlign align);
     static void text(float x, float y, const char *t, void* font);

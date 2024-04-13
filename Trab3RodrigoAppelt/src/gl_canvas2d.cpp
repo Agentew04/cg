@@ -191,6 +191,10 @@ float CV::textWidth(const char *t, void* font){
     return width;
 }
 
+float CV::fontHeight(void* font){
+    return glutBitmapHeight(font);
+}
+
 void CV::text(float x, float y, const char *t, void* font)
 {
     int tam = (int)strlen(t);

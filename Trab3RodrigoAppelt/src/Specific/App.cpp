@@ -25,8 +25,7 @@ App::App(int *scrW, int *scrH)
     coins = PersistentStorage::getOrSetDefault<int>("user","coins", 0);
     highscore = PersistentStorage::getOrSetDefault<int>("user","highscore", 0);
 
-    std::string name = PersistentStorage::getOrSetDefault<std::string>("user","name", "carlos");
-    std::cout << "Name: " << name << std::endl;
+    std::string name = PersistentStorage::getOrSetDefault<std::string>("user","name", "");
 }
 
 App::~App()
@@ -40,12 +39,27 @@ void App::update(float delta)
     }
 }
 
+void App::keyDown(Key key){
+    switch(currentMenu){
+    case MenuState::IDENTIFICATION:
+        idTextBox->keyDown(key);
+    case MenuState::GAME:
+        //game.keyDown(key);
+        break;
+    default:
+        break;
+    }
+}
+
 void App::mouseUp()
 {
     switch (currentMenu)
     {
     case MenuState::MAIN_MENU:
         mainMenuButtons.mouseUp();
+        break;
+    case MenuState::IDENTIFICATION:
+        idTextBox->mouseUp();
         break;
     case MenuState::PAUSED:
         pauseButtons.mouseUp();
@@ -68,6 +82,9 @@ void App::mouseDown()
     {
     case MenuState::MAIN_MENU:
         mainMenuButtons.mouseDown();
+        break;
+    case MenuState::IDENTIFICATION:
+        idTextBox->mouseDown();
         break;
     case MenuState::PAUSED:
         pauseButtons.mouseDown();
@@ -92,6 +109,9 @@ void App::updateMousePos(Vector2 pos)
     case MenuState::MAIN_MENU:
         mainMenuButtons.updateMousePos(pos);
         break;
+    case MenuState::IDENTIFICATION:
+        idTextBox->updateMousePos(pos);
+        break;
     case MenuState::PAUSED:
         pauseButtons.updateMousePos(pos);
         break;
@@ -115,6 +135,9 @@ void App::render()
     {
     case MenuState::MAIN_MENU:
         renderMainMenu();
+        break;
+    case MenuState::IDENTIFICATION:
+        renderIdentification();
         break;
     case MenuState::PAUSED:
     case MenuState::GAME:
@@ -148,6 +171,12 @@ void App::renderMainMenu()
         TextAlign::CENTER
     );
     mainMenuButtons.draw();
+}
+
+void App::renderIdentification(){
+    CV::clear(Vector3::fromHex(0x1D1E30));
+
+    idTextBox->render();
 }
 
 void App::renderGame()
@@ -185,15 +214,31 @@ void App::submitButtons(){
         [](){
             return Vector2(200, 50);
         },
-        Button::ButtonPlacement::CENTER,
+        UIPlacement::CENTER,
         "Play",
         [this](Button*){
             std::cout << "Play button clicked" << std::endl;
-            currentMenu = MenuState::GAME;
+            if(username == ""){
+                currentMenu = MenuState::IDENTIFICATION;
+            }else{
+                currentMenu = MenuState::GAME;
+            }
         }
     );
     mainmenuPlay->style = ButtonStyle::FlatLightBlue();
     mainMenuButtons.registerButton(mainmenuPlay);
+
+    idTextBox = new TextBox(
+        [&](){
+            return Vector2((*screenWidth)/2, 5*(*screenHeight)/11);
+        },
+        [](){
+            return Vector2(200, 50);
+        },
+        UIPlacement::CENTER,
+        TextAlign::CENTER
+    );
+    idTextBox->style = TextBox::Style::FlatWhite();
 }
 
 // ENDREGION UI

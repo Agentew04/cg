@@ -189,7 +189,6 @@ public:
             set<T>(container, key, defaultValue);
         }
         if(std::is_same<T, std::string>::value){
-            std::cout << "eh str key: " << key << std::endl;
             std::string val = get<std::string>(container, key, std::string());
             return *(T*)&val;
         }else{

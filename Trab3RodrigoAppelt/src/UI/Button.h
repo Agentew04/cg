@@ -7,6 +7,7 @@
 
 #include "../Math/Vector2.h"
 #include "../Math/Vector3.h"
+#include "UIDefinitions.h"
 
 // enum que representa o estado que um botao pode estar
 enum ButtonState {
@@ -39,28 +40,24 @@ struct ButtonStyle{
     /// se nao houver mais observadores
     static void freeStyles();
 
-    ~ButtonStyle();
+    private:
+    static int styleObserverCount;
+    static ButtonStyle *windows10Style;
+    static ButtonStyle *flatLightBlueStyle;
+    static ButtonStyle *flatDarkBlueStyle;
+    static ButtonStyle *flatWhiteStyle;
+    static ButtonStyle *flatGreenStyle;
+    static ButtonStyle *flatRedStyle;
 };
 
 /// @brief Classe que representa um botao na aplicacao, com uma callback
 class Button {
 public:
-    enum class ButtonPlacement{
-        TOP_LEFT,
-        LEFT,
-        BOTTOM_LEFT,
-        TOP_CENTER,
-        CENTER,
-        BOTTOM_CENTER,
-        TOP_RIGHT,
-        RIGHT,
-        BOTTOM_RIGHT
-    };
 
     Button(
         std::function<Vector2()> positionFunc,
         std::function<Vector2()> sizeFunc, 
-        ButtonPlacement placement,
+        UIPlacement placement,
         std::string text, 
         std::function<void(Button*)> callback);
     ~Button();
@@ -78,13 +75,11 @@ public:
 private:
     std::function<Vector2()> sizeFunc;
     std::function<Vector2()> positionFunc;
-    ButtonPlacement placement;
+    UIPlacement placement;
 
     std::string text;
     std::function<void(Button*)> callback;
 
-    /// @brief Traduz coordenadas de origem variada para as coordenadas normais
-    void translate(Vector2& pos, Vector2& size, ButtonPlacement placement);
 };
 
 

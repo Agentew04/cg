@@ -1,15 +1,17 @@
 #include "Button.h"
-#include "../gl_canvas2d.h"
 
 #include <iostream>
 
-int styleObserverCount = 0;
-ButtonStyle* windows10Style = nullptr;
-ButtonStyle* flatLightBlueStyle = nullptr;
-ButtonStyle* flatDarkBlueStyle = nullptr;
-ButtonStyle* flatWhiteStyle = nullptr;
-ButtonStyle* flatGreenStyle = nullptr;
-ButtonStyle* flatRedStyle = nullptr;
+#include "../gl_canvas2d.h"
+#include "UIDefinitions.h"
+
+int ButtonStyle::styleObserverCount = 0;
+ButtonStyle* ButtonStyle::windows10Style = nullptr;
+ButtonStyle* ButtonStyle::flatLightBlueStyle = nullptr;
+ButtonStyle* ButtonStyle::flatDarkBlueStyle = nullptr;
+ButtonStyle* ButtonStyle::flatWhiteStyle = nullptr;
+ButtonStyle* ButtonStyle::flatGreenStyle = nullptr;
+ButtonStyle* ButtonStyle::flatRedStyle = nullptr;
 
 void ButtonStyle::setState(ButtonState state, Vector3 background, Vector3 border){
     this->backgroundColor[state] = background;
@@ -125,15 +127,10 @@ void ButtonStyle::freeStyles(){
     }
 }
 
-ButtonStyle::~ButtonStyle(){
-    backgroundColor.clear();
-    borderColor.clear();
-}
-
 
 Button::Button(std::function<Vector2()> positionFunc,
         std::function<Vector2()> sizeFunc, 
-        Button::ButtonPlacement placement,
+        UIPlacement placement,
         std::string text, 
         std::function<void(Button*)> callback) :
         positionFunc(positionFunc), 
@@ -150,7 +147,7 @@ Button::~Button() {
 void Button::render(){
     Vector2 pos = positionFunc();
     Vector2 sz = sizeFunc();
-    translate(pos, sz, placement);
+    translateCoordinates(pos,sz,placement);
     CV::translate(pos);
 
     // draw background
@@ -177,31 +174,7 @@ void Button::call(){
 bool Button::inside(Vector2 mousePos){
     Vector2 pos = positionFunc();
     Vector2 sz = sizeFunc();
-    translate(pos, sz, placement);
+    translateCoordinates(pos,sz,placement);
     return (mousePos.x >= pos.x && mousePos.x <= pos.x + sz.x) &&
            (mousePos.y >= pos.y && mousePos.y <= pos.y + sz.y);
-}
-
-void Button::translate(Vector2& pos, Vector2& size, Button::ButtonPlacement placement){
-    if(placement == Button::ButtonPlacement::TOP_LEFT){
-        // ja esta normalizado
-        return;
-    }
-    if(placement == Button::ButtonPlacement::CENTER){
-        pos = pos - size/2;
-    }else if(placement == Button::ButtonPlacement::TOP_CENTER){
-        pos = pos - Vector2(size.x/2, 0);
-    }else if(placement == Button::ButtonPlacement::BOTTOM_CENTER){
-        pos = pos - Vector2(size.x/2, size.y);
-    }else if(placement == Button::ButtonPlacement::LEFT){
-        pos = pos - Vector2(0, size.y/2);
-    }else if(placement == Button::ButtonPlacement::RIGHT){
-        pos = pos - Vector2(size.x, size.y/2);
-    }else if(placement == Button::ButtonPlacement::TOP_RIGHT){
-        pos = pos - Vector2(size.x, 0);
-    }else if(placement == Button::ButtonPlacement::BOTTOM_LEFT){
-        pos = pos - Vector2(0, size.y);
-    }else if(placement == Button::ButtonPlacement::BOTTOM_RIGHT){
-        pos = pos - size;
-    }
 }

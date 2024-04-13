@@ -50,6 +50,8 @@ void keyboard(int key)
     if (key == ESC)
     {
         CV::close();
+    }else{
+        app->keyDown((Key)key);
     }
 }
 

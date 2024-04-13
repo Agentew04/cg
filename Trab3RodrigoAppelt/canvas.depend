@@ -432,11 +432,11 @@
 	<iostream>
 	"lodepng.h"
 
-1712985275 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\gl_canvas2d.cpp
+1713042300 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
-1712984619 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\gl_canvas2d.h
+1713042265 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\gl_canvas2d.h
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
@@ -446,6 +446,7 @@
 	"Math/Vector2.h"
 	"Math/Vector3.h"
 	"Math/Polygon2D.h"
+	"UI/UIDefinitions.h"
 
 1632060799 e:\universidade\cg\trabalhos\include\gl\glut.h
 	"freeglut_std.h"
@@ -471,17 +472,19 @@
 1712981618 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\math\vector3.h
 	<iostream>
 
-1712988716 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\button.cpp
+1713041597 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\button.cpp
 	"Button.h"
-	"../gl_canvas2d.h"
 	<iostream>
+	"../gl_canvas2d.h"
+	"UIDefinitions.h"
 
-1712988613 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\button.h
+1713041560 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\button.h
 	<string>
 	<functional>
 	<map>
 	"../Math/Vector2.h"
 	"../Math/Vector3.h"
+	"UIDefinitions.h"
 
 1712987239 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\buttonmanager.cpp
 	<vector>
@@ -634,7 +637,7 @@
 	"ImageManipulation.h"
 	"../Math/Vector2.h"
 
-1712985381 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\main.cpp
+1713041884 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -647,7 +650,7 @@
 	"Storage/PersistentStorage.h"
 	"Specific/App.h"
 
-1712890162 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\keyboard.h
+1713041087 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\keyboard.h
 
 1712977520 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\web\httplib.h
 	<io.h>
@@ -727,7 +730,7 @@
 	<iostream>
 	"lodepng.h"
 
-1713036992 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\storage\persistentstorage.h
+1713041730 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\storage\persistentstorage.h
 	<string>
 	<map>
 	<iostream>
@@ -777,7 +780,7 @@
 1712983967 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\game.cpp
 	"Game.h"
 
-1713037531 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\storage\persistentstorage.cpp
+1713037621 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\storage\persistentstorage.cpp
 	<fstream>
 	<algorithm>
 	<iterator>
@@ -789,14 +792,35 @@
 1712983962 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\game.h
 	"../Math/Vector2.h"
 
-1712989021 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\app.h
+1713041199 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\app.h
 	"../Math/Vector2.h"
 	"Game.h"
+	"../Keyboard.h"
 	"../UI/ButtonManager.h"
+	"../UI/TextBox.h"
 
-1713031312 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\app.cpp
+1713041747 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\app.cpp
 	"App.h"
 	<random>
 	"../gl_canvas2d.h"
 	"../Storage/PersistentStorage.h"
+
+1713040491 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\uidefinitions.h
+	"../Math/Vector2.h"
+
+1713041484 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\textbox.h
+	<functional>
+	<map>
+	"UIDefinitions.h"
+	"../Keyboard.h"
+	"../Math/Vector2.h"
+	"../Math/Vector3.h"
+
+1713042372 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\textbox.cpp
+	"TextBox.h"
+	<iostream>
+	<vector>
+	<string>
+	"../gl_canvas2d.h"
+	"../Keyboard.h"
 
