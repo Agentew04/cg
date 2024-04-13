@@ -27,6 +27,7 @@ public:
 private:
     enum class MenuState{
         MAIN_MENU,
+        IDENTIFICATION,
         //HOW_TO_PLAY, // ignorar
         //CONFIG, // ignorar?
         //SHOP, // ignorar

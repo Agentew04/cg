@@ -45,9 +45,22 @@ struct ButtonStyle{
 /// @brief Classe que representa um botao na aplicacao, com uma callback
 class Button {
 public:
+    enum class ButtonPlacement{
+        TOP_LEFT,
+        LEFT,
+        BOTTOM_LEFT,
+        TOP_CENTER,
+        CENTER,
+        BOTTOM_CENTER,
+        TOP_RIGHT,
+        RIGHT,
+        BOTTOM_RIGHT
+    };
+
     Button(
         std::function<Vector2()> positionFunc,
         std::function<Vector2()> sizeFunc, 
+        ButtonPlacement placement,
         std::string text, 
         std::function<void(Button*)> callback);
     ~Button();
@@ -63,11 +76,15 @@ public:
     ButtonStyle *style;
     ButtonState state;
 private:
-    std::function<Vector2()> positionFunc;
     std::function<Vector2()> sizeFunc;
+    std::function<Vector2()> positionFunc;
+    ButtonPlacement placement;
 
     std::string text;
     std::function<void(Button*)> callback;
+
+    /// @brief Traduz coordenadas de origem variada para as coordenadas normais
+    void translate(Vector2& pos, Vector2& size, ButtonPlacement placement);
 };
 
 

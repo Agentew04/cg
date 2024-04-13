@@ -133,10 +133,12 @@ ButtonStyle::~ButtonStyle(){
 
 Button::Button(std::function<Vector2()> positionFunc,
         std::function<Vector2()> sizeFunc, 
+        Button::ButtonPlacement placement,
         std::string text, 
         std::function<void(Button*)> callback) :
         positionFunc(positionFunc), 
         sizeFunc(sizeFunc),
+        placement(placement),
         text(text),
         callback(callback){
     this->clickable = true;
@@ -148,6 +150,7 @@ Button::~Button() {
 void Button::render(){
     Vector2 pos = positionFunc();
     Vector2 sz = sizeFunc();
+    translate(pos, sz, placement);
     CV::translate(pos);
 
     // draw background
@@ -174,6 +177,31 @@ void Button::call(){
 bool Button::inside(Vector2 mousePos){
     Vector2 pos = positionFunc();
     Vector2 sz = sizeFunc();
+    translate(pos, sz, placement);
     return (mousePos.x >= pos.x && mousePos.x <= pos.x + sz.x) &&
            (mousePos.y >= pos.y && mousePos.y <= pos.y + sz.y);
+}
+
+void Button::translate(Vector2& pos, Vector2& size, Button::ButtonPlacement placement){
+    if(placement == Button::ButtonPlacement::TOP_LEFT){
+        // ja esta normalizado
+        return;
+    }
+    if(placement == Button::ButtonPlacement::CENTER){
+        pos = pos - size/2;
+    }else if(placement == Button::ButtonPlacement::TOP_CENTER){
+        pos = pos - Vector2(size.x/2, 0);
+    }else if(placement == Button::ButtonPlacement::BOTTOM_CENTER){
+        pos = pos - Vector2(size.x/2, size.y);
+    }else if(placement == Button::ButtonPlacement::LEFT){
+        pos = pos - Vector2(0, size.y/2);
+    }else if(placement == Button::ButtonPlacement::RIGHT){
+        pos = pos - Vector2(size.x, size.y/2);
+    }else if(placement == Button::ButtonPlacement::TOP_RIGHT){
+        pos = pos - Vector2(size.x, 0);
+    }else if(placement == Button::ButtonPlacement::BOTTOM_LEFT){
+        pos = pos - Vector2(0, size.y);
+    }else if(placement == Button::ButtonPlacement::BOTTOM_RIGHT){
+        pos = pos - size;
+    }
 }

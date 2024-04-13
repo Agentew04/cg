@@ -62,6 +62,7 @@ void PersistentStorage::getOrDefaultInt(std::string container, std::string key, 
     }
     if(containers[container]->ints.find(key) == containers[container]->ints.end()){
         *value = defaultValue;
+        containers[container]->ints[key] = defaultValue;
         return;
     }
     *value = containers[container]->ints[key];

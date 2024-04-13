@@ -61,6 +61,8 @@ void PersistentStorage::getOrDefaultVec2(std::string container, std::string key,
     }
     if(containers[container]->vec2s.find(key) == containers[container]->vec2s.end()){
         *value = defaultValue;
+        containers[container]->vec2s[key] = defaultValue;
+        return;
     }
     *value = containers[container]->vec2s[key];
 }

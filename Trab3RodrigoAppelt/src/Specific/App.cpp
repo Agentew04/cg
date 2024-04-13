@@ -139,6 +139,11 @@ void App::renderMainMenu()
         GLUT_BITMAP_TIMES_ROMAN_24,
         TextAlign::CENTER
     );
+    CV::text((*screenWidth)/2, 5*(*screenHeight)/11, 
+        ("Coins: " + std::to_string(highscore)).c_str(), 
+        GLUT_BITMAP_HELVETICA_18,
+        TextAlign::CENTER
+    );
     mainMenuButtons.draw();
 }
 
@@ -172,11 +177,12 @@ void App::submitButtons(){
     // mainmenu
     auto mainmenuPlay = new Button(
         [&](){ 
-            return Vector2((*screenWidth)/2, 5*(*screenHeight)/11);
+            return Vector2((*screenWidth)/2, 6.5*(*screenHeight)/11);
         },
         [](){ 
             return Vector2(200, 50);
         },
+        Button::ButtonPlacement::CENTER,
         "Play",
         [this](Button*){
             std::cout << "Play button clicked" << std::endl;

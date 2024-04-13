@@ -62,6 +62,7 @@ void PersistentStorage::getOrDefaultFloat(std::string container, std::string key
     }
     if(containers[container]->floats.find(key) == containers[container]->floats.end()){
         *value = defaultValue;
+        containers[container]->floats[key] = defaultValue;
         return;
     }
     *value = containers[container]->floats[key];
