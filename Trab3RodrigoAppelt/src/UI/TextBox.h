@@ -44,6 +44,8 @@ public:
     void mouseDown();
     void mouseUp();
     void updateMousePos(Vector2 pos);
+
+    std::string getText();
 private:
     Vector2 mousePos;
     std::function<Vector2()> positionFunc;

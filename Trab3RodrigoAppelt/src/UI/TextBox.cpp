@@ -113,6 +113,10 @@ void TextBox::updateMousePos(Vector2 pos){
     if(currentState != UIState::FOCUSED && currentState != UIState::CLICK
         && inside(position, size, mousePos)){
         currentState = UIState::HOVER;
+        return;
+    }
+    if(currentState == UIState::HOVER && !inside(position, size, mousePos)){
+        currentState = UIState::NORMAL;
     }
 }
 
@@ -139,4 +143,8 @@ void TextBox::mouseUp(){
 bool TextBox::inside(Vector2 pos, Vector2 size, Vector2 mousePos){
     return (mousePos.x >= pos.x && mousePos.x <= pos.x + size.x) &&
            (mousePos.y >= pos.y && mousePos.y <= pos.y + size.y);
+}
+
+std::string TextBox::getText(){
+    return text;
 }

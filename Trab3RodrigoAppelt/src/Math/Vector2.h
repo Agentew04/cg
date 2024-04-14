@@ -43,19 +43,19 @@ public:
 
     // OPERADORES
     /// @brief Adiciona dois vetores
-    Vector2 operator+(const Vector2 &v);
+    Vector2 operator+(const Vector2 &v) const;
     Vector2 operator+=(const Vector2 &v);
 
     /// @brief Subtrai dois vetores
-    Vector2 operator-(const Vector2 &v);
+    Vector2 operator-(const Vector2 &v) const;
     Vector2 operator-=(const Vector2 &v);
 
     /// @brief Multiplica por um escalar
-    Vector2 operator*(const float f);
+    Vector2 operator*(const float f) const;
     Vector2 operator*=(const float f);
 
     /// @brief Divide por um escalar
-    Vector2 operator/(const float f);
+    Vector2 operator/(const float f) const;
     Vector2 operator/=(const float f);
 
     /// @brief Produtor escalar

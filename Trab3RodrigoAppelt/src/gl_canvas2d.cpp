@@ -79,11 +79,18 @@ void CV::line( float x1, float y1, float x2, float y2 )
 void CV::line( float x1, float y1, float x2, float y2, float width)
 {
     glLineWidth((GLfloat)width);
-    glBegin(GL_LINES);
-        glVertex2d(x1, y1);
-        glVertex2d(x2, y2);
-    glEnd();
+    line(x1, y1, x2, y2);
     glLineWidth(1.0);
+}
+
+void CV::line( Vector2 p1, Vector2 p2 )
+{
+   line(p1.x, p1.y, p2.x, p2.y);
+}
+
+void CV::line( Vector2 p1, Vector2 p2, float width)
+{
+   line(p1.x, p1.y, p2.x, p2.y, width);
 }
 
 
@@ -308,7 +315,7 @@ void CV::translate(Vector2 offset)
 
 void CV::color(float r, float g, float b)
 {
-   glColor3d(r, g, b);
+   glColor3f(r, g, b);
 }
 
 void CV::color(int idx)
@@ -318,16 +325,16 @@ void CV::color(int idx)
 
 void CV::color(float r, float g, float b, float alpha)
 {
-   glColor4d(r, g, b, alpha);
+   glColor4f(r, g, b, alpha);
    //glTexImage2D(GL_TEXTURE_2D, 0, )
 }
 
 void CV::color(Vector3 rgb){
-    glColor3d(rgb.x, rgb.y, rgb.z);
+    glColor3f(rgb.x, rgb.y, rgb.z);
 }
 
-void color(Vector3 rgb, float a){
-    glColor4d(rgb.x, rgb.y, rgb.z, a);
+void CV::color(Vector3 rgb, float a){
+    glColor4f(rgb.x, rgb.y, rgb.z, a);
 }
 
 void special(int key, int , int )

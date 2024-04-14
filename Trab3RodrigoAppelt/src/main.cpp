@@ -41,6 +41,8 @@ void render()
 {
     app->render();
 
+    CV::translate(Vector2(0,0));
+    CV::color(1,1,1);
     CV::text(screenWidth,25, ("FPS: " + std::to_string((int)std::round(CV::fps()))).c_str(), TextAlign::RIGHT);
 }
 

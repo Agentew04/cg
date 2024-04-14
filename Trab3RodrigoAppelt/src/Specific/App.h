@@ -61,7 +61,10 @@ private:
 
     // per screen variables
     ButtonManager mainMenuButtons;
+
     TextBox *idTextBox;
+    ButtonManager idButtons;
+
     ButtonManager pauseButtons;
     ButtonManager gameButtons;
     ButtonManager gameOverButtons;

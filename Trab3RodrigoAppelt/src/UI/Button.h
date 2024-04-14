@@ -56,9 +56,9 @@ public:
 
     Button(
         std::function<Vector2()> positionFunc,
-        std::function<Vector2()> sizeFunc, 
+        std::function<Vector2()> sizeFunc,
         UIPlacement placement,
-        std::string text, 
+        std::string text,
         std::function<void(Button*)> callback);
     ~Button();
 
@@ -73,8 +73,8 @@ public:
     ButtonStyle *style;
     ButtonState state;
 private:
-    std::function<Vector2()> sizeFunc;
     std::function<Vector2()> positionFunc;
+    std::function<Vector2()> sizeFunc;
     UIPlacement placement;
 
     std::string text;

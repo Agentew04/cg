@@ -58,7 +58,7 @@ float Vector2::distance(const Vector2& point) const
     return std::sqrt( ((point.x - x)*(point.x - x)) + ((point.y - y)*(point.y - y)));
 }
 
-Vector2 Vector2::operator+(const Vector2 &v)
+Vector2 Vector2::operator+(const Vector2 &v)  const
 {
     return Vector2(x + v.x, y + v.y);
 }
@@ -70,7 +70,7 @@ Vector2 Vector2::operator+=(const Vector2 &v)
     return *this;
 }
 
-Vector2 Vector2::operator-(const Vector2 &v)
+Vector2 Vector2::operator-(const Vector2 &v) const
 {
     return Vector2(x - v.x, y - v.y);
 }
@@ -82,7 +82,7 @@ Vector2 Vector2::operator-=(const Vector2 &v)
     return *this;
 }
 
-Vector2 Vector2::operator*(const float f)
+Vector2 Vector2::operator*(const float f) const
 {
     return Vector2(x * f, y * f);
 }
@@ -94,7 +94,7 @@ Vector2 Vector2::operator*=(const float f)
     return *this;
 }
 
-Vector2 Vector2::operator/(const float f)
+Vector2 Vector2::operator/(const float f) const
 {
     return Vector2(x / f, y / f);
 }

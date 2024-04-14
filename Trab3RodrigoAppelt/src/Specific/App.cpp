@@ -9,7 +9,8 @@ App::App(int *scrW, int *scrH)
     :
     currentMenu(MenuState::MAIN_MENU),
     screenWidth(scrW), screenHeight(scrH),
-    mousePos(0,0)
+    mousePos(0,0),
+    game(scrW, scrH)
 {
     submitButtons();
 
@@ -25,7 +26,7 @@ App::App(int *scrW, int *scrH)
     coins = PersistentStorage::getOrSetDefault<int>("user","coins", 0);
     highscore = PersistentStorage::getOrSetDefault<int>("user","highscore", 0);
 
-    std::string name = PersistentStorage::getOrSetDefault<std::string>("user","name", "");
+    username = PersistentStorage::getOrSetDefault<std::string>("user","name", "");
 }
 
 App::~App()
@@ -44,7 +45,7 @@ void App::keyDown(Key key){
     case MenuState::IDENTIFICATION:
         idTextBox->keyDown(key);
     case MenuState::GAME:
-        //game.keyDown(key);
+        game.keyDown(key);
         break;
     default:
         break;
@@ -60,12 +61,14 @@ void App::mouseUp()
         break;
     case MenuState::IDENTIFICATION:
         idTextBox->mouseUp();
+        idButtons.mouseUp();
         break;
     case MenuState::PAUSED:
         pauseButtons.mouseUp();
         break;
     case MenuState::GAME:
         gameButtons.mouseUp();
+        game.mouseUp();
         break;
     case MenuState::GAME_OVER:
         gameOverButtons.mouseUp();
@@ -85,12 +88,14 @@ void App::mouseDown()
         break;
     case MenuState::IDENTIFICATION:
         idTextBox->mouseDown();
+        idButtons.mouseDown();
         break;
     case MenuState::PAUSED:
         pauseButtons.mouseDown();
         break;
     case MenuState::GAME:
         gameButtons.mouseDown();
+        game.mouseDown();
         break;
     case MenuState::GAME_OVER:
         gameOverButtons.mouseDown();
@@ -111,12 +116,14 @@ void App::updateMousePos(Vector2 pos)
         break;
     case MenuState::IDENTIFICATION:
         idTextBox->updateMousePos(pos);
+        idButtons.updateMousePos(pos);
         break;
     case MenuState::PAUSED:
         pauseButtons.updateMousePos(pos);
         break;
     case MenuState::GAME:
         gameButtons.updateMousePos(pos);
+        game.updateMousePos(pos);
         break;
     case MenuState::GAME_OVER:
         gameOverButtons.updateMousePos(pos);
@@ -177,12 +184,12 @@ void App::renderIdentification(){
     CV::clear(Vector3::fromHex(0x1D1E30));
 
     idTextBox->render();
+    idButtons.draw();
 }
 
 void App::renderGame()
 {
-    CV::clear(1,1,1);
-    // draw game
+    game.render();
 }
 
 void App::renderPauseMenu()
@@ -228,6 +235,7 @@ void App::submitButtons(){
     mainmenuPlay->style = ButtonStyle::FlatLightBlue();
     mainMenuButtons.registerButton(mainmenuPlay);
 
+
     idTextBox = new TextBox(
         [&](){
             return Vector2((*screenWidth)/2, 5*(*screenHeight)/11);
@@ -239,6 +247,27 @@ void App::submitButtons(){
         TextAlign::CENTER
     );
     idTextBox->style = TextBox::Style::FlatWhite();
+
+    auto idPlay = new Button(
+        [&](){
+            return Vector2((*screenWidth)/2, 7*(*screenHeight)/11);
+        },
+        [](){
+            return Vector2(200, 50);
+        },
+        UIPlacement::CENTER,
+        "Play",
+        [this](Button*){
+            if(idTextBox->getText() == ""){
+                return;
+            }
+            PersistentStorage::set<std::string>("user","name",idTextBox->getText());
+            std::cout << "Play button clicked" << std::endl;
+            currentMenu = MenuState::GAME;
+        }
+    );
+    idPlay->style = ButtonStyle::FlatGreen();
+    idButtons.registerButton(idPlay);
 }
 
 // ENDREGION UI

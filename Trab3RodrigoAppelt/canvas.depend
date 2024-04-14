@@ -432,11 +432,11 @@
 	<iostream>
 	"lodepng.h"
 
-1713042300 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\gl_canvas2d.cpp
+1713050956 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
-1713042265 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\gl_canvas2d.h
+1713050929 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\gl_canvas2d.h
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
@@ -465,7 +465,7 @@
 1632060794 e:\universidade\cg\trabalhos\include\gl\freeglut_ext.h
 	<stdarg.h>
 
-1712974536 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\math\vector2.h
+1713045360 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\math\vector2.h
 	<cmath>
 	<iostream>
 
@@ -478,7 +478,7 @@
 	"../gl_canvas2d.h"
 	"UIDefinitions.h"
 
-1713041560 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\button.h
+1713045592 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\button.h
 	<string>
 	<functional>
 	<map>
@@ -602,7 +602,7 @@
 	"Chart.h"
 	"ImageRenderer.h"
 
-1712874829 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\math\polygon2d.h
+1713045462 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\math\polygon2d.h
 	<vector>
 	"Vector2.h"
 
@@ -611,10 +611,10 @@
 	<string.h>
 	<iostream>
 
-1712887700 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\math\polygon2d.cpp
+1713045488 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\math\polygon2d.cpp
 	"Polygon2D.h"
 
-1712974547 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\math\vector2.cpp
+1713045380 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\math\vector2.cpp
 	"Vector2.h"
 
 1712981605 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\math\vector3.cpp
@@ -637,7 +637,7 @@
 	"ImageManipulation.h"
 	"../Math/Vector2.h"
 
-1713041884 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\main.cpp
+1713052598 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -730,7 +730,7 @@
 	<iostream>
 	"lodepng.h"
 
-1713041730 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\storage\persistentstorage.h
+1713053895 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\storage\persistentstorage.h
 	<string>
 	<map>
 	<iostream>
@@ -777,10 +777,11 @@
 	<unistd.h>
 	"schrift.h"
 
-1712983967 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\game.cpp
+1713052646 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\game.cpp
 	"Game.h"
+	"../gl_canvas2d.h"
 
-1713037621 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\storage\persistentstorage.cpp
+1713045584 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\storage\persistentstorage.cpp
 	<fstream>
 	<algorithm>
 	<iterator>
@@ -789,17 +790,22 @@
 	<iomanip>
 	"PersistentStorage.h"
 
-1712983962 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\game.h
+1713054109 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\game.h
+	<vector>
 	"../Math/Vector2.h"
+	"../Keyboard.h"
+	"Components/Ball.h"
+	"Components/Block.h"
+	"Components/Powerups.h"
 
-1713041199 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\app.h
+1713044248 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\app.h
 	"../Math/Vector2.h"
 	"Game.h"
 	"../Keyboard.h"
 	"../UI/ButtonManager.h"
 	"../UI/TextBox.h"
 
-1713041747 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\app.cpp
+1713054304 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\app.cpp
 	"App.h"
 	<random>
 	"../gl_canvas2d.h"
@@ -808,7 +814,7 @@
 1713040491 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\uidefinitions.h
 	"../Math/Vector2.h"
 
-1713041484 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\textbox.h
+1713044350 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\textbox.h
 	<functional>
 	<map>
 	"UIDefinitions.h"
@@ -816,11 +822,30 @@
 	"../Math/Vector2.h"
 	"../Math/Vector3.h"
 
-1713042372 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\textbox.cpp
+1713044506 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\textbox.cpp
 	"TextBox.h"
 	<iostream>
 	<vector>
 	<string>
 	"../gl_canvas2d.h"
 	"../Keyboard.h"
+
+1713053021 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\components\ball.h
+	"../../Math/Vector2.h"
+	"../../Math/Polygon2D.h"
+
+1713049431 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\components\block.h
+
+1713050870 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\components\powerups.h
+
+1713050769 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\components\block.cpp
+	"Block.h"
+	"../../gl_canvas2d.h"
+
+1713053156 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\components\ball.cpp
+	"Ball.h"
+	"../../gl_canvas2d.h"
+
+1713050862 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\components\powerups.cpp
+	"Powerups.h"
 

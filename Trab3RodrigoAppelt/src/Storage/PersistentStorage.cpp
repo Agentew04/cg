@@ -57,7 +57,7 @@ void PersistentStorage::load(std::string path){
             int typeSize = std::stoi(line.substr(div1Idx+1, div2Idx-div1Idx-1));
             uint32_t metadata = std::stoull(line.substr(div2Idx+1, div3Idx-div2Idx-1), nullptr, 16);
             std::string data = line.substr(div3Idx+1);
-            
+
 
             void* ptr = new uint8_t[typeSize];
             containers[currentContainer]->heap[key] = ptr;
@@ -100,7 +100,7 @@ void PersistentStorage::save(){
 
             file << kvp.first << ":" << size << "/";
             file << std::hex << std::setw(2) << std::setfill('0')
-                << it->second->metadatas[kvp.second]
+                << metadata
                 << std::dec << "=";
 
             for(int i = 0; i < size; i++){
