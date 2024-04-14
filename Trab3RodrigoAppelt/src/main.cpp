@@ -26,15 +26,18 @@
 #include "Storage/PersistentStorage.h"
 #include "Specific/App.h"
 
+#include "UI/ProgressRing.h"
 
 // largura e altura inicial da tela . Alteram com o redimensionamento de tela.
 int screenWidth = 1600, screenHeight = 900;
 Vector2 mousePos;
 App *app;
 
+float prog = 0.0f;
 void update(float delta)
 {
     app->update(delta);
+    prog+=delta;
 }
 
 void render()

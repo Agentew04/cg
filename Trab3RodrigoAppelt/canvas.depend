@@ -432,11 +432,11 @@
 	<iostream>
 	"lodepng.h"
 
-1713050956 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\gl_canvas2d.cpp
+1713056361 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
-1713050929 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\gl_canvas2d.h
+1713055923 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\gl_canvas2d.h
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
@@ -637,7 +637,7 @@
 	"ImageManipulation.h"
 	"../Math/Vector2.h"
 
-1713052598 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\main.cpp
+1713056436 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -649,6 +649,7 @@
 	"gl_canvas2d.h"
 	"Storage/PersistentStorage.h"
 	"Specific/App.h"
+	"UI/ProgressRing.h"
 
 1713041087 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\keyboard.h
 
@@ -777,9 +778,11 @@
 	<unistd.h>
 	"schrift.h"
 
-1713052646 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\game.cpp
+1713054678 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\game.cpp
 	"Game.h"
+	<string>
 	"../gl_canvas2d.h"
+	"../Storage/PersistentStorage.h"
 
 1713045584 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\storage\persistentstorage.cpp
 	<fstream>
@@ -790,7 +793,7 @@
 	<iomanip>
 	"PersistentStorage.h"
 
-1713054109 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\game.h
+1713054661 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\game.h
 	<vector>
 	"../Math/Vector2.h"
 	"../Keyboard.h"
@@ -848,4 +851,15 @@
 
 1713050862 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\components\powerups.cpp
 	"Powerups.h"
+
+1713056000 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\progressring.h
+	<vector>
+	"../Math/Vector2.h"
+	"UIDefinitions.h"
+
+1713056639 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\progressring.cpp
+	"ProgressRing.h"
+	<cmath>
+	<algorithm>
+	"../gl_canvas2d.h"
 

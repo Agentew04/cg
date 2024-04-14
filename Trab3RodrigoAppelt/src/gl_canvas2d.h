@@ -55,6 +55,10 @@ public:
     static void circleFill( float x, float y, float radius, int div );
     static void circleFill( Vector2 pos, float radius, int div );
 
+    static void triangleFan(float vx[], float vy[], int n_elems);
+    static void triangleFan(std::vector<Vector2> vertices, uint32_t count);
+
+
     //especifica a cor de desenho e de limpeza de tela
     static void color(float r, float g, float b);
     static void color(Vector3 rgb);
@@ -64,6 +68,7 @@ public:
 
     static void clear(float r, float g, float b);
     static void clear(Vector3 rgb);
+
 
     //desenha texto na coordenada (x,y)
     static float textWidth(const char *t, void* font);

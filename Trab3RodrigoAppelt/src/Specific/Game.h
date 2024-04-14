@@ -10,7 +10,8 @@
 #include "Components/Block.h"
 #include "Components/Powerups.h"
 
-/// @brief Classe que vai guardar o estado do jogo.
+/// @brief Classe que vai gerenciar e 
+/// guardar o estado do jogo.
 /// Nivel, blocos quebrados, bolas etc
 class Game {
 public:

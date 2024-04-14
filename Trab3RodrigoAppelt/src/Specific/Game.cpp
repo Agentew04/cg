@@ -115,8 +115,6 @@ void Game::renderArrow()
     Vector2 finalPosition = mousePos-gameAreaStart;
     finalPosition.x = std::max(0.0f, std::min(gameAreaSize.x, finalPosition.x));
     finalPosition.y = std::max(0.0f, std::min(gameAreaSize.y, finalPosition.y));
-    // render linha da posicao inicial da bola ate mouse
-
     
     CV::color(Vector3::fromHex(0x00FF00));
     CV::line(ballLaunchPosition-gameAreaStart, finalPosition, 3.0f);
