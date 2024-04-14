@@ -13,6 +13,7 @@
 #include "Math/Vector3.h"
 #include "Math/Polygon2D.h"
 #include "UI/UIDefinitions.h"
+#include "3D/ObjLoader.h"
 
 #define PI_2 6.28318530717
 #define PI   3.14159265359
@@ -69,6 +70,8 @@ public:
     static void clear(float r, float g, float b);
     static void clear(Vector3 rgb);
 
+    //3d
+    static void obj(ObjFile &obj);
 
     //desenha texto na coordenada (x,y)
     static float textWidth(const char *t, void* font);
@@ -84,6 +87,9 @@ public:
     //coordenada de offset para desenho de objetos.
     static void translate(float x, float y);
     static void translate(Vector2 pos);
+
+    static float time();
+    static float delta();
 
     /// @brief Retorna uma media do FPS
     static float fps();

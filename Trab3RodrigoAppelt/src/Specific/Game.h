@@ -2,6 +2,7 @@
 #define __GAME_H__
 
 #include <vector>
+#include <random>
 
 #include "../Math/Vector2.h"
 #include "../Keyboard.h"
@@ -31,27 +32,42 @@ public:
     void mouseDown();
     void updateMousePos(Vector2 pos);
 private:
+    std::mt19937 rng;
+
     int *screenWidth;
     int *screenHeight;
     Vector2 mousePos;
 
     Vector2 gameAreaStart;
     Vector2 gameAreaSize;
+    std::vector<Rectangle2D> getGameAreaBounds();
+
+    const Vector2 blockAreaSize = Vector2(7,10);
 
     void renderHeader();
     void renderGameArea();
+    void renderLine(std::vector<Block> line);
     void renderArrow();
 
     bool hasActivePlay;
-    const float burstInterval = 0.5f;
-    int burstCount;
+    const float burstInterval = 0.2f;
+    uint32_t burstCount;
+    uint32_t spawned;
+    float lastBurstTime;
     int level;
+    bool firstBack;
 
     std::vector<Ball> balls;
     std::vector<std::vector<Block>> blockLines;
     std::vector<Powerup> powerups;
 
     Vector2 ballLaunchPosition;
+    Vector2 ballLaunchDirection;
+    Vector2 nextLaunchPosition;
+    float ballSpeed;
+
+    std::vector<Block> createNewLine(int level);
+    void pushLines();
 };
 
 #endif

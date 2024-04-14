@@ -11,6 +11,8 @@ public:
     Vector2 position;
     Vector2 velocity;
     Circle2D collider;
+
+    constexpr static const float radius = 5.0f;
 private:
 };
 

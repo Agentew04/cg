@@ -4,19 +4,24 @@
 #include <vector>
 #include "Vector2.h"
 
+struct Collision {
+    bool happened;
+    Vector2 normal;
+};
+
 class Shape2D{
 public:
     virtual bool pointInside(const Vector2& point) const = 0;
-    virtual bool intersects(const Shape2D& shape) const = 0;
+    virtual Collision intersects(const Shape2D& shape) const = 0;
 };
 
 class Rectangle2D : public Shape2D{
 public:
-    Rectangle2D(Vector2 position, Vector2 size);
+    Rectangle2D(Vector2 position, Vector2 size, bool sizeAsP2 = false);
     Rectangle2D();
     Rectangle2D(const Rectangle2D& r);
     bool pointInside(const Vector2& point) const;
-    bool intersects(const Shape2D& shape) const;
+    Collision intersects(const Shape2D& shape) const;
     Vector2 position;
     Vector2 size;
 };
@@ -27,7 +32,7 @@ public:
     Circle2D();
     Circle2D(const Circle2D& c);
     bool pointInside(const Vector2& point) const;
-    bool intersects(const Shape2D& shape) const;
+    Collision intersects(const Shape2D& shape) const;
     Vector2 position;
     float radius;
 };
@@ -49,7 +54,7 @@ public:
     bool pointInside(const Vector2& point) const;
 
     /// @brief Checa se o poligono se intersecta com outro poligono
-    bool intersects(const Shape2D& shape) const;
+    Collision intersects(const Shape2D& shape) const;
 
     std::vector<Vector2> vertices;
 private:

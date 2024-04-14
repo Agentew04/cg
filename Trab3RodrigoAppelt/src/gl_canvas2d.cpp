@@ -272,6 +272,18 @@ void CV::clear(Vector3 rgb)
     glClearColor(rgb.x, rgb.y, rgb.z, 1);
 }
 
+void CV::obj(ObjFile &obj){
+    glBegin(GL_TRIANGLES);
+    for(auto face : obj.faces){
+        for(auto vertex : face){
+            auto v = obj.vertices[vertex-1];
+            v = v.multiply(obj.scale);
+            glVertex3f(v.x, v.y, v.z);
+        }
+    }
+    glEnd();
+}
+
 void CV::circle(float x, float y, float radius, int div)
 {
     float ang = 0, x1, y1;
@@ -456,6 +468,7 @@ static int lastTime = 0;
 // buffer of deltas to calculate FPS
 #define FPS_BUFFER_SIZE 60
 static float deltas[FPS_BUFFER_SIZE] = {};
+float deltaTime;
 
 void display(void)
 {
@@ -464,7 +477,7 @@ void display(void)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     int time = glutGet(GLUT_ELAPSED_TIME);
-    float delta = ((float)time - lastTime) / 1000.0f;
+    deltaTime = ((float)time - lastTime) / 1000.0f;
     lastTime = time;
 
     // shift all elements to the left
@@ -472,13 +485,21 @@ void display(void)
     {
         deltas[i] = deltas[i + 1];
     }
-    deltas[FPS_BUFFER_SIZE - 1] = delta;
+    deltas[FPS_BUFFER_SIZE - 1] = deltaTime;
 
-    update(delta);
+    update(deltaTime);
     render();
 
     glFlush();
     glutSwapBuffers();
+}
+
+float CV::delta(){
+    return deltaTime;
+}
+
+float CV::time(){
+    return glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
 }
 
 float CV::fps()

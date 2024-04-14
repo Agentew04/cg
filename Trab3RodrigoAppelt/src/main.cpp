@@ -25,6 +25,7 @@
 
 #include "Storage/PersistentStorage.h"
 #include "Specific/App.h"
+#include "3D/ObjLoader.h"
 
 #include "UI/ProgressRing.h"
 
@@ -32,6 +33,7 @@
 int screenWidth = 1600, screenHeight = 900;
 Vector2 mousePos;
 App *app;
+ObjFile objFile;
 
 float prog = 0.0f;
 void update(float delta)
@@ -47,6 +49,8 @@ void render()
     CV::translate(Vector2(0,0));
     CV::color(1,1,1);
     CV::text(screenWidth,25, ("FPS: " + std::to_string((int)std::round(CV::fps()))).c_str(), TextAlign::RIGHT);
+    CV::translate(Vector2(200,200));
+    CV::obj(objFile);
 }
 
 // funcao chamada toda vez que uma tecla for pressionada.
@@ -88,13 +92,14 @@ void cleanup()
 
 int main(void)
 {
-    srand(time(NULL));
     PersistentStorage::load("./Trab3RodrigoAppelt/saves/save.dat");
 
     // inicializar classes
     app = new App(&screenWidth, &screenHeight);
 
-    CV::init(&screenWidth, &screenHeight, "Canvas2D - Custom Template", false);
+    objFile = ObjLoader::load("./Trab3RodrigoAppelt/images/moeda.obj");
+    objFile.scale = Vector3(10,-10,10);
+    CV::init(&screenWidth, &screenHeight, "Canvas2D - Custom Template", true);
     CV::run();
 
     cleanup();

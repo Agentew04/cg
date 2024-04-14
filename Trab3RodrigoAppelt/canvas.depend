@@ -432,11 +432,11 @@
 	<iostream>
 	"lodepng.h"
 
-1713056361 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\gl_canvas2d.cpp
+1713129911 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
-1713055923 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\gl_canvas2d.h
+1713129392 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\gl_canvas2d.h
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
@@ -447,6 +447,7 @@
 	"Math/Vector3.h"
 	"Math/Polygon2D.h"
 	"UI/UIDefinitions.h"
+	"3D/ObjLoader.h"
 
 1632060799 e:\universidade\cg\trabalhos\include\gl\glut.h
 	"freeglut_std.h"
@@ -465,7 +466,7 @@
 1632060794 e:\universidade\cg\trabalhos\include\gl\freeglut_ext.h
 	<stdarg.h>
 
-1713045360 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\math\vector2.h
+1713118550 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\math\vector2.h
 	<cmath>
 	<iostream>
 
@@ -602,7 +603,7 @@
 	"Chart.h"
 	"ImageRenderer.h"
 
-1713045462 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\math\polygon2d.h
+1713122099 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\math\polygon2d.h
 	<vector>
 	"Vector2.h"
 
@@ -611,10 +612,10 @@
 	<string.h>
 	<iostream>
 
-1713045488 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\math\polygon2d.cpp
+1713122068 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\math\polygon2d.cpp
 	"Polygon2D.h"
 
-1713045380 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\math\vector2.cpp
+1713118586 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\math\vector2.cpp
 	"Vector2.h"
 
 1712981605 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\math\vector3.cpp
@@ -637,7 +638,7 @@
 	"ImageManipulation.h"
 	"../Math/Vector2.h"
 
-1713056436 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\main.cpp
+1713129952 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -649,6 +650,7 @@
 	"gl_canvas2d.h"
 	"Storage/PersistentStorage.h"
 	"Specific/App.h"
+	"3D/ObjLoader.h"
 	"UI/ProgressRing.h"
 
 1713041087 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\keyboard.h
@@ -778,9 +780,11 @@
 	<unistd.h>
 	"schrift.h"
 
-1713054678 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\game.cpp
+1713124912 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\game.cpp
 	"Game.h"
 	<string>
+	<functional>
+	<random>
 	"../gl_canvas2d.h"
 	"../Storage/PersistentStorage.h"
 
@@ -793,8 +797,9 @@
 	<iomanip>
 	"PersistentStorage.h"
 
-1713054661 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\game.h
+1713124421 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\game.h
 	<vector>
+	<random>
 	"../Math/Vector2.h"
 	"../Keyboard.h"
 	"Components/Ball.h"
@@ -833,17 +838,19 @@
 	"../gl_canvas2d.h"
 	"../Keyboard.h"
 
-1713053021 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\components\ball.h
+1713123104 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\components\ball.h
 	"../../Math/Vector2.h"
 	"../../Math/Polygon2D.h"
 
-1713049431 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\components\block.h
+1713103204 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\components\block.h
+	"../../Math/Polygon2D.h"
+	"../../Math/Vector2.h"
+	"../../Math/Vector3.h"
 
 1713050870 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\components\powerups.h
 
-1713050769 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\components\block.cpp
+1713103226 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\components\block.cpp
 	"Block.h"
-	"../../gl_canvas2d.h"
 
 1713053156 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\components\ball.cpp
 	"Ball.h"
@@ -857,9 +864,20 @@
 	"../Math/Vector2.h"
 	"UIDefinitions.h"
 
-1713056639 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\progressring.cpp
+1713056685 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\progressring.cpp
 	"ProgressRing.h"
 	<cmath>
 	<algorithm>
 	"../gl_canvas2d.h"
+
+1713129695 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\3d\objloader.h
+	<string>
+	<vector>
+	"../Math/Vector3.h"
+
+1713129659 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\3d\objloader.cpp
+	"ObjLoader.h"
+	<iostream>
+	<vector>
+	<fstream>
 

@@ -1,9 +1,11 @@
 #include "Block.h"
 
-#include "../../gl_canvas2d.h"
+Block::Block() :
+    position(Vector2::zero()),
+    color(Vector3::zero()),
+    life(1){}
 
-void Block::render()
-{
-    CV::color(1, 0, 0);
-    CV::rectFill(0, 0, 10, 10);
-}
+Block::Block(Vector2 pos, Vector3 color, int life) :
+    position(pos),
+    color(color),
+    life(life){}
