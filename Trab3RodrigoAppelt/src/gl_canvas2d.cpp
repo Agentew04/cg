@@ -272,12 +272,12 @@ void CV::clear(Vector3 rgb)
     glClearColor(rgb.x, rgb.y, rgb.z, 1);
 }
 
-void CV::obj(ObjFile &obj){
+void CV::obj(ObjFile *obj){
     glBegin(GL_TRIANGLES);
-    for(auto face : obj.faces){
+    for(auto face : obj->faces){
         for(auto vertex : face){
-            auto v = obj.vertices[vertex-1];
-            v = v.multiply(obj.scale);
+            auto v = obj->vertices[vertex-1];
+            v = v.multiply(obj->scale);
             glVertex3f(v.x, v.y, v.z);
         }
     }

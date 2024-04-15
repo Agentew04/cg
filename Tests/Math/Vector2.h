@@ -41,21 +41,28 @@ public:
 
     bool isClockwise(const Vector2& v) const;
 
+    /// @brief Reflete o vetor atual de acordo com uma normal de um plano
+    /// @param normal Vetor normal do plano
+    /// @return Vetor refletido
+    Vector2 reflection(const Vector2& normal) const;
+
+    Vector2 scale(float a) const;
+
     // OPERADORES
     /// @brief Adiciona dois vetores
-    Vector2 operator+(const Vector2 &v);
+    Vector2 operator+(const Vector2 &v) const;
     Vector2 operator+=(const Vector2 &v);
 
     /// @brief Subtrai dois vetores
-    Vector2 operator-(const Vector2 &v);
+    Vector2 operator-(const Vector2 &v) const;
     Vector2 operator-=(const Vector2 &v);
 
     /// @brief Multiplica por um escalar
-    Vector2 operator*(const float f);
+    Vector2 operator*(const float f) const;
     Vector2 operator*=(const float f);
 
     /// @brief Divide por um escalar
-    Vector2 operator/(const float f);
+    Vector2 operator/(const float f) const;
     Vector2 operator/=(const float f);
 
     /// @brief Produtor escalar
@@ -63,11 +70,11 @@ public:
     float dot(const Vector2 &v);
 
     /// @brief Multiplica componente a componente 2 vetores
-    Vector2 multiply(const Vector2 &v);
+    Vector2 multiply(const Vector2 &v) const;
 
     /// @brief Compara se dois vetores sao iguais
-    bool operator==(const Vector2 &v);
-    bool operator!=(const Vector2 &v);
+    bool operator==(const Vector2 &v) const;
+    bool operator!=(const Vector2 &v) const;
 
     /// CONSTANTES
     static Vector2 zero() { return Vector2(0, 0); }

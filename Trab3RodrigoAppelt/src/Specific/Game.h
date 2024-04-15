@@ -40,7 +40,9 @@ private:
 
     Vector2 gameAreaStart;
     Vector2 gameAreaSize;
-    std::vector<Rectangle2D> getGameAreaBounds();
+    // left, right, ceiling
+    std::vector<Rectangle2D> gameAreaWalls; 
+    void updateGameAreaBounds();
 
     const Vector2 blockAreaSize = Vector2(7,10);
 

@@ -1,5 +1,10 @@
 #include "Polygon2D.h"
 
+#include <map>
+#include <chrono>
+
+std::map<std::tuple<uint32_t,uint32_t>,float> lastCollisionTime;
+
 Rectangle2D::Rectangle2D(Vector2 position, Vector2 size, bool sizeAsP2) {
     this->position = position;
     if (sizeAsP2) {
@@ -20,6 +25,15 @@ bool Rectangle2D::pointInside(const Vector2& point) const {
 }
 
 Collision Rectangle2D::intersects(const Shape2D& shape) const {
+    if(lastCollisionTime.find(std::make_tuple(id, shape.id)) != lastCollisionTime.end()){
+        if(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count() - lastCollisionTime[std::make_tuple(id, shape.id)] < collisionWait * 1000){
+            std::cout << "cached collision" << std::endl;
+            return Collision{false, Vector2(0, 0)};
+        }else{
+            std::cout << "collision expired" << std::endl;
+        }
+    }
+
     if (dynamic_cast<const Rectangle2D*>(&shape) != nullptr) {
         Rectangle2D r = dynamic_cast<const Rectangle2D&>(shape);
 
@@ -38,6 +52,7 @@ Collision Rectangle2D::intersects(const Shape2D& shape) const {
         } else if (position.y > r.position.y) {
             normal = Vector2(0, 1);
         }
+        lastCollisionTime[std::make_tuple(id, shape.id)] = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
         return Collision{true, normal};
     }
 
@@ -48,6 +63,7 @@ Collision Rectangle2D::intersects(const Shape2D& shape) const {
         Vector2 closestPoint = Vector2(std::max(position.x, std::min(c.position.x, position.x + size.x)),
                                        std::max(position.y, std::min(c.position.y, position.y + size.y)));
         if ((closestPoint - c.position).magnitude <= c.radius) {
+            lastCollisionTime[std::make_tuple(id, shape.id)] = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
             return Collision{true, (closestPoint - c.position).normalized()};
         }
         return Collision{false, Vector2(0, 0)};
@@ -68,11 +84,24 @@ bool Circle2D::pointInside(const Vector2& point) const{
 }
 
 Collision Circle2D::intersects(const Shape2D& shape) const{
+    if(lastCollisionTime.find(std::make_tuple(id, shape.id)) != lastCollisionTime.end()){
+        if(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count() - lastCollisionTime[std::make_tuple(id, shape.id)] < 100){
+            std::cout << "cached collision between" << id << " and  " << shape.id << std::endl;
+            return Collision{false, Vector2(0, 0)};
+        }else{
+            std::cout << "collision expired" << std::endl;
+        }
+    }
+
     // if shape is circle
     if (dynamic_cast<const Circle2D*>(&shape) != nullptr) {
         Circle2D c = dynamic_cast<const Circle2D&>(shape);
         // circle circle collision
-        return Collision{(c.position - position).magnitude <= c.radius + radius, (c.position - position).normalized()};
+        if((c.position - position).magnitude <= c.radius + radius){
+            lastCollisionTime[std::make_tuple(id, shape.id)] = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+            return Collision{true, (c.position - position).normalized()};
+        }
+        return Collision{false, Vector2(0, 0)};
     }
 
     // if shape is a rect
@@ -83,6 +112,8 @@ Collision Circle2D::intersects(const Shape2D& shape) const{
         Vector2 closestPoint = Vector2(std::max(r.position.x, std::min(position.x, r.position.x + r.size.x)),
                                        std::max(r.position.y, std::min(position.y, r.position.y + r.size.y)));
         if ((closestPoint - position).magnitude <= radius) {
+            lastCollisionTime[std::make_tuple(id, shape.id)] = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+            std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count() << std::endl;
             return Collision{true, (closestPoint - position).normalized()};
         }
         return Collision{false, Vector2(0, 0)};
@@ -95,6 +126,7 @@ Collision Circle2D::intersects(const Shape2D& shape) const{
         float x = radius * cos(i * stepSize);
         float y = radius * sin(i * stepSize);
         if (shape.pointInside(position + Vector2(x, y))) {
+            lastCollisionTime[std::make_tuple(id, shape.id)] = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
             return Collision{true, (position - (position + Vector2(x, y))).normalized()};
         }
     }

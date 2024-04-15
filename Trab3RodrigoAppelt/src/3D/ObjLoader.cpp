@@ -4,12 +4,13 @@
 #include <vector>
 #include <fstream>
 
+std::map<std::string, ObjFile*> ObjLoader::objFiles;
 
-ObjFile ObjLoader::load(const std::string& filename) {
+void ObjLoader::load(const std::string& filename, const std::string& id) {
     std::ifstream file(filename);
     if (!file.is_open()) {
         std::cerr << "Could not open file " << filename << std::endl;
-        return ObjFile();
+        return;
     }
 
     std::vector<Vector3> vertices;
@@ -39,8 +40,23 @@ ObjFile ObjLoader::load(const std::string& filename) {
             continue;
         }
     }
-    ObjFile obj;
-    obj.vertices = vertices;
-    obj.faces = faces;
-    return obj;
+    ObjFile *obj = new ObjFile();
+    obj->vertices = vertices;
+    obj->faces = faces;
+    objFiles[id] = obj;
+    file.close();
+    std::cout << "Loaded " << filename << " as \"" << id << "\". "
+        << std::to_string(obj->vertices.size()) << " vertices and " 
+        << std::to_string(obj->faces.size()) << " faces." << std::endl;
+}
+
+void ObjLoader::free() {
+    for (auto& obj : objFiles) {
+        delete obj.second;
+    }
+    objFiles.clear();
+}
+
+ObjFile* ObjLoader::get(const std::string& id) {
+    return objFiles[id];
 }

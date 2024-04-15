@@ -33,7 +33,6 @@
 int screenWidth = 1600, screenHeight = 900;
 Vector2 mousePos;
 App *app;
-ObjFile objFile;
 
 float prog = 0.0f;
 void update(float delta)
@@ -50,7 +49,8 @@ void render()
     CV::color(1,1,1);
     CV::text(screenWidth,25, ("FPS: " + std::to_string((int)std::round(CV::fps()))).c_str(), TextAlign::RIGHT);
     CV::translate(Vector2(200,200));
-    CV::obj(objFile);
+    CV::color(1,1,0);
+    CV::obj(ObjLoader::get("coin"));
 }
 
 // funcao chamada toda vez que uma tecla for pressionada.
@@ -85,23 +85,24 @@ void mouse(int, int state, int, int, int x, int y)
     }
 }
 
+void load(){
+    PersistentStorage::load("./Trab3RodrigoAppelt/saves/save.dat");
+    ObjLoader::load("./Trab3RodrigoAppelt/models/moeda.obj", "coin");
+    ObjLoader::load("./Trab3RodrigoAppelt/models/logo.obj", "logo");
+    app = new App(&screenWidth, &screenHeight);
+}
+
 void cleanup()
 {
+    ObjLoader::free();
     delete app;
+    PersistentStorage::save();
 }
 
 int main(void)
 {
-    PersistentStorage::load("./Trab3RodrigoAppelt/saves/save.dat");
-
-    // inicializar classes
-    app = new App(&screenWidth, &screenHeight);
-
-    objFile = ObjLoader::load("./Trab3RodrigoAppelt/images/moeda.obj");
-    objFile.scale = Vector3(10,-10,10);
-    CV::init(&screenWidth, &screenHeight, "Canvas2D - Custom Template", true);
+    load();
+    CV::init(&screenWidth, &screenHeight, "Balls Bounce Remake", true);
     CV::run();
-
     cleanup();
-    PersistentStorage::save();
 }

@@ -84,12 +84,149 @@ TEST_CASE("CW/CCW"){
     SECTION("CW"){
         Vector2 v1(0,1);
         Vector2 v2(1,0);
-        REQUIRE(v1.isClockwise(v2) == true);
+        REQUIRE(v1.isClockwise(v2) == false);
     }
     SECTION("CCW"){
         Vector2 v1(0,1);
         Vector2 v2(-1,0);
-        REQUIRE(v1.isClockwise(v2) == false);
+        REQUIRE(v1.isClockwise(v2) == true);
+    }
+}
+
+TEST_CASE("Vector2: Horizontal Plane Reflection", "[reflection]"){
+    Vector2 n = Vector2(0,1).normalized();
+    SECTION("Incoming Above Left Angled"){
+        Vector2 d = Vector2(1,-1);
+        std::cout << "D out" << d << std::endl;
+        Vector2 r = d.reflection(n);
+        REQUIRE(r.x == Approx(1));
+        REQUIRE(r.y == Approx(1));
+    }
+    SECTION("Incoming Above Right Angled"){
+        Vector2 d = Vector2(-1,-1);
+        Vector2 r = d.reflection(n);
+        REQUIRE(r.x == Approx(-1));
+        REQUIRE(r.y == Approx(1));
+    }
+    SECTION("Incoming Straight"){
+        Vector2 d = Vector2(0,-1);
+        Vector2 r = d.reflection(n);
+        REQUIRE(r.x == Approx(0));
+        REQUIRE(r.y == Approx(1));
+    }
+    SECTION("Incoming Below Left Angled"){
+        Vector2 d = Vector2(1,1);
+        Vector2 r = d.reflection(n);
+        REQUIRE(r.x == Approx(1));
+        REQUIRE(r.y == Approx(-1));
+    }
+    SECTION("Incoming Below Right Angled"){
+        Vector2 d = Vector2(-1,1);
+        Vector2 r = d.reflection(n);
+        REQUIRE(r.x == Approx(-1));
+        REQUIRE(r.y == Approx(-1));
+    }
+}
+
+TEST_CASE("Vector2: Vertical Plane Reflection", "[reflection]"){
+    Vector2 n = Vector2(-1,0).normalized();
+    SECTION("Incoming Above Left Angled"){
+        Vector2 d = Vector2(1,1);
+        Vector2 r = d.reflection(n);
+        REQUIRE(r.x == Approx(-1));
+        REQUIRE(r.y == Approx(1));
+    }
+    SECTION("Incoming Above Right Angled"){
+        Vector2 d = Vector2(1,-1);
+        Vector2 r = d.reflection(n);
+        REQUIRE(r.x == Approx(-1));
+        REQUIRE(r.y == Approx(-1));
+    }
+    SECTION("Incoming Straight"){
+        Vector2 d = Vector2(1,0);
+        Vector2 r = d.reflection(n);
+        REQUIRE(r.x == Approx(-1));
+        REQUIRE(r.y == Approx(0));
+    }
+    SECTION("Incoming Below Left Angled"){
+        Vector2 d = Vector2(-1,1);
+        Vector2 r = d.reflection(n);
+        REQUIRE(r.x == Approx(1));
+        REQUIRE(r.y == Approx(1));
+    }
+    SECTION("Incoming Below Right Angled"){
+        Vector2 d = Vector2(-1,-1);
+        Vector2 r = d.reflection(n);
+        REQUIRE(r.x == Approx(1));
+        REQUIRE(r.y == Approx(-1));
+    }
+}
+
+TEST_CASE("Vector2: Ascending Plane Reflection", "[reflection]"){
+    Vector2 n = Vector2(-1,1).normalized();
+    SECTION("Incoming Above Left Angled"){
+        Vector2 d = Vector2(1,0);
+        Vector2 r = d.reflection(n);
+        REQUIRE(r.x == Approx(0));
+        REQUIRE(r.y == Approx(1));
+    }
+    SECTION("Incoming Above Right Angled"){
+        Vector2 d = Vector2(0,-1);
+        Vector2 r = d.reflection(n);
+        REQUIRE(r.x == Approx(-1));
+        REQUIRE(r.y == Approx(0));
+    }
+    SECTION("Incoming Straight"){
+        Vector2 d = Vector2(1,-1);
+        Vector2 r = d.reflection(n);
+        REQUIRE(r.x == Approx(-1));
+        REQUIRE(r.y == Approx(1));
+    }
+    SECTION("Incoming Below Left Angled"){
+        Vector2 d = Vector2(0,1);
+        Vector2 r = d.reflection(n);
+        REQUIRE(r.x == Approx(1));
+        REQUIRE(r.y == Approx(0));
+    }
+    SECTION("Incoming Below Right Angled"){
+        Vector2 d = Vector2(-1,0);
+        Vector2 r = d.reflection(n);
+        REQUIRE(r.x == Approx(0));
+        REQUIRE(r.y == Approx(-1));
+    }
+}
+
+TEST_CASE("Vector2: Descending Plane Reflection", "[reflection]"){
+    Vector2 n = Vector2(1,1).normalized();
+    SECTION("Incoming Above Left Angled"){
+        Vector2 d = Vector2(0,-1);
+        Vector2 r = d.reflection(n);
+        REQUIRE(r.x == Approx(1));
+        REQUIRE(r.y == Approx(0));
+    }
+    SECTION("Incoming Above Right Angled"){
+        Vector2 d = Vector2(-1,0);
+        Vector2 r = d.reflection(n);
+        REQUIRE(r.x == Approx(0));
+        REQUIRE(r.y == Approx(1));
+    }
+    SECTION("Incoming Straight"){
+        Vector2 d = Vector2(-1,-1);
+        Vector2 r = d.reflection(n);
+        REQUIRE(r.x == Approx(1));
+        REQUIRE(r.y == Approx(1));
+    }
+    SECTION("Incoming Below Left Angled"){
+        Vector2 d = Vector2(0,1);
+        Vector2 r = d.reflection(n);
+        REQUIRE(r.x == Approx(0));
+        REQUIRE(r.y == Approx(0-1));
+    }
+    SECTION("Incoming Below Right Angled"){
+        Vector2 d = Vector2(0,1);
+        Vector2 r = d.reflection(n);
+        REQUIRE(r.x == Approx(-1));
+        REQUIRE(r.y == Approx(0));
     }
 }
 

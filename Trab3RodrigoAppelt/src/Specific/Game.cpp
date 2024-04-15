@@ -10,7 +10,7 @@
 Game::Game(int *scrW, int *scrH) : screenWidth(scrW), screenHeight(scrH),
                                    mousePos(Vector2::zero()),
                                    hasActivePlay(false),
-                                   burstCount(5),
+                                   burstCount(2),
                                    spawned(0),
                                    lastBurstTime(0.0f),
                                    level(1),
@@ -26,9 +26,6 @@ Game::Game(int *scrW, int *scrH) : screenWidth(scrW), screenHeight(scrH),
     std::cout << std::to_string(rng()) << " " << std::to_string(rng()) << " " << std::to_string(rng()) << std::endl;
     blockLines.push_back(createNewLine(1));
     pushLines();
-    blockLines.push_back(createNewLine(2));
-    pushLines();
-    blockLines.push_back(createNewLine(3));
 
 }
 
@@ -59,6 +56,7 @@ void Game::update(float delta)
             b.position = ballLaunchPosition;
             b.velocity = ballLaunchDirection*ballSpeed;
             b.collider = Circle2D(b.position, b.radius);
+            b.collider.id = rng();
             balls.push_back(b);
             spawned++;
             lastBurstTime = CV::time();
@@ -72,14 +70,14 @@ void Game::update(float delta)
 
             for(auto &line: blockLines){
                 for(auto &block: line){
-                    block.collider = Rectangle2D(
-                        gameAreaStart + block.position*blockSize, 
-                        Vector2(blockSize, blockSize));
+                    block.collider.position = gameAreaStart + block.position*blockSize;
+                    block.collider.size = Vector2(blockSize, blockSize);
                 }
             }
             for(auto &ball: balls){
-                ball.collider = Circle2D(ball.position, ball.radius);
+                ball.collider.position = ball.position;
             }
+            updateGameAreaBounds();
         }
             
 
@@ -109,7 +107,8 @@ void Game::update(float delta)
             }
         
             // verifica colisoes com as paredes
-            for(auto &wall: getGameAreaBounds()){
+            
+            for(auto &wall: gameAreaWalls){
                 auto wallCollision = ball.collider.intersects(wall);
                 if(wallCollision.happened){
                     ball.velocity = ball.velocity.reflection(wallCollision.normal);
@@ -164,9 +163,10 @@ void Game::renderHeader()
     Vector2 headerStart(5 * (*screenWidth) / 14, 0);
     Vector2 headerSize(4 * (*screenWidth) / 14, 1 * (*screenHeight) / 9);
     CV::translate(headerStart);
+    CV::color(Vector3::fromHex(0xFFFFFF));
 
     // render pause button(fazer no app.cpp?)
-
+    
     // render current score(fase)
     CV::text(headerSize.x / 2, headerSize.y / 2, std::to_string(level).c_str(), GLUT_BITMAP_HELVETICA_18, TextAlign::CENTER);
     // render coins and highscore
@@ -320,6 +320,7 @@ std::vector<Block> Game::createNewLine(int level)
         Block b(Vector2(candidateIndex, 1),
                 Vector3::fromHex(0xAA3333),
                 blockLife);
+        b.collider.id = rng();
         blocks.push_back(b);
     }
     return blocks;
@@ -333,23 +334,29 @@ void Game::pushLines(){
     }
 }
 
-std::vector<Rectangle2D> Game::getGameAreaBounds(){
-    std::vector<Rectangle2D> bounds;
+void Game::updateGameAreaBounds(){
 
+    if(gameAreaWalls.size() < 3){
+        gameAreaWalls.clear();
+        auto left = Rectangle2D();
+        left.id = rng();
+        gameAreaWalls.push_back(left);
+        auto right = Rectangle2D();
+        right.id = rng();
+        gameAreaWalls.push_back(right);
+        auto ceiling = Rectangle2D();
+        ceiling.id = rng();
+        gameAreaWalls.push_back(ceiling);
+    }
     // left wall
-    bounds.push_back(Rectangle2D(Vector2(5 * (*screenWidth) / 14, 1 * (*screenHeight) / 9),
-                                  Vector2(1, 7 * (*screenHeight) / 9)));
+    gameAreaWalls[0].position = Vector2(5 * (*screenWidth) / 14, 1 * (*screenHeight) / 9);
+    gameAreaWalls[0].size = Vector2(1, 7 * (*screenHeight) / 9);
 
     // right wall
-    bounds.push_back(Rectangle2D(Vector2(9 * (*screenWidth) / 14, 1 * (*screenHeight) / 9),
-                                  Vector2(1, 7 * (*screenHeight) / 9)));
+    gameAreaWalls[1].position = Vector2(9 * (*screenWidth) / 14, 1 * (*screenHeight) / 9);
+    gameAreaWalls[1].size = Vector2(1, 7 * (*screenHeight) / 9);
 
     // ceiling
-    bounds.push_back(Rectangle2D(Vector2(5 * (*screenWidth) / 14, 1 * (*screenHeight) / 9),
-                                  Vector2(4 * (*screenWidth) / 14, 1)));
-    
-    //floor
-    //bounds.push_back(Rectangle2D(Vector2(5 * (*screenWidth) / 14, 8 * (*screenHeight) / 9),
-    //                              Vector2(4 * (*screenWidth) / 14, 1)));
-    return bounds;
+    gameAreaWalls[2].position = Vector2(5 * (*screenWidth) / 14, 1 * (*screenHeight) / 9);
+    gameAreaWalls[2].size = Vector2(4 * (*screenWidth) / 14, 1);
 }

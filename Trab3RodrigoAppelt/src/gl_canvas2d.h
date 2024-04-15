@@ -71,7 +71,7 @@ public:
     static void clear(Vector3 rgb);
 
     //3d
-    static void obj(ObjFile &obj);
+    static void obj(ObjFile *obj);
 
     //desenha texto na coordenada (x,y)
     static float textWidth(const char *t, void* font);
