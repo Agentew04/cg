@@ -886,3 +886,366 @@
 	<vector>
 	<fstream>
 
+1713197090 source:d:\universidade\cg\trab3rodrigoappelt\src\3d\objloader.cpp
+	"ObjLoader.h"
+	<iostream>
+	<vector>
+	<fstream>
+
+1713197090 d:\universidade\cg\trab3rodrigoappelt\src\3d\objloader.h
+	<string>
+	<vector>
+	<map>
+	"../Math/Vector3.h"
+
+1713197090 d:\universidade\cg\trab3rodrigoappelt\src\math\vector3.h
+	<iostream>
+
+1713197090 source:d:\universidade\cg\trab3rodrigoappelt\src\fonts\fontmanager.cpp
+	"FontManager.h"
+	"schrift.h"
+
+1713197090 d:\universidade\cg\trab3rodrigoappelt\src\fonts\fontmanager.h
+	<string>
+	<vector>
+	"schrift.h"
+
+1713197090 d:\universidade\cg\trab3rodrigoappelt\src\fonts\schrift.h
+	<stddef.h>
+	<stdint.h>
+
+1713197090 source:d:\universidade\cg\trab3rodrigoappelt\src\fonts\schrift.c
+	<assert.h>
+	<errno.h>
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<windows.h>
+	<fcntl.h>
+	<sys/mman.h>
+	<sys/stat.h>
+	<unistd.h>
+	"schrift.h"
+
+1713197090 source:d:\universidade\cg\trab3rodrigoappelt\src\image\bmp.cpp
+	"Bmp.h"
+	<string.h>
+	<cstdint>
+	<iostream>
+
+1713197090 d:\universidade\cg\trab3rodrigoappelt\src\image\bmp.h
+	<stdio.h>
+	<stdlib.h>
+
+1713197090 source:d:\universidade\cg\trab3rodrigoappelt\src\image\imagemanipulation.cpp
+	<iostream>
+	<cstring>
+	"ImageManipulation.h"
+	"../Math/Vector2.h"
+
+1713197090 d:\universidade\cg\trab3rodrigoappelt\src\image\imagemanipulation.h
+	<cstdint>
+	"../Math/Vector2.h"
+
+1713197090 d:\universidade\cg\trab3rodrigoappelt\src\math\vector2.h
+	<cmath>
+	<iostream>
+
+1713197090 source:d:\universidade\cg\trab3rodrigoappelt\src\image\lodepng.cpp
+	"lodepng.h"
+	<limits.h>
+	<stdio.h>
+	<stdlib.h>
+
+1713197090 d:\universidade\cg\trab3rodrigoappelt\src\image\lodepng.h
+	<string.h>
+	<vector>
+	<string>
+	"lodepng.h"
+	<iostream>
+	"lodepng.h"
+
+1713197090 source:d:\universidade\cg\trab3rodrigoappelt\src\math\matrix.cpp
+	"Matrix.h"
+	<string.h>
+	<iostream>
+
+1713197090 d:\universidade\cg\trab3rodrigoappelt\src\math\matrix.h
+	<string.h>
+	<iostream>
+	<vector>
+	"Vector2.h"
+	"Vector3.h"
+
+1713197090 source:d:\universidade\cg\trab3rodrigoappelt\src\math\vector2.cpp
+	"Vector2.h"
+
+1713197090 source:d:\universidade\cg\trab3rodrigoappelt\src\math\vector3.cpp
+	<cmath>
+	"Vector3.h"
+
+1713197090 source:d:\universidade\cg\trab3rodrigoappelt\src\specific\components\ball.cpp
+	"Ball.h"
+	"../../gl_canvas2d.h"
+
+1713197090 d:\universidade\cg\trab3rodrigoappelt\src\specific\components\ball.h
+	"../../Math/Vector2.h"
+	"../../Math/Polygon2D.h"
+
+1713197090 d:\universidade\cg\trab3rodrigoappelt\src\math\polygon2d.h
+	<vector>
+	<map>
+	"Vector2.h"
+
+1713444508 d:\universidade\cg\trab3rodrigoappelt\src\gl_canvas2d.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	"Math/Vector2.h"
+	"Math/Vector3.h"
+	"Math/Polygon2D.h"
+	"UI/UIDefinitions.h"
+	"3D/ObjLoader.h"
+
+1713197090 d:\universidade\cg\trab3rodrigoappelt\src\ui\uidefinitions.h
+	"../Math/Vector2.h"
+
+1713197090 source:d:\universidade\cg\trab3rodrigoappelt\src\specific\components\block.cpp
+	"Block.h"
+
+1713197090 d:\universidade\cg\trab3rodrigoappelt\src\specific\components\block.h
+	"../../Math/Polygon2D.h"
+	"../../Math/Vector2.h"
+	"../../Math/Vector3.h"
+
+1713197090 source:d:\universidade\cg\trab3rodrigoappelt\src\specific\components\powerups.cpp
+	"Powerups.h"
+
+1713197090 d:\universidade\cg\trab3rodrigoappelt\src\specific\components\powerups.h
+
+1713197090 source:d:\universidade\cg\trab3rodrigoappelt\src\ui\button.cpp
+	"Button.h"
+	<iostream>
+	"../gl_canvas2d.h"
+	"UIDefinitions.h"
+
+1713197090 d:\universidade\cg\trab3rodrigoappelt\src\ui\button.h
+	<string>
+	<functional>
+	<map>
+	"../Math/Vector2.h"
+	"../Math/Vector3.h"
+	"UIDefinitions.h"
+
+1713197090 source:d:\universidade\cg\trab3rodrigoappelt\src\ui\buttonmanager.cpp
+	<vector>
+	<iostream>
+	<algorithm>
+	"ButtonManager.h"
+	"CursorManager.h"
+
+1713197090 d:\universidade\cg\trab3rodrigoappelt\src\ui\buttonmanager.h
+	<vector>
+	"Button.h"
+
+1713197090 d:\universidade\cg\trab3rodrigoappelt\src\ui\cursormanager.h
+	<windows.h>
+	<map>
+
+1713197090 source:d:\universidade\cg\trab3rodrigoappelt\src\ui\chart.cpp
+	<algorithm>
+	<vector>
+	"Chart.h"
+	"../gl_canvas2d.h"
+
+1713197090 d:\universidade\cg\trab3rodrigoappelt\src\ui\chart.h
+	<vector>
+	<map>
+	"../Math/Vector2.h"
+	"../Math/Vector3.h"
+
+1713197090 source:d:\universidade\cg\trab3rodrigoappelt\src\ui\checkbox.cpp
+	<iostream>
+	<cmath>
+	"CheckBox.h"
+	"../gl_canvas2d.h"
+
+1713197090 d:\universidade\cg\trab3rodrigoappelt\src\ui\checkbox.h
+	<map>
+	<functional>
+	"../Math/Vector2.h"
+	"../Math/Vector3.h"
+
+1713197090 source:d:\universidade\cg\trab3rodrigoappelt\src\ui\checkboxmanager.cpp
+	<vector>
+	<iostream>
+	<algorithm>
+	"CheckBoxManager.h"
+	"CursorManager.h"
+
+1713197090 d:\universidade\cg\trab3rodrigoappelt\src\ui\checkboxmanager.h
+	<vector>
+	"CheckBox.h"
+
+1713197090 source:d:\universidade\cg\trab3rodrigoappelt\src\ui\cursormanager.cpp
+	<windows.h>
+	<map>
+	<iostream>
+	"CursorManager.h"
+
+1713197090 source:d:\universidade\cg\trab3rodrigoappelt\src\ui\imagerenderer.cpp
+	"ImageRenderer.h"
+	"../gl_canvas2d.h"
+	<iostream>
+
+1713197090 d:\universidade\cg\trab3rodrigoappelt\src\ui\imagerenderer.h
+	<vector>
+	"../Image/ImageManipulation.h"
+	"../Math/Vector2.h"
+	"../Math/Matrix.h"
+
+1713197090 source:d:\universidade\cg\trab3rodrigoappelt\src\ui\progressring.cpp
+	"ProgressRing.h"
+	<cmath>
+	<algorithm>
+	"../gl_canvas2d.h"
+
+1713197090 d:\universidade\cg\trab3rodrigoappelt\src\ui\progressring.h
+	<vector>
+	"../Math/Vector2.h"
+	"UIDefinitions.h"
+
+1713197090 source:d:\universidade\cg\trab3rodrigoappelt\src\ui\slider.cpp
+	"Slider.h"
+	"../gl_canvas2d.h"
+	<iostream>
+	<cmath>
+
+1713197090 d:\universidade\cg\trab3rodrigoappelt\src\ui\slider.h
+	<map>
+	<functional>
+	"../Math/Vector2.h"
+	"../Math/Vector3.h"
+
+1713197090 source:d:\universidade\cg\trab3rodrigoappelt\src\ui\slidermanager.cpp
+	<vector>
+	<iostream>
+	<algorithm>
+	"SliderManager.h"
+
+1713197090 d:\universidade\cg\trab3rodrigoappelt\src\ui\slidermanager.h
+	<vector>
+	"Slider.h"
+
+1713197090 source:d:\universidade\cg\trab3rodrigoappelt\src\ui\textbox.cpp
+	"TextBox.h"
+	<iostream>
+	<vector>
+	<string>
+	"../gl_canvas2d.h"
+	"../Keyboard.h"
+
+1713197090 d:\universidade\cg\trab3rodrigoappelt\src\ui\textbox.h
+	<functional>
+	<map>
+	"UIDefinitions.h"
+	"../Keyboard.h"
+	"../Math/Vector2.h"
+	"../Math/Vector3.h"
+
+1713197090 d:\universidade\cg\trab3rodrigoappelt\src\keyboard.h
+
+1713197090 source:d:\universidade\cg\trab3rodrigoappelt\src\ui\uimanager.cpp
+	<vector>
+	<iostream>
+	"UIManager.h"
+
+1713197090 d:\universidade\cg\trab3rodrigoappelt\src\ui\uimanager.h
+	<vector>
+	"Button.h"
+	"Slider.h"
+	"CheckBox.h"
+	"ButtonManager.h"
+	"SliderManager.h"
+	"CheckBoxManager.h"
+	"Chart.h"
+	"ImageRenderer.h"
+
+1713444508 source:d:\universidade\cg\trab3rodrigoappelt\src\gl_canvas2d.cpp
+	"gl_canvas2d.h"
+	<GL/glut.h>
+
+1713459911 source:d:\universidade\cg\trab3rodrigoappelt\src\main.cpp
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	<math.h>
+	<iostream>
+	<stdio.h>
+	<time.h>
+	<stdlib.h>
+	"Keyboard.h"
+	"gl_canvas2d.h"
+	"Storage/PersistentStorage.h"
+	"Specific/App.h"
+	"3D/ObjLoader.h"
+	"UI/ProgressRing.h"
+
+1713444508 d:\universidade\cg\trab3rodrigoappelt\src\storage\persistentstorage.h
+	<string>
+	<map>
+	<iostream>
+	<iomanip>
+	"../Math/Vector2.h"
+	"../Math/Vector3.h"
+
+1713444508 d:\universidade\cg\trab3rodrigoappelt\src\specific\app.h
+	"../Math/Vector2.h"
+	"Game.h"
+	"../Keyboard.h"
+	"../UI/ButtonManager.h"
+	"../UI/TextBox.h"
+
+1713459351 d:\universidade\cg\trab3rodrigoappelt\src\specific\game.h
+	<vector>
+	<random>
+	"../Math/Vector2.h"
+	"../Keyboard.h"
+	"Components/Ball.h"
+	"Components/Block.h"
+	"Components/Powerups.h"
+
+1713444508 source:d:\universidade\cg\trab3rodrigoappelt\src\math\polygon2d.cpp
+	"Polygon2D.h"
+	<map>
+	<chrono>
+
+1713459466 source:d:\universidade\cg\trab3rodrigoappelt\src\specific\app.cpp
+	"App.h"
+	<random>
+	"../gl_canvas2d.h"
+	"../Storage/PersistentStorage.h"
+	"../3D/ObjLoader.h"
+
+1713459900 source:d:\universidade\cg\trab3rodrigoappelt\src\specific\game.cpp
+	"Game.h"
+	<string>
+	<functional>
+	<random>
+	"../gl_canvas2d.h"
+	"../Storage/PersistentStorage.h"
+
+1713444508 source:d:\universidade\cg\trab3rodrigoappelt\src\storage\persistentstorage.cpp
+	<fstream>
+	<algorithm>
+	<iterator>
+	<iostream>
+	<sstream>
+	<vector>
+	<string>
+	<iomanip>
+	"PersistentStorage.h"
+

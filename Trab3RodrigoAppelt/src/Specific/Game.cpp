@@ -15,6 +15,7 @@ Game::Game(int *scrW, int *scrH) : screenWidth(scrW), screenHeight(scrH),
                                    lastBurstTime(0.0f),
                                    level(1),
                                    firstBack(false),
+                                   gameOver(false),
                                    ballLaunchPosition((*scrW) / 2, (*scrH) - 100),
                                    ballLaunchDirection(Vector2::zero()),
                                    nextLaunchPosition(Vector2::zero()),
@@ -42,6 +43,7 @@ void Game::reset()
     ballLaunchPosition = Vector2((*screenWidth) / 2, 1 * (*screenHeight) / 9);
     ballLaunchDirection = Vector2::zero();
     firstBack = false;
+    gameOver = false;
 }
 
 void Game::update(float delta)
@@ -104,8 +106,10 @@ void Game::update(float delta)
                     auto blockCollision = ball.collider.intersects(it->collider);
                     if(blockCollision.happened){
                         it->life--;
+                        #if PHYSICS_DEBUG
                         std::cout << "Bola " << ball.collider.id << " colidiu com bloco " << it->collider.id 
                             << ". Vida(" << it->life+1 << "->" << it->life << ")" << std::endl;
+                        #endif
                         if(it->life <= 0){
                             line.erase(it);
                         }
@@ -121,13 +125,14 @@ void Game::update(float delta)
                         Vector2 normal = (ball.position - it->collider.position).normalized();
                         // empurrar a bola pra fora
                         ball.position += normal*ball.collider.radius;
+                        #if PHYSICS_DEBUG
                         std::cout << "BOLA DENTRO! Empurrando" << std::endl;
+                        #endif
                     }
                 }
             }
         
             // verifica colisoes com as paredes
-            
             for(auto &wall: gameAreaWalls){
                 auto wallCollision = ball.collider.intersects(wall);
                 if(wallCollision.happened){
@@ -138,15 +143,12 @@ void Game::update(float delta)
             // verifica se saiu p baixo
             for(auto it=balls.begin();it<balls.end();it++){
                 if(it->position.y > (8 * (*screenHeight) / 9) + it->radius+5){
-                    std::cout << "saiu p baixo" << std::endl;
                     if(!firstBack){
                         firstBack = true;
                         it->velocity = Vector2::zero();
                         nextLaunchPosition = it->position;
                         nextLaunchPosition.y = 8 * (*screenHeight) / 9;
-                        std::cout << "first back" << std::endl;
                     }else{
-                        std::cout << "deleted" << std::endl;
                         balls.erase(it);
                     }
                 }
@@ -162,7 +164,6 @@ void Game::update(float delta)
                 Vector2 normal = Vector2(1,0);
                 ball.velocity = ball.velocity.reflection(normal);
                 ball.position += normal*ball.collider.radius;
-                std::cout << "Bola saiu pela esquerda, empurrando pro campo" << std::endl;
                 continue;
             }
             // right side
@@ -170,7 +171,6 @@ void Game::update(float delta)
                 Vector2 normal = Vector2(-1,0);
                 ball.velocity = ball.velocity.reflection(normal);
                 ball.position += normal*ball.collider.radius;
-                std::cout << "Bola saiu pela direita, empurrando pro campo" << std::endl;
                 continue;
             }
             // top side
@@ -178,8 +178,24 @@ void Game::update(float delta)
                 Vector2 normal = Vector2(0,1);
                 ball.velocity = ball.velocity.reflection(normal);
                 ball.position += normal*ball.collider.radius;
-                std::cout << "Bola saiu pelo topo, empurrando pro campo" << std::endl;
                 continue;
+            }
+        }
+
+        // se alguma bola esta muito na horizontal
+        // adicionamos uma componente vertical aleatoria
+        // para acelerar e previnir blocks
+        for(auto &ball: balls){
+            bool up = rng()%2;
+            if(ball.velocity * Vector2::right() > 0.9f*ballSpeed){
+                ball.velocity += (up?Vector2::up():Vector2::down())*ballSpeed*0.1f;
+                // normaliza e multiplica para garantir que a bola nao acelerou
+                ball.velocity.normalize();
+                ball.velocity *= ballSpeed;
+                #if PHYSICS_DEBUG
+                std::cout << "Adicionando componente vertical a bola(" 
+                    << ball.collider.id << ")" << std::endl;
+                #endif
             }
         }
 
@@ -188,7 +204,14 @@ void Game::update(float delta)
             blockLines.push_back(createNewLine(level));
 
             // checar game over(blocos na ultima linha!)
-            // TODO
+            for(auto &line : blockLines){
+                for(auto &block : line){
+                    if(block.position.y == blockAreaSize.y){
+                        gameOver = true;
+                        break;
+                    }
+                }
+            }
 
             // verificar se passou o highscore
             if(level > PersistentStorage::get<int>("user", "highscore", 0)){
@@ -453,4 +476,8 @@ void Game::updateGameAreaBounds(){
         gameAreaWalls[2].id = rng();
         std::cout << "Game area walls ids reset" << std::endl;
     }
+}
+
+bool Game::isGameOver(){
+    return gameOver;
 }

@@ -277,6 +277,7 @@ void CV::obj(ObjFile *obj, Vector2 pos, Vector2 scale){
     for(auto face : obj->faces){
         for(auto vertex : face){
             auto v = obj->vertices[vertex-1];
+            
             v = v.multiply(Vector3(scale.x, scale.y, 1));
             v = v + Vector3(pos.x, pos.y, 0);
             glVertex3f(v.x, v.y, v.z);

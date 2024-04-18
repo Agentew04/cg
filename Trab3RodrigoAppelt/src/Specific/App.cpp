@@ -35,6 +35,9 @@ void App::update(float delta)
 {
     if(currentMenu == MenuState::GAME){
         game.update(delta);
+        if(game.isGameOver()){
+            currentMenu = MenuState::GAME_OVER;
+        }
     }
 }
 
@@ -200,6 +203,9 @@ void App::renderPauseMenu()
 void App::renderGameOver()
 {
     // draw game over
+    CV::clear(Vector3::fromHex(0x1D1E30));
+    CV::translate(*screenWidth/2, *screenHeight/2);
+    CV::text(0,0,"Game Over",GLUT_BITMAP_HELVETICA_18, TextAlign::CENTER);
 }
 
 void App::renderPostGameStats()
@@ -268,6 +274,10 @@ void App::submitButtons(){
     );
     idPlay->style = ButtonStyle::FlatGreen();
     idButtons.registerButton(idPlay);
+
+    // game over menu
+    // play again button
+    // main menu button
 }
 
 // ENDREGION UI

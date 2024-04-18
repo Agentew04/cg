@@ -30,7 +30,7 @@
 #include "UI/ProgressRing.h"
 
 // largura e altura inicial da tela . Alteram com o redimensionamento de tela.
-int screenWidth = 1600, screenHeight = 900;
+int screenWidth = 1280, screenHeight = 720;
 Vector2 mousePos;
 App *app;
 

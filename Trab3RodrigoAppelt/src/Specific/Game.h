@@ -24,6 +24,8 @@ public:
     /// @brief Reinicia todo o estado do jogo
     void reset();
 
+    bool isGameOver();
+
     // event forwarding
     void update(float delta);
     void render();
@@ -58,6 +60,7 @@ private:
     float lastBurstTime;
     int level;
     bool firstBack;
+    bool gameOver;
 
     std::vector<Ball> balls;
     std::vector<std::vector<Block>> blockLines;

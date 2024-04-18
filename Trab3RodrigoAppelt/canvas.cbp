@@ -35,7 +35,7 @@
 			<Add option="-Wall" />
 			<Add option="-std=c++11" />
 			<Add option="-fexceptions" />
-			<Add option="-DPHYSICS_DEBUG=1" />
+			<Add option="-DPHYSICS_DEBUG=0" />
 			<Add directory="../include" />
 		</Compiler>
 		<Linker>
