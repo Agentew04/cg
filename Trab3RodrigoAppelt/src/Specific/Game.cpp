@@ -104,6 +104,8 @@ void Game::update(float delta)
                     auto blockCollision = ball.collider.intersects(it->collider);
                     if(blockCollision.happened){
                         it->life--;
+                        std::cout << "Bola " << ball.collider.id << " colidiu com bloco " << it->collider.id 
+                            << ". Vida(" << it->life+1 << "->" << it->life << ")" << std::endl;
                         if(it->life <= 0){
                             line.erase(it);
                         }
@@ -185,6 +187,16 @@ void Game::update(float delta)
             pushLines();
             blockLines.push_back(createNewLine(level));
 
+            // checar game over(blocos na ultima linha!)
+            // TODO
+
+            // verificar se passou o highscore
+            if(level > PersistentStorage::get<int>("user", "highscore", 0)){
+                PersistentStorage::set<int>("user", "highscore", level);
+            }
+            level++;
+
+            // resetar variaveis p proximo nivel
             // constrain next launch position to be a valid one
             // in case the first ball went out of bounds
             if(nextLaunchPosition.x < 5 * (*screenWidth) / 14){
@@ -195,13 +207,10 @@ void Game::update(float delta)
             }
             ballLaunchPosition = nextLaunchPosition;
             balls.clear();
-            level++;
-            burstCount ++;
-            spawned = 0;
             firstBack = false;
             hasActivePlay = false;
-
-            // checa se deu game over
+            spawned = 0;
+            burstCount ++; // TODO remover isso e fazer um sistema de powerups
         }
     }
 }
@@ -390,6 +399,15 @@ std::vector<Block> Game::createNewLine(int level)
                 blockLife);
         b.collider.id = rng();
         blocks.push_back(b);
+    }
+    // mais uma passada pra garantir q n tem id 0
+    for(auto &block: blocks){
+        if(block.collider.id == 0){
+            block.collider.id = rng();
+            #if PHYSICS_DEBUG
+            std::cout << "Regenerating block collider id" << std::endl;
+            #endif
+        }
     }
     return blocks;
 }

@@ -3,11 +3,14 @@
 #include <iterator>
 #include <iostream>
 #include <sstream>
+#include <vector>
+#include <string>
 #include <iomanip>
 
 #include "PersistentStorage.h"
 
 // variaveis estaticas
+std::vector<std::string> PersistentStorage::comments;
 std::string PersistentStorage::savePath = "";
 std::map<std::string, PersistentStorage::Container*> PersistentStorage::containers;
 
@@ -27,6 +30,11 @@ void PersistentStorage::load(std::string path){
     std::string line;
     while(std::getline(file, line)){
         if(line.empty()){
+            continue;
+        }
+
+        if(line[0] == '#' || line[0] == ';'){
+            comments.push_back(line);
             continue;
         }
 
@@ -84,6 +92,12 @@ void PersistentStorage::save(){
         return;
     }
 
+    // write comments
+    for(auto &comment: comments){
+        file << comment << std::endl;
+    }
+
+    // write sections
     for(auto it = containers.begin(); it != containers.end(); it++){
         file << "[" << it->first << "]" << std::endl;
         for(auto kvp : it->second->heap){

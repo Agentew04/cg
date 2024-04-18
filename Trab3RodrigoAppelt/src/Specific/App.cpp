@@ -24,9 +24,6 @@ App::App(int *scrW, int *scrH)
     }
 
     // load user data
-    coins = PersistentStorage::getOrSetDefault<int>("user","coins", 0);
-    highscore = PersistentStorage::getOrSetDefault<int>("user","highscore", 0);
-
     username = PersistentStorage::getOrSetDefault<std::string>("user","name", "");
 }
 
@@ -174,6 +171,7 @@ void App::renderMainMenu()
     CV::obj(ObjLoader::get("logo"), 
         Vector2((*screenWidth)/2, 2.75*(*screenHeight)/11),
         Vector2(75,-75));
+    int coins = PersistentStorage::getOrSetDefault<int>("user","coins",0);
     CV::text((*screenWidth)/2, 5*(*screenHeight)/11,
         ("Coins: " + std::to_string(coins)).c_str(),
         GLUT_BITMAP_HELVETICA_18,

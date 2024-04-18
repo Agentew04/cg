@@ -13,7 +13,9 @@
 /// @details Segmenta eles em 'containers' nomeados e permite
 /// a serializacao de tipos basicos numericos.
 /// As implementacoes sao genericas exceto para tipos
-/// std(nesse caso ha uma especializacao)
+/// std(nesse caso ha uma especializacao). Suporta
+/// comentarios com '#' ou ';', porem vai salvar
+/// todos no inicio do arquivo.
 /// @remarks Cada dado eh separado em uma tupla:
 /// (container, chave, tamanho, metadados, binario)
 class PersistentStorage {
@@ -197,6 +199,11 @@ public:
     }
 
 private:
+
+    /// @brief Estrutura que armazena os comentarios no arquivo.
+    /// Usado puramente para informacao caso o arquivo seja aberto
+    /// para debug(ou curiosidade kkjk)
+    static std::vector<std::string> comments;
 
     class Container {
     public:

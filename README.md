@@ -22,6 +22,22 @@ e de UI.
 * T4: Não divulgado
 * T5: Não divulgado
 
+## Ferramentas criadas
+
+Dentre as ferramentas e tecnologias criadas para melhorar a qualidade dos trabalhos
+e a facilidade de desenvolvimento, estão:
+* PersistentStorage: Uma classe que facilita a persistência de dados em arquivos
+* UI: Coleção de controles totalmente customizáveis e reutilizáveis usando geometria
+* Math: Coleção de componentes matemáticas testadas: Vetores, Matrizes e Polígonos
+* ObjLoader: Carregador de arquivos .obj simples para a renderização de formas complexas
+  sem usar bmps ou bibliotecas externas. No futuro, será usado para renderizar fontes
+  customizadas sem a necessidade de uma biblioteca ttf.
+
+E algumas bibliotecas externas pequenas embutidas direto no código:
+* schrift.c: Usado para carregar arquivos .ttf. Não utilizado ainda
+* lodepng.c: Usado para carregar arquivos .png. Não utilizado ainda
+* htttlib.h: Usado para fazer requisições HTTP. Utilizado para placar online
+
 ## Demonstrações:
 
 ### T1

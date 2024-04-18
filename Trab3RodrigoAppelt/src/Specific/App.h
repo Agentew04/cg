@@ -71,8 +71,8 @@ private:
     ButtonManager postGameStatsButtons;
 
     // user data
-    int coins;
-    int highscore;
+    // int coins; <-     precisamos aqui? talvez soh no 
+    // int highscore;    persistent storage ja serve!
     std::string username;
 };
 
