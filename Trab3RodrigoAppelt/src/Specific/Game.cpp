@@ -23,10 +23,8 @@ Game::Game(int *scrW, int *scrH) : screenWidth(scrW), screenHeight(scrH),
     // std::random_device r; <- versao 8.1.0 do g++ do codeblocks n suporta
     //                          passar a seed antiga direto pro mersene
     rng = std::mt19937(time(nullptr));
-    std::cout << std::to_string(rng()) << " " << std::to_string(rng()) << " " << std::to_string(rng()) << std::endl;
     blockLines.push_back(createNewLine(1));
     pushLines();
-
 }
 
 Game::~Game()
@@ -80,6 +78,16 @@ void Game::update(float delta)
             updateGameAreaBounds();
         }
             
+        // se por algum acaso uma bolinha perdeu o id de colisor, regenerar
+        for(auto &ball: balls){
+            if(ball.collider.id == 0){
+                ball.collider.id = rng();
+                #if PHYSICS_DEBUG
+                std::cout << "Regenerating ball collider id" << std::endl;
+                #endif
+            }
+        }
+
 
         //move bolinhas
         for(auto &ball: balls){
@@ -102,6 +110,16 @@ void Game::update(float delta)
 
                         // reflete bola
                         ball.velocity = ball.velocity.reflection(blockCollision.normal);
+                    }
+
+                    // checa se a bola esta dentro do bloco
+                    if(it->collider.pointInside(ball.position)){
+                        // se a bola esta dentro do bloco, ela deve sair
+                        // pela direcao oposta a que entrou
+                        Vector2 normal = (ball.position - it->collider.position).normalized();
+                        // empurrar a bola pra fora
+                        ball.position += normal*ball.collider.radius;
+                        std::cout << "BOLA DENTRO! Empurrando" << std::endl;
                     }
                 }
             }
@@ -135,12 +153,50 @@ void Game::update(float delta)
             // eventualmente, colisao com powerup bounce
         }
 
+        // verifica se alguma bola saiu do campo. Se saiu, tenta corrigir
+        for(auto &ball : balls){
+            // left side
+            if(ball.position.x < 5 * (*screenWidth) / 14 + ball.radius){
+                Vector2 normal = Vector2(1,0);
+                ball.velocity = ball.velocity.reflection(normal);
+                ball.position += normal*ball.collider.radius;
+                std::cout << "Bola saiu pela esquerda, empurrando pro campo" << std::endl;
+                continue;
+            }
+            // right side
+            if(ball.position.x > 9 * (*screenWidth) / 14 - ball.radius){
+                Vector2 normal = Vector2(-1,0);
+                ball.velocity = ball.velocity.reflection(normal);
+                ball.position += normal*ball.collider.radius;
+                std::cout << "Bola saiu pela direita, empurrando pro campo" << std::endl;
+                continue;
+            }
+            // top side
+            if(ball.position.y < 1 * (*screenHeight) / 9 + ball.radius){
+                Vector2 normal = Vector2(0,1);
+                ball.velocity = ball.velocity.reflection(normal);
+                ball.position += normal*ball.collider.radius;
+                std::cout << "Bola saiu pelo topo, empurrando pro campo" << std::endl;
+                continue;
+            }
+        }
+
         if(balls.size() == 0){
             pushLines();
             blockLines.push_back(createNewLine(level));
+
+            // constrain next launch position to be a valid one
+            // in case the first ball went out of bounds
+            if(nextLaunchPosition.x < 5 * (*screenWidth) / 14){
+                nextLaunchPosition.x = 5 * (*screenWidth) / 14;
+            }
+            if(nextLaunchPosition.x > 9 * (*screenWidth) / 14){
+                nextLaunchPosition.x = 9 * (*screenWidth) / 14;
+            }
             ballLaunchPosition = nextLaunchPosition;
             balls.clear();
             level++;
+            burstCount ++;
             spawned = 0;
             firstBack = false;
             hasActivePlay = false;
@@ -205,6 +261,16 @@ void Game::renderGameArea()
         for (auto &ball : balls)
         {
             ball.render();
+            #if PHYSICS_DEBUG
+            CV::translate(0,0);
+            // ball collider
+            CV::color(1,0,0);
+            CV::circle(ball.collider.position, ball.collider.radius, 16);
+            // direction
+            CV::color(0,0,1);
+            CV::line(ball.collider.position, ball.collider.position+ball.velocity.normalized()*ball.collider.radius*2, 3.0f);
+            CV::translate(gameAreaStart);
+            #endif
         }
 
         // render dummy ball on launch position
@@ -252,9 +318,11 @@ void Game::renderLine(std::vector<Block> line)
             GLUT_BITMAP_HELVETICA_18,
             TextAlign::CENTER);
 
+        #if PHYSICS_DEBUG
         // render collider
         CV::color(0,1,0);
         CV::rect(block.collider.position, block.collider.position+block.collider.size);
+        #endif
     }
 }
 
@@ -337,6 +405,7 @@ void Game::pushLines(){
 void Game::updateGameAreaBounds(){
 
     if(gameAreaWalls.size() < 3){
+        std::cout << "Creating game area walls" << std::endl;
         gameAreaWalls.clear();
         auto left = Rectangle2D();
         left.id = rng();
@@ -359,4 +428,11 @@ void Game::updateGameAreaBounds(){
     // ceiling
     gameAreaWalls[2].position = Vector2(5 * (*screenWidth) / 14, 1 * (*screenHeight) / 9);
     gameAreaWalls[2].size = Vector2(4 * (*screenWidth) / 14, 1);
+
+    if(gameAreaWalls[0].id == 0 || gameAreaWalls[1].id == 0 || gameAreaWalls[2].id == 0){
+        gameAreaWalls[0].id = rng();
+        gameAreaWalls[1].id = rng();
+        gameAreaWalls[2].id = rng();
+        std::cout << "Game area walls ids reset" << std::endl;
+    }
 }

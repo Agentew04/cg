@@ -432,11 +432,11 @@
 	<iostream>
 	"lodepng.h"
 
-1713131244 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\gl_canvas2d.cpp
+1713403409 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
-1713131168 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\gl_canvas2d.h
+1713401692 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\gl_canvas2d.h
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
@@ -613,7 +613,7 @@
 	<string.h>
 	<iostream>
 
-1713136385 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\math\polygon2d.cpp
+1713404338 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\math\polygon2d.cpp
 	"Polygon2D.h"
 	<map>
 	<chrono>
@@ -641,7 +641,7 @@
 	"ImageManipulation.h"
 	"../Math/Vector2.h"
 
-1713133684 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\main.cpp
+1713401517 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -783,7 +783,7 @@
 	<unistd.h>
 	"schrift.h"
 
-1713136628 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\game.cpp
+1713404991 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\game.cpp
 	"Game.h"
 	<string>
 	<functional>
@@ -816,7 +816,7 @@
 	"../UI/ButtonManager.h"
 	"../UI/TextBox.h"
 
-1713133923 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\app.cpp
+1713401669 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\app.cpp
 	"App.h"
 	<random>
 	"../gl_canvas2d.h"

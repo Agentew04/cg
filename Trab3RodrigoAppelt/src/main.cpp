@@ -48,9 +48,6 @@ void render()
     CV::translate(Vector2(0,0));
     CV::color(1,1,1);
     CV::text(screenWidth,25, ("FPS: " + std::to_string((int)std::round(CV::fps()))).c_str(), TextAlign::RIGHT);
-    CV::translate(Vector2(200,200));
-    CV::color(1,1,0);
-    CV::obj(ObjLoader::get("coin"));
 }
 
 // funcao chamada toda vez que uma tecla for pressionada.

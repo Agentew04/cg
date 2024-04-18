@@ -169,15 +169,11 @@ void App::renderMainMenu()
     CV::clear(Vector3::fromHex(0x1D1E30));
     CV::color(Vector3::fromHex(0xFFFFFF));
 
-    CV::translate((*screenWidth)/2, 2.75*(*screenHeight)/11);
-    ObjLoader::get("logo")->scale = Vector3(75,-75,0);
-    CV::obj(ObjLoader::get("logo"));
-    // CV::text((*screenWidth)/2, 3*(*screenHeight)/11,
-    //     "BALL BOUNCE",
-    //     GLUT_BITMAP_TIMES_ROMAN_24,
-    //     TextAlign::CENTER
-    // );
+    
     CV::translate(0,0);
+    CV::obj(ObjLoader::get("logo"), 
+        Vector2((*screenWidth)/2, 2.75*(*screenHeight)/11),
+        Vector2(75,-75));
     CV::text((*screenWidth)/2, 5*(*screenHeight)/11,
         ("Coins: " + std::to_string(coins)).c_str(),
         GLUT_BITMAP_HELVETICA_18,

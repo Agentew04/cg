@@ -3,6 +3,14 @@
 #include <map>
 #include <chrono>
 
+
+// forward declaration
+class CV{
+public:
+    // returns the current time in seconds
+    static float time();
+};
+
 std::map<std::tuple<uint32_t,uint32_t>,float> lastCollisionTime;
 
 Rectangle2D::Rectangle2D(Vector2 position, Vector2 size, bool sizeAsP2) {
@@ -25,13 +33,16 @@ bool Rectangle2D::pointInside(const Vector2& point) const {
 }
 
 Collision Rectangle2D::intersects(const Shape2D& shape) const {
-    if(lastCollisionTime.find(std::make_tuple(id, shape.id)) != lastCollisionTime.end()){
-        if(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count() - lastCollisionTime[std::make_tuple(id, shape.id)] < collisionWait * 1000){
-            std::cout << "cached collision" << std::endl;
-            return Collision{false, Vector2(0, 0)};
-        }else{
-            std::cout << "collision expired" << std::endl;
+    auto tuple = std::make_tuple(id, shape.id);
+    if(id != 0 && shape.id != 0){
+        if(lastCollisionTime.find(tuple) != lastCollisionTime.end()){
+            float now = CV::time();
+            if(now - lastCollisionTime[tuple] < collisionWait){
+                return Collision{false, Vector2(0, 0)};
+            }
         }
+    }else{
+        std::cout << "collider with id 0. Not caching" << std::endl;
     }
 
     if (dynamic_cast<const Rectangle2D*>(&shape) != nullptr) {
@@ -52,7 +63,10 @@ Collision Rectangle2D::intersects(const Shape2D& shape) const {
         } else if (position.y > r.position.y) {
             normal = Vector2(0, 1);
         }
-        lastCollisionTime[std::make_tuple(id, shape.id)] = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+        lastCollisionTime[tuple] = CV::time();
+        #if PHYSICS_DEBUG
+        std::cout << "Rect(" << id << ") Rect(" << shape.id << ") collision" << std::endl;
+        #endif
         return Collision{true, normal};
     }
 
@@ -63,7 +77,10 @@ Collision Rectangle2D::intersects(const Shape2D& shape) const {
         Vector2 closestPoint = Vector2(std::max(position.x, std::min(c.position.x, position.x + size.x)),
                                        std::max(position.y, std::min(c.position.y, position.y + size.y)));
         if ((closestPoint - c.position).magnitude <= c.radius) {
-            lastCollisionTime[std::make_tuple(id, shape.id)] = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+            lastCollisionTime[tuple] = CV::time();
+            #if PHYSICS_DEBUG
+            std::cout << "Rect(" << id << ") Circle(" << shape.id << ") collision" << std::endl;
+            #endif
             return Collision{true, (closestPoint - c.position).normalized()};
         }
         return Collision{false, Vector2(0, 0)};
@@ -83,14 +100,19 @@ bool Circle2D::pointInside(const Vector2& point) const{
     return (point - position).magnitude <= radius;
 }
 
+
 Collision Circle2D::intersects(const Shape2D& shape) const{
-    if(lastCollisionTime.find(std::make_tuple(id, shape.id)) != lastCollisionTime.end()){
-        if(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count() - lastCollisionTime[std::make_tuple(id, shape.id)] < 100){
-            std::cout << "cached collision between" << id << " and  " << shape.id << std::endl;
-            return Collision{false, Vector2(0, 0)};
-        }else{
-            std::cout << "collision expired" << std::endl;
+    
+    auto tuple = std::make_tuple(id, shape.id);
+    if(id != 0 && shape.id != 0){
+        float now = CV::time();
+        if(lastCollisionTime.find(tuple) != lastCollisionTime.end()){
+            if(now - lastCollisionTime[tuple] < collisionWait){
+                return Collision{false, Vector2(0, 0)};
+            }
         }
+    }else{
+        std::cout << "collider with id 0. Not caching" << std::endl;
     }
 
     // if shape is circle
@@ -98,7 +120,10 @@ Collision Circle2D::intersects(const Shape2D& shape) const{
         Circle2D c = dynamic_cast<const Circle2D&>(shape);
         // circle circle collision
         if((c.position - position).magnitude <= c.radius + radius){
-            lastCollisionTime[std::make_tuple(id, shape.id)] = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+            lastCollisionTime[tuple] = CV::time();
+            #if PHYSICS_DEBUG
+            std::cout << "Circle(" << id << ") Circle(" << shape.id << ") collision" << std::endl;
+            #endif
             return Collision{true, (c.position - position).normalized()};
         }
         return Collision{false, Vector2(0, 0)};
@@ -112,8 +137,10 @@ Collision Circle2D::intersects(const Shape2D& shape) const{
         Vector2 closestPoint = Vector2(std::max(r.position.x, std::min(position.x, r.position.x + r.size.x)),
                                        std::max(r.position.y, std::min(position.y, r.position.y + r.size.y)));
         if ((closestPoint - position).magnitude <= radius) {
-            lastCollisionTime[std::make_tuple(id, shape.id)] = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
-            std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count() << std::endl;
+            lastCollisionTime[tuple] = CV::time();
+            #if PHYSICS_DEBUG
+            std::cout << "Circle(" << id << ") Rect(" << shape.id << ") collision" << std::endl;
+            #endif
             return Collision{true, (closestPoint - position).normalized()};
         }
         return Collision{false, Vector2(0, 0)};
@@ -126,7 +153,10 @@ Collision Circle2D::intersects(const Shape2D& shape) const{
         float x = radius * cos(i * stepSize);
         float y = radius * sin(i * stepSize);
         if (shape.pointInside(position + Vector2(x, y))) {
-            lastCollisionTime[std::make_tuple(id, shape.id)] = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+            lastCollisionTime[tuple] = CV::time();
+            #if PHYSICS_DEBUG
+            std::cout << "Circle(" << id << ") Generic(" << shape.id << ") collision" << std::endl;
+            #endif
             return Collision{true, (position - (position + Vector2(x, y))).normalized()};
         }
     }
@@ -158,6 +188,7 @@ bool Polygon2D::pointInside(const Vector2& point) const{
 
 Collision Polygon2D::intersects(const Shape2D& shape) const{
     // TODO consertar isso, por algum motivo n passa nos testes
+    std::cout << "not implemented polygon collision" << std::endl;
     return Collision{false, Vector2(0,0)};
     // for(auto &vert:vertices){
     //     if(shape.pointInside(vert)){

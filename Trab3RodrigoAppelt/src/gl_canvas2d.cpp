@@ -272,12 +272,13 @@ void CV::clear(Vector3 rgb)
     glClearColor(rgb.x, rgb.y, rgb.z, 1);
 }
 
-void CV::obj(ObjFile *obj){
+void CV::obj(ObjFile *obj, Vector2 pos, Vector2 scale){
     glBegin(GL_TRIANGLES);
     for(auto face : obj->faces){
         for(auto vertex : face){
             auto v = obj->vertices[vertex-1];
-            v = v.multiply(obj->scale);
+            v = v.multiply(Vector3(scale.x, scale.y, 1));
+            v = v + Vector3(pos.x, pos.y, 0);
             glVertex3f(v.x, v.y, v.z);
         }
     }
@@ -297,6 +298,11 @@ void CV::circle(float x, float y, float radius, int div)
         ang += inc;
     }
     glEnd();
+}
+
+void CV::circle(Vector2 pos, float radius, int div)
+{
+    CV::circle(pos.x, pos.y, radius, div);
 }
 
 void CV::circleFill(float x, float y, float radius, int div)
