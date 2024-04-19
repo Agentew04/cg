@@ -8,9 +8,17 @@
 
 std::map<std::tuple<CustomFont, char>, std::tuple<float,float>> FontManager::glyphSize;
 std::map<std::tuple<CustomFont, char>, std::string> FontManager::objNames;
+std::map<CustomFont, bool> FontManager::loadedFonts;
+std::map<std::tuple<CustomFont, char>, bool> FontManager::definedChars;
 
 void FontManager::load(CustomFont font)
 {
+    if (loadedFonts[font])
+    {
+        return;
+    }
+    loadedFonts[font] = true;
+
     switch (font)
     {
     case CustomFont::AgencyFB_Digits:
@@ -30,7 +38,7 @@ void FontManager::load(CustomFont font)
         for (int i = 0; i < 10; i++)
         {
             char c = '0' + i;
-            uint32_t width, height;
+            float width, height;
 
             // get max delta in Y of the '1' vertices
             objNames[std::make_tuple(font, c)] = "agency_digit" + std::to_string(i);
@@ -58,20 +66,25 @@ void FontManager::load(CustomFont font)
             width = maxX - minX;
             height = maxY - minY;
             glyphSize[std::make_tuple(font, c)] = std::make_tuple(width, height);
+            definedChars[std::make_tuple(font, c)] = true;
         }
+        
+        // space glyph
+        glyphSize[std::make_tuple(font, ' ')] = std::make_tuple(0.2f, 0.2f);
+        definedChars[std::make_tuple(font, ' ')] = true;
         break;
     default:
         break;
     }
 }
 
-void FontManager::getLineHeight(CustomFont font, uint32_t &lineHeight)
+void FontManager::getLineHeight(CustomFont font, float &lineHeight)
 {
     switch (font)
     {
     case CustomFont::AgencyFB_Digits:
         // read '1' height
-        uint32_t width, height;
+        float width, height;
         FontManager::getGlyphSize(font, '1', width, height);
         lineHeight = height;
         break;
@@ -80,7 +93,7 @@ void FontManager::getLineHeight(CustomFont font, uint32_t &lineHeight)
     }
 }
 
-void FontManager::getGlyphSize(CustomFont font, char c, uint32_t &width, uint32_t &height){
+void FontManager::getGlyphSize(CustomFont font, char c, float &width, float &height){
     switch (font)
     {
     case CustomFont::AgencyFB_Digits:
@@ -92,12 +105,12 @@ void FontManager::getGlyphSize(CustomFont font, char c, uint32_t &width, uint32_
 
 }
 
-void FontManager::getTextSize(CustomFont font, const std::string &text, uint32_t &width, uint32_t &height){
+void FontManager::getTextSize(CustomFont font, const std::string &text, float &width, float &height){
     width = 0;
     height = 0;
     for (auto &c : text)
     {
-        uint32_t glyphWidth, glyphHeight;
+        float glyphWidth, glyphHeight;
         FontManager::getGlyphSize(font, c, glyphWidth, glyphHeight);
         width += glyphWidth;
         if (glyphHeight > height)
@@ -107,14 +120,35 @@ void FontManager::getTextSize(CustomFont font, const std::string &text, uint32_t
     }
 }
 
-ObjFile FontManager::getGlyph(CustomFont font, char c){
+ObjFile* FontManager::getGlyph(CustomFont font, char c){
     switch (font)
     {
     case CustomFont::AgencyFB_Digits:
-        return *ObjLoader::get(objNames[std::make_tuple(font, c)]);
+        return ObjLoader::get(objNames[std::make_tuple(font, c)]);
         break;
     default:
         break;
     }
-    return ObjFile();
+    std::cout << "Nao achei glifo '" << c << "' na fonte " << (int)font << std::endl;
+    return nullptr;
+}
+
+float FontManager::getFontSpacing(CustomFont font){
+    switch (font)
+    {
+    case CustomFont::AgencyFB_Digits:
+        return 0.07f;
+        break;
+    default:
+        break;
+    }
+    return 0;
+}
+
+bool FontManager::isDefined(CustomFont font, char c){
+    if (definedChars.find(std::make_tuple(font, c)) == definedChars.end())
+    {
+        return false;
+    }
+    return definedChars[std::make_tuple(font, c)];
 }

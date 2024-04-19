@@ -11,9 +11,11 @@
 
 #include "Math/Vector2.h"
 #include "Math/Vector3.h"
+#include "Math/Matrix.h"
 #include "Math/Polygon2D.h"
 #include "UI/UIDefinitions.h"
 #include "3D/ObjLoader.h"
+#include "Fonts/FontManager.h"
 
 #define PI_2 6.28318530717
 #define PI   3.14159265359
@@ -83,6 +85,7 @@ public:
     static void text(Vector2 pos, const char *t);  //varias funcoes ainda nao tem implementacao. Faca como exercicio
     static void text(Vector2 pos, int valor);      //varias funcoes ainda nao tem implementacao. Faca como exercicio
     static void text(Vector2 pos, float valor);    //varias funcoes ainda nao tem implementacao. Faca como exercicio
+    static void text(Vector2 pos, const std::string& text, const CustomFont font, Vector2 transform, TextAlign align);
 
     //coordenada de offset para desenho de objetos.
     static void translate(float x, float y);

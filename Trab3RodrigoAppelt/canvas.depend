@@ -432,11 +432,14 @@
 	<iostream>
 	"lodepng.h"
 
-1713479607 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\gl_canvas2d.cpp
+1713556746 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
+	<string>
+	"Fonts/FontManager.h"
+	"Math/Matrix.h"
 
-1713401692 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\gl_canvas2d.h
+1713555585 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\gl_canvas2d.h
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
@@ -445,9 +448,11 @@
 	<GL/freeglut_ext.h>
 	"Math/Vector2.h"
 	"Math/Vector3.h"
+	"Math/Matrix.h"
 	"Math/Polygon2D.h"
 	"UI/UIDefinitions.h"
 	"3D/ObjLoader.h"
+	"Fonts/FontManager.h"
 
 1632060799 e:\universidade\cg\trabalhos\include\gl\glut.h
 	"freeglut_std.h"
@@ -641,7 +646,7 @@
 	"ImageManipulation.h"
 	"../Math/Vector2.h"
 
-1713479607 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\main.cpp
+1713556597 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -654,7 +659,7 @@
 	"Storage/PersistentStorage.h"
 	"Specific/App.h"
 	"3D/ObjLoader.h"
-	"UI/ProgressRing.h"
+	"Fonts/FontManager.h"
 
 1713041087 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\keyboard.h
 
@@ -760,14 +765,16 @@
 1712353573 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\storage\persistentstorage.vec3.cpp
 	"PersistentStorage.h"
 
-1712979238 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\fonts\fontmanager.cpp
+1713556521 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\fonts\fontmanager.cpp
 	"FontManager.h"
-	"schrift.h"
+	<map>
+	<tuple>
+	"../3D/ObjLoader.h"
 
-1712979214 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\fonts\fontmanager.h
+1713556688 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\fonts\fontmanager.h
 	<string>
 	<vector>
-	"schrift.h"
+	"../3D/ObjLoader.h"
 
 1712978599 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\fonts\schrift.c
 	<assert.h>

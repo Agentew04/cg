@@ -15,6 +15,10 @@
 #include "gl_canvas2d.h"
 #include <GL/glut.h>
 
+#include <string>
+#include "Fonts/FontManager.h"
+#include "Math/Matrix.h"
+
 int *scrWidth, *scrHeight; // guarda referencia para as variaveis de altura e largura da main()
 
 // conjunto de cores predefinidas. Pode-se adicionar mais cores.
@@ -255,6 +259,48 @@ void CV::text(float x, float y, const char *t, void *font, TextAlign align)
         finalX = x - (width / 2);
     }
     CV::text(finalX, y, t, font);
+}
+
+void CV::text(Vector2 pos, const std::string& text, const CustomFont font, Vector2 scale, TextAlign align){
+    FontManager::load(font);
+
+    if(scale.y > 0){
+        scale.y *= -1;
+    }
+
+    float textWidth, textHeight;
+    FontManager::getTextSize(font, text, textWidth, textHeight);
+    textWidth *= scale.x;
+    textHeight *= scale.y;
+    if(align == TextAlign::CENTER){
+        pos.x -= textWidth / 2;
+    }
+
+    float lineHeight;
+    FontManager::getLineHeight(font, lineHeight);
+    lineHeight *= scale.y;
+    
+    float x = pos.x;
+    float y = pos.y;
+
+    for(auto c : text){
+        if(!FontManager::isDefined(font, c))
+            continue;
+        if(c == '\n'){
+            y += lineHeight;
+            x = pos.x;
+            continue;
+        }
+        float glyphWidth, glyphHeight;
+        FontManager::getGlyphSize(font, c, glyphWidth, glyphHeight);
+        glyphWidth *= scale.x;
+
+        auto glyph = FontManager::getGlyph(font, c);
+        if(glyph != nullptr){
+            CV::obj(glyph, Vector2(x, y), scale);
+        }
+        x += glyphWidth + FontManager::getFontSpacing(font) * scale.x;
+    }
 }
 
 void CV::text(float x, float y, const char *t, TextAlign align)

@@ -26,8 +26,8 @@
 #include "Storage/PersistentStorage.h"
 #include "Specific/App.h"
 #include "3D/ObjLoader.h"
+#include "Fonts/FontManager.h"
 
-#include "UI/ProgressRing.h"
 
 // largura e altura inicial da tela . Alteram com o redimensionamento de tela.
 int screenWidth = 1280, screenHeight = 720;
@@ -48,6 +48,14 @@ void render()
     CV::translate(Vector2(0,0));
     CV::color(1,1,1);
     CV::text(screenWidth,25, ("FPS: " + std::to_string((int)std::round(CV::fps()))).c_str(), TextAlign::RIGHT);
+
+    CV::translate(Vector2(0,0));
+    CV::color(1,0,0);
+    CV::text(Vector2(50,50),
+        "69 420",
+        CustomFont::AgencyFB_Digits,
+        Vector2(50,50),
+        TextAlign::LEFT);
 }
 
 // funcao chamada toda vez que uma tecla for pressionada.
