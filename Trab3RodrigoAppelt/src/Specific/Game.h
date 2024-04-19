@@ -30,6 +30,7 @@ public:
     void update(float delta);
     void render();
     void keyDown(Key key);
+    void keyUp(Key key);
     void mouseUp();
     void mouseDown();
     void updateMousePos(Vector2 pos);
@@ -70,6 +71,7 @@ private:
     Vector2 ballLaunchDirection;
     Vector2 nextLaunchPosition;
     float ballSpeed;
+    float ballSpeedMultiplier;
 
     std::vector<Block> createNewLine(int level);
     void pushLines();

@@ -45,8 +45,22 @@ void App::keyDown(Key key){
     switch(currentMenu){
     case MenuState::IDENTIFICATION:
         idTextBox->keyDown(key);
+        break;
     case MenuState::GAME:
         game.keyDown(key);
+        break;
+    default:
+        break;
+    }
+}
+
+void App::keyUp(Key key){
+    switch(currentMenu){
+    case MenuState::IDENTIFICATION:
+        // idTextBox->keyUp(key);
+        break;
+    case MenuState::GAME:
+        game.keyUp(key);
         break;
     default:
         break;

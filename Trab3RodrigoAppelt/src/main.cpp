@@ -66,8 +66,9 @@ void keyboard(int key)
 }
 
 // funcao chamada toda vez que uma tecla for liberada
-void keyboardUp(int)
+void keyboardUp(int key)
 {
+    app->keyUp((Key)key);
 }
 
 // funcao para tratamento de mouse: cliques, movimentos e arrastos

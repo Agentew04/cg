@@ -23,6 +23,7 @@ public:
     void update(float delta);
     void render();
     void keyDown(Key key);
+    void keyUp(Key key);
     void mouseUp();
     void mouseDown();
     void updateMousePos(Vector2 pos);

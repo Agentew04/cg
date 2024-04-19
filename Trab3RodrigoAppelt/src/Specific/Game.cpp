@@ -19,7 +19,8 @@ Game::Game(int *scrW, int *scrH) : screenWidth(scrW), screenHeight(scrH),
                                    ballLaunchPosition((*scrW) / 2, (*scrH) - 100),
                                    ballLaunchDirection(Vector2::zero()),
                                    nextLaunchPosition(Vector2::zero()),
-                                   ballSpeed(200.0f)
+                                   ballSpeed(200.0f),
+                                   ballSpeedMultiplier(1.0f)
 {
     // std::random_device r; <- versao 8.1.0 do g++ do codeblocks n suporta
     //                          passar a seed antiga direto pro mersene
@@ -44,6 +45,7 @@ void Game::reset()
     ballLaunchDirection = Vector2::zero();
     firstBack = false;
     gameOver = false;
+    ballSpeedMultiplier = 1.0f;
 }
 
 void Game::update(float delta)
@@ -93,7 +95,7 @@ void Game::update(float delta)
 
         //move bolinhas
         for(auto &ball: balls){
-            ball.position += ball.velocity*delta;
+            ball.position += ball.velocity * delta * ballSpeedMultiplier;
         }
         
         //verifica colisoes
@@ -403,6 +405,17 @@ void Game::renderArrow()
 
 void Game::keyDown(Key key)
 {
+    if(key == 32){
+        if(hasActivePlay){
+            ballSpeedMultiplier = 2.0f;
+        }
+    }
+}
+
+void Game::keyUp(Key key){
+    if(key == 32){
+        ballSpeedMultiplier = 1.0f;
+    }
 }
 
 void Game::mouseUp()
