@@ -48,14 +48,6 @@ void render()
     CV::translate(Vector2(0,0));
     CV::color(1,1,1);
     CV::text(screenWidth,25, ("FPS: " + std::to_string((int)std::round(CV::fps()))).c_str(), TextAlign::RIGHT);
-
-    CV::translate(Vector2(0,0));
-    CV::color(1,0,0);
-    CV::text(Vector2(50,50),
-        "69 420",
-        CustomFont::AgencyFB_Digits,
-        Vector2(50,50),
-        TextAlign::LEFT);
 }
 
 // funcao chamada toda vez que uma tecla for pressionada.
@@ -64,6 +56,10 @@ void keyboard(int key)
     if (key == ESC)
     {
         CV::close();
+    }else if(key == 'w'){
+        static bool wireframe = false;
+        wireframe = !wireframe;
+        CV::setWireframe(wireframe);
     }else{
         app->keyDown((Key)key);
     }
@@ -94,6 +90,10 @@ void load(){
     PersistentStorage::load("./Trab3RodrigoAppelt/saves/save.dat");
     ObjLoader::load("./Trab3RodrigoAppelt/models/moeda.obj", "coin");
     ObjLoader::load("./Trab3RodrigoAppelt/models/logo.obj", "logo");
+    ObjLoader::load("./Trab3RodrigoAppelt/models/trophy.obj", "trophy");
+    ObjLoader::load("./Trab3RodrigoAppelt/models/music.obj", "music");
+    ObjLoader::load("./Trab3RodrigoAppelt/models/pause.obj", "pause");
+    ObjLoader::load("./Trab3RodrigoAppelt/models/powerupBall.obj", "powerupBall");
     app = new App(&screenWidth, &screenHeight);
 }
 

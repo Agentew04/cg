@@ -256,16 +256,45 @@ void Game::renderHeader()
     // render pause button(fazer no app.cpp?)
     
     // render current score(fase)
-    CV::text(headerSize.x / 2, headerSize.y / 2, std::to_string(level).c_str(), GLUT_BITMAP_HELVETICA_18, TextAlign::CENTER);
+    CV::text(headerSize * 0.5f,
+        std::to_string(level),
+        CustomFont::AgencyFB_Digits,
+        Vector2(35,35),
+        TextAlign::CENTER);
+
     // render coins and highscore
     int coins = PersistentStorage::get<int>("user", "coins", 0);
     int highscore = PersistentStorage::get<int>("user", "highscore", 0);
-    CV::text(headerSize.x, headerSize.y / 3,
-             ("Coins: " + std::to_string(coins)).c_str(),
-             GLUT_BITMAP_HELVETICA_18, TextAlign::RIGHT);
-    CV::text(headerSize.x, 2 * headerSize.y / 3,
-             ("Highscore: " + std::to_string(highscore)).c_str(),
-             GLUT_BITMAP_HELVETICA_18, TextAlign::RIGHT);
+    auto coinObj = ObjLoader::get("coin");
+    float lineHeight;
+    FontManager::getLineHeight(CustomFont::AgencyFB_Digits, lineHeight);
+    CV::color(Vector3::fromHex(0xFFD700));
+    CV::obj(coinObj, Vector2(headerSize.x - 50, headerSize.y / 3), Vector2(7,-7));
+    CV::text(Vector2(headerSize.x - 30, headerSize.y / 3 + (lineHeight*25)/2),
+        std::to_string(coins),
+        CustomFont::AgencyFB_Digits,
+        Vector2(25,25),
+        TextAlign::LEFT
+    );
+
+    auto trophyObj = ObjLoader::get("trophy");
+    CV::color(Vector3::fromHex(0xFFFFFF));
+    CV::obj(trophyObj, Vector2(headerSize.x - 50, 2 * headerSize.y / 3), Vector2(15,-15));
+    CV::text(Vector2(headerSize.x - 30, 2 * headerSize.y / 3 + (lineHeight*25)/2),
+        std::to_string(highscore),
+        CustomFont::AgencyFB_Digits,
+        Vector2(25,25),
+        TextAlign::LEFT
+    );
+
+
+    // CV::text(headerSize.x, headerSize.y / 3,
+    //          ("Coins: " + std::to_string(coins)).c_str(),
+    //          GLUT_BITMAP_HELVETICA_18, TextAlign::RIGHT);
+    // CV::color(Vector3::fromHex(0xFFFFFF));
+    // CV::text(headerSize.x, 2 * headerSize.y / 3,
+    //          ("Highscore: " + std::to_string(highscore)).c_str(),
+    //          GLUT_BITMAP_HELVETICA_18, TextAlign::RIGHT);
 }
 
 void Game::renderGameArea()

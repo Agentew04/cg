@@ -85,7 +85,7 @@ public:
     static void text(Vector2 pos, const char *t);  //varias funcoes ainda nao tem implementacao. Faca como exercicio
     static void text(Vector2 pos, int valor);      //varias funcoes ainda nao tem implementacao. Faca como exercicio
     static void text(Vector2 pos, float valor);    //varias funcoes ainda nao tem implementacao. Faca como exercicio
-    static void text(Vector2 pos, const std::string& text, const CustomFont font, Vector2 transform, TextAlign align);
+    static void text(Vector2 pos, const std::string& text, const CustomFont font, Vector2 scale, TextAlign align);
 
     //coordenada de offset para desenho de objetos.
     static void translate(float x, float y);
@@ -96,6 +96,8 @@ public:
 
     /// @brief Retorna uma media do FPS
     static float fps();
+
+    static void setWireframe(bool value);
 
     //funcao de inicializacao da Canvas2D. Recebe a largura, altura, e um titulo para a janela
     static void init(int *w, int *h, const char *title, bool antiAliasing);

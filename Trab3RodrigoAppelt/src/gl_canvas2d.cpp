@@ -566,6 +566,18 @@ float CV::fps()
     return ((float)FPS_BUFFER_SIZE) / sum;
 }
 
+void CV::setWireframe(bool value)
+{
+    if (value)
+    {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    }
+    else
+    {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    }
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////
 //  inicializa o OpenGL
 ////////////////////////////////////////////////////////////////////////////////////////
