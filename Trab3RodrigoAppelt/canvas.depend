@@ -432,7 +432,7 @@
 	<iostream>
 	"lodepng.h"
 
-1713403409 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\gl_canvas2d.cpp
+1713479607 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
@@ -641,7 +641,7 @@
 	"ImageManipulation.h"
 	"../Math/Vector2.h"
 
-1713401517 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\main.cpp
+1713479607 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -783,7 +783,7 @@
 	<unistd.h>
 	"schrift.h"
 
-1713407195 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\game.cpp
+1713479607 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\game.cpp
 	"Game.h"
 	<string>
 	<functional>
@@ -791,16 +791,18 @@
 	"../gl_canvas2d.h"
 	"../Storage/PersistentStorage.h"
 
-1713045584 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\storage\persistentstorage.cpp
+1713407644 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\storage\persistentstorage.cpp
 	<fstream>
 	<algorithm>
 	<iterator>
 	<iostream>
 	<sstream>
+	<vector>
+	<string>
 	<iomanip>
 	"PersistentStorage.h"
 
-1713134920 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\game.h
+1713479607 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\game.h
 	<vector>
 	<random>
 	"../Math/Vector2.h"
@@ -816,7 +818,7 @@
 	"../UI/ButtonManager.h"
 	"../UI/TextBox.h"
 
-1713406922 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\app.cpp
+1713479607 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\app.cpp
 	"App.h"
 	<random>
 	"../gl_canvas2d.h"
