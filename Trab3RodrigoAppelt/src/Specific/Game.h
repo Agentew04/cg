@@ -6,6 +6,7 @@
 
 #include "../Math/Vector2.h"
 #include "../Keyboard.h"
+#include "../3D/ParticleManager.h"
 
 #include "Components/Ball.h"
 #include "Components/Block.h"
@@ -36,6 +37,7 @@ public:
     void updateMousePos(Vector2 pos);
 private:
     std::mt19937 rng;
+    ParticleManager particleManager;
 
     int *screenWidth;
     int *screenHeight;

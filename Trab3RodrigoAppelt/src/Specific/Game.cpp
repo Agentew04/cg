@@ -7,7 +7,9 @@
 #include "../gl_canvas2d.h"
 #include "../Storage/PersistentStorage.h"
 
-Game::Game(int *scrW, int *scrH) : screenWidth(scrW), screenHeight(scrH),
+Game::Game(int *scrW, int *scrH) : rng(time(nullptr)),
+                                   particleManager(rng()),
+                                   screenWidth(scrW), screenHeight(scrH),
                                    mousePos(Vector2::zero()),
                                    hasActivePlay(false),
                                    burstCount(2),
@@ -24,8 +26,7 @@ Game::Game(int *scrW, int *scrH) : screenWidth(scrW), screenHeight(scrH),
 {
     // std::random_device r; <- versao 8.1.0 do g++ do codeblocks n suporta
     //                          passar a seed antiga direto pro mersene
-    rng = std::mt19937(time(nullptr));
-    blockLines.push_back(createNewLine(1));
+    blockLines.push_back(createNewLine(level));
     pushLines();
 }
 
@@ -50,6 +51,7 @@ void Game::reset()
 
 void Game::update(float delta)
 {
+    particleManager.update(delta);
     if (hasActivePlay)
     {
         // dispara nova bola na rajada se possivel
@@ -114,6 +116,15 @@ void Game::update(float delta)
                         #endif
                         if(it->life <= 0){
                             line.erase(it);
+                            particleManager.spawn(
+                                ObjLoader::get("coin"), 
+                                25, 
+                                ball.position, 
+                                Vector2(10,10), 
+                                {Vector3::fromHex(0xFF0000), Vector3::fromHex(0x00FF00), Vector3::fromHex(0x0000FF)},
+                                1,
+                                100,
+                                true);
                         }
 
                         // reflete bola
@@ -246,6 +257,7 @@ void Game::render()
     renderHeader();
 
     renderGameArea();
+    particleManager.render();
 }
 
 void Game::renderHeader()
