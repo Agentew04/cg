@@ -96,6 +96,17 @@ void CV::line(Vector2 p1, Vector2 p2, float width)
     line(p1.x, p1.y, p2.x, p2.y, width);
 }
 
+void CV::lineDashed(Vector2 p1, Vector2 p2, float segmentLength, float width){
+    int segments = (int)((p1.distance(p2) / segmentLength)/2);
+    Vector2 delta = p1 - p2;
+    Vector2 lnsgm = Vector2(p1.x / segments, p2.y / segments);
+
+    for(int i=0;i<segments;i++){
+        std::cout << "Segment i=" << i << " " << p1 + (lnsgm*i) << " -> " << p1 + (lnsgm*(i+1)) << std::endl;
+        line(p1 + (lnsgm*i), p1 + (lnsgm*(i+1)), width);
+    }
+}
+
 void CV::rect(float x1, float y1, float x2, float y2)
 {
     glBegin(GL_LINE_LOOP);
@@ -515,7 +526,7 @@ void inicializa()
 {
     glClearColor(1, 1, 1, 1);
     glPolygonMode(GL_FRONT, GL_FILL);
-    
+
     // habilita alpha blending
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
@@ -596,7 +607,7 @@ void CV::init(int *w, int *h, const char *title, bool antiAliasing)
     // habilita MSAA
     if (antiAliasing)
     {
-        glutSetOption(GLUT_MULTISAMPLE, 8);
+        glutSetOption(GLUT_MULTISAMPLE, 4);
         glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_MULTISAMPLE);
     }
     else

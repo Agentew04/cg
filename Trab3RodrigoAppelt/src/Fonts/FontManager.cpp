@@ -23,16 +23,16 @@ void FontManager::load(CustomFont font)
     {
     case CustomFont::AgencyFB_Digits:
         // load glyphs
-        ObjLoader::load("./Trab3RodrigoAppelt/models/agency_digit0.obj", "agency_digit0");
-        ObjLoader::load("./Trab3RodrigoAppelt/models/agency_digit1.obj", "agency_digit1");
-        ObjLoader::load("./Trab3RodrigoAppelt/models/agency_digit2.obj", "agency_digit2");
-        ObjLoader::load("./Trab3RodrigoAppelt/models/agency_digit3.obj", "agency_digit3");
-        ObjLoader::load("./Trab3RodrigoAppelt/models/agency_digit4.obj", "agency_digit4");
-        ObjLoader::load("./Trab3RodrigoAppelt/models/agency_digit5.obj", "agency_digit5");
-        ObjLoader::load("./Trab3RodrigoAppelt/models/agency_digit6.obj", "agency_digit6");
-        ObjLoader::load("./Trab3RodrigoAppelt/models/agency_digit7.obj", "agency_digit7");
-        ObjLoader::load("./Trab3RodrigoAppelt/models/agency_digit8.obj", "agency_digit8");
-        ObjLoader::load("./Trab3RodrigoAppelt/models/agency_digit9.obj", "agency_digit9");
+        ObjLoader::load("./Trab3RodrigoAppelt/models/agency_digit0.3d", "agency_digit0");
+        ObjLoader::load("./Trab3RodrigoAppelt/models/agency_digit1.3d", "agency_digit1");
+        ObjLoader::load("./Trab3RodrigoAppelt/models/agency_digit2.3d", "agency_digit2");
+        ObjLoader::load("./Trab3RodrigoAppelt/models/agency_digit3.3d", "agency_digit3");
+        ObjLoader::load("./Trab3RodrigoAppelt/models/agency_digit4.3d", "agency_digit4");
+        ObjLoader::load("./Trab3RodrigoAppelt/models/agency_digit5.3d", "agency_digit5");
+        ObjLoader::load("./Trab3RodrigoAppelt/models/agency_digit6.3d", "agency_digit6");
+        ObjLoader::load("./Trab3RodrigoAppelt/models/agency_digit7.3d", "agency_digit7");
+        ObjLoader::load("./Trab3RodrigoAppelt/models/agency_digit8.3d", "agency_digit8");
+        ObjLoader::load("./Trab3RodrigoAppelt/models/agency_digit9.3d", "agency_digit9");
 
         // calculate glyph sizes
         for (int i = 0; i < 10; i++)

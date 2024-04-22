@@ -123,11 +123,18 @@ void Game::update(float delta)
                         if(it->life <= 0){
                             line.erase(it);
                             particleManager.spawn(
-                                ObjLoader::get("coin"), 
-                                25, 
+                                ObjLoader::get("star"), 
+                                20,
                                 ball.position, 
-                                Vector2(10,10), 
-                                {Vector3::fromHex(0xFF0000), Vector3::fromHex(0x00FF00), Vector3::fromHex(0x0000FF)},
+                                Vector2(5,5), 
+                                {
+                                    Vector3::fromHex(0xd62828), 
+                                    Vector3::fromHex(0xf77f00), 
+                                    Vector3::fromHex(0xfcbf49),
+                                    Vector3::fromHex(0xffbe0b),
+                                    Vector3::fromHex(0xff7d00),
+                                    Vector3::fromHex(0xf18701)
+                                },
                                 1,
                                 100,
                                 true
@@ -328,6 +335,10 @@ void Game::renderGameArea()
     CV::translate(gameAreaStart);
     CV::color(Vector3::fromHex(0x1D1E30));
     CV::rectFill(Vector2::zero(), gameAreaSize);
+    CV::color(Vector3::fromHex(0xDD1111));
+    CV::lineDashed( Vector2(gameAreaStart.x, gameAreaStart.y+gameAreaSize.y),
+        Vector2(gameAreaStart.x+gameAreaSize.x, gameAreaStart.y+gameAreaSize.y),
+        25, 2);
 
     for (auto &linha : blockLines)
     {

@@ -89,12 +89,13 @@ void mouse(int, int state, int, int, int x, int y)
 
 void load(){
     PersistentStorage::load("./Trab3RodrigoAppelt/saves/save.dat");
-    ObjLoader::load("./Trab3RodrigoAppelt/models/moeda.obj", "coin");
-    ObjLoader::load("./Trab3RodrigoAppelt/models/logo.obj", "logo");
-    ObjLoader::load("./Trab3RodrigoAppelt/models/trophy.obj", "trophy");
-    ObjLoader::load("./Trab3RodrigoAppelt/models/music.obj", "music");
-    ObjLoader::load("./Trab3RodrigoAppelt/models/pause.obj", "pause");
-    ObjLoader::load("./Trab3RodrigoAppelt/models/powerupBall.obj", "powerupBall");
+    ObjLoader::load("./Trab3RodrigoAppelt/models/moeda.3d", "coin");
+    ObjLoader::load("./Trab3RodrigoAppelt/models/logo.3d", "logo");
+    ObjLoader::load("./Trab3RodrigoAppelt/models/trophy.3d", "trophy");
+    ObjLoader::load("./Trab3RodrigoAppelt/models/music.3d", "music");
+    ObjLoader::load("./Trab3RodrigoAppelt/models/pause.3d", "pause");
+    ObjLoader::load("./Trab3RodrigoAppelt/models/star.3d", "star");
+    ObjLoader::load("./Trab3RodrigoAppelt/models/powerupBall.3d", "powerupBall");
     app = new App(&screenWidth, &screenHeight);
 }
 
