@@ -515,6 +515,10 @@ void inicializa()
 {
     glClearColor(1, 1, 1, 1);
     glPolygonMode(GL_FRONT, GL_FILL);
+    
+    // habilita alpha blending
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_BLEND);
 }
 
 static int lastTime = 0;
@@ -599,6 +603,8 @@ void CV::init(int *w, int *h, const char *title, bool antiAliasing)
     {
         glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
     }
+
+    //habilita execucao de codigo dps do main loop
     glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
 
     glutInitWindowSize(*w, *h);

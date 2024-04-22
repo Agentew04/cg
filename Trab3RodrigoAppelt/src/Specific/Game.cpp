@@ -18,7 +18,7 @@ Game::Game(int *scrW, int *scrH) : rng(time(nullptr)),
                                    level(1),
                                    firstBack(false),
                                    gameOver(false),
-                                   ballLaunchPosition((*scrW) / 2, (*scrH) - 100),
+                                   ballLaunchPosition((*scrW) / 2, 8*(*scrH/9)),
                                    ballLaunchDirection(Vector2::zero()),
                                    nextLaunchPosition(Vector2::zero()),
                                    ballSpeed(200.0f),
@@ -37,16 +37,22 @@ Game::~Game()
 void Game::reset()
 {
     hasActivePlay = false;
+    particleManager.reset();
     burstCount = 1;
     spawned = 0;
     level = 1;
     firstBack = false;
     lastBurstTime = 0.0f;
-    ballLaunchPosition = Vector2((*screenWidth) / 2, 1 * (*screenHeight) / 9);
+    ballLaunchPosition = Vector2((*screenWidth) / 2, 8 * (*screenHeight) / 9);
     ballLaunchDirection = Vector2::zero();
     firstBack = false;
     gameOver = false;
     ballSpeedMultiplier = 1.0f;
+    balls.clear();
+    powerups.clear();
+    blockLines.clear();
+    blockLines.push_back(createNewLine(1));
+    pushLines();
 }
 
 void Game::update(float delta)
@@ -124,7 +130,8 @@ void Game::update(float delta)
                                 {Vector3::fromHex(0xFF0000), Vector3::fromHex(0x00FF00), Vector3::fromHex(0x0000FF)},
                                 1,
                                 100,
-                                true);
+                                true
+                            );
                         }
 
                         // reflete bola
@@ -213,8 +220,8 @@ void Game::update(float delta)
         }
 
         if(balls.size() == 0){
+            blockLines.push_back(createNewLine(level+1));
             pushLines();
-            blockLines.push_back(createNewLine(level));
 
             // checar game over(blocos na ultima linha!)
             for(auto &line : blockLines){
@@ -241,6 +248,7 @@ void Game::update(float delta)
             if(nextLaunchPosition.x > 9 * (*screenWidth) / 14){
                 nextLaunchPosition.x = 9 * (*screenWidth) / 14;
             }
+
             ballLaunchPosition = nextLaunchPosition;
             balls.clear();
             firstBack = false;
@@ -500,7 +508,6 @@ void Game::pushLines(){
 void Game::updateGameAreaBounds(){
 
     if(gameAreaWalls.size() < 3){
-        std::cout << "Creating game area walls" << std::endl;
         gameAreaWalls.clear();
         auto left = Rectangle2D();
         left.id = rng();
@@ -528,7 +535,6 @@ void Game::updateGameAreaBounds(){
         gameAreaWalls[0].id = rng();
         gameAreaWalls[1].id = rng();
         gameAreaWalls[2].id = rng();
-        std::cout << "Game area walls ids reset" << std::endl;
     }
 }
 

@@ -30,14 +30,14 @@ public:
 
 private:
     enum class MenuState{
-        MAIN_MENU,
-        IDENTIFICATION,
+        MAIN_MENU, // feito
+        IDENTIFICATION, // feito
         //HOW_TO_PLAY, // ignorar
         //CONFIG, // ignorar?
         //SHOP, // ignorar
         //RATING, // ignorar
-        GAME,
-        PAUSED,
+        GAME, // feito
+        PAUSED, 
         GAME_OVER,
         POST_GAME_STATS
     };

@@ -13,6 +13,7 @@ bool inside(Vector2 buttonPos, Vector2 buttonSize, Vector2 mousePos){
 }
 
 void ButtonManager::registerButton(Button *button){
+    button->state = ButtonState::NORMAL;
     this->buttons.push_back(button);
 }
 

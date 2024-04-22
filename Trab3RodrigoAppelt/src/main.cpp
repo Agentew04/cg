@@ -53,15 +53,15 @@ void render()
 // funcao chamada toda vez que uma tecla for pressionada.
 void keyboard(int key)
 {
-    if (key == ESC)
-    {
-        CV::close();
-    }else if(key == 'w'){
-        static bool wireframe = false;
-        wireframe = !wireframe;
-        CV::setWireframe(wireframe);
-    }else{
-        app->keyDown((Key)key);
+    switch (key){
+        case 'w':
+            static bool wireframe = false;
+            wireframe = !wireframe;
+            CV::setWireframe(wireframe);
+            break;
+        default:
+            app->keyDown((Key)key);
+            break;
     }
 }
 

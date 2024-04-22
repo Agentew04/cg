@@ -47,7 +47,16 @@ void App::keyDown(Key key){
         idTextBox->keyDown(key);
         break;
     case MenuState::GAME:
-        game.keyDown(key);
+        if(key == ESC){
+            currentMenu = MenuState::PAUSED;
+        }else{
+            game.keyDown(key);
+        }
+        break;
+    case MenuState::PAUSED:
+        if(key == ESC){
+            currentMenu = MenuState::GAME;
+        }
         break;
     default:
         break;
@@ -211,7 +220,23 @@ void App::renderGame()
 
 void App::renderPauseMenu()
 {
-    // draw pause menu
+    // draw semi transparent background
+    CV::translate(Vector2::zero());
+    CV::color(Vector3::fromHex(0x000000), 0.5f);
+    CV::rectFill(Vector2::zero(), Vector2(*screenWidth, *screenHeight));
+
+    // draw PAUSED title
+    CV::color(Vector3::fromHex(0xFFFFFF));
+    CV::text(
+        *screenWidth/2,
+        *screenHeight/6,
+        "PAUSED",
+        GLUT_BITMAP_HELVETICA_18,
+        TextAlign::CENTER
+    );
+    
+    // render buttons
+    pauseButtons.draw();
 }
 
 void App::renderGameOver()
@@ -288,6 +313,57 @@ void App::submitButtons(){
     );
     idPlay->style = ButtonStyle::FlatGreen();
     idButtons.registerButton(idPlay);
+
+    // pause buttons menu
+    auto continuePauseMenu = new Button(
+        [&](){
+            return Vector2(*screenWidth/2, 2*(*screenHeight)/6);
+        },
+        [&](){
+            return Vector2(*screenWidth/7, (*screenHeight)/8-10);
+        },
+        UIPlacement::CENTER,
+        "CONTINUAR",
+        [&](Button*){
+            currentMenu = MenuState::GAME;
+        }
+    );
+    continuePauseMenu->style = ButtonStyle::FlatRed();
+    pauseButtons.registerButton(continuePauseMenu);
+
+    auto retryPauseMenu = new Button(
+        [&](){
+            return Vector2(*screenWidth/2, 3*(*screenHeight)/6);
+        },
+        [&](){
+            return Vector2(*screenWidth/7, (*screenHeight)/8-10);
+        },
+        UIPlacement::CENTER,
+        "REINICIAR",
+        [&](Button*){
+            game.reset();
+            currentMenu = MenuState::GAME;
+        }
+    );
+    retryPauseMenu->style = ButtonStyle::FlatLightBlue();
+    pauseButtons.registerButton(retryPauseMenu);
+
+    auto mainMenuPauseMenu = new Button(
+        [&](){
+            return Vector2(*screenWidth/2, 4*(*screenHeight)/6);
+        },
+        [&](){
+            return Vector2(*screenWidth/7, (*screenHeight)/8-10);
+        },
+        UIPlacement::CENTER,
+        "MENU INICIAL",
+        [&](Button*){
+            game.reset();
+            currentMenu = MenuState::MAIN_MENU;
+        }
+    );
+    mainMenuPauseMenu->style = ButtonStyle::FlatGreen();
+    pauseButtons.registerButton(mainMenuPauseMenu);
 
     // game over menu
     // play again button

@@ -1188,14 +1188,14 @@
 	"Chart.h"
 	"ImageRenderer.h"
 
-1713648839 source:d:\universidade\cg\trab3rodrigoappelt\src\gl_canvas2d.cpp
+1713811982 source:d:\universidade\cg\trab3rodrigoappelt\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 	<string>
 	"Fonts/FontManager.h"
 	"Math/Matrix.h"
 
-1713648839 source:d:\universidade\cg\trab3rodrigoappelt\src\main.cpp
+1713811333 source:d:\universidade\cg\trab3rodrigoappelt\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -1218,7 +1218,7 @@
 	"../Math/Vector2.h"
 	"../Math/Vector3.h"
 
-1713648839 d:\universidade\cg\trab3rodrigoappelt\src\specific\app.h
+1713811170 d:\universidade\cg\trab3rodrigoappelt\src\specific\app.h
 	"../Math/Vector2.h"
 	"Game.h"
 	"../Keyboard.h"
@@ -1240,14 +1240,14 @@
 	<map>
 	<chrono>
 
-1713648839 source:d:\universidade\cg\trab3rodrigoappelt\src\specific\app.cpp
+1713812588 source:d:\universidade\cg\trab3rodrigoappelt\src\specific\app.cpp
 	"App.h"
 	<random>
 	"../gl_canvas2d.h"
 	"../Storage/PersistentStorage.h"
 	"../3D/ObjLoader.h"
 
-1713653734 source:d:\universidade\cg\trab3rodrigoappelt\src\specific\game.cpp
+1713813835 source:d:\universidade\cg\trab3rodrigoappelt\src\specific\game.cpp
 	"Game.h"
 	<string>
 	<functional>
@@ -1266,13 +1266,13 @@
 	<iomanip>
 	"PersistentStorage.h"
 
-1713653822 d:\universidade\cg\trab3rodrigoappelt\src\3d\particlemanager.h
+1713813711 d:\universidade\cg\trab3rodrigoappelt\src\3d\particlemanager.h
 	<vector>
 	<random>
 	"ObjLoader.h"
 	"../Math/Vector2.h"
 
-1713653651 source:d:\universidade\cg\trab3rodrigoappelt\src\3d\particlemanager.cpp
+1713813436 source:d:\universidade\cg\trab3rodrigoappelt\src\3d\particlemanager.cpp
 	"ParticleManager.h"
 	<cmath>
 	"../gl_canvas2d.h"
