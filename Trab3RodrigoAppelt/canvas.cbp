@@ -35,7 +35,7 @@
 			<Add option="-Wall" />
 			<Add option="-std=c++11" />
 			<Add option="-fexceptions" />
-			<Add option="-DPHYSICS_DEBUG=0" />
+			<Add option="-DPHYSICS_DEBUG=1" />
 			<Add directory="../include" />
 		</Compiler>
 		<Linker>
@@ -48,6 +48,8 @@
 		<Unit filename="src/3D/ObjLoader.h" />
 		<Unit filename="src/3D/ParticleManager.cpp" />
 		<Unit filename="src/3D/ParticleManager.h" />
+		<Unit filename="src/3D/TaskManager.cpp" />
+		<Unit filename="src/3D/TaskManager.h" />
 		<Unit filename="src/Fonts/FontManager.cpp" />
 		<Unit filename="src/Fonts/FontManager.h" />
 		<Unit filename="src/Fonts/schrift.c">

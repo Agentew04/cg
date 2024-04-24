@@ -27,6 +27,7 @@
 #include "Specific/App.h"
 #include "3D/ObjLoader.h"
 #include "Fonts/FontManager.h"
+#include "Misc/TaskManager.h"
 
 
 // largura e altura inicial da tela . Alteram com o redimensionamento de tela.
@@ -34,11 +35,9 @@ int screenWidth = 1280, screenHeight = 720;
 Vector2 mousePos;
 App *app;
 
-float prog = 0.0f;
 void update(float delta)
 {
     app->update(delta);
-    prog+=delta;
 }
 
 void render()
@@ -48,6 +47,7 @@ void render()
     CV::translate(Vector2(0,0));
     CV::color(1,1,1);
     CV::text(screenWidth,25, ("FPS: " + std::to_string((int)std::round(CV::fps()))).c_str(), TextAlign::RIGHT);
+    TaskManager::update();
 }
 
 // funcao chamada toda vez que uma tecla for pressionada.

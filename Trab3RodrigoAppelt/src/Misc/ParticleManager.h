@@ -4,7 +4,7 @@
 #include <vector>
 #include <random>
 
-#include "ObjLoader.h"
+#include "../3D/ObjLoader.h"
 #include "../Math/Vector2.h"
 
 class ParticleManager {

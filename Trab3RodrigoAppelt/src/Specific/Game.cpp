@@ -6,6 +6,7 @@
 
 #include "../gl_canvas2d.h"
 #include "../Storage/PersistentStorage.h"
+#include "../Misc/TaskManager.h"
 
 Game::Game(int *scrW, int *scrH) : rng(time(nullptr)),
                                    particleManager(rng()),
@@ -89,7 +90,7 @@ void Game::update(float delta)
             }
             updateGameAreaBounds();
         }
-            
+
         // se por algum acaso uma bolinha perdeu o id de colisor, regenerar
         for(auto &ball: balls){
             if(ball.collider.id == 0){
@@ -105,60 +106,58 @@ void Game::update(float delta)
         for(auto &ball: balls){
             ball.position += ball.velocity * delta * ballSpeedMultiplier;
         }
-        
+
         //verifica colisoes
         for(auto &ball: balls){
             // verifica colisoes com os blocos
             for(auto &line: blockLines){
                 // iterator for para ir deletando conforme quebram
                 for(auto it = line.begin(); it<line.end(); it++){
+                    Block& block = *it;
                     // se bateu em algum bloco
-                    auto blockCollision = ball.collider.intersects(it->collider);
+                    auto blockCollision = ball.collider.intersects(block.collider);
+
+                    Vector2 incoming = ball.velocity;
+
                     if(blockCollision.happened){
-                        it->life--;
+                        block.life--;
                         #if PHYSICS_DEBUG
-                        std::cout << "Bola " << ball.collider.id << " colidiu com bloco " << it->collider.id 
-                            << ". Vida(" << it->life+1 << "->" << it->life << ")" << std::endl;
+                        std::cout << "Bola " << ball.collider.id << " colidiu com bloco " << block.collider.id
+                            << ". Vida(" << block.life+1 << "->" << block.life << ")" << std::endl;
                         #endif
-                        if(it->life <= 0){
+
+                        // reflete bola
+                        ball.velocity = incoming.reflection(blockCollision.normal);
+
+                        // deleta o bloco e cria as particulas
+                        if(block.life <= 0){
                             line.erase(it);
                             particleManager.spawn(
-                                ObjLoader::get("star"), 
-                                20,
-                                ball.position, 
-                                Vector2(5,5), 
+                                ObjLoader::get("star"), //obj
+                                20, // qtd
+                                ball.position, //lugar
+                                Vector2(5,5), // escala
                                 {
-                                    Vector3::fromHex(0xd62828), 
-                                    Vector3::fromHex(0xf77f00), 
+                                    Vector3::fromHex(0xd62828),
+                                    Vector3::fromHex(0xf77f00),
                                     Vector3::fromHex(0xfcbf49),
                                     Vector3::fromHex(0xffbe0b),
                                     Vector3::fromHex(0xff7d00),
                                     Vector3::fromHex(0xf18701)
-                                },
-                                1,
-                                100,
-                                true
+                                }, //cores
+                                1, //ttl
+                                100, // forca de dispersao
+                                true // gravidade
                             );
+                            continue;
                         }
 
-                        // reflete bola
-                        ball.velocity = ball.velocity.reflection(blockCollision.normal);
-                    }
-
-                    // checa se a bola esta dentro do bloco
-                    if(it->collider.pointInside(ball.position)){
-                        // se a bola esta dentro do bloco, ela deve sair
-                        // pela direcao oposta a que entrou
-                        Vector2 normal = (ball.position - it->collider.position).normalized();
-                        // empurrar a bola pra fora
-                        ball.position += normal*ball.collider.radius;
-                        #if PHYSICS_DEBUG
-                        std::cout << "BOLA DENTRO! Empurrando" << std::endl;
-                        #endif
+                        // verifica se colidiu tbm com os blocos adjacentes
+                        
                     }
                 }
             }
-        
+
             // verifica colisoes com as paredes
             for(auto &wall: gameAreaWalls){
                 auto wallCollision = ball.collider.intersects(wall);
@@ -180,8 +179,6 @@ void Game::update(float delta)
                     }
                 }
             }
-
-            // eventualmente, colisao com powerup bounce
         }
 
         // verifica se alguma bola saiu do campo. Se saiu, tenta corrigir
@@ -209,7 +206,7 @@ void Game::update(float delta)
             }
         }
 
-        // se alguma bola esta muito na horizontal
+        //se alguma bola esta muito na horizontal
         // adicionamos uma componente vertical aleatoria
         // para acelerar e previnir blocks
         for(auto &ball: balls){
@@ -219,10 +216,6 @@ void Game::update(float delta)
                 // normaliza e multiplica para garantir que a bola nao acelerou
                 ball.velocity.normalize();
                 ball.velocity *= ballSpeed;
-                #if PHYSICS_DEBUG
-                std::cout << "Adicionando componente vertical a bola(" 
-                    << ball.collider.id << ")" << std::endl;
-                #endif
             }
         }
 
@@ -283,7 +276,7 @@ void Game::renderHeader()
     CV::color(Vector3::fromHex(0xFFFFFF));
 
     // render pause button(fazer no app.cpp?)
-    
+
     // render current score(fase)
     CV::text(headerSize * 0.5f,
         std::to_string(level),
@@ -403,7 +396,7 @@ void Game::renderLine(std::vector<Block> line)
     {
         CV::color(block.color);
         Vector2 screenPos = gameAreaStart + block.position * blockSize;
-        CV::rectFill(screenPos + Vector2(blockmargin), 
+        CV::rectFill(screenPos + Vector2(blockmargin),
             screenPos + Vector2(blockSize) - Vector2(blockmargin));
         CV::color(Vector3::fromHex(0xFFFFFF));
         CV::text(screenPos.x + blockSize * 0.5f,

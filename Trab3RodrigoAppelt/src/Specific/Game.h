@@ -6,13 +6,13 @@
 
 #include "../Math/Vector2.h"
 #include "../Keyboard.h"
-#include "../3D/ParticleManager.h"
+#include "../Misc/ParticleManager.h"
 
 #include "Components/Ball.h"
 #include "Components/Block.h"
 #include "Components/Powerups.h"
 
-/// @brief Classe que vai gerenciar e 
+/// @brief Classe que vai gerenciar e
 /// guardar o estado do jogo.
 /// Nivel, blocos quebrados, bolas etc
 class Game {
@@ -46,7 +46,7 @@ private:
     Vector2 gameAreaStart;
     Vector2 gameAreaSize;
     // left, right, ceiling
-    std::vector<Rectangle2D> gameAreaWalls; 
+    std::vector<Rectangle2D> gameAreaWalls;
     void updateGameAreaBounds();
 
     const Vector2 blockAreaSize = Vector2(7,10);

@@ -102,7 +102,6 @@ void CV::lineDashed(Vector2 p1, Vector2 p2, float segmentLength, float width){
     Vector2 lnsgm = Vector2(p1.x / segments, p2.y / segments);
 
     for(int i=0;i<segments;i++){
-        std::cout << "Segment i=" << i << " " << p1 + (lnsgm*i) << " -> " << p1 + (lnsgm*(i+1)) << std::endl;
         line(p1 + (lnsgm*i), p1 + (lnsgm*(i+1)), width);
     }
 }
