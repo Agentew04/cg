@@ -14,7 +14,7 @@ Game::Game(int *scrW, int *scrH) : rng(time(nullptr)),
                                    screenWidth(scrW), screenHeight(scrH),
                                    mousePos(Vector2::zero()),
                                    hasActivePlay(false),
-                                   burstCount(2),
+                                   burstCount(1),
                                    spawned(0),
                                    lastBurstTime(0.0f),
                                    level(1),
@@ -375,11 +375,19 @@ void Game::renderLine(std::vector<Block> line)
         CV::rectFill(screenPos + Vector2(blockmargin),
             screenPos + Vector2(blockSize) - Vector2(blockmargin));
         CV::color(Vector3::fromHex(0xFFFFFF));
-        CV::text(screenPos.x + blockSize * 0.5f,
-            screenPos.y + blockSize * 0.5f + 0.9f*CV::fontHeight(GLUT_BITMAP_HELVETICA_18)/2,
+
+        float lineHeight;
+        FontManager::getLineHeight(CustomFont::AgencyFB_Digits, lineHeight);
+        CV::text(Vector2(screenPos.x + blockSize * 0.5f, screenPos.y + blockSize * 0.5f + (lineHeight*25)/2.0f),
             std::to_string(block.life).c_str(),
-            GLUT_BITMAP_HELVETICA_18,
+            CustomFont::AgencyFB_Digits,
+            Vector2(25,25),
             TextAlign::CENTER);
+        // CV::text(screenPos.x + blockSize * 0.5f,
+        //     screenPos.y + blockSize * 0.5f + 0.9f*CV::fontHeight(GLUT_BITMAP_HELVETICA_18)/2,
+        //     std::to_string(block.life).c_str(),
+        //     GLUT_BITMAP_HELVETICA_18,
+        //     TextAlign::CENTER);
 
         #if PHYSICS_DEBUG
         // render collider
