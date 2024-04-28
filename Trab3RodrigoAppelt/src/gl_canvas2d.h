@@ -101,7 +101,7 @@ public:
     static void setWireframe(bool value);
 
     //funcao de inicializacao da Canvas2D. Recebe a largura, altura, e um titulo para a janela
-    static void init(int *w, int *h, const char *title, bool antiAliasing);
+    static void init(int *w, int *h, const char *title, bool antiAliasing, bool vsync);
 
     // inicia processo de saida do programa
     static void close();

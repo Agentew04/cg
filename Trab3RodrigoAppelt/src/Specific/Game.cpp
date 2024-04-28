@@ -7,6 +7,7 @@
 #include "../gl_canvas2d.h"
 #include "../Storage/PersistentStorage.h"
 #include "../Misc/TaskManager.h"
+#include "../Misc/SoundPlayer.h"
 
 Game::Game(int *scrW, int *scrH) : rng(time(nullptr)),
                                    particleManager(rng()),
@@ -120,6 +121,7 @@ void Game::update(float delta)
                     Vector2 incoming = ball.velocity;
 
                     if(blockCollision.happened){
+
                         block.life--;
                         #if PHYSICS_DEBUG
                         std::cout << "Bola " << ball.collider.id << " colidiu com bloco " << block.collider.id
@@ -131,6 +133,7 @@ void Game::update(float delta)
 
                         // deleta o bloco e cria as particulas
                         if(block.life <= 0){
+                            SoundPlayer::play("ballHit");
                             line.erase(it);
                             particleManager.spawn(
                                 ObjLoader::get("star"), //obj
@@ -153,7 +156,7 @@ void Game::update(float delta)
                         }
 
                         // verifica se colidiu tbm com os blocos adjacentes
-                        
+
                     }
                 }
             }

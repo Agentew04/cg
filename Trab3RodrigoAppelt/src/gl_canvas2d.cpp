@@ -19,6 +19,15 @@
 #include "Fonts/FontManager.h"
 #include "Math/Matrix.h"
 
+//
+// DEFINES QUE DESABILITAM FUNCIONALIDADES EXTRAS:
+// Comente as linhas abaixo para forcar que estas
+// features sejam desabilitadas em caso de incompatibilidade
+
+//#define DISABLE_VSYNC
+//#define DISABLE_WIREFRAME
+//#define DISABLE_ANTI_ALIASING
+
 int *scrWidth, *scrHeight; // guarda referencia para as variaveis de altura e largura da main()
 
 // conjunto de cores predefinidas. Pode-se adicionar mais cores.
@@ -289,7 +298,7 @@ void CV::text(Vector2 pos, const std::string& text, const CustomFont font, Vecto
     float lineHeight;
     FontManager::getLineHeight(font, lineHeight);
     lineHeight *= scale.y;
-    
+
     float x = pos.x;
     float y = pos.y;
 
@@ -333,7 +342,7 @@ void CV::obj(ObjFile *obj, Vector2 pos, Vector2 scale){
     for(auto face : obj->faces){
         for(auto vertex : face){
             auto v = obj->vertices[vertex-1];
-            
+
             v = v.multiply(Vector3(scale.x, scale.y, 1));
             v = v + Vector3(pos.x, pos.y, 0);
             glVertex3f(v.x, v.y, v.z);
@@ -582,6 +591,7 @@ float CV::fps()
 
 void CV::setWireframe(bool value)
 {
+    #ifndef DISABLE_WIREFRAME
     if (value)
     {
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -590,12 +600,13 @@ void CV::setWireframe(bool value)
     {
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     }
+    #endif // DISABLE_WIREFRAME
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
 //  inicializa o OpenGL
 ////////////////////////////////////////////////////////////////////////////////////////
-void CV::init(int *w, int *h, const char *title, bool antiAliasing)
+void CV::init(int *w, int *h, const char *title, bool antiAliasing, bool vsync)
 {
     int argc = 0;
     glutInit(&argc, NULL);
@@ -606,8 +617,12 @@ void CV::init(int *w, int *h, const char *title, bool antiAliasing)
     // habilita MSAA
     if (antiAliasing)
     {
+        #ifndef DISABLE_ANTI_ALIASING
         glutSetOption(GLUT_MULTISAMPLE, 4);
         glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_MULTISAMPLE);
+        #else
+        glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
+        #endif // DISABLE_ANTI_ALIASING
     }
     else
     {
@@ -622,6 +637,13 @@ void CV::init(int *w, int *h, const char *title, bool antiAliasing)
     glutCreateWindow(title);
 
     inicializa();
+
+    if(vsync){
+    #ifndef DISABLE_VSYNC
+        // force v-sync para conservar bateria em notebooks
+        ((BOOL(WINAPI*)(int))wglGetProcAddress("wglSwapIntervalEXT"))(vsync ? 1 : 0);
+    #endif // DISABLE_VSYNC
+    }
 
     glutReshapeFunc(reshape);
     glutDisplayFunc(display);

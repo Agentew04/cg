@@ -28,6 +28,7 @@
 #include "3D/ObjLoader.h"
 #include "Fonts/FontManager.h"
 #include "Misc/TaskManager.h"
+#include "Misc/SoundPlayer.h"
 
 
 // largura e altura inicial da tela . Alteram com o redimensionamento de tela.
@@ -96,6 +97,8 @@ void load(){
     ObjLoader::load("./Trab3RodrigoAppelt/models/pause.3d", "pause");
     ObjLoader::load("./Trab3RodrigoAppelt/models/star.3d", "star");
     ObjLoader::load("./Trab3RodrigoAppelt/models/powerupBall.3d", "powerupBall");
+    SoundPlayer::load("./Trab3RodrigoAppelt/audio/ballHit1.wav", "ballHit");
+    SoundPlayer::load("./Trab3RodrigoAppelt/audio/ballHit2.wav", "ballExit");
     app = new App(&screenWidth, &screenHeight);
 }
 
@@ -109,7 +112,7 @@ void cleanup()
 int main(void)
 {
     load();
-    CV::init(&screenWidth, &screenHeight, "Balls Bounce Remake", true);
+    CV::init(&screenWidth, &screenHeight, "Bolas Saltitantes do Rodrigo Appelt", /*anti-aliasing: */true, /*vsync: */false);
     CV::run();
     cleanup();
 }

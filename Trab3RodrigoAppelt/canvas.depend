@@ -1009,7 +1009,7 @@
 	<map>
 	"Vector2.h"
 
-1713826901 d:\universidade\cg\trab3rodrigoappelt\src\gl_canvas2d.h
+1714307409 d:\universidade\cg\trab3rodrigoappelt\src\gl_canvas2d.h
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
@@ -1188,14 +1188,14 @@
 	"Chart.h"
 	"ImageRenderer.h"
 
-1713896258 source:d:\universidade\cg\trab3rodrigoappelt\src\gl_canvas2d.cpp
+1714307281 source:d:\universidade\cg\trab3rodrigoappelt\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 	<string>
 	"Fonts/FontManager.h"
 	"Math/Matrix.h"
 
-1713959660 source:d:\universidade\cg\trab3rodrigoappelt\src\main.cpp
+1714044452 source:d:\universidade\cg\trab3rodrigoappelt\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -1210,6 +1210,7 @@
 	"3D/ObjLoader.h"
 	"Fonts/FontManager.h"
 	"Misc/TaskManager.h"
+	"Misc/SoundPlayer.h"
 
 1713448108 d:\universidade\cg\trab3rodrigoappelt\src\storage\persistentstorage.h
 	<string>
@@ -1249,14 +1250,15 @@
 	"../Storage/PersistentStorage.h"
 	"../3D/ObjLoader.h"
 
-1713898714 source:d:\universidade\cg\trab3rodrigoappelt\src\specific\game.cpp
+1714307328 source:d:\universidade\cg\trab3rodrigoappelt\src\specific\game.cpp
 	"Game.h"
 	<string>
 	<functional>
 	<random>
 	"../gl_canvas2d.h"
 	"../Storage/PersistentStorage.h"
-	"../3D/TaskManager.h"
+	"../Misc/TaskManager.h"
+	"../Misc/SoundPlayer.h"
 
 1713448108 source:d:\universidade\cg\trab3rodrigoappelt\src\storage\persistentstorage.cpp
 	<fstream>
@@ -1301,4 +1303,24 @@
 	<functional>
 	<vector>
 	"../gl_canvas2d.h"
+
+1714044657 d:\universidade\cg\trab3rodrigoappelt\src\misc\soundplayer.h
+	<string>
+	<map>
+	<windows.h>
+	<mmsystem.h>
+
+1713817036 source:d:\universidade\cg\trab3rodrigoappelt\src\misc\particlemanager.cpp
+	"ParticleManager.h"
+	<cmath>
+	"../gl_canvas2d.h"
+
+1714306864 source:d:\universidade\cg\trab3rodrigoappelt\src\misc\soundplayer.cpp
+	"SoundPlayer.h"
+	<system_error>
+	<iostream>
+
+1713956657 source:d:\universidade\cg\trab3rodrigoappelt\src\misc\taskmanager.cpp
+	"TaskManager.h"
+	<iostream>
 
