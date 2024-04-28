@@ -32,10 +32,14 @@ e a facilidade de desenvolvimento, estão:
 * **ObjLoader:** Carregador de arquivos .obj simples para a renderização de formas complexas
   sem usar bmps ou bibliotecas externas. No futuro, será usado para renderizar fontes
   customizadas sem a necessidade de uma biblioteca ttf.
+* **TaskManager:** Um gerenciador simples de corrotinas usado principalmente para mostrar
+  informações de depuração por um tempo na tela.
+* **ParticleManager:** Um gerenciador de partículas que usa objetos 3D para criar efeitos
+  especiais.
 
 E algumas bibliotecas externas pequenas embutidas direto no código:
-* **schrift.c:** Usado para carregar arquivos .ttf. Não utilizado ainda
-* **lodepng.cpp:** Usado para carregar arquivos .png. Não utilizado ainda
+* ~**schrift.c:** Usado para carregar arquivos .ttf. Não utilizado ainda~
+* ~**lodepng.cpp:** Usado para carregar arquivos .png. Não utilizado ainda~
 * **httplib.h:** Usado para fazer requisições HTTP. Utilizado para placar online
 
 ## Demonstrações:
