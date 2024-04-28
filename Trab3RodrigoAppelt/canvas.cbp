@@ -43,6 +43,7 @@
 			<Add library="../lib/libopengl32.a" />
 			<Add library="../lib/libglu32.a" />
 			<Add library="ws2_32" />
+			<Add library="winmm" />
 		</Linker>
 		<Unit filename="src/3D/ObjLoader.cpp" />
 		<Unit filename="src/3D/ObjLoader.h" />
