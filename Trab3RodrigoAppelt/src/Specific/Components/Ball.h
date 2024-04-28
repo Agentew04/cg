@@ -12,7 +12,7 @@ public:
     Vector2 velocity;
     Circle2D collider;
 
-    constexpr static const float radius = 5.0f;
+    constexpr static const float radius = 10.0f;
 private:
 };
 

@@ -6,7 +6,6 @@
 
 // SE QUISER DESABILITAR OS AUDIOS POR COMPLETO,
 // DESCOMENTE A LINHA ABAIXO
-
 //#define DISABLE_AUDIO
 
 std::map<std::string, std::string> SoundPlayer::sounds;
@@ -22,7 +21,7 @@ void SoundPlayer::play(const std::string& id, bool loop){
         nullptr, // hmod
         SND_FILENAME
         | SND_ASYNC
-        | (loop ? SND_LOOP : 0)// fdwSound
+        | (loop ? SND_LOOP : 0) // fdwSound
     );
     if(!result){
         int error = GetLastError();

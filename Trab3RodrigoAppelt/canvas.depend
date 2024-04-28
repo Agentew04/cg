@@ -989,22 +989,22 @@
 	"Vector2.h"
 	"Vector3.h"
 
-1713200690 source:d:\universidade\cg\trab3rodrigoappelt\src\math\vector2.cpp
+1714335909 source:d:\universidade\cg\trab3rodrigoappelt\src\math\vector2.cpp
 	"Vector2.h"
 
 1713200690 source:d:\universidade\cg\trab3rodrigoappelt\src\math\vector3.cpp
 	<cmath>
 	"Vector3.h"
 
-1713200690 source:d:\universidade\cg\trab3rodrigoappelt\src\specific\components\ball.cpp
+1714343441 source:d:\universidade\cg\trab3rodrigoappelt\src\specific\components\ball.cpp
 	"Ball.h"
 	"../../gl_canvas2d.h"
 
-1713200690 d:\universidade\cg\trab3rodrigoappelt\src\specific\components\ball.h
+1714343433 d:\universidade\cg\trab3rodrigoappelt\src\specific\components\ball.h
 	"../../Math/Vector2.h"
 	"../../Math/Polygon2D.h"
 
-1713200690 d:\universidade\cg\trab3rodrigoappelt\src\math\polygon2d.h
+1714348292 d:\universidade\cg\trab3rodrigoappelt\src\math\polygon2d.h
 	<vector>
 	<map>
 	"Vector2.h"
@@ -1188,14 +1188,14 @@
 	"Chart.h"
 	"ImageRenderer.h"
 
-1714307281 source:d:\universidade\cg\trab3rodrigoappelt\src\gl_canvas2d.cpp
+1714307794 source:d:\universidade\cg\trab3rodrigoappelt\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 	<string>
 	"Fonts/FontManager.h"
 	"Math/Matrix.h"
 
-1714044452 source:d:\universidade\cg\trab3rodrigoappelt\src\main.cpp
+1714346471 source:d:\universidade\cg\trab3rodrigoappelt\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -1227,7 +1227,7 @@
 	"../UI/ButtonManager.h"
 	"../UI/TextBox.h"
 
-1713959640 d:\universidade\cg\trab3rodrigoappelt\src\specific\game.h
+1714348714 d:\universidade\cg\trab3rodrigoappelt\src\specific\game.h
 	<vector>
 	<random>
 	"../Math/Vector2.h"
@@ -1237,10 +1237,11 @@
 	"Components/Block.h"
 	"Components/Powerups.h"
 
-1713960182 source:d:\universidade\cg\trab3rodrigoappelt\src\math\polygon2d.cpp
+1714348390 source:d:\universidade\cg\trab3rodrigoappelt\src\math\polygon2d.cpp
 	"Polygon2D.h"
 	<map>
 	<chrono>
+	<algorithm>
 	"../Misc/Tuple.h"
 
 1713816188 source:d:\universidade\cg\trab3rodrigoappelt\src\specific\app.cpp
@@ -1250,7 +1251,7 @@
 	"../Storage/PersistentStorage.h"
 	"../3D/ObjLoader.h"
 
-1714307328 source:d:\universidade\cg\trab3rodrigoappelt\src\specific\game.cpp
+1714348037 source:d:\universidade\cg\trab3rodrigoappelt\src\specific\game.cpp
 	"Game.h"
 	<string>
 	<functional>
@@ -1304,7 +1305,7 @@
 	<vector>
 	"../gl_canvas2d.h"
 
-1714044657 d:\universidade\cg\trab3rodrigoappelt\src\misc\soundplayer.h
+1714335748 d:\universidade\cg\trab3rodrigoappelt\src\misc\soundplayer.h
 	<string>
 	<map>
 	<windows.h>
@@ -1315,7 +1316,7 @@
 	<cmath>
 	"../gl_canvas2d.h"
 
-1714306864 source:d:\universidade\cg\trab3rodrigoappelt\src\misc\soundplayer.cpp
+1714335833 source:d:\universidade\cg\trab3rodrigoappelt\src\misc\soundplayer.cpp
 	"SoundPlayer.h"
 	<system_error>
 	<iostream>

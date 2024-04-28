@@ -74,6 +74,18 @@ void Game::update(float delta)
             lastBurstTime = CV::time();
         }
 
+        // se por algum acaso uma bolinha perdeu o id de colisor, regenerar
+        for(auto &ball: balls){
+            if(ball.collider.id == 0){
+                ball.collider.id = rng();
+            }
+        }
+
+        //move bolinhas
+        for(auto &ball: balls){
+            ball.position += ball.velocity * delta * ballSpeedMultiplier;
+        }
+
         // atualiza os colisores
         {
             Vector2 gameAreaStart(5 * (*screenWidth) / 14, 1 * (*screenHeight) / 9);
@@ -88,75 +100,28 @@ void Game::update(float delta)
             }
             for(auto &ball: balls){
                 ball.collider.position = ball.position;
+                ball.collider.radius = ball.radius;
             }
             updateGameAreaBounds();
         }
 
-        // se por algum acaso uma bolinha perdeu o id de colisor, regenerar
-        for(auto &ball: balls){
-            if(ball.collider.id == 0){
-                ball.collider.id = rng();
-                #if PHYSICS_DEBUG
-                std::cout << "Regenerating ball collider id" << std::endl;
-                #endif
-            }
-        }
-
-
-        //move bolinhas
-        for(auto &ball: balls){
-            ball.position += ball.velocity * delta * ballSpeedMultiplier;
-        }
 
         //verifica colisoes
         for(auto &ball: balls){
             // verifica colisoes com os blocos
             for(auto &line: blockLines){
                 // iterator for para ir deletando conforme quebram
-                for(auto it = line.begin(); it<line.end(); it++){
-                    Block& block = *it;
-                    // se bateu em algum bloco
-                    auto blockCollision = ball.collider.intersects(block.collider);
-
-                    Vector2 incoming = ball.velocity;
-
-                    if(blockCollision.happened){
-
-                        block.life--;
-                        #if PHYSICS_DEBUG
-                        std::cout << "Bola " << ball.collider.id << " colidiu com bloco " << block.collider.id
-                            << ". Vida(" << block.life+1 << "->" << block.life << ")" << std::endl;
-                        #endif
-
-                        // reflete bola
-                        ball.velocity = incoming.reflection(blockCollision.normal);
-
-                        // deleta o bloco e cria as particulas
-                        if(block.life <= 0){
-                            SoundPlayer::play("ballHit");
-                            line.erase(it);
-                            particleManager.spawn(
-                                ObjLoader::get("star"), //obj
-                                20, // qtd
-                                ball.position, //lugar
-                                Vector2(5,5), // escala
-                                {
-                                    Vector3::fromHex(0xd62828),
-                                    Vector3::fromHex(0xf77f00),
-                                    Vector3::fromHex(0xfcbf49),
-                                    Vector3::fromHex(0xffbe0b),
-                                    Vector3::fromHex(0xff7d00),
-                                    Vector3::fromHex(0xf18701)
-                                }, //cores
-                                1, //ttl
-                                100, // forca de dispersao
-                                true // gravidade
-                            );
-                            continue;
-                        }
-
-                        // verifica se colidiu tbm com os blocos adjacentes
-
+                for(auto &block:line){
+                    processCollisions(ball, block);
+                }
+            }
+            // remove blocos com 0 de vida
+            for(auto &line: blockLines){
+                for(auto it = line.begin(); it != line.end();){
+                    if(it->life <= 0){
+                        it = line.erase(it);
+                    }else{
+                        it++;
                     }
                 }
             }
@@ -187,21 +152,21 @@ void Game::update(float delta)
         // verifica se alguma bola saiu do campo. Se saiu, tenta corrigir
         for(auto &ball : balls){
             // left side
-            if(ball.position.x < 5 * (*screenWidth) / 14 + ball.radius){
+            if((ball.position.x+ball.radius) < 5 * (*screenWidth) / 14 + ball.radius){
                 Vector2 normal = Vector2(1,0);
                 ball.velocity = ball.velocity.reflection(normal);
                 ball.position += normal*ball.collider.radius;
                 continue;
             }
             // right side
-            if(ball.position.x > 9 * (*screenWidth) / 14 - ball.radius){
+            if((ball.position.x-ball.radius) > 9 * (*screenWidth) / 14 - ball.radius){
                 Vector2 normal = Vector2(-1,0);
                 ball.velocity = ball.velocity.reflection(normal);
                 ball.position += normal*ball.collider.radius;
                 continue;
             }
             // top side
-            if(ball.position.y < 1 * (*screenHeight) / 9 + ball.radius){
+            if((ball.position.y+ball.radius) < 1 * (*screenHeight) / 9 + ball.radius){
                 Vector2 normal = Vector2(0,1);
                 ball.velocity = ball.velocity.reflection(normal);
                 ball.position += normal*ball.collider.radius;
@@ -214,7 +179,7 @@ void Game::update(float delta)
         // para acelerar e previnir blocks
         for(auto &ball: balls){
             bool up = rng()%2;
-            if(ball.velocity * Vector2::right() > 0.9f*ballSpeed){
+            while(fabs(ball.velocity * Vector2::right()) > 0.99f*ballSpeed){
                 ball.velocity += (up?Vector2::up():Vector2::down())*ballSpeed*0.1f;
                 // normaliza e multiplica para garantir que a bola nao acelerou
                 ball.velocity.normalize();
@@ -311,15 +276,6 @@ void Game::renderHeader()
         Vector2(25,25),
         TextAlign::LEFT
     );
-
-
-    // CV::text(headerSize.x, headerSize.y / 3,
-    //          ("Coins: " + std::to_string(coins)).c_str(),
-    //          GLUT_BITMAP_HELVETICA_18, TextAlign::RIGHT);
-    // CV::color(Vector3::fromHex(0xFFFFFF));
-    // CV::text(headerSize.x, 2 * headerSize.y / 3,
-    //          ("Highscore: " + std::to_string(highscore)).c_str(),
-    //          GLUT_BITMAP_HELVETICA_18, TextAlign::RIGHT);
 }
 
 void Game::renderGameArea()
@@ -355,10 +311,13 @@ void Game::renderGameArea()
             CV::translate(0,0);
             // ball collider
             CV::color(1,0,0);
-            CV::circle(ball.collider.position, ball.collider.radius, 16);
+            CV::circle(ball.collider.position, 10, 16);
             // direction
             CV::color(0,0,1);
-            CV::line(ball.collider.position, ball.collider.position+ball.velocity.normalized()*ball.collider.radius*2, 3.0f);
+            CV::line(ball.collider.position, ball.collider.position+ball.velocity.normalized()*ball.collider.radius*4, 2.0f);
+            // ball position
+            CV::color(1,1,0);
+            CV::circleFill(ball.position, 4, 8);
             CV::translate(gameAreaStart);
             #endif
         }
@@ -547,4 +506,83 @@ void Game::updateGameAreaBounds(){
 
 bool Game::isGameOver(){
     return gameOver;
+}
+
+Block* Game::getBlockAt(Vector2 pos){
+    for(auto &line: blockLines){
+        for(auto &block: line){
+            if(block.position == pos){
+                return &block;
+            }
+        }
+    }
+    return nullptr;
+}
+
+void hit(Block& block, ParticleManager& mng){
+    block.life--;
+
+    if(block.life <= 0){
+        SoundPlayer::play("ballHit");
+        mng.spawn(
+            ObjLoader::get("star"),//modelo
+            20,//qtd
+            block.collider.position + Vector2(block.collider.size.x/2, block.collider.size.y/2), //pos
+            Vector2(5,5), // escala
+            {
+                Vector3::fromHex(0xd62828),
+                Vector3::fromHex(0xf77f00),
+                Vector3::fromHex(0xfcbf49),
+                Vector3::fromHex(0xffbe0b),
+                Vector3::fromHex(0xff7d00),
+                Vector3::fromHex(0xf18701)
+            }, // cores
+            1.0f, //ttl
+            100.0f, //forca
+            true//gravidade
+        );
+    }
+}
+
+bool Game::processCollisions(Ball& ball, Block& block){
+    if(block.life <= 0){
+        return false;
+    }
+    Block* blockEsq = getBlockAt(block.position + Vector2(-1,0));
+    Block* blockDir = getBlockAt(block.position + Vector2(1,0));
+
+    Collision colisaoCentral = ball.collider.intersects(block.collider);
+    bool colidiuCentro = colisaoCentral.happened;
+    bool colidiuEsq = blockEsq != nullptr ? ball.collider.intersects(blockEsq->collider).happened : false;
+    bool colidiuDir = blockDir != nullptr ? ball.collider.intersects(blockDir->collider).happened : false;
+
+    if(colidiuCentro && !colidiuEsq && !colidiuDir){ // isso funciona
+        // colisao normal no meio do bloco
+        ball.velocity = ball.velocity.reflection(colisaoCentral.normal);
+        hit(block, particleManager);
+        return true;
+    }else if(colidiuCentro && (colidiuEsq || colidiuDir)){ // isso funciona
+        // colisao entre 2 blocos, normal é simulada com um plano
+        Vector2 normal = Vector2(0,1);
+        ball.velocity = ball.velocity.reflection(normal);
+        hit(block, particleManager);
+        if(colidiuEsq && blockEsq != nullptr){
+            hit(*blockEsq, particleManager);
+        }
+        if(colidiuDir && blockDir != nullptr){
+            hit(*blockDir, particleManager);
+        }
+        return true;
+    }else if(block.collider.pointInside(ball.position)){ // isso nao kkk
+        auto col = ball.collider.intersects(block.collider, true);
+
+        if(col.happened){
+            ball.velocity = ball.velocity.reflection(col.normal);
+            hit(block, particleManager);
+            return true;
+        }
+        return false;
+    }else{
+        return false;
+    }
 }

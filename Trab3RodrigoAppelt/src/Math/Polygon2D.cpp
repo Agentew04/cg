@@ -2,26 +2,36 @@
 
 #include <map>
 #include <chrono>
+#include <algorithm>
 
 #include "../Misc/Tuple.h"
 
-
 // forward declaration
-class CV{
+class CV
+{
 public:
     // returns the current time in seconds
     static float time();
 };
 
-std::map<Tuple<uint32_t,uint32_t>,float> lastCollisionTime;
+template <typename T>
+T clamp(T value, T min, T max)
+{
+    return std::max(min, std::min(value, max));
+}
+std::map<Tuple<uint32_t, uint32_t>, float> lastCollisionTime;
 
-Rectangle2D::Rectangle2D(Vector2 position, Vector2 size, bool sizeAsP2) {
+Rectangle2D::Rectangle2D(Vector2 position, Vector2 size, bool sizeAsP2)
+{
     this->position = position;
-    if (sizeAsP2) {
+    if (sizeAsP2)
+    {
         float sizeX = std::fabs(size.x - position.x);
         float sizeY = std::fabs(size.y - position.y);
         this->size = Vector2(sizeX, sizeY);
-    } else {
+    }
+    else
+    {
         this->size = size;
     }
 }
@@ -30,53 +40,73 @@ Rectangle2D::Rectangle2D() : position(Vector2(0, 0)), size(Vector2(0, 0)) {}
 
 Rectangle2D::Rectangle2D(const Rectangle2D &r) : position(r.position), size(r.size) {}
 
-bool Rectangle2D::pointInside(const Vector2& point) const {
+bool Rectangle2D::pointInside(const Vector2 &point) const
+{
     return point.x >= position.x && point.x <= position.x + size.x && point.y >= position.y && point.y <= position.y + size.y;
 }
 
-Collision Rectangle2D::intersects(const Shape2D& shape) const {
+Collision Rectangle2D::intersects(const Shape2D &shape, bool ignoreCache) const
+{
     auto tuple = Tuple<uint32_t, uint32_t>::make(id, shape.id);
-    if(id != 0 && shape.id != 0){
-        if(lastCollisionTime.find(tuple) != lastCollisionTime.end()){
-            float now = CV::time();
-            if(now - lastCollisionTime[tuple] < collisionWait){
-                return Collision{false, Vector2(0, 0)};
+    if (!ignoreCache)
+    {
+        if (id != 0 && shape.id != 0)
+        {
+            if (lastCollisionTime.find(tuple) != lastCollisionTime.end())
+            {
+                float now = CV::time();
+                if (now - lastCollisionTime[tuple] < collisionWait)
+                {
+                    return Collision{false, Vector2(0, 0)};
+                }
             }
         }
-    }else{
-        std::cout << "collider with id 0. Not caching" << std::endl;
+        else
+        {
+            std::cout << "collider with id 0. Not caching" << std::endl;
+        }
     }
 
-    if (dynamic_cast<const Rectangle2D*>(&shape) != nullptr) {
-        Rectangle2D r = dynamic_cast<const Rectangle2D&>(shape);
+    if (dynamic_cast<const Rectangle2D *>(&shape) != nullptr)
+    {
+        Rectangle2D r = dynamic_cast<const Rectangle2D &>(shape);
 
         // rect rect collision
-        if (position.x + size.x < r.position.x || position.x > r.position.x + r.size.x 
-            || position.y + size.y < r.position.y || position.y > r.position.y + r.size.y) {
+        if (position.x + size.x < r.position.x || position.x > r.position.x + r.size.x || position.y + size.y < r.position.y || position.y > r.position.y + r.size.y)
+        {
             return Collision{false, Vector2(0, 0)};
         }
 
         Vector2 normal = Vector2(0, 0);
-        if (position.x < r.position.x) {
+        if (position.x < r.position.x)
+        {
             normal = Vector2(-1, 0);
-        } else if (position.x > r.position.x) {
+        }
+        else if (position.x > r.position.x)
+        {
             normal = Vector2(1, 0);
-        } else if (position.y < r.position.y) {
+        }
+        else if (position.y < r.position.y)
+        {
             normal = Vector2(0, -1);
-        } else if (position.y > r.position.y) {
+        }
+        else if (position.y > r.position.y)
+        {
             normal = Vector2(0, 1);
         }
         lastCollisionTime[tuple] = CV::time();
         return Collision{true, normal};
     }
 
-    if (dynamic_cast<const Circle2D*>(&shape) != nullptr) {
-        Circle2D c = dynamic_cast<const Circle2D&>(shape);
+    if (dynamic_cast<const Circle2D *>(&shape) != nullptr)
+    {
+        Circle2D c = dynamic_cast<const Circle2D &>(shape);
 
         // check circle rect collision
         Vector2 closestPoint = Vector2(std::max(position.x, std::min(c.position.x, position.x + size.x)),
                                        std::max(position.y, std::min(c.position.y, position.y + size.y)));
-        if ((closestPoint - c.position).magnitude <= c.radius) {
+        if ((closestPoint - c.position).magnitude <= c.radius)
+        {
             lastCollisionTime[tuple] = CV::time();
             return Collision{true, (closestPoint - c.position).normalized()};
         }
@@ -91,32 +121,43 @@ Circle2D::Circle2D(Vector2 position, float radius) : position(position), radius(
 
 Circle2D::Circle2D() : position(Vector2(0, 0)), radius(0) {}
 
-Circle2D::Circle2D(const Circle2D &c): position(c.position), radius(c.radius){}
+Circle2D::Circle2D(const Circle2D &c) : position(c.position), radius(c.radius) {}
 
-bool Circle2D::pointInside(const Vector2& point) const{
+bool Circle2D::pointInside(const Vector2 &point) const
+{
     return (point - position).magnitude <= radius;
 }
 
+Collision Circle2D::intersects(const Shape2D &shape, bool ignoreCache) const
+{
 
-Collision Circle2D::intersects(const Shape2D& shape) const{
-    
-    auto tuple = Tuple<uint32_t,uint32_t>::make(id, shape.id);
-    if(id != 0 && shape.id != 0){
-        float now = CV::time();
-        if(lastCollisionTime.find(tuple) != lastCollisionTime.end()){
-            if(now - lastCollisionTime[tuple] < collisionWait){
-                return Collision{false, Vector2(0, 0)};
+    auto tuple = Tuple<uint32_t, uint32_t>::make(id, shape.id);
+    if (!ignoreCache)
+    {
+        if (id != 0 && shape.id != 0)
+        {
+            float now = CV::time();
+            if (lastCollisionTime.find(tuple) != lastCollisionTime.end())
+            {
+                if (now - lastCollisionTime[tuple] < collisionWait)
+                {
+                    return Collision{false, Vector2(0, 0)};
+                }
             }
         }
-    }else{
-        std::cout << "collider with id 0. Not caching" << std::endl;
+        else
+        {
+            std::cout << "collider with id 0. Not caching" << std::endl;
+        }
     }
 
     // if shape is circle
-    if (dynamic_cast<const Circle2D*>(&shape) != nullptr) {
-        Circle2D c = dynamic_cast<const Circle2D&>(shape);
+    if (dynamic_cast<const Circle2D *>(&shape) != nullptr)
+    {
+        Circle2D c = dynamic_cast<const Circle2D &>(shape);
         // circle circle collision
-        if((c.position - position).magnitude <= c.radius + radius){
+        if ((c.position - position).magnitude <= c.radius + radius)
+        {
             lastCollisionTime[tuple] = CV::time();
             return Collision{true, (c.position - position).normalized()};
         }
@@ -124,71 +165,83 @@ Collision Circle2D::intersects(const Shape2D& shape) const{
     }
 
     // if shape is a rect
-    if (dynamic_cast<const Rectangle2D*>(&shape) != nullptr) {
-        Rectangle2D r = dynamic_cast<const Rectangle2D&>(shape);
-        Vector2 normal;
+    if (dynamic_cast<const Rectangle2D *>(&shape) != nullptr)
+    {
+        const Circle2D &circle = *this;
+        Rectangle2D rect = dynamic_cast<const Rectangle2D &>(shape);
 
-        // codigo de colisao circle-rect tirado de
-        // https://www.jeffreythompson.org/collision-detection/circle-rect.php
-        
-        float cx = position.x;
-        float cy = position.y;
-        float rx = r.position.x;
-        float ry = r.position.y;
-        float rw = r.size.x;
-        float rh = r.size.y;
+        float closestX = clamp(circle.position.x, rect.position.x, rect.position.x + rect.size.x);
+        float closestY = clamp(circle.position.y, rect.position.y, rect.position.y + rect.size.y);
 
-        // temporary variables to set edges for testing
-        float testX = cx;
-        float testY = cy;
+        float distanceX = circle.position.x - closestX;
+        float distanceY = circle.position.y - closestY;
+        float distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
 
-        // which edge is closest?
-        if (cx < rx){
-            testX = rx;      // test left edge
-            normal = Vector2(-1, 0);
-        }else if (cx > rx+rw){
-            testX = rx+rw;   // right edge
-            normal = Vector2(1, 0);
-        }
-        if (cy < ry) {
-            testY = ry;      // top edge
-            normal = Vector2(0, -1);
-        }
-        else if (cy > ry+rh) {
-            testY = ry+rh;   // bottom edge
-            normal = Vector2(0, 1);
+        // If the distance is less than the circle's radius, they are colliding
+        bool hasCollision = distanceSquared <= (circle.radius * circle.radius);
+        if (!hasCollision)
+        {
+            return Collision{false, Vector2(0, 0)};
         }
 
-        // get distance from closest edges
-        float distX = cx-testX;
-        float distY = cy-testY;
-        float distance = sqrt( (distX*distX) + (distY*distY) );
+        Vector2 normal = Vector2(100, 100);
+        // Calculate the normal of the collision based on which side of the rectangle it occurs on
+        float dx = circle.position.x - rect.position.x - rect.size.x / 2.0f;
+        float dy = circle.position.y - rect.position.y - rect.size.y / 2.0f;
 
-        // if the distance is less than the radius, collision!
-        if (distance <= radius) {
-            lastCollisionTime[tuple] = CV::time();
-            return Collision{true, normal};
+        // Determine the closest side of the rectangle
+        float w = rect.size.x / 2.0f;
+        float h = rect.size.y / 2.0f;
+        float x_overlap = w - std::abs(dx);
+        float y_overlap = h - std::abs(dy);
+
+        if (x_overlap > y_overlap)
+        {
+            // Collision on the top or bottom side of the rectangle
+            if (dy > 0)
+            {
+                normal = {0.0f, 1.0f}; // Collision on the top side
+            }
+            else
+            {
+                normal = {0.0f, -1.0f}; // Collision on the bottom side
+            }
         }
-        return Collision{false, Vector2(0, 0)};
+        else
+        {
+            // Collision on the left or right side of the rectangle
+            if (dx > 0)
+            {
+                normal = {1.0f, 0.0f}; // Collision on the right side
+            }
+            else
+            {
+                normal = {-1.0f, 0.0f}; // Collision on the left side
+            }
+        }
+
+        lastCollisionTime[tuple] = CV::time();
+        return Collision{true, normal};
     }
 
     // discrete circle
     int colliderResolution = 16;
     float stepSize = 2 * 3.1415 / colliderResolution;
-    for (int i = 0; i < colliderResolution; i++) {
+    for (int i = 0; i < colliderResolution; i++)
+    {
         float x = radius * cos(i * stepSize);
         float y = radius * sin(i * stepSize);
-        if (shape.pointInside(position + Vector2(x, y))) {
+        if (shape.pointInside(position + Vector2(x, y)))
+        {
             lastCollisionTime[tuple] = CV::time();
-            #if PHYSICS_DEBUG
+#if PHYSICS_DEBUG
             std::cout << "Circle(" << id << ") Generic(" << shape.id << ") collision" << std::endl;
-            #endif
+#endif
             return Collision{true, (position - (position + Vector2(x, y))).normalized()};
         }
     }
     return Collision{false, Vector2(0, 0)};
 }
-
 
 Polygon2D::Polygon2D() {}
 
@@ -196,26 +249,30 @@ Polygon2D::Polygon2D(std::vector<Vector2> vertices) : vertices(vertices) {}
 
 Polygon2D::Polygon2D(const Polygon2D &p) : vertices(p.vertices) {}
 
-Polygon2D::~Polygon2D() {
+Polygon2D::~Polygon2D()
+{
     this->vertices.clear();
 }
 
-bool Polygon2D::pointInside(const Vector2& point) const{
+bool Polygon2D::pointInside(const Vector2 &point) const
+{
     // Check for empty polygon
     unsigned int i, j;
     bool c = false;
-    for (i = 0, j = vertices.size()-1; i < vertices.size(); j = i++) {
-        if ( ((vertices[i].y>point.y) != (vertices[j].y>point.y)) &&
-        (point.x < (vertices[j].x-vertices[i].x) * (point.y-vertices[i].y) / (vertices[j].y-vertices[i].y) + vertices[i].x) )
-        c = !c;
+    for (i = 0, j = vertices.size() - 1; i < vertices.size(); j = i++)
+    {
+        if (((vertices[i].y > point.y) != (vertices[j].y > point.y)) &&
+            (point.x < (vertices[j].x - vertices[i].x) * (point.y - vertices[i].y) / (vertices[j].y - vertices[i].y) + vertices[i].x))
+            c = !c;
     }
     return c;
 }
 
-Collision Polygon2D::intersects(const Shape2D& shape) const{
+Collision Polygon2D::intersects(const Shape2D &shape, bool ignoreCache) const
+{
     // TODO consertar isso, por algum motivo n passa nos testes
     std::cout << "not implemented polygon collision" << std::endl;
-    return Collision{false, Vector2(0,0)};
+    return Collision{false, Vector2(0, 0)};
     // for(auto &vert:vertices){
     //     if(shape.pointInside(vert)){
     //         std::cout << "normal not available for polygon collision" << std::endl;

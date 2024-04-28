@@ -77,6 +77,10 @@ private:
 
     std::vector<Block> createNewLine(int level);
     void pushLines();
+
+    // funcoes para gerenciar a colisao melhor
+    Block* getBlockAt(Vector2 pos);
+    bool processCollisions(Ball& ball, Block& block);
 };
 
 #endif

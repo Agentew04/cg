@@ -139,7 +139,7 @@ Vector2 Vector2::multiply(const Vector2 &v) const
 
 bool Vector2::operator==(const Vector2 &v) const
 {
-    float epsilon = 0.00001;
+    float epsilon = 0.0001;
     return fabs(x - v.x) < epsilon && fabs(y - v.y) < epsilon;
 }
 

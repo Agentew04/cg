@@ -112,7 +112,7 @@ void cleanup()
 int main(void)
 {
     load();
-    CV::init(&screenWidth, &screenHeight, "Bolas Saltitantes do Rodrigo Appelt", /*anti-aliasing: */true, /*vsync: */false);
+    CV::init(&screenWidth, &screenHeight, "Bolas Saltitantes do Rodrigo Appelt", /*anti-aliasing: */true, /*vsync: */true);
     CV::run();
     cleanup();
 }
