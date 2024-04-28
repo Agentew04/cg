@@ -28,8 +28,22 @@ Game::Game(int *scrW, int *scrH) : rng(time(nullptr)),
 {
     // std::random_device r; <- versao 8.1.0 do g++ do codeblocks n suporta
     //                          passar a seed antiga direto pro mersene
+    blockColors = {
+        Vector3::fromHex(0xffbe0b),
+        Vector3::fromHex(0xe63946),
+        Vector3::fromHex(0x8338ec),
+        Vector3::fromHex(0x3a86ff),
+        Vector3::fromHex(0x8d99ae),
+        Vector3::fromHex(0x003049),
+        Vector3::fromHex(0x84a98c),
+        Vector3::fromHex(0x386641),
+        Vector3::fromHex(0x17c3b2),
+        Vector3::fromHex(0x98c1d9),
+        Vector3::fromHex(0x80ed99)
+    }; //suficiente p/ loopar e nao repetir cores na tela!
     blockLines.push_back(createNewLine(level));
     pushLines();
+
 }
 
 Game::~Game()
@@ -427,6 +441,9 @@ std::vector<Block> Game::createNewLine(int level)
 {
     std::uniform_int_distribution<int> blockCountRng(1, 6);
     std::uniform_int_distribution<int> candidateRng(0, blockAreaSize.x - 1);
+
+    Vector3 lineColor = blockColors[level % blockColors.size()];
+
     int numBlocks = blockCountRng(rng);
     int blockLife = level;
     if (level % 10 == 0)
@@ -446,7 +463,7 @@ std::vector<Block> Game::createNewLine(int level)
         bPos[candidateIndex] = true;
 
         Block b(Vector2(candidateIndex, 1),
-                Vector3::fromHex(0xAA3333),
+                lineColor,
                 blockLife);
         b.collider.id = rng();
         blocks.push_back(b);

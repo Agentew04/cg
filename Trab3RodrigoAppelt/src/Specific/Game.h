@@ -68,6 +68,7 @@ private:
     std::vector<Ball> balls;
     std::vector<std::vector<Block>> blockLines;
     std::vector<Powerup> powerups;
+    std::vector<Vector3> blockColors;
 
     Vector2 ballLaunchPosition;
     Vector2 ballLaunchDirection;
