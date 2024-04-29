@@ -112,6 +112,13 @@ void cleanup()
 int main(void)
 {
     load();
+
+    // PersistentStorage::set("a", "array", std::vector<int>({{1, 2, 3,4,5}}));
+    auto blocks = PersistentStorage::get("a", "array", std::vector<int>());
+    for (auto block : blocks)
+    {
+        std::cout << block << std::endl;
+    }
     CV::init(&screenWidth, &screenHeight, "Bolas Saltitantes do Rodrigo Appelt", /*anti-aliasing: */true, /*vsync: */true);
     CV::run();
     cleanup();

@@ -89,6 +89,71 @@ public:
         return value;
     }
 
+    template<typename T>
+    static void set(std::string container, std::string key, std::vector<T> value){
+        if(!isValidIdentifier(container, key)){
+            std::cout << "Invalid id!" << std::endl;
+            return;
+        }
+
+        if(value.size() > 65536){
+            std::cout << "Array too big: " << value.size() << std::endl;
+            return;
+        }
+
+        // create container if not exists yet
+        if(containers.find(container) == containers.end()){
+            containers[container] = new Container();
+        }
+
+        // if already exists, free
+        if(containers[container]->heap.find(key) != containers[container]->heap.end()){
+            delete[] (T*)containers[container]->heap[key];
+        }
+
+        T *array = new T[value.size()];
+        std::copy(value.begin(), value.end(), array);
+        uint32_t metadata = 0;
+        // highest 4 bits are array identifier 1010
+        metadata |= 0b1010 << 28;
+        // low 16 bits are array size
+        metadata |= value.size() & 0xFFFF;
+        // hightest 14 bits after identifier are item size
+        metadata |= (sizeof(T) & 0xFFF) << 16;
+        containers[container]->metadatas[array] = metadata;
+        containers[container]->heap[key] = array;
+        containers[container]->heapSizes[array] = value.size() * sizeof(T);
+    }
+
+    template<typename T>
+    static std::vector<T> get(std::string container, std::string key, std::vector<T>){
+        if(!isValidIdentifier(container, key)){
+            std::cout << "Invalid id!" << std::endl;
+            return {};
+        }
+
+        if(containers.find(container) == containers.end()){
+            return {};
+        }
+        if(containers[container]->heap.find(key) == containers[container]->heap.end()){
+            return {};
+        }
+        T* ptr = (T*)containers[container]->heap[key];
+        uint32_t metadata = containers[container]->metadatas[ptr];
+        // check array identifier
+        if((metadata >> 28) != 0b1010){
+            std::cout << "Not an array! Identifier was: " << (metadata >> 28) << ". Was supposed to be: "  << 0b1010 << "." << std::endl;
+            return {};
+        }
+        uint32_t elements = metadata & 0xFFFF;
+        uint32_t itemSize = (metadata >> 16) & 0xFFF;
+        if(itemSize != sizeof(T)){
+            std::cout << "Item size mismatch! Expected: " << sizeof(T) << ". Got: " << itemSize << "." << std::endl;
+        }
+        std::vector<T> value(elements);
+        std::copy(ptr, ptr+elements, value.begin());
+        return value;
+    }
 
     // T
     template<typename T>
