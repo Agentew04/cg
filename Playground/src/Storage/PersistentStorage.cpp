@@ -2,24 +2,22 @@
 #include <algorithm>
 #include <iterator>
 #include <iostream>
+#include <sstream>
+#include <vector>
+#include <string>
+#include <iomanip>
 
 #include "PersistentStorage.h"
 
 // variaveis estaticas
+std::vector<std::string> PersistentStorage::comments;
 std::string PersistentStorage::savePath = "";
-bool PersistentStorage::initialized = false;
 std::map<std::string, PersistentStorage::Container*> PersistentStorage::containers;
 
-void PersistentStorage::init(){
-    savePath = ".\\save-rodrigoappelt-t1.dat";
-    initialized = true;
-}
-
-void PersistentStorage::load(){
-    init();
-
+void PersistentStorage::load(std::string path){
     // o arquivo vai estar formatado
     // estilo ini
+    savePath = path;
     std::ifstream file(savePath);
 
     if(!file.is_open()){
@@ -32,6 +30,11 @@ void PersistentStorage::load(){
     std::string line;
     while(std::getline(file, line)){
         if(line.empty()){
+            continue;
+        }
+
+        if(line[0] == '#' || line[0] == ';'){
+            comments.push_back(line);
             continue;
         }
 
@@ -50,48 +53,36 @@ void PersistentStorage::load(){
             if(currentContainer.empty()){
                 continue;
             }
-            int div1Idx = line.find(':');
-            int div2Idx = line.find('=');
-            if(div1Idx == std::string::npos || div2Idx == std::string::npos){
+            uint32_t div1Idx = line.find(':');
+            uint32_t div2Idx = line.find('/');
+            uint32_t div3Idx = line.find('=');
+
+            if(div1Idx == std::string::npos || div2Idx == std::string::npos || div3Idx == std::string::npos){
                 continue;
             }
-            std::string key = line.substr(0, div1Idx);
-            std::string type = line.substr(div1Idx+1, div2Idx-div1Idx-1);
-            std::string value = line.substr(div2Idx+1);
 
-            if(type == "int"){
-                containers[currentContainer]->ints[key] = std::stoi(value);
-            }else if(type == "float"){
-                containers[currentContainer]->floats[key] = std::stof(value);
-            }else if(type == "vec2"){
-                int div3Idx = value.find(',');
-                if(div3Idx == std::string::npos){
-                    continue;
-                }
-                std::string x = value.substr(0, div3Idx);
-                std::string y = value.substr(div3Idx+1);
-                containers[currentContainer]->vec2s[key] = Vector2(std::stof(x), std::stof(y));
-            }else if(type == "vec3"){
-                int div3Idx = value.find(',');
-                int div4Idx = value.find(',', div3Idx+1);
-                if(div3Idx == std::string::npos || div4Idx == std::string::npos){
-                    continue;
-                }
-                std::string x = value.substr(0, div3Idx);
-                std::string y = value.substr(div3Idx+1, div4Idx-div3Idx-1);
-                std::string z = value.substr(div4Idx+1);
-                containers[currentContainer]->vec3s[key] = Vector3(std::stof(x), std::stof(y), std::stof(z));
-            }else{
-                continue;
+            std::string key = line.substr(0, div1Idx);
+            int typeSize = std::stoi(line.substr(div1Idx+1, div2Idx-div1Idx-1));
+            uint32_t metadata = std::stoull(line.substr(div2Idx+1, div3Idx-div2Idx-1), nullptr, 16);
+            std::string data = line.substr(div3Idx+1);
+
+
+            void* ptr = new uint8_t[typeSize];
+            containers[currentContainer]->heap[key] = ptr;
+            containers[currentContainer]->heapSizes[ptr] = typeSize;
+            containers[currentContainer]->metadatas[ptr] = metadata;
+
+            for(int i = 0; i < typeSize; i++){
+                std::string byte = data.substr(i*2, 2);
+                ((uint8_t*)ptr)[i] = std::stoi(byte, nullptr, 16);
             }
         }
     }
     file.close();
 }
 
-void PersistentStorage::save(){
-    init();
 
+void PersistentStorage::save(){
     // sobrescreve o arquivo
     std::ofstream file(savePath);
 
@@ -101,33 +92,71 @@ void PersistentStorage::save(){
         return;
     }
 
+    // write comments
+    for(auto &comment: comments){
+        file << comment << std::endl;
+    }
+
+    // write sections
     for(auto it = containers.begin(); it != containers.end(); it++){
         file << "[" << it->first << "]" << std::endl;
-        for(auto it2 = it->second->ints.begin(); it2 != it->second->ints.end(); it2++){
-            file << it2->first << ":int=" << it2->second << std::endl;
-        }
-        for(auto it2 = it->second->floats.begin(); it2 != it->second->floats.end(); it2++){
-            file << it2->first << ":float=" << it2->second << std::endl;
-        }
-        for(auto it2 = it->second->vec2s.begin(); it2 != it->second->vec2s.end(); it2++){
-            file << it2->first << ":vec2=" << it2->second.x << "," << it2->second.y << std::endl;
-        }
-        for(auto it2 = it->second->vec3s.begin(); it2 != it->second->vec3s.end(); it2++){
-            file << it2->first << ":vec3=" << it2->second.x << "," << it2->second.y << "," << it2->second.z << std::endl;
+        for(auto kvp : it->second->heap){
+            std::string key = kvp.first;
+            int size = it->second->heapSizes[kvp.second];
+            uint32_t metadata = it->second->metadatas[kvp.second];
+
+            if(kvp.second == nullptr){
+                continue;
+            }
+            if(size == 0){
+                continue;
+            }
+
+            file << kvp.first << ":" << size << "/";
+            file << std::hex << std::setw(2) << std::setfill('0')
+                << metadata
+                << std::dec << "=";
+
+            for(int i = 0; i < size; i++){
+                file << std::hex << std::setw(2) << std::setfill('0') << (int)((uint8_t*)kvp.second)[i];
+            }
+            file << std::dec << std::endl;
         }
     }
 }
 
 void PersistentStorage::reset(){
-    init();
     for(auto it = containers.begin(); it != containers.end(); it++){
-        it->second->ints.clear();
-        it->second->floats.clear();
-        it->second->vec2s.clear();
-        it->second->vec3s.clear();
         delete it->second;
     }
     containers.clear();
     save();
 }
+
+PersistentStorage::Container::~Container(){
+    for(auto it = heap.begin(); it != heap.end(); it++){
+        delete it->second;
+    }
+    heap.clear();
+    heapSizes.clear();
+}
+
+bool PersistentStorage::isValidIdentifier(std::string container, std::string key){
+    for(char c : container){
+        if(c == '[' || c == ']' || c == ':' || c == '=' || c == '/'
+            || !isalnum(c)){
+            return false;
+        }
+    }
+
+    for(char c : key){
+        if(c == '[' || c == ']' || c == ':' || c == '=' || c == '/'
+            || !isalnum(c)){
+            return false;
+        }
+    }
+    return true;
+}
+
+
 

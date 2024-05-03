@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "../Image/ImageManipulation.h"
-#include "../Vector2.h"
+#include "../Math/Vector2.h"
 #include "../Math/Matrix.h"
 
 /// @brief Classe responsavel por renderizar uma

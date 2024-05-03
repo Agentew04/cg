@@ -2,7 +2,7 @@
 #include <cstring>
 
 #include "ImageManipulation.h"
-#include "../Vector2.h"
+#include "../Math/Vector2.h"
 
 Image::Image(int width, int height){
     this->width = width;

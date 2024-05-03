@@ -15,7 +15,7 @@
 #include <GL/freeglut_ext.h> //callback da wheel do mouse.
 
 #define _USE_MATH_DEFINES
-#include <math.h>
+#include <cmath>
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,89 +23,83 @@
 #include <vector>
 
 #include "gl_canvas2d.h"
+#include "Math/Vector2.h"
+#include "Math/Vector3.h"
+#include "Math/Matrix.h"
 
-struct Bola{
-    Vector2 pos;
-    Vector2 direcao;
-    float velocidade;
-    float age;
+struct Square{
+    Vector2 vertices[4];
+
+    Square(Vector2 v0, Vector2 v1, Vector2 v2, Vector2 v3){
+        vertices[0] = v0;
+        vertices[1] = v1;
+        vertices[2] = v2;
+        vertices[3] = v3;
+    }
+
+    Square(){
+        vertices[0] = Vector2(0,0);
+        vertices[1] = Vector2(0,0);
+        vertices[2] = Vector2(0,0);
+        vertices[3] = Vector2(0,0);
+    }
+
+    Square(std::vector<Vector2> v){
+        for(int i=0; i<4; i++){
+            vertices[i] = v[i];
+        }
+    }
 };
-std::vector<Bola> bolas;
 
 //largura e altura inicial da tela . Alteram com o redimensionamento de tela.
 int screenWidth = 500, screenHeight = 500;
 Vector2 mousePos;
 
-float startTetha = 0.0f;
-Vector2 translation(0,0);
-
-Vector2 origem(screenWidth/2, screenHeight/2);
-float tamanhoCanhao = 75.0f;
 void update(float delta){
-    tamanhoCanhao = (origem - mousePos).magnitude();
-    std::cout << tamanhoCanhao;
-    int i=0;
-    for(auto &bola : bolas){
-        bola.age += delta;
-        bola.pos = bola.pos + bola.direcao * bola.velocidade;
-        bola.direcao.y = bola.direcao.y - delta*2;
 
-        if(bola.pos.x > screenWidth || bola.pos.x < 0
-           || bola.pos.y > screenHeight || bola.pos.y < 0){
-        }
-        i++;
-    }
 }
 
-void render(float delta)
-{
-    //CV::translate(origem);
-    CV::color(1,0,0);
 
 
-    Vector2 direcao = Vector2(mousePos-origem).normalized();
-    std::string txt = "Direcao: ("+std::to_string(direcao.x)+", "+std::to_string(direcao.y)+")";
-    CV::text(Vector2(100,100), txt.c_str());
-
-    // desenhar canhao
-    float alpha = acos(Vector2::right().dot(direcao))*180/M_PI;
-    txt = "Angulo: " + std::to_string(alpha) + " graus.";
-    CV::text(Vector2(100,120), txt.c_str());
-    CV::color(0,1,0);
-    CV::line(origem, (direcao*tamanhoCanhao)+origem);
-
-    // desenhar bolas
-    for(auto &bola : bolas){
-        CV::circle(bola.pos.x, bola.pos.y, 20, 50);
+Square translateSquare(Square sq, Vector2 offset){
+    Square newSq;
+    for(int i=0; i<4; i++){
+        newSq.vertices[i] = sq.vertices[i] + offset;
     }
-
-    Sleep(10); //nao eh controle de FPS. Somente um limitador de FPS.
+    return newSq;
 }
 
-void drawSaw(){
-    int steps = 15;
-    float stepSize = (M_PI*2)/steps;
-    float tetha = startTetha;
-    float tethaAnt = tetha;
-    float rTop = 125;
-    float rBot = 100;
-    float r = rTop;
-    Vector2 lastPoint(r*cos(tetha),r*sin(tetha));
-    for(int i=0; i<steps+1; i++){
-        // desenhar 2 segmentos,
-        //   um subindo
-        //   um descendo
-        float x = rTop*cos(tetha);
-        float y = rTop*sin(tetha);
-        CV::line(lastPoint, Vector2(x,y));
-        lastPoint = Vector2(x,y);
-        x = rBot*cos(tetha);
-        y = rBot*sin(tetha);
-        CV::line(lastPoint, Vector2(x,y));
-        lastPoint = Vector2(x,y);
-        tetha += stepSize;
+void drawAxis(){
+    CV::color(0,0,0);
+    // draw X
+    CV::line(Vector2(-screenWidth/2,0), Vector2(screenWidth/2,0));
+    // draw Y
+    CV::line(Vector2(0,-screenHeight/2), Vector2(0,screenHeight/2));
+}
+
+Square rotateSquare(Square sq, float radians){
+    Square newSq;
+    for(int i=0;i<4;i++){
+        Vector2 v = sq.vertices[i];
+        float x = std::cos(radians)*v.x - std::sin(radians)*v.y;
+        float y = std::sin(radians)*v.x + std::cos(radians)*v.y;
+        newSq.vertices[i] = Vector2(x,y);
     }
-    //startTetha+=0.04;
+    return newSq;
+}
+
+Square scaleSquare(Square sq, Vector2 factor){
+    Square newSq;
+    for(int i=0; i<4; i++){
+        newSq.vertices[i] = sq.vertices[i].multiply(factor);
+    }
+    return newSq;
+}
+
+void drawSquare(Square sq){
+    for(int i=0; i<4; i++){
+        CV::line(sq.vertices[i], sq.vertices[(i+1)%4]);
+    }
 }
 
 void cleanup(){
@@ -134,23 +128,97 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
 {
     mousePos = Vector2(x,y);
     if(state == 0){
-        //mouse down
-        Vector2 mid = Vector2(screenWidth/2, screenHeight/2);
-        Vector2 direcao = (mousePos-mid).normalized();
-        Bola b;
-        b.pos = mid;//+direcao*75.0f;
-        b.direcao = direcao;
-        b.velocidade = -5*tamanhoCanhao/75.0f;
-        b.age = 0;
-        bolas.push_back(b);
     }else if(state == 1){
         // mouse up
     }
 }
 
+void p1_2023_1(){
+    float x = 150, y = 100;
+    float l = 50;
+    float alpha = std::atan(y/x);
+    drawAxis();
+
+    Square original = translateSquare(
+        rotateSquare(
+            Square(std::vector<Vector2>{ {0,0}, {l,0}, {l,l}, {0,l}}),
+            alpha
+        ), Vector2(x,y)
+    );
+    CV::color(1,0,0);
+    drawSquare(original);
+
+    // mover pra origem
+    Square translated = translateSquare(original, Vector2(-x,-y));
+    CV::color(0,1,0);
+    drawSquare(translated);
+
+    // endireitar
+    Square rotated = rotateSquare(translated, -alpha);
+    CV::color(0,0,1);
+    drawSquare(rotated);
+
+    // escalar
+    Square scaled = scaleSquare(rotated, Vector2(0.6f, 0.6f));
+    CV::color(1,0,0);
+    drawSquare(scaled);
+
+    // volta pra posicao original
+
+    Square final = translateSquare(scaled, Vector2(x,y));
+    CV::color(0,1,0);
+    drawSquare(final);
+}
+
+void p1_2022_1(){
+    float l = 50;
+    float x = 100, y = 100;
+    float alpha = std::atan(y/(-x)) + M_PI - M_PI/2;
+    drawAxis();
+
+    Square original = Square(std::vector<Vector2>{ {-l,-l}, {0,-l}, {0,0}, {-l,0}});
+    CV::color(1,0,0);
+    drawSquare(original);
+
+    // mover pra origem
+    Square translated = translateSquare(original, Vector2(l,l));
+    CV::color(0,1,0);
+    drawSquare(translated);
+
+    // endireitar
+    Square rotated = rotateSquare(translated, alpha);
+    CV::color(0,0,1);
+    drawSquare(rotated);
+
+    // escalar
+    Square scaled = scaleSquare(rotated, Vector2(0.3f, 0.3f));
+    CV::color(1,0,0);
+    drawSquare(scaled);
+
+    // volta pra posicao original
+    Square final = translateSquare(scaled, Vector2(x,0));
+    CV::color(0,1,0);
+    drawSquare(final);
+}
+
+void p1_2021_1(){
+    
+}
+void render()
+{
+    CV::clear(1,1,1);
+    CV::translate(screenWidth/2, screenHeight/2);
+
+    // p1_2023_1();
+    p1_2022_1();
+
+
+    Sleep(10); //nao eh controle de FPS. Somente um limitador de FPS.
+}
+
 int main(void)
 {
-    CV::init(&screenWidth, &screenHeight, "Canvas2D - Custom Template", false);
+    CV::init(&screenWidth, &screenHeight, "Canvas2D - Custom Template", false, true);
     CV::run();
     cleanup();
 }

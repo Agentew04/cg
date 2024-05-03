@@ -3,248 +3,118 @@
 
 #include <string.h>
 #include <iostream>
+#include <vector>
 
-#include "../Vector2.h"
-#include "../Vector3.h"
+#include "Vector2.h"
+#include "Vector3.h"
 
 /// @brief Classe que implementa operacoes sobre matrizes
 class Matrix{
 public:
     /// @brief Cria nova matrix nxn
     /// @param n A dimensao da matriz
-    Matrix(int n){
-        this->n = n;
-        data = new float[n*n];
-        memset(data, 0, n*n*sizeof(float));
-    }
+    Matrix(size_t n);
 
     /// @brief Copia uma matriz
     /// @param m A matriz a ser copiada
-    Matrix(const Matrix &m){
-        this->n = m.n;
-        data = new float[n*n];
-        memcpy(data, m.data, n*n*sizeof(float));
-    }
+    Matrix(const Matrix &m);
 
     /// @brief Cria uma nova matriz nxn com dados
     /// @param n A dimensao da matriz
     /// @param data Os dados da matriz
-    Matrix(int n, float *data, bool dealloc = false){
-        this->n = n;
-        this->data = new float[n*n];
-        memcpy(this->data, data, n*n*sizeof(float));
-        if(dealloc){
-            delete[] data;
-        }
-    }
+    Matrix(size_t n, float *data, bool dealloc = false);
 
     /// @brief Destroi a matriz
-    ~Matrix(){
-        delete[] data;
-    }
+    ~Matrix();
 
     /// @brief Retorna o elemento em uma posicao
     /// @param i A coordenada i
     /// @param j A coordenada j
     /// @return O elemento na posicao i,j
-    float at(int i, int j) const{
-        if(i < 0 || i >= n || j < 0 || j >= n){
-            std::cout << "Matrix::at: Indice fora dos limites" << std::endl;
-            return 0;
-        }
-        return data[i*n + j];
-    }
+    float at(uint32_t i, uint32_t j) const;
+
+    /// @brief Seta um elemento na posicao i,j
+    /// @param i A coordenada i
+    /// @param j A coordenada j
+    /// @param val O valor a ser setado
+    void set(uint32_t i, uint32_t j, float val);
 
     /// @brief Retorna uma matriz identidade
     /// @param n o tamanho da matriz
     /// @return a matriz criada
-    static Matrix identity(int n){
-        float *data = new float[n*n];
-        memset(data, 0, n*n*sizeof(float));
-        for(int i = 0; i < n; i++){
-            data[i*n + i] = 1;
-        }
-        return Matrix(n, data);
-    }
+    static Matrix identity(size_t n);
 
     /// @brief Cria uma matriz de rotacao 2D
     /// @param angle Angulo em radianos
-    static Matrix rotation2D(float angle){
-        float data[] = {
-            (float)cos(angle), (float)-sin(angle),
-            (float)sin(angle), (float)cos(angle)
-        };
-        return Matrix(2, data);
-    }
+    static Matrix rotation2D(float angle);
+    /// @brief Cria uma matriz de rotacao 2D com coordenadas homogeneas
+    /// @param angle Angulo em radianos
+    static Matrix rotation2DHomo(float angle);
 
-    /// @brief Cria uma matriz de escala 2D
-    /// @param x Fator de escala em x
-    /// @param y Fator de escala em y
-    static Matrix translation2D(float x, float y){
-        float data[] = {
-            1, 0, x,
-            0, 1, y,
-            0, 0, 1
-}       ;
-        return Matrix(3, data);
-    }
+    /// @brief Cria uma matriz de translacao 2D
+    /// @param x Movimento no eixo x
+    /// @param y Movimento no eixo y
+    static Matrix translation2D(float x, float y);
 
-    static Matrix scale2D(float x, float y){
-        float data[] = {
-            x, 0,
-            0, y
-        };
-        return Matrix(2, data);
-    }
+    /// @brief Cria uma matriz de escala 2D 2x2
+    /// @param x O fator de escala no eixo x
+    /// @param y O fator de escala no eixo y
+    static Matrix scale2D(float x, float y);
+
+    /// @brief Cria uma matriz de escala 2D 3x3 com coordenadas homogeneas
+    /// @param x O fator de escala no eixo x
+    /// @param y O fator de escala no eixo y
+    static Matrix scale2DHomo(float x, float y);
 
     /// @brief Retorna a dimensao da matriz quadrada
-    int dim() const{
-        return n;
-    }
+    size_t dim() const;
 
     /// @brief Calcula o determinante da matriz
-    float det() const {
-        if(n==1){
-            return data[0];
-        }
-        if(n==2){
-            return data[0]*data[3] - data[1]*data[2];
-        }
-        // sarrus
-        if(n==3){
-            return data[0]*data[4]*data[8] + data[1]*data[5]*data[6] + data[2]*data[3]*data[7] - data[2]*data[4]*data[6] - data[1]*data[3]*data[8] - data[0]*data[5]*data[7];
-        }
-        // recursivo
-        float res = 0;
-        for(int i = 0; i < n; i++){
-            Matrix sub(n-1);
-            for(int j = 1; j < n; j++){
-                for(int k = 0; k < n; k++){
-                    if(k < i){
-                        sub.data[(j-1)*n + k] = data[j*n + k];
-                    }else if(k > i){
-                        sub.data[(j-1)*n + k-1] = data[j*n + k];
-                    }
-                }
-            }
-            res += data[i] * sub.det() * (i%2==0?1:-1);
-        }
-        return res;
-    }
+    float det() const;
 
     /// @brief Cria uma matriz transposta desta
-    Matrix transpose() const {
-        float *data = new float[n*n];
-        for(int i = 0; i < n; i++){
-            for(int j = 0; j < n; j++){
-                data[j*n + i] = this->data[i*n + j];
-            }
-        }
-        return Matrix(n, data, true);
-    }
+    Matrix transpose() const;
+
+    // /// @brief Calcula a matriz inversa desta
+    // Matrix inverse() const;
+
+    /// OPERADORES
 
     /// @brief Printa a matriz em uma stream
-    friend std::ostream& operator <<(std::ostream &os, const Matrix &m){
-        for(int i = 0; i < m.n; i++){
-            for(int j = 0; j < m.n; j++){
-                os << m.at(i,j) << " ";
-            }
-            os << std::endl;
-        }
-        return os;
-    }
+    friend std::ostream& operator <<(std::ostream &os, const Matrix &m);
 
     /// @brief Soma duas matrizes de mesmo tamanho termo a termo
-    Matrix operator +(const Matrix &m){
-        if(n != m.n){
-            std::cout << "Matrix::operator+: Matrizes de tamanhos diferentes" << std::endl;
-            return *this;
-        }
-        Matrix res(n);
-        for(int i = 0; i < n; i++){
-            for(int j = 0; j < n; j++){
-                res.data[i*n + j] = data[i*n + j] + m.data[i*n + j];
-            }
-        }
-        return res;
-    }
+    Matrix operator +(const Matrix &m);
+    Matrix& operator +=(const Matrix &m);
 
     /// @brief Subtrai duas matrizes termo a termo
-    Matrix operator -(const Matrix &m){
-        if(n != m.n){
-            std::cout << "Matrix::operator-: Matrizes de tamanhos diferentes" << std::endl;
-            return *this;
-        }
-        Matrix res(n);
-        for(int i = 0; i < n; i++){
-            for(int j = 0; j < n; j++){
-                res.data[i*n + j] = data[i*n + j] - m.data[i*n + j];
-            }
-        }
-        return res;
-    }
+    Matrix operator -(const Matrix &m);
+    /// @brief Multiplica cada termo da matrix por -1
+    Matrix operator -();
+    /// @brief Subtrai uma matriz de outra inplace
+    Matrix& operator -=(const Matrix &m);
 
     /// @brief Multiplica cada termo por um escalar a
-    Matrix operator *(const float a){
-        Matrix res(n);
-        for(int i = 0; i < n; i++){
-            for(int j = 0; j < n; j++){
-                res.data[i*n + j] = data[i*n + j] * a;
-            }
-        }
-        return res;
-    }
-
+    Matrix operator *(const float a);
+    /// @brief Multiplica cada termo por um escalar a inplace
+    Matrix& operator *=(const float a);
     /// @brief Multiplica duas matrizes
-    Matrix operator *(const Matrix &m){
-        if(n != m.n){
-            std::cout << "Matrix::operator*: Matrizes de tamanhos diferentes" << std::endl;
-            return *this;
-        }
-        Matrix res(n);
-        for(int i = 0; i < n; i++){
-            for(int j = 0; j < n; j++){
-                for(int k = 0; k < n; k++){
-                    res.data[i*n + j] += data[i*n + k] * m.data[k*n + j];
-                }
-            }
-        }
-        return res;
-    }
+    Matrix operator *(const Matrix &m);
+    /// @brief Multiplica duas matrizes inplace
+    Matrix &operator *=(const Matrix &m);
 
     /// @brief multiplica uma matriz 3x3 com um vector 3x1
-    Vector3 operator *(const Vector3 &v){
-        if(n != 3){
-            std::cout << "Matrix::operator*: Matriz nao 3x3" << std::endl;
-            return Vector3(0.0f, 0.0f, 0.0f);
-        }
-        Vector3 res;
-        for(int i = 0; i < 3; i++){
-            res.x += data[i*3 + 0] * v.x;
-            res.y += data[i*3 + 1] * v.y;
-            res.z += data[i*3 + 2] * v.z;
-        }
-        return res;
-    }
+    Vector3 operator *(const Vector3 &v);
 
     /// @brief Multiplica uma matriz 2x2 com um vector 2x1
-    Vector2 operator *(const Vector2 &v){
-        if(n != 2){
-            std::cout << "Matrix::operator*: Matriz nao 2x2" << std::endl;
-            return Vector2(0.0f, 0.0f);
-        }
-        Vector2 res;
-        for(int i = 0; i < 2; i++){
-            res.x += data[i*2 + 0] * v.x;
-            res.y += data[i*2 + 1] * v.y;
-        }
-        return res;
-    }
+    Vector2 operator *(const Vector2 &v);
 
-
+    /// @brief Multiplica uma matriz nxn com um vector nx1
+    std::vector<float> operator *(const std::vector<float> &v);
+    
 private:
     float *data;
-    int n;
+    size_t n;
 };
 
 #endif

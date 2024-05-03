@@ -4,8 +4,8 @@
 #include <vector>
 #include <map>
 
-#include "../Vector2.h"
-#include "../Vector3.h"
+#include "../Math/Vector2.h"
+#include "../Math/Vector3.h"
 
 /*
     Classe para desenhar graficos de linha e ponto.
@@ -40,7 +40,7 @@ public:
     ChartType type;
     std::vector<Series*> series;
     Vector2 pos,size;
-    
+
 private:
     void drawSeries(Series *series);
 };
