@@ -1,15 +1,19 @@
 #ifndef __APP_H__
 #define __APP_H__
 
+#include <vector>
+#include <string>
+
 #include "../Math/Vector2.h"
 #include "Game.h"
 #include "../Keyboard.h"
 #include "../UI/ButtonManager.h"
 #include "../UI/TextBox.h"
+#include "../Misc/Tuple.h"
 
 /// @brief Classe que vai guardar o estado atual
 /// da aplicacao.(qual menu esta, os dados do jogo,
-/// usuario, etc). 
+/// usuario, etc).
 /// Tambem serve de "desambiguacao" para os eventos
 /// (encaminha para o gerenciador da tela atual).
 class App {
@@ -37,9 +41,8 @@ private:
         //SHOP, // ignorar
         //RATING, // ignorar
         GAME, // feito
-        PAUSED, 
-        GAME_OVER,
-        POST_GAME_STATS
+        PAUSED,
+        GAME_OVER
     };
     MenuState currentMenu;
 
@@ -69,12 +72,14 @@ private:
     ButtonManager pauseButtons;
     ButtonManager gameButtons;
     ButtonManager gameOverButtons;
-    ButtonManager postGameStatsButtons;
 
     // user data
-    // int coins; <-     precisamos aqui? talvez soh no 
+    // int coins; <-     precisamos aqui? talvez soh no
     // int highscore;    persistent storage ja serve!
     std::string username;
+
+    std::vector<Tuple<std::string, int>> highscoresBuffer;
+    bool highscoresFetched = false;
 };
 
 #endif

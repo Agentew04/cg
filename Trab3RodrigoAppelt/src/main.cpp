@@ -1,15 +1,4 @@
-/*********************************************************************
-// Canvas para desenho, criada sobre a API OpenGL. Nao eh necessario conhecimentos de OpenGL para usar.
-//  Autor: Cesar Tadeu Pozzer
-//         05/2024
-//
-//  Pode ser utilizada para fazer desenhos, animacoes, e jogos simples.
-//  Tem tratamento de mouse e teclado
-//  Estude o OpenGL antes de tentar compreender o arquivo gl_canvas.cpp
-//
-//  Versao 2.0
-//
-// *********************************************************************/
+
 
 #include <GL/glut.h>
 #include <GL/freeglut_ext.h> //callback da wheel do mouse.
@@ -29,6 +18,7 @@
 #include "Fonts/FontManager.h"
 #include "Misc/TaskManager.h"
 #include "Misc/SoundPlayer.h"
+#include "Web/WebManager.h"
 
 
 // largura e altura inicial da tela . Alteram com o redimensionamento de tela.
@@ -107,18 +97,12 @@ void cleanup()
     ObjLoader::free();
     delete app;
     PersistentStorage::save();
+    WebManager::free();
 }
 
 int main(void)
 {
     load();
-
-    // PersistentStorage::set("a", "array", std::vector<int>({{1, 2, 3,4,5}}));
-    auto blocks = PersistentStorage::get("a", "array", std::vector<int>());
-    for (auto block : blocks)
-    {
-        std::cout << block << std::endl;
-    }
     CV::init(&screenWidth, &screenHeight, "Bolas Saltitantes do Rodrigo Appelt", /*anti-aliasing: */true, /*vsync: */true);
     CV::run();
     cleanup();

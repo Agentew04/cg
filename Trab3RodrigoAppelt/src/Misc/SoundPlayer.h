@@ -11,7 +11,9 @@
 /// @remarks Consegue tocar apenas um audio
 /// por vez. Para tocar mais de um audio ao
 /// mesmo tempo, portar o codigo para usar
-/// Direct Audio com win32!
+/// Direct Audio com win32! Se quiser desabilitar
+/// a funcionalidade por completo, descomente a
+/// linha #define DISABLE_SOUND no arquivo SoundPlayer.cpp
 class SoundPlayer{
 public:
 

@@ -68,7 +68,6 @@ void TextBox::render(){
     Vector3 background, border;
     Vector3 foreground = style->foreground;
     if(style == nullptr){
-        std::cout << "No style set for TextBox" << std::endl;
         return;
     }
     style->getState(currentState, &background, &border);

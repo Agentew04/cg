@@ -5,6 +5,7 @@
 #include "../gl_canvas2d.h"
 #include "../Storage/PersistentStorage.h"
 #include "../3D/ObjLoader.h"
+#include "../Web/WebManager.h"
 
 App::App(int *scrW, int *scrH)
     :
@@ -36,6 +37,43 @@ void App::update(float delta)
     if(currentMenu == MenuState::GAME){
         game.update(delta);
         if(game.isGameOver()){
+            // primeiro frame que ele perdeu.
+            // enviar o highscore para servidor
+            bool success = false;
+            WebManager::post(
+                "ballsbounce.rodrigoappelt.com",
+                "/highscores",
+                {
+                    {"name", username},
+                    {"score", std::to_string(game.getScore())},
+                    {"uniqueid", std::to_string(PersistentStorage::get<int>("user","uniqueid",0))}
+                },
+                &success
+            );
+
+            if(!success){
+                // nao consegui enviar pro server
+            }
+
+            // fetch highscores
+            success = false;
+            auto res = WebManager::get(
+                "ballsbounce.rodrigoappelt.com",
+                "/highscores",
+                {
+                    { "maxEntries", "10"}
+                },
+                &success
+            );
+            if(success){
+                highscoresBuffer.clear();
+                auto arr = WebManager::fromJsonArray(res);
+                for(auto obj : arr){
+                    highscoresBuffer.push_back({obj["name"], std::stoi(obj["score"])});
+                }
+                highscoresFetched = true;
+            }
+
             currentMenu = MenuState::GAME_OVER;
         }
     }
@@ -97,9 +135,6 @@ void App::mouseUp()
     case MenuState::GAME_OVER:
         gameOverButtons.mouseUp();
         break;
-    case MenuState::POST_GAME_STATS:
-        postGameStatsButtons.mouseUp();
-        break;
     }
 }
 
@@ -123,9 +158,6 @@ void App::mouseDown()
         break;
     case MenuState::GAME_OVER:
         gameOverButtons.mouseDown();
-        break;
-    case MenuState::POST_GAME_STATS:
-        postGameStatsButtons.mouseDown();
         break;
     }
 }
@@ -152,9 +184,6 @@ void App::updateMousePos(Vector2 pos)
     case MenuState::GAME_OVER:
         gameOverButtons.updateMousePos(pos);
         break;
-    case MenuState::POST_GAME_STATS:
-        postGameStatsButtons.updateMousePos(pos);
-        break;
     }
 }
 
@@ -179,10 +208,6 @@ void App::render()
         break;
     case MenuState::GAME_OVER:
         renderGameOver();
-        break;
-    case MenuState::POST_GAME_STATS:
-        // draw end game stats, pb, etc
-        renderPostGameStats();
         break;
     }
 }
@@ -241,17 +266,84 @@ void App::renderPauseMenu()
 
 void App::renderGameOver()
 {
-    // draw game over
+    // draw post game screen
     CV::clear(Vector3::fromHex(0x1D1E30));
-    CV::translate(*screenWidth/2, *screenHeight/2);
-    CV::text(0,0,"Game Over",GLUT_BITMAP_HELVETICA_18, TextAlign::CENTER);
-}
 
-void App::renderPostGameStats()
-{
-    // draw post game stats
-}
+    // draw left panel
+    CV::translate(Vector2::zero());
+    CV::color(Vector3::fromHex(0x242535)); // shadow
+    CV::rectFill(Vector2(1* *screenWidth/9+15, 1* *screenHeight/7+15), Vector2(4* *screenWidth/9+15, 6* *screenHeight/7+15));
+    CV::color(Vector3::fromHex(0x383947)); // bg
+    CV::rectFill(Vector2(1* *screenWidth/9, 1* *screenHeight/7), Vector2(4* *screenWidth/9, 6* *screenHeight/7));
+    CV::translate(Vector2(1* *screenWidth/9, 1* *screenHeight/7));
+    // draw game over and stats
+    CV::color(Vector3::fromHex(0xFFFFFF));
+    CV::text(
+        1.5* *screenWidth/9,
+        0.5* *screenHeight/7,
+        "GAME OVER",
+        GLUT_BITMAP_HELVETICA_18,
+        TextAlign::CENTER
+    );
+    CV::text(
+        1.5* *screenWidth/9,
+        2* *screenHeight/7,
+        ("Score: " + std::to_string(game.getScore())).c_str(),
+        GLUT_BITMAP_HELVETICA_18,
+        TextAlign::CENTER
+    );
+    CV::text(
+        1.5* *screenWidth/9,
+        2.5* *screenHeight/7,
+        ("Highscore: " + std::to_string(PersistentStorage::get<int>("user", "highscore",0))).c_str(),
+        GLUT_BITMAP_HELVETICA_18,
+        TextAlign::CENTER
+    );
 
+
+    // draw right panel
+    CV::translate(Vector2::zero());
+    CV::color(Vector3::fromHex(0x242535));
+    CV::rectFill(Vector2(5* *screenWidth/9+15, 1* *screenHeight/7+15), Vector2(8* *screenWidth/9+15, 6* *screenHeight/7+15));
+    CV::color(Vector3::fromHex(0x383947));
+    CV::rectFill(Vector2(5* *screenWidth/9, 1* *screenHeight/7), Vector2(8* *screenWidth/9, 6* *screenHeight/7));
+    CV::translate(Vector2(5* *screenWidth/9, 1* *screenHeight/7));
+    // draw highscores panel
+    CV::color(Vector3::fromHex(0xFFFFFF));
+    CV::text(
+        1.5* *screenWidth/9,
+        0.5* *screenHeight/7,
+        "Placar de Lideres",
+        GLUT_BITMAP_HELVETICA_18,
+        TextAlign::CENTER
+    );
+    if(!highscoresFetched){
+        CV::text(
+            1.5* *screenWidth/9,
+            3* *screenHeight/7,
+            "Nao foi possivel carregar\nEsta sem internet?",
+            GLUT_BITMAP_HELVETICA_18,
+            TextAlign::CENTER
+        );
+    }else{
+        // draw highscore list
+        int i = 0;
+        for(auto score : highscoresBuffer){
+            std::string line = std::to_string(i+1) + ". " + score.first + ": " + std::to_string(score.second);
+            CV::text(
+                1* *screenWidth/9,
+                (0.5+((i+1)/2.0))* *screenHeight/7, //comeca em 1, sobe 0.5 a cada linha
+                line.c_str(),
+                GLUT_BITMAP_HELVETICA_18,
+                TextAlign::LEFT
+            );
+            i++;
+        }
+    }
+
+    // draw buttons
+    gameOverButtons.draw();
+}
 
 // ENDREGION RENDER
 
@@ -267,9 +359,8 @@ void App::submitButtons(){
             return Vector2(200, 50);
         },
         UIPlacement::CENTER,
-        "Play",
+        "Jogar",
         [this](Button*){
-            std::cout << "Play button clicked" << std::endl;
             if(username == ""){
                 currentMenu = MenuState::IDENTIFICATION;
             }else{
@@ -280,6 +371,25 @@ void App::submitButtons(){
     mainmenuPlay->style = ButtonStyle::FlatLightBlue();
     mainMenuButtons.registerButton(mainmenuPlay);
 
+    auto mainmenuContinue = new Button(
+        [&](){
+            return Vector2((*screenWidth)/2, 8*(*screenHeight)/11);
+        },
+        [](){
+            return Vector2(200, 50);
+        },
+        UIPlacement::CENTER,
+        "Continuar",
+        [this](Button*){
+            // checar se realmente tem jogo salvo
+            if(PersistentStorage::get("game", "hasSavedGame", 0) == 1){
+                game.loadState();
+                currentMenu = MenuState::GAME;
+            }
+        }
+    );
+    mainmenuContinue->style = ButtonStyle::FlatLightBlue();
+    mainMenuButtons.registerButton(mainmenuContinue);
 
     idTextBox = new TextBox(
         [&](){
@@ -301,13 +411,12 @@ void App::submitButtons(){
             return Vector2(200, 50);
         },
         UIPlacement::CENTER,
-        "Play",
+        "CONTINUAR",
         [this](Button*){
             if(idTextBox->getText() == ""){
                 return;
             }
             PersistentStorage::set<std::string>("user","name",idTextBox->getText());
-            std::cout << "Play button clicked" << std::endl;
             currentMenu = MenuState::GAME;
         }
     );
@@ -356,8 +465,10 @@ void App::submitButtons(){
             return Vector2(*screenWidth/7, (*screenHeight)/8-10);
         },
         UIPlacement::CENTER,
-        "MENU INICIAL",
+        "MENU INICIAL(salvar)",
         [&](Button*){
+            game.saveState();
+            PersistentStorage::set("game", "hasSavedGame", 1);
             game.reset();
             currentMenu = MenuState::MAIN_MENU;
         }
@@ -366,6 +477,39 @@ void App::submitButtons(){
     pauseButtons.registerButton(mainMenuPauseMenu);
 
     // game over menu
+    auto mainMenuGameOver = new Button(
+        [&](){
+            return Vector2(2.5* *screenWidth/9, 6*(*screenHeight)/7 - 15);
+        },
+        [&](){
+            return Vector2(1* *screenWidth/9, 0.5* *screenHeight/7);
+        },
+        UIPlacement::BOTTOM_CENTER,
+        "MENU INICIAL",
+        [&](Button*){
+            game.reset();
+            currentMenu = MenuState::MAIN_MENU;
+        }
+    );
+    mainMenuGameOver->style = ButtonStyle::FlatGreen();
+    gameOverButtons.registerButton(mainMenuGameOver);
+
+    auto retryGameOver = new Button(
+        [&](){
+            return Vector2(6.5* *screenWidth/9, 6*(*screenHeight)/7 - 15);
+        },
+        [&](){
+            return Vector2(1* *screenWidth/9, 0.5* *screenHeight/7);
+        },
+        UIPlacement::BOTTOM_CENTER,
+        "REINICIAR",
+        [&](Button*){
+            game.reset();
+            currentMenu = MenuState::GAME;
+        }
+    );
+    retryGameOver->style = ButtonStyle::FlatLightBlue();
+    gameOverButtons.registerButton(retryGameOver);
     // play again button
     // main menu button
 }

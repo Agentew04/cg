@@ -45,11 +45,6 @@ void ObjLoader::load(const std::string& filename, const std::string& id) {
     obj->faces = faces;
     objFiles[id] = obj;
     file.close();
-    // imprimir mensagem de diagnostico quando carrega um obj
-    // *util para debug de lazy loading das fontes
-    // std::cout << "Loaded " << filename << " as \"" << id << "\". "
-    //     << std::to_string(obj->vertices.size()) << " vertices and " 
-    //     << std::to_string(obj->faces.size()) << " faces." << std::endl;
 }
 
 void ObjLoader::free() {

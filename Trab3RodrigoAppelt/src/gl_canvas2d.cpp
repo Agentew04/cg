@@ -106,12 +106,21 @@ void CV::line(Vector2 p1, Vector2 p2, float width)
 }
 
 void CV::lineDashed(Vector2 p1, Vector2 p2, float segmentLength, float width){
-    int segments = (int)((p1.distance(p2) / segmentLength)/2);
-    Vector2 delta = p1 - p2;
-    Vector2 lnsgm = Vector2(p1.x / segments, p2.y / segments);
+    float distance = sqrt(pow(p2.x - p1.x, 2) + pow(p2.y - p1.y, 2));
+    int numSegments = distance / segmentLength;
 
-    for(int i=0;i<segments;i++){
-        line(p1 + (lnsgm*i), p1 + (lnsgm*(i+1)), width);
+    Vector2 segmentStart = p1;
+    Vector2 segmentEnd;
+
+    for (int i = 0; i < numSegments; ++i) {
+        segmentEnd.x = p1.x + (p2.x - p1.x) * (i + 1) / numSegments;
+        segmentEnd.y = p1.y + (p2.y - p1.y) * (i + 1) / numSegments;
+
+        if (i % 2 == 0) {
+            line(segmentStart, segmentEnd, width);
+        }
+
+        segmentStart = segmentEnd;
     }
 }
 

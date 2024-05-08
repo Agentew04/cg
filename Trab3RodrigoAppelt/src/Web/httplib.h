@@ -7,7 +7,7 @@
 
 // Rodrigo Appelt: acho q n funciona sem a linha abaixo
 // e tbm a dependencia 'ws2_32' no Code::Blocks
-#define _WIN32_WINNT 0x501
+//#define _WIN32_WINNT 0x501
 
 #ifndef CPPHTTPLIB_HTTPLIB_H
 #define CPPHTTPLIB_HTTPLIB_H

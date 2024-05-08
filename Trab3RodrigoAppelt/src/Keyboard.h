@@ -1,6 +1,8 @@
 #ifndef __KEYBOARD_H__
 #define __KEYBOARD_H__
 
+// TODO: substituir typedef por um enum class se necessario
+
 typedef int Key;
 
 #define ESC ((Key)27)

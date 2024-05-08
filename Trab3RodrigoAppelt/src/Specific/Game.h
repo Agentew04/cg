@@ -27,6 +27,11 @@ public:
 
     bool isGameOver();
 
+    int getScore();
+
+    void saveState();
+    void loadState();
+
     // event forwarding
     void update(float delta);
     void render();
@@ -82,6 +87,7 @@ private:
     // funcoes para gerenciar a colisao melhor
     Block* getBlockAt(Vector2 pos);
     bool processCollisions(Ball& ball, Block& block);
+    void defineGameOver();
 };
 
 #endif

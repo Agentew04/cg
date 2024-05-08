@@ -59,7 +59,6 @@ UIManager::UIManager(){
 }
 
 UIManager::~UIManager(){
-    std::cout << "Deleting UI Manager" << std::endl;
     for(auto chart : this->charts){
         delete chart;
     }

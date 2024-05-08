@@ -25,7 +25,6 @@ void ProgressRing::render()
     CV::translate(Vector2::zero());
     int vert = vertices.size()-2;
 
-    std::cout << vert << " " << vert*value << " " << std::round(vert * value) << std::endl;
     vert = (int)std::round(vert * value);
     CV::triangleFan(vertices, vert+2);
 }

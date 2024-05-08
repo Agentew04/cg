@@ -100,7 +100,6 @@ void ButtonStyle::freeStyles(){
     if(styleObserverCount > 0){
         return;
     }
-    std::cout << "Clearing all Button styles" << std::endl;
     if(windows10Style != nullptr){
         delete windows10Style;
         windows10Style = nullptr;

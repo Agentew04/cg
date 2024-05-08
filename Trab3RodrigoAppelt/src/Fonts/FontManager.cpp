@@ -63,9 +63,6 @@ void FontManager::load(CustomFont font)
                     maxY = v.y;
                 }
             }
-            if(i == 1){
-                std::cout << "minX: " << minX << " maxX: " << maxX << " minY: " << minY << " maxY: " << maxY << std::endl;
-            }
             width = maxX - minX;
             height = maxY - minY;
             glyphSize[std::make_tuple(font, c)] = std::make_tuple(width, height);

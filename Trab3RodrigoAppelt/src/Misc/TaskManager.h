@@ -23,6 +23,7 @@ public:
         AMOUNT
     };
 
+    /// @brief A estrutura interna de uma Tarefa
     struct Task {
         std::function<void()> task;
         TaskType type;
