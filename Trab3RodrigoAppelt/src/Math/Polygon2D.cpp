@@ -268,7 +268,7 @@ bool Polygon2D::pointInside(const Vector2 &point) const
     return c;
 }
 
-Collision Polygon2D::intersects(const Shape2D &shape, bool ignoreCache) const
+Collision Polygon2D::intersects(const Shape2D&, bool) const
 {
     // TODO consertar isso, por algum motivo n passa nos testes
     std::cout << "not implemented polygon collision" << std::endl;

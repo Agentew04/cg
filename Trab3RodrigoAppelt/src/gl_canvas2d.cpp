@@ -412,7 +412,7 @@ void CV::triangleFan(float vx[], float vy[], int n_elems)
 
 void CV::triangleFan(std::vector<Vector2> vertices, uint32_t count)
 {
-    int min = count;
+    uint32_t min = count;
     if (vertices.size() < count)
     {
         min = vertices.size();

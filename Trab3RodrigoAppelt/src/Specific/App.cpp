@@ -40,6 +40,8 @@ void App::update(float delta)
             // primeiro frame que ele perdeu.
             // enviar o highscore para servidor
             bool success = false;
+            PersistentStorage::set("user", "highscore", game.getScore()); // vai sobrepor oq o game escreveu mas azar
+            PersistentStorage::set("game", "hasSavedGame", 0);
             WebManager::post(
                 "ballsbounce.rodrigoappelt.com",
                 "/highscores",

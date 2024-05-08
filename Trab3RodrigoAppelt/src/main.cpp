@@ -1,4 +1,80 @@
+/*
 
+Trabalho 3 (Balls Bounce) - Computacao Grafica
+Autor: Rodrigo Appelt
+Matricula: 202210244
+
+Features Implementadas:
+- Menu principal
+- Placar de lideres online
+- Menu de pause
+- Salvamento em disco da partida atual
+- Efeitos de audio
+- Modo raio x
+- Efeitos de explosao ao destruir bloco
+- Carregamento de arquivos 3D
+- Controle de Anti-Aliasing na Canvas2D
+- Controle de VSync na Canvas2D
+
+
+Manual de Uso:
+- Apos abrir a aplicacao, clicar em jogar ou
+  carregar
+  - se nao houver partida salva, o carregar nao fara nada
+- Durante o jogo, use o mouse para mirar a direcao de lancament
+  e clique para comecar a lancar as bolinhas
+- Clique na tecla 'w' para mudar o modo raio x
+- Clique ESC para pausar/despausar o jogo.
+  - Clique em continuar para voltar ao jogo
+  - Clique em reiniciar para desistir da partida atual
+  - Clique em menu principal para salvar o estado da partida
+- No jogo, se algum bloco passar da linha pontilhada, voce perde
+- No menu de game over, pode ver:
+  - Sua pontuacao atual
+  - Sua melhor pontuacao
+  - O placar de lideres online. 
+- No menu de game over, tem dois botoes para voltar ao menu
+  principal e para tentar novamente
+
+Observacoes:
+- Caso alguma funcionalidade esteja impedindo o trabalho de 
+  compilar ou precise ser desabilitada, ha alguns defines 
+  para desabilitar funcoes especificas:
+
+  - Em Web/WebManager.cpp:L10 (DISABLE_WEB)
+    - Para tentar corrigir algum problema com relacao a link
+      da httplib, tenha certeza de incluir a flag -lws2_32.
+    - Nos arquivos(esquerda), botao direito no projeto
+      'Canvas 2D' > Properties > Project's build options >
+      > Linker Settings > Link Libraries
+      - Adicionar 'ws2_32' na lista da esquerda
+
+  - Em Misc/SoundPlayer.cpp:L9 (DISABLE_SOUND)
+    - Para tentar corrigir algum problema com relacao a link
+      da windows.h(PlaySound), tenha certeza de incluir a 
+      flag -lwinmm
+    - Nos arquivos(esquerda), botao direito no projeto
+      'Canvas 2D' > Properties > Project's build options >
+      > Linker Settings > Link Libraries
+      - Adicionar 'winmm' na lista da esquerda
+
+  - Em gl_canvas2d.cpp:L27 (DISABLE_VSYNC)
+    - Descomentando essa linha, desabilita-se o controle
+    total de V-Sync do usuario.
+
+  - Em gl_canvas2d.cpp:L28 (DISABLE_WIREFRAME)
+    - Descomentando essa linha, desabilita-se o uso
+    do OpenGL para desenhar os poligonos como wireframes.
+
+  - Em gl_canvas2d.cpp:L29 (DISABLE_ANTI_ALIASING)
+    - Descomentando essa linha, desabilita-se a possibilidade
+    de controlar o estado do anti-aliasing da aplicacao.
+
+- O codigo fonte atualizado sera disponibilizado em: 
+  https://github.com/Agentew04/cg/tree/main/Trab3RodrigoAppelt
+  apos o fim da disciplina(a fim de evitar plagios)
+
+*/
 
 #include <GL/glut.h>
 #include <GL/freeglut_ext.h> //callback da wheel do mouse.
