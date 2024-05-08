@@ -35,7 +35,7 @@
 			<Add option="-Wall" />
 			<Add option="-std=c++17" />
 			<Add option="-fexceptions" />
-			<Add option="-DPHYSICS_DEBUG=1" />
+			<Add option="-DPHYSICS_DEBUG=0" />
 			<Add directory="../include" />
 		</Compiler>
 		<Linker>
@@ -49,10 +49,6 @@
 		<Unit filename="src/3D/ObjLoader.h" />
 		<Unit filename="src/Fonts/FontManager.cpp" />
 		<Unit filename="src/Fonts/FontManager.h" />
-		<Unit filename="src/Image/Bmp.h" />
-		<Unit filename="src/Image/ImageManipulation.cpp" />
-		<Unit filename="src/Image/ImageManipulation.h" />
-		<Unit filename="src/Image/bmp.cpp" />
 		<Unit filename="src/Keyboard.h" />
 		<Unit filename="src/Math/Matrix.cpp" />
 		<Unit filename="src/Math/Matrix.h" />
