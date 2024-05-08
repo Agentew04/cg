@@ -36,6 +36,8 @@ e a facilidade de desenvolvimento, estão:
   informações de depuração por um tempo na tela.
 * **ParticleManager:** Um gerenciador de partículas que usa objetos 3D para criar efeitos
   especiais.
+* **WebManager:** Uma classe para simplificar o envio de requisições HTTP usando a biblioteca
+  [httplib](https://github.com/Agentew04/cg/tree/main/Trab3RodrigoAppelt).
 
 E algumas bibliotecas externas pequenas embutidas direto no código:
 * ~**schrift.c:** Usado para carregar arquivos .ttf. Não utilizado ainda~
