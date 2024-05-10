@@ -40,18 +40,18 @@ void UIManager::remove(Chart *chart){
     }
 }
 
-void UIManager::add(ImageRenderer *img){
-    this->images.push_back(img);
-}
+//void UIManager::add(ImageRenderer *img){
+//    this->images.push_back(img);
+//}
 
-void UIManager::remove(ImageRenderer *img){
-    for(auto it = this->images.begin(); it != this->images.end(); it++){
-        if(*it == img){
-            this->images.erase(it);
-            return;
-        }
-    }
-}
+//void UIManager::remove(ImageRenderer *img){
+//    for(auto it = this->images.begin(); it != this->images.end(); it++){
+//        if(*it == img){
+//            this->images.erase(it);
+//            return;
+//        }
+//    }
+//}
 
 
 UIManager::UIManager(){
@@ -71,9 +71,9 @@ void UIManager::draw(){
     for(auto chart : this->charts){
         chart->draw();
     }
-    for(auto img : this->images){
-        img->draw();
-    }
+    //for(auto img : this->images){
+        //img->draw();
+    //}
 }
 
 void UIManager::updateMousePos(Vector2 mousePos){

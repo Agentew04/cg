@@ -4,7 +4,7 @@
 
 #include "../gl_canvas2d.h"
 
-ParticleManager::ParticleManager(int seed) : 
+ParticleManager::ParticleManager(int seed) :
     gravity(0, +9.81*50),
     rng(seed) {}
 
@@ -15,15 +15,15 @@ void ParticleManager::spawn(ObjFile *file, uint32_t count, Vector2 initialPos, V
     spn.scale = scale;
 
     std::uniform_int_distribution<uint32_t> colorsDistrib(0, colors.size()-1);
-    std::uniform_real_distribution<float> ttlRng(0, ttl*0.3);    
+    std::uniform_real_distribution<float> ttlRng(0, ttl*0.3);
     std::uniform_real_distribution<float> forceRng(0.7,1.25);
     std::uniform_real_distribution<float> angleRng(0.9, 1.1);
 
-    for(int i=0; i<count; i++){
+    for(uint32_t i=0; i<count; i++){
         ParticleSpawn::Particle particle;
         particle.position = initialPos;
         float actualForce = force*forceRng(rng);
-        
+
         float step = (2*3.1415)/count;
         float angle = (step*i) * angleRng(rng);
         float x = actualForce * std::cos(angle);
@@ -57,7 +57,7 @@ void ParticleManager::update(float delta){
             particle.life += delta;
         }
     }
-    
+
     for(auto it=particleSpawns.begin(); it<particleSpawns.end(); it++){
         if(it->particles.size() == 0){
             particleSpawns.erase(it);

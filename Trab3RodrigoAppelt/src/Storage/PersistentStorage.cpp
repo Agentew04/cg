@@ -135,7 +135,10 @@ void PersistentStorage::reset(){
 
 PersistentStorage::Container::~Container(){
     for(auto it = heap.begin(); it != heap.end(); it++){
-        delete it->second;
+        //delete it->second;
+        // delete void* eh indefinido. Precisaria de um rework para ajustar isto!
+        // pelo menos isso so eh chamado no fim da aplicacao
+        free(it->second);
     }
     heap.clear();
     heapSizes.clear();

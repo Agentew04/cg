@@ -89,8 +89,6 @@
 		<Unit filename="src/UI/CheckBoxManager.h" />
 		<Unit filename="src/UI/CursorManager.cpp" />
 		<Unit filename="src/UI/CursorManager.h" />
-		<Unit filename="src/UI/ImageRenderer.cpp" />
-		<Unit filename="src/UI/ImageRenderer.h" />
 		<Unit filename="src/UI/ProgressRing.cpp" />
 		<Unit filename="src/UI/ProgressRing.h" />
 		<Unit filename="src/UI/Slider.cpp" />

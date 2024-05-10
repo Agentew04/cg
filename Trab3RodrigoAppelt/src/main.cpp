@@ -95,6 +95,7 @@ Observacoes:
 #include "Misc/TaskManager.h"
 #include "Misc/SoundPlayer.h"
 #include "Web/WebManager.h"
+#include "UI/CursorManager.h"
 
 
 // largura e altura inicial da tela . Alteram com o redimensionamento de tela.
@@ -109,12 +110,14 @@ void update(float delta)
 
 void render()
 {
+    CursorManager::startFrame();
     app->render();
 
     CV::translate(Vector2(0,0));
     CV::color(1,1,1);
     CV::text(screenWidth,25, ("FPS: " + std::to_string((int)std::round(CV::fps()))).c_str(), TextAlign::RIGHT);
     TaskManager::update();
+    CursorManager::applyCursor();
 }
 
 // funcao chamada toda vez que uma tecla for pressionada.
@@ -174,6 +177,7 @@ void cleanup()
     delete app;
     PersistentStorage::save();
     WebManager::free();
+    CursorManager::freeResources();
 }
 
 int main(void)
