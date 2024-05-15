@@ -10,8 +10,13 @@ Features Implementadas:
 - Menu de pause
 - Salvamento em disco da partida atual
 - Efeitos de audio
-- Modo raio x
 - Efeitos de explosao ao destruir bloco
+- Efeitos em colisao de bolinhas
+- Powerups
+  - Laser(Horizontal e Vertical)
+  - Bola Extra
+- Progressao de niveis
+- Modo raio x
 - Carregamento de arquivos 3D
 - Controle de Anti-Aliasing na Canvas2D
 - Controle de VSync na Canvas2D
@@ -20,8 +25,8 @@ Features Implementadas:
 Manual de Uso:
 - Apos abrir a aplicacao, clicar em jogar ou
   carregar
-  - se nao houver partida salva, o carregar nao fara nada
-- Durante o jogo, use o mouse para mirar a direcao de lancament
+  - se nao houver partida salva anterior, o carregar nao fara nada
+- Durante o jogo, use o mouse para selecionar a direcao de lancamento
   e clique para comecar a lancar as bolinhas
 - Clique na tecla 'w' para mudar o modo raio x
 - Clique ESC para pausar/despausar o jogo.
@@ -105,12 +110,12 @@ App *app;
 
 void update(float delta)
 {
+    CursorManager::startFrame();
     app->update(delta);
 }
 
 void render()
 {
-    CursorManager::startFrame();
     app->render();
 
     CV::translate(Vector2(0,0));
@@ -165,9 +170,12 @@ void load(){
     ObjLoader::load("./Trab3RodrigoAppelt/models/music.3d", "music");
     ObjLoader::load("./Trab3RodrigoAppelt/models/pause.3d", "pause");
     ObjLoader::load("./Trab3RodrigoAppelt/models/star.3d", "star");
+    ObjLoader::load("./Trab3RodrigoAppelt/models/collisionParticle.3d", "collisionParticle");
     ObjLoader::load("./Trab3RodrigoAppelt/models/powerupBall.3d", "powerupBall");
+    ObjLoader::load("./Trab3RodrigoAppelt/models/powerupLaser.3d", "powerupLaser");
     SoundPlayer::load("./Trab3RodrigoAppelt/audio/ballHit1.wav", "ballHit");
     SoundPlayer::load("./Trab3RodrigoAppelt/audio/ballHit2.wav", "ballExit");
+    SoundPlayer::load("./Trab3RodrigoAppelt/audio/laserZap.wav", "laserZap");
     app = new App(&screenWidth, &screenHeight);
 }
 

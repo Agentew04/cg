@@ -61,7 +61,6 @@ private:
     void renderGame();
     void renderPauseMenu();
     void renderGameOver();
-    void renderPostGameStats();
 
     // per screen variables
     ButtonManager mainMenuButtons;

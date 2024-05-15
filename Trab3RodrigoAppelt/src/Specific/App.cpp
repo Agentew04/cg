@@ -9,7 +9,7 @@
 
 App::App(int *scrW, int *scrH)
     :
-    currentMenu(MenuState::MAIN_MENU),
+    currentMenu(MenuState::IDENTIFICATION),
     screenWidth(scrW), screenHeight(scrH),
     mousePos(0,0),
     game(scrW, scrH)
@@ -26,6 +26,9 @@ App::App(int *scrW, int *scrH)
 
     // load user data
     username = PersistentStorage::getOrSetDefault<std::string>("user","name", "");
+    PersistentStorage::setIfNot("user","coins",0);
+    PersistentStorage::setIfNot("user","highscore",0);
+    std::cout << "Username: " << username << std::endl;
 }
 
 App::~App()
@@ -34,6 +37,11 @@ App::~App()
 
 void App::update(float delta)
 {
+    if(currentMenu == MenuState::IDENTIFICATION){
+        if(username != ""){
+            currentMenu = MenuState::MAIN_MENU;
+        }
+    }
     if(currentMenu == MenuState::GAME){
         game.update(delta);
         if(game.isGameOver()){
@@ -48,7 +56,7 @@ void App::update(float delta)
                 {
                     {"name", username},
                     {"score", std::to_string(game.getScore())},
-                    {"uniqueid", std::to_string(PersistentStorage::get<int>("user","uniqueid",0))}
+                    {"userId", std::to_string(PersistentStorage::get<int>("user","uniqueid",0))}
                 },
                 &success
             );
@@ -225,7 +233,8 @@ void App::renderMainMenu()
         Vector2((*screenWidth)/2, 2.75*(*screenHeight)/11),
         Vector2(75,-75));
     int coins = PersistentStorage::getOrSetDefault<int>("user","coins",0);
-    CV::text((*screenWidth)/2, 5*(*screenHeight)/11,
+    CV::text(
+        (*screenWidth)/2, 5*(*screenHeight)/11,
         ("Coins: " + std::to_string(coins)).c_str(),
         GLUT_BITMAP_HELVETICA_18,
         TextAlign::CENTER
@@ -419,7 +428,7 @@ void App::submitButtons(){
                 return;
             }
             PersistentStorage::set<std::string>("user","name",idTextBox->getText());
-            currentMenu = MenuState::GAME;
+            currentMenu = MenuState::MAIN_MENU;
         }
     );
     idPlay->style = ButtonStyle::FlatGreen();

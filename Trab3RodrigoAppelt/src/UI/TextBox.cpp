@@ -94,11 +94,23 @@ void TextBox::keyDown(Key key){
     if(currentState != UIState::FOCUSED){
         return;
     }
+    if(key == LEFT_SHIFT || key == RIGHT_SHIFT){
+        std::cout << "shift: " << key << std::endl;
+        return;
+    }
     if(key == BACKSPACE){
+        std::cout << "backspace: " << key << std::endl;
         if(text.size() > 0){
             text.pop_back();
         }
-    }else if(!iscntrl(key)){
+    }else if(isspace(key)){
+        std::cout << "space: " << key << std::endl;
+        text.push_back(' ');
+    }else if(iscntrl(key)){
+        std::cout << "isctrl: " << key << std::endl;
+        return;
+    }else if(isalnum(key) || ispunct(key)){
+        std::cout << "AlNum or punct: " << key << std::endl;
         text.push_back((char)key);
     }
 }

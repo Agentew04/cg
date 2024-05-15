@@ -75,6 +75,7 @@
 		<Unit filename="src/Specific/Components/Powerups.h" />
 		<Unit filename="src/Specific/Game.cpp" />
 		<Unit filename="src/Specific/Game.h" />
+		<Unit filename="src/Specific/Game.save.cpp" />
 		<Unit filename="src/Storage/PersistentStorage.cpp" />
 		<Unit filename="src/Storage/PersistentStorage.h" />
 		<Unit filename="src/UI/Button.cpp" />
@@ -89,6 +90,8 @@
 		<Unit filename="src/UI/CheckBoxManager.h" />
 		<Unit filename="src/UI/CursorManager.cpp" />
 		<Unit filename="src/UI/CursorManager.h" />
+		<Unit filename="src/UI/ProgressBar.cpp" />
+		<Unit filename="src/UI/ProgressBar.h" />
 		<Unit filename="src/UI/ProgressRing.cpp" />
 		<Unit filename="src/UI/ProgressRing.h" />
 		<Unit filename="src/UI/Slider.cpp" />

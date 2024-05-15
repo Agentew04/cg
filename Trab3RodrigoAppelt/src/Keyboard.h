@@ -11,6 +11,8 @@ typedef int Key;
 #define RIGHT_ARROW ((Key)202)
 #define DOWN_ARROW ((Key)203)
 #define SPACE ((Key)32)
+#define LEFT_SHIFT ((Key)212)
+#define RIGHT_SHIFT ((Key)213)
 #define BACKSPACE ((Key)8)
 #define ENTER ((Key)13)
 #define TAB ((Key)9)

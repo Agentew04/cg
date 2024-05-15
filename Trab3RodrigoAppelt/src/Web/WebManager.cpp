@@ -71,7 +71,7 @@ std::string WebManager::post(
 
     // create json body
     std::string body = buildJsonBody(queryParams);
-
+    std::cout << "Body: " << body << std::endl;
     #ifndef DISABLE_WEB
     auto res = cli.Post(path, body, "application/json");
 

@@ -9,6 +9,7 @@
 #include "../Misc/TaskManager.h"
 #include "../Misc/SoundPlayer.h"
 
+
 Game::Game(int *scrW, int *scrH) : rng(time(nullptr)),
                                    particleManager(rng()),
                                    screenWidth(scrW), screenHeight(scrH),
@@ -24,7 +25,9 @@ Game::Game(int *scrW, int *scrH) : rng(time(nullptr)),
                                    ballLaunchDirection(Vector2::zero()),
                                    nextLaunchPosition(Vector2::zero()),
                                    ballSpeed(200.0f),
-                                   ballSpeedMultiplier(1.0f)
+                                   ballSpeedMultiplier(1.0f),
+                                   xpLevel(1),
+                                   xp(0)
 {
     // std::random_device r; <- versao 8.1.0 do g++ do codeblocks n suporta
     //                          passar a seed antiga direto pro mersene
@@ -43,7 +46,16 @@ Game::Game(int *scrW, int *scrH) : rng(time(nullptr)),
     }; //suficiente p/ loopar e nao repetir cores na tela!
     blockLines.push_back(createNewLine(level));
     pushLines();
-
+    
+    //cria a progress bar
+    xpBar = ProgressBar(
+        [&](){return Vector2(5 * (*screenWidth) / 14, 1 * (*screenHeight) / 9);},
+        [&](){return Vector2(4 * (*screenWidth) / 14, 5);},
+        Vector3::fromHex(0x023047),
+        Vector3::fromHex(0x219EBC),
+        UIPlacement::TOP_LEFT,
+        0, 25
+    );
 }
 
 Game::~Game()
@@ -65,10 +77,14 @@ void Game::reset()
     gameOver = false;
     ballSpeedMultiplier = 1.0f;
     balls.clear();
-    powerups.clear();
+    ballPowerups.clear();
+    laserPowerups.clear();
     blockLines.clear();
     blockLines.push_back(createNewLine(1));
     pushLines();
+    xpLevel = 1;
+    xp = 0;
+    xpBar.setValue(0);
 }
 
 void Game::update(float delta)
@@ -94,6 +110,16 @@ void Game::update(float delta)
                 ball.collider.id = rng();
             }
         }
+        for(auto &eb: ballPowerups){
+            if(eb.collider.id == 0){
+                eb.collider.id = rng();
+            }
+        }
+        for(auto &laser: laserPowerups){
+            if(laser.collider.id == 0){
+                laser.collider.id = rng();
+            }
+        }
 
         //move bolinhas
         for(auto &ball: balls){
@@ -101,25 +127,8 @@ void Game::update(float delta)
         }
 
         // atualiza os colisores
-        {
-            Vector2 gameAreaStart(5 * (*screenWidth) / 14, 1 * (*screenHeight) / 9);
-            Vector2 gameAreaSize(4 * (*screenWidth) / 14, 7 * (*screenHeight) / 9);
-            float blockSize = std::min(gameAreaSize.x / blockAreaSize.x, gameAreaSize.y / blockAreaSize.y);
-
-            for(auto &line: blockLines){
-                for(auto &block: line){
-                    block.collider.position = gameAreaStart + block.position*blockSize;
-                    block.collider.size = Vector2(blockSize, blockSize);
-                }
-            }
-            for(auto &ball: balls){
-                ball.collider.position = ball.position;
-                ball.collider.radius = ball.radius;
-            }
-            updateGameAreaBounds();
-        }
-
-
+        updateColliders();
+        
         //verifica colisoes
         for(auto &ball: balls){
             // verifica colisoes com os blocos
@@ -129,6 +138,7 @@ void Game::update(float delta)
                     processCollisions(ball, block);
                 }
             }
+            
             // remove blocos com 0 de vida
             for(auto &line: blockLines){
                 for(auto it = line.begin(); it != line.end();){
@@ -136,6 +146,36 @@ void Game::update(float delta)
                         it = line.erase(it);
                     }else{
                         it++;
+                    }
+                }
+            }
+
+            // verifica colisoes com os powerups
+            for(auto it = ballPowerups.begin(); it != ballPowerups.end();){
+                if(ball.collider.intersects(it->collider).happened){
+                    burstCount++;
+                    it = ballPowerups.erase(it);
+                }else{
+                    it++;
+                }
+            }
+            for(auto &laser: laserPowerups){
+                if(ball.collider.intersects(laser.collider).happened){
+                    float blockSize;
+                    Vector2 areaStart;
+                    Vector2 areaSize;
+                    computeSizes(&blockSize, &areaStart, &areaSize);
+                    laser.activateVFX(blockSize, areaStart, areaSize);
+                    // danificar todos os blocos na linha e coluna
+                    for(auto &line: blockLines){
+                        for(auto &block: line){
+                            if(laser.direction == Laser::Direction::Horizontal && block.position.y == laser.position.y){
+                                hitBlock(nullptr, block);
+                            }
+                            if(laser.direction == Laser::Direction::Vertical && block.position.x == laser.position.x){
+                                hitBlock(nullptr, block);
+                            }
+                        }
                     }
                 }
             }
@@ -193,11 +233,15 @@ void Game::update(float delta)
         // para acelerar e previnir blocks
         for(auto &ball: balls){
             bool up = rng()%2;
-            while(fabs(ball.velocity * Vector2::right()) > 0.99f*ballSpeed){
+            int maxIt = 100;
+            int iter = 0;
+            while((fabs(ball.velocity * Vector2::right()) > 0.99f*ballSpeed)
+                && iter < maxIt){
                 ball.velocity += (up?Vector2::up():Vector2::down())*ballSpeed*0.1f;
                 // normaliza e multiplica para garantir que a bola nao acelerou
                 ball.velocity.normalize();
                 ball.velocity *= ballSpeed;
+                iter++;
             }
         }
 
@@ -233,6 +277,13 @@ void Game::update(float delta)
 
             ballLaunchPosition = nextLaunchPosition;
             balls.clear();
+            for(auto it = laserPowerups.begin(); it != laserPowerups.end();){
+                if(it->dirty){
+                    it = laserPowerups.erase(it);
+                }else{
+                    it++;
+                }
+            }
             firstBack = false;
             hasActivePlay = false;
             spawned = 0;
@@ -294,9 +345,10 @@ void Game::renderHeader()
 
 void Game::renderGameArea()
 {
-    Vector2 gameAreaStart(5 * (*screenWidth) / 14, 1 * (*screenHeight) / 9);
-    Vector2 gameAreaSize(4 * (*screenWidth) / 14, 7 * (*screenHeight) / 9);
-    float blockSize = std::min(gameAreaSize.x / blockAreaSize.x, gameAreaSize.y / blockAreaSize.y);
+    Vector2 gameAreaStart;
+    Vector2 gameAreaSize;
+    float blockSize;
+    computeSizes(&blockSize, &gameAreaStart, &gameAreaSize);
 
     // draw game area background
     CV::translate(gameAreaStart);
@@ -313,29 +365,13 @@ void Game::renderGameArea()
         renderLine(linha);
     }
 
-    for (auto &powerup : powerups)
-    {
-        powerup.render();
-    }
+    renderPowerups(blockSize, gameAreaStart);
 
     if (hasActivePlay)
     {
         for (auto &ball : balls)
         {
             ball.render();
-            #if PHYSICS_DEBUG
-            CV::translate(0,0);
-            // ball collider
-            CV::color(1,0,0);
-            CV::circle(ball.collider.position, 10, 16);
-            // direction
-            CV::color(0,0,1);
-            CV::line(ball.collider.position, ball.collider.position+ball.velocity.normalized()*ball.collider.radius*4, 2.0f);
-            // ball position
-            CV::color(1,1,0);
-            CV::circleFill(ball.position, 4, 8);
-            CV::translate(gameAreaStart);
-            #endif
         }
 
         // render dummy ball on launch position
@@ -359,15 +395,26 @@ void Game::renderGameArea()
         dummyBall.position = ballLaunchPosition;
         dummyBall.render();
     }
+
+    xpBar.render();
+}
+
+void Game::renderPowerups(float blockSize, Vector2 gameAreaStart){
+    for(auto& extraBall : ballPowerups){
+        extraBall.render(blockSize, gameAreaStart);
+    }
+    for(auto& laser: laserPowerups){
+        laser.render(blockSize, gameAreaStart);
+    }
 }
 
 void Game::renderLine(std::vector<Block> line)
 {
-    Vector2 gameAreaStart(5 * (*screenWidth) / 14, 1 * (*screenHeight) / 9);
-    Vector2 gameAreaSize(4 * (*screenWidth) / 14, 7 * (*screenHeight) / 9);
+    Vector2 gameAreaStart;
+    Vector2 gameAreaSize;
+    float blockSize;
+    computeSizes(&blockSize, &gameAreaStart, &gameAreaSize);
 
-    // descobrir tamanho maximo de bloco
-    float blockSize = std::min(gameAreaSize.x / blockAreaSize.x, gameAreaSize.y / blockAreaSize.y);
     CV::translate(Vector2::zero());
     int blockmargin = 2;
     for (auto &block : line)
@@ -385,11 +432,6 @@ void Game::renderLine(std::vector<Block> line)
             CustomFont::AgencyFB_Digits,
             Vector2(25,25),
             TextAlign::CENTER);
-        // CV::text(screenPos.x + blockSize * 0.5f,
-        //     screenPos.y + blockSize * 0.5f + 0.9f*CV::fontHeight(GLUT_BITMAP_HELVETICA_18)/2,
-        //     std::to_string(block.life).c_str(),
-        //     GLUT_BITMAP_HELVETICA_18,
-        //     TextAlign::CENTER);
 
         #if PHYSICS_DEBUG
         // render collider
@@ -406,8 +448,10 @@ float clamp(float val, float min, float max)
 
 void Game::renderArrow()
 {
-    Vector2 gameAreaStart(5 * (*screenWidth) / 14, 1 * (*screenHeight) / 9);
-    Vector2 gameAreaSize(4 * (*screenWidth) / 14, 7 * (*screenHeight) / 9);
+
+    Vector2 gameAreaStart;
+    Vector2 gameAreaSize;
+    computeSizes(nullptr, &gameAreaStart, &gameAreaSize);
     CV::translate(gameAreaStart);
 
     Vector2 finalPosition = mousePos - gameAreaStart;
@@ -483,6 +527,42 @@ std::vector<Block> Game::createNewLine(int level)
         b.collider.id = rng();
         blocks.push_back(b);
     }
+
+    // tentar gerar os powerups
+    if(level % 3 == 0){ // gerar uma bola extra
+        int livre = -1;
+        for(int i = 0; i < blockAreaSize.x; i++){
+            if(!bPos[i]){
+                livre = i;
+                bPos[i] = true;
+                break;
+            }
+        }
+        if(livre != -1){
+            ExtraBall eb = ExtraBall(Vector2(livre,1));
+            eb.collider.id = rng();
+            ballPowerups.push_back(eb);
+        }
+    }
+    if(level % 5 == 0){ // gerar um laser
+        int livre = -1;
+        for(int i = 0; i < blockAreaSize.x; i++){
+            if(!bPos[i]){
+                livre = i;
+                bPos[i] = true;
+                break;
+            }
+        }
+        if(livre != -1){
+            bool isHorizontal = rng()%2;
+            Laser l = Laser(Vector2(livre,1), 
+                isHorizontal ? Laser::Direction::Horizontal : Laser::Direction::Vertical);
+            l.collider.id = rng();
+            laserPowerups.push_back(l);
+        }
+
+    }
+
     // mais uma passada pra garantir q n tem id 0
     for(auto &block: blocks){
         if(block.collider.id == 0){
@@ -496,6 +576,22 @@ void Game::pushLines(){
     for(auto &line: blockLines){
         for(auto &block: line){
             block.position.y++;
+        }
+    }
+    for(auto it = ballPowerups.begin(); it != ballPowerups.end();){
+        it->position.y++;
+        if(it->position.y > blockAreaSize.y){
+            it = ballPowerups.erase(it);
+        }else{
+            it++;
+        }
+    }
+    for(auto it = laserPowerups.begin(); it != laserPowerups.end();){
+        it->position.y++;
+        if(it->position.y > blockAreaSize.y){
+            it = laserPowerups.erase(it);
+        }else{
+            it++;
         }
     }
 }
@@ -548,12 +644,35 @@ Block* Game::getBlockAt(Vector2 pos){
     return nullptr;
 }
 
-void hit(Block& block, ParticleManager& mng){
+void Game::hitBlock(Ball *ball, Block& block){
     block.life--;
+
+    if(ball != nullptr){ 
+        particleManager.spawn(
+            ObjLoader::get("collisionParticle"),
+            5,
+            ball->collider.position 
+                + (((block.collider.position+block.collider.size.multiply(0.5))
+                - ball->collider.position).normalized() * ball->collider.radius),
+            Vector2(5,5),
+            {
+                Vector3::fromHex(0xABC4FF),
+                Vector3::fromHex(0xB6CCFE),
+                Vector3::fromHex(0xC1D3FE),
+                Vector3::fromHex(0xCCDBFD),
+                Vector3::fromHex(0xD7E3FC),
+                Vector3::fromHex(0xE2EAFC),
+                Vector3::fromHex(0xEDF2FB),
+            },
+            0.5f,
+            25.0f,
+            false
+        );
+    }
 
     if(block.life <= 0){
         SoundPlayer::play("ballHit");
-        mng.spawn(
+        particleManager.spawn(
             ObjLoader::get("star"),//modelo
             20,//qtd
             block.collider.position + Vector2(block.collider.size.x/2, block.collider.size.y/2), //pos
@@ -565,11 +684,52 @@ void hit(Block& block, ParticleManager& mng){
                 Vector3::fromHex(0xffbe0b),
                 Vector3::fromHex(0xff7d00),
                 Vector3::fromHex(0xf18701)
-            }, // cores
-            1.0f, //ttl
+            },      // cores
+            1.0f,   //ttl
             100.0f, //forca
-            true//gravidade
+            true    //gravidade
         );
+        xp++;
+
+        // display a +X (moeda)
+        TaskManager::schedule(
+            [=](){
+                CV::translate(block.collider.position);
+                CV::color(Vector3::fromHex(0xFFD700));
+                CV::text(-25.0f, 25.0f,
+                    ("+"+std::to_string(xpLevel)).c_str(),
+                    GLUT_BITMAP_HELVETICA_18,
+                    TextAlign::CENTER
+                );
+            },
+            TaskManager::TaskType::DURATION,
+            0.6f
+        );
+        if(xp >= 25){
+            xp = 0;
+            xpLevel++;
+            xpBar.setMaxValue(25); // n precisa, mas deixa aqui caso
+                                   // queira adicionar dificuldade 
+                                   // de nivel em nivel
+            TaskManager::schedule( // display level up! na direita
+                [&](){
+                    CV::translate(Vector2(9 * (*screenWidth) / 14, 1 * (*screenHeight) / 9));
+                    CV::color(Vector3::fromHex(0x219EBC));
+                    CV::text(0.0f, 0.0f,
+                        "LEVEL UP!",
+                        GLUT_BITMAP_HELVETICA_18,
+                        TextAlign::LEFT
+                    );
+                },
+                TaskManager::TaskType::DURATION,
+                4.0f
+            );
+        }
+        xpBar.setValue(xp);
+
+        int coins = PersistentStorage::get<int>("user", "coins", 0);
+        coins += xpLevel;
+        PersistentStorage::set<int>("user", "coins", coins);
     }
 }
 
@@ -579,27 +739,43 @@ bool Game::processCollisions(Ball& ball, Block& block){
     }
     Block* blockEsq = getBlockAt(block.position + Vector2(-1,0));
     Block* blockDir = getBlockAt(block.position + Vector2(1,0));
+    Block* blockCima = getBlockAt(block.position + Vector2(0,1));
+    Block* blockBaixo = getBlockAt(block.position + Vector2(0,-1));
 
     Collision colisaoCentral = ball.collider.intersects(block.collider);
     bool colidiuCentro = colisaoCentral.happened;
     bool colidiuEsq = blockEsq != nullptr ? ball.collider.intersects(blockEsq->collider).happened : false;
     bool colidiuDir = blockDir != nullptr ? ball.collider.intersects(blockDir->collider).happened : false;
+    bool colidiuCima = blockCima != nullptr ? ball.collider.intersects(blockCima->collider).happened : false;
+    bool colidiuBaixo = blockBaixo != nullptr ? ball.collider.intersects(blockBaixo->collider).happened : false;
 
     if(colidiuCentro && !colidiuEsq && !colidiuDir){ // isso funciona
         // colisao normal no meio do bloco
         ball.velocity = ball.velocity.reflection(colisaoCentral.normal);
-        hit(block, particleManager);
+        hitBlock(&ball, block);
         return true;
     }else if(colidiuCentro && (colidiuEsq || colidiuDir)){ // isso funciona
         // colisao entre 2 blocos, normal é simulada com um plano
         Vector2 normal = Vector2(0,1);
         ball.velocity = ball.velocity.reflection(normal);
-        hit(block, particleManager);
+        hitBlock(&ball, block);
         if(colidiuEsq && blockEsq != nullptr){
-            hit(*blockEsq, particleManager);
+            hitBlock(&ball, *blockEsq);
         }
         if(colidiuDir && blockDir != nullptr){
-            hit(*blockDir, particleManager);
+            hitBlock(&ball, *blockDir);
+        }
+        return true;
+    }else if(colidiuCentro && (colidiuCima || colidiuBaixo)){ // isso funciona
+        // colisao entre 2 blocos, normal é simulada com um plano
+        Vector2 normal = Vector2(1,0);
+        ball.velocity = ball.velocity.reflection(normal);
+        hitBlock(&ball, block);
+        if(colidiuCima && blockCima != nullptr){
+            hitBlock(&ball, *blockCima);
+        }
+        if(colidiuBaixo && blockBaixo != nullptr){
+            hitBlock(&ball, *blockBaixo);
         }
         return true;
     }else if(block.collider.pointInside(ball.position)){ // isso nao kkk
@@ -607,7 +783,7 @@ bool Game::processCollisions(Ball& ball, Block& block){
 
         if(col.happened){
             ball.velocity = ball.velocity.reflection(col.normal);
-            hit(block, particleManager);
+            hitBlock(&ball, block);
             return true;
         }
         return false;
@@ -625,160 +801,49 @@ int Game::getScore(){
     return level;
 }
 
-void Game::saveState(){
-    //espera-se que nao e um gameover aqui
-    // aqui temos que persistir:
-    // simples: 
-    // nivel
-    // firstback
-    // burstCount
-    // spawned
-    // hasActiveplay
-    // lastbursttime
-    // balllaunchposition
-    // balllaunchdirection
-    // nextlaunchposition
-    // vetores:
-    // blocos(posicao e vida)
-    // bolas(posicao e velocidade)
-    
-    //simples:
-    PersistentStorage::set<int>("game", "level", level);
-    PersistentStorage::set<bool>("game", "firstBack", firstBack);
-    PersistentStorage::set<uint32_t>("game", "burstCount", burstCount);
-    PersistentStorage::set<uint32_t>("game", "spawned", spawned);
-    PersistentStorage::set<bool>("game", "hasActivePlay", hasActivePlay);
-    // PersistentStorage::set<float>("game", "lastBurstTime", lastBurstTime);
-    PersistentStorage::set<Vector2>("game", "ballLaunchPosition", ballLaunchPosition);
-    PersistentStorage::set<Vector2>("game", "ballLaunchDirection", ballLaunchDirection);
-    PersistentStorage::set<Vector2>("game", "nextLaunchPosition", nextLaunchPosition);
+void Game::updateColliders(){
+    Vector2 gameAreaStart;
+    Vector2 gameAreaSize;
+    float blockSize;
+    computeSizes(&blockSize, &gameAreaStart, &gameAreaSize);
 
-    //vetores:
-    // blocos
-    //aqui vamos macaquear pq a serializacao de vetor n ta funcionando
-    //azar
-    // acumular linhas em um unico vetor
-    std::vector<Block> blocos;
     for(auto &line: blockLines){
         for(auto &block: line){
-            blocos.push_back(block);
+            block.collider.position = gameAreaStart + block.position*blockSize;
+            block.collider.size = Vector2(blockSize, blockSize);
         }
     }
-    PersistentStorage::set<int>("game", "blockCount", blocos.size());
-    int i=0;
-    for(auto& block: blocos){
-        PersistentStorage::set<Vector2>(
-            "game", 
-            "block"+std::to_string(i)+"pos",
-            block.position);
-        PersistentStorage::set<Vector3>(
-            "game", 
-            "block"+std::to_string(i)+"color",
-            block.color);
-        PersistentStorage::set<int>(
-            "game", 
-            "block"+std::to_string(i)+"life",
-            block.life);
-        i++;
+    for(auto &ball: balls){
+        ball.collider.position = ball.position;
+        ball.collider.radius = ball.radius;
     }
-
-    // bolas, fazer a msm coisa pq sim
-    PersistentStorage::set<int>("game", "ballsCount", balls.size());
-    i=0;
-    for(auto& ball: balls){
-        PersistentStorage::set<Vector2>(
-            "game", 
-            "ball"+std::to_string(i)+"pos",
-            ball.position);
-        PersistentStorage::set<Vector2>(
-            "game", 
-            "ball"+std::to_string(i)+"vel",
-            ball.velocity);
-        i++;
+    for(auto &eb: ballPowerups){
+        eb.collider.position = gameAreaStart 
+            + eb.position.multiply(blockSize) ;
+            // + eb.position.multiply(blockSize/0.5f);
+        eb.collider.radius = 25;
     }
+    for(auto &laser: laserPowerups){
+        laser.collider.position = gameAreaStart 
+            + laser.position.multiply(blockSize) ;
+            // + laser.position.multiply(blockSize/0.5f);
+        laser.collider.size = Vector2(25,25);
+    }
+    updateGameAreaBounds();
 }
 
-void Game::loadState(){
-    reset();
-    // aqui temos que carregar de volta pra memoria:
-    // simples: 
-    // nivel
-    // firstback
-    // burstCount
-    // spawned
-    // hasActiveplay
-    // lastbursttime
-    // balllaunchposition
-    // balllaunchdirection
-    // nextlaunchposition
-    // vetores:
-    // blocos(posicao e vida)
-    // bolas(posicao e velocidade)
+void Game::computeSizes(float *blockSize, Vector2 *gameAreaStart, Vector2 *gameAreaSize){
+    auto start = Vector2(5 * (*screenWidth) / 14, 1 * (*screenHeight) / 9);
+    auto size = Vector2(4 * (*screenWidth) / 14, 7 * (*screenHeight) / 9);
+    auto bSize = std::min(size.x / blockAreaSize.x, size.y / blockAreaSize.y);
 
-    //simples:
-    level = PersistentStorage::get<int>("game", "level", 1);
-    firstBack = PersistentStorage::get<bool>("game", "firstBack", false);
-    burstCount = PersistentStorage::get<uint32_t>("game", "burstCount", 1);
-    spawned = PersistentStorage::get<uint32_t>("game", "spawned", 0);
-    hasActivePlay = PersistentStorage::get<bool>("game", "hasActivePlay", false);
-    lastBurstTime = 0;
-    // lastBurstTime = PersistentStorage::get<float>("game", "lastBurstTime", 0.0f);
-    ballLaunchPosition = PersistentStorage::get<Vector2>("game", "ballLaunchPosition", Vector2::zero());
-    ballLaunchDirection = PersistentStorage::get<Vector2>("game", "ballLaunchDirection", Vector2::zero());
-    nextLaunchPosition = PersistentStorage::get<Vector2>("game", "nextLaunchPosition", Vector2::zero());
-
-    //vetores:
-    // blocos
-    // desfazer a macaqueada
-    int blockCount = PersistentStorage::get<int>("game", "blockCount", 0);
-    std::vector<Block> blocos;
-    for(int i=0;i<blockCount;i++){
-        Vector2 pos = PersistentStorage::get<Vector2>(
-            "game", 
-            "block"+std::to_string(i)+"pos",
-            Vector2::zero());
-        Vector3 color = PersistentStorage::get<Vector3>(
-            "game", 
-            "block"+std::to_string(i)+"color",
-            Vector3::zero());
-        int life = PersistentStorage::get<int>(
-            "game", 
-            "block"+std::to_string(i)+"life",
-            0);
-        Block b(pos, color, life);
-        blocos.push_back(b);
+    if(blockSize != nullptr){
+        *blockSize = bSize;
     }
-    // agregar blocos em linhas
-    blockLines.clear();
-    //fodasse eu vou jogar um bloco em cada linha azar
-    for(auto &block: blocos){
-        std::vector<Block> linha;
-        linha.push_back(block);
-        blockLines.push_back(linha);
+    if(gameAreaStart != nullptr){
+        *gameAreaStart = start;
     }
-
-    for(auto &line: blockLines){
-        for(auto &block: line){
-            block.collider.id = rng();
-        }
-    }
-
-    // bolas, mesma macaquice
-    int ballsCount = PersistentStorage::get<int>("game", "ballsCount", 0);
-    for(int i=0;i<ballsCount;i++){
-        Ball b;
-        b.position = PersistentStorage::get<Vector2>(
-            "game", 
-            "ball"+std::to_string(i)+"pos",
-            Vector2::zero());
-        b.velocity = PersistentStorage::get<Vector2>(
-            "game", 
-            "ball"+std::to_string(i)+"vel",
-            Vector2::zero());
-        balls.push_back(b);
-    }
-
-    for(auto &ball: balls){
-        ball.collider.id = rng();
+    if(gameAreaSize != nullptr){
+        *gameAreaSize = size;
     }
 }

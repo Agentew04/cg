@@ -1,29 +1,33 @@
 #ifndef __POWERUPS_H__
 #define __POWERUPS_H__
 
-class Powerup{
+#include "../../Math/Vector2.h"
+#include "../../Math/Polygon2D.h"
+
+class ExtraBall {
 public:
-    virtual void render() = 0;
+    Vector2 position;
+    ExtraBall(Vector2 pos);
+    void render(float blockSize, Vector2 gameAreaStart);
+    Circle2D collider;
 };
 
-class Coin : public Powerup{
-    
-};
+class Laser {
+public:
+    enum class Direction{
+        Horizontal,
+        Vertical
+    };
 
-class AditionalBall : public Powerup{
-    
-};
-
-class CrossHorizontal : public Powerup{
-    
-};
-
-class CrossVertical : public Powerup{
-    
-};
-
-class Bounce : public Powerup{
-    
+    Laser(Vector2 pos, Direction dir);
+    Direction direction;
+    Vector2 position;
+    bool dirty;
+    float *blockSize;
+    Vector2 *gameAreaStart;
+    void render(float blockSize, Vector2 gameAreaStart);
+    void activateVFX(float blockSize, Vector2 gameAreaStart, Vector2 gameAreaSize);
+    Rectangle2D collider;
 };
 
 #endif // __POWERUPS_H__
