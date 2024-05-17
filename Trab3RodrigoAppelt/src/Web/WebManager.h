@@ -6,9 +6,6 @@
 #include <memory>
 #include <vector>
 
-namespace httplib{
-    class Client;
-}
 
 /// @brief Classe usada pra simplificar o uso
 /// de requests HTTP da lib httplib.
@@ -59,11 +56,6 @@ private:
         std::map<std::string, std::string> queryParams);
 
     static std::string buildJsonBody(std::map<std::string, std::string> queryParams);
-
-    static std::map<
-        std::string,
-        std::unique_ptr<httplib::Client>
-    > clients;
 };
 
 #endif

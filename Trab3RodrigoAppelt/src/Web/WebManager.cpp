@@ -9,15 +9,18 @@ do trabalho, descomente a linha abaixo
 
 // #define DISABLE_WEB
 
+#ifndef DISABLE_WEB
 #include "httplib.h"
 
-std::map<std::string, std::unique_ptr<httplib::Client>> WebManager::clients;
+std::map<std::string, std::unique_ptr<httplib::Client>> clients;
+#endif
 
 std::string WebManager::get(
     std::string domain,
     std::string path,
     std::map<std::string, std::string> queryParams,
     bool *success){
+    #ifndef DISABLE_WEB    
 
     // get client
     if(clients.find(domain) == clients.end()){
@@ -28,7 +31,6 @@ std::string WebManager::get(
 
     std::string url = buildQueryParams(path, queryParams);
 
-    #ifndef DISABLE_WEB    
     auto res = cli.Get(url);
 
     if(!res){
@@ -62,6 +64,7 @@ std::string WebManager::post(
     std::map<std::string, std::string> queryParams,
     bool *success){
 
+    #ifndef DISABLE_WEB
     // get client
     if(clients.find(domain) == clients.end()){
         clients[domain] = std::make_unique<httplib::Client>(domain, 80);
@@ -71,8 +74,6 @@ std::string WebManager::post(
 
     // create json body
     std::string body = buildJsonBody(queryParams);
-    std::cout << "Body: " << body << std::endl;
-    #ifndef DISABLE_WEB
     auto res = cli.Post(path, body, "application/json");
 
     if(!res){
@@ -114,13 +115,13 @@ std::string WebManager::buildQueryParams(std::string path,
 }
 
 void WebManager::free(){
+    #ifndef DISABLE_WEB
     for(auto it = clients.begin(); it != clients.end(); it++){
-        #ifndef DISABLE_WEB
         it->second->stop();
-        #endif
         delete it->second.release();
     }
     clients.clear();
+    #endif
 }
 
 std::string WebManager::buildJsonBody(std::map<std::string, std::string> queryParams){
