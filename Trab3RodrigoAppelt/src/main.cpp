@@ -10,13 +10,13 @@ Features Implementadas:
 - Menu de pausa
 - Menu de game over
 - Salvamento em disco da partida atual
-- Efeitos de audio
-- Efeitos de explosao ao destruir bloco
+- Efeitos de audio quando quebra bloco/perde jogo
+- Explosoes com particulas quando quebra um bloco
+- Progressao de niveis/fases
 - Efeitos de colisao de bolinhas
 - Powerups
   - Laser(Horizontal e Vertical)
   - Bola Extra
-- Progressao de niveis
 - Modo raio x
 - Carregamento de arquivos 3D
 - Controle de Anti-Aliasing na Canvas2D
@@ -40,6 +40,9 @@ Manual de Uso:
   - Sua pontuacao atual
   - Sua melhor pontuacao
   - O placar de lideres online
+- A sua pontuacao vai ser enviada para o placar apenas quando voce perder.
+  - Se forcar o fechamento do jogo pelo CodeBlocks(e nao pelo X da janela), 
+  talvez alguns valores nao serao persistidos no disco tambem!
 - No menu de game over, tem dois botoes para voltar ao menu
   principal e para tentar novamente
 
