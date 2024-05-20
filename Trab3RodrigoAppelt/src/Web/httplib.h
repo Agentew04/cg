@@ -234,7 +234,7 @@ using socket_t = int;
 #include <sstream>
 #include <string>
 #include <sys/stat.h>
-#include <thread>
+#include "mingw.thread.h"
 #include <unordered_map>
 #include <unordered_set>
 #include <utility>

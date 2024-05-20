@@ -492,7 +492,7 @@
 	"../Math/Vector3.h"
 	"UIDefinitions.h"
 
-1715562380 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\buttonmanager.cpp
+1716054498 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\buttonmanager.cpp
 	<vector>
 	<iostream>
 	<algorithm>
@@ -542,7 +542,7 @@
 	<vector>
 	"CheckBox.h"
 
-1711670896 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\cursormanager.cpp
+1716063688 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\cursormanager.cpp
 	<windows.h>
 	<map>
 	<iostream>
@@ -668,7 +668,7 @@
 
 1715800493 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\keyboard.h
 
-1715562380 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\web\httplib.h
+1716241649 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\web\httplib.h
 	<io.h>
 	<winsock2.h>
 	<ws2tcpip.h>
@@ -713,7 +713,7 @@
 	<sstream>
 	<string>
 	<sys/stat.h>
-	<thread>
+	"mingw.thread.h"
 	<unordered_map>
 	<unordered_set>
 	<utility>
@@ -795,7 +795,7 @@
 	<unistd.h>
 	"schrift.h"
 
-1715814118 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\game.cpp
+1716070738 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\game.cpp
 	"Game.h"
 	<string>
 	<functional>
@@ -837,7 +837,7 @@
 	"../UI/TextBox.h"
 	"../Misc/Tuple.h"
 
-1715801412 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\app.cpp
+1716054381 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\app.cpp
 	"App.h"
 	<random>
 	"../gl_canvas2d.h"
@@ -1443,7 +1443,7 @@
 	<windows.h>
 	<mmsystem.h>
 
-1715562380 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\web\webmanager.h
+1715982687 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\web\webmanager.h
 	<string>
 	<map>
 	<memory>
@@ -1463,7 +1463,7 @@
 	"TaskManager.h"
 	<iostream>
 
-1715799962 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\web\webmanager.cpp
+1715982669 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\web\webmanager.cpp
 	"WebManager.h"
 	<memory>
 	"httplib.h"
@@ -1485,4 +1485,30 @@
 1715813894 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\progressbar.cpp
 	"ProgressBar.h"
 	"../gl_canvas2d.h"
+
+1716241523 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\web\mingw.thread.h
+	<thread>
+	<cstddef>
+	<cerrno>
+	<exception>
+	<system_error>
+	<functional>
+	<tuple>
+	<chrono>
+	<memory>
+	<iosfwd>
+	<utility>
+	"mingw.invoke.h"
+	<windows.h>
+	<synchapi.h>
+	<handleapi.h>
+	<sysinfoapi.h>
+	<processthreadsapi.h>
+	<process.h>
+	<cstdio>
+
+1716241545 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\web\mingw.invoke.h
+	<type_traits>
+	<utility>
+	<functional>
 

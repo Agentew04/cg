@@ -1,6 +1,7 @@
 #include "App.h"
 
 #include <random>
+#include <ctime>
 
 #include "../gl_canvas2d.h"
 #include "../Storage/PersistentStorage.h"
@@ -18,8 +19,7 @@ App::App(int *scrW, int *scrH)
 
     // create persistent unique user id
     if(!PersistentStorage::has("user","uniqueid")){
-        std::random_device r;
-        std::mt19937 rgen(r());
+        std::mt19937 rgen(time(nullptr));
         int uniqueId = rgen();
         PersistentStorage::set<int>("user","uniqueid",uniqueId);
     }
@@ -427,6 +427,7 @@ void App::submitButtons(){
             if(idTextBox->getText() == ""){
                 return;
             }
+            username = idTextBox->getText();
             PersistentStorage::set<std::string>("user","name",idTextBox->getText());
             currentMenu = MenuState::MAIN_MENU;
         }
