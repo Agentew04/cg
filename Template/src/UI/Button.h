@@ -7,6 +7,7 @@
 
 #include "../Math/Vector2.h"
 #include "../Math/Vector3.h"
+#include "UIDefinitions.h"
 
 // enum que representa o estado que um botao pode estar
 enum ButtonState {
@@ -27,36 +28,58 @@ struct ButtonStyle{
     Vector3 foreground;
 
     static ButtonStyle* Windows10();
+    static ButtonStyle* FlatLightBlue();
+    static ButtonStyle* FlatDarkBlue();
+    static ButtonStyle* FlatWhite();
+    static ButtonStyle* FlatGreen();
+    static ButtonStyle* FlatRed();
 
-    ~ButtonStyle();
+    /// @brief Registra mais um observador dos estilos.
+    static void startUsing();
+    /// @brief Libera todos os estilos compartilhados de botoes
+    /// se nao houver mais observadores
+    static void freeStyles();
+
+    private:
+    static int styleObserverCount;
+    static ButtonStyle *windows10Style;
+    static ButtonStyle *flatLightBlueStyle;
+    static ButtonStyle *flatDarkBlueStyle;
+    static ButtonStyle *flatWhiteStyle;
+    static ButtonStyle *flatGreenStyle;
+    static ButtonStyle *flatRedStyle;
 };
 
-// classe que representa um botao na aplicacao, com uma callback
-class Button{
+/// @brief Classe que representa um botao na aplicacao, com uma callback
+class Button {
 public:
-    Button(Vector2 pos, Vector2 sz, std::string text, std::function<void(Button*)> callback);
+
+    Button(
+        std::function<Vector2()> positionFunc,
+        std::function<Vector2()> sizeFunc,
+        UIPlacement placement,
+        std::string text,
+        std::function<void(Button*)> callback);
     ~Button();
 
-    void draw();
+    void render();
 
     void call();
 
     bool clickable;
 
+    bool inside(Vector2 mousePos);
+
     ButtonStyle *style;
     ButtonState state;
-
-    Vector2 getPos();
-    Vector2 getSize();
-
-
 private:
+    std::function<Vector2()> positionFunc;
+    std::function<Vector2()> sizeFunc;
+    UIPlacement placement;
 
-
-    Vector2 pos;
-    Vector2 sz;
     std::string text;
     std::function<void(Button*)> callback;
+
 };
 
 
