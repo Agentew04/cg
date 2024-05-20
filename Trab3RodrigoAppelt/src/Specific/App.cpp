@@ -28,7 +28,7 @@ App::App(int *scrW, int *scrH)
     username = PersistentStorage::getOrSetDefault<std::string>("user","name", "");
     PersistentStorage::setIfNot("user","coins",0);
     PersistentStorage::setIfNot("user","highscore",0);
-    std::cout << "Username: " << username << std::endl;
+    // std::cout << "Username: " << username << std::endl;
 }
 
 App::~App()

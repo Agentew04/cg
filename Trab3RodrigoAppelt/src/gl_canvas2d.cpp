@@ -612,6 +612,8 @@ void CV::setWireframe(bool value)
     #endif // DISABLE_WIREFRAME
 }
 
+typedef int (APIENTRY *PFNWGLSWAPINTERVALEXT)(int);
+
 ////////////////////////////////////////////////////////////////////////////////////////
 //  inicializa o OpenGL
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -647,12 +649,10 @@ void CV::init(int *w, int *h, const char *title, bool antiAliasing, bool vsync)
 
     inicializa();
 
-    if(vsync){
     #ifndef DISABLE_VSYNC
-        // force v-sync para conservar bateria em notebooks
-        ((BOOL(WINAPI*)(int))wglGetProcAddress("wglSwapIntervalEXT"))(vsync ? 1 : 0);
+    // force v-sync para conservar bateria em notebooks
+    ((BOOL(WINAPI*)(int))wglGetProcAddress("wglSwapIntervalEXT"))(vsync ? 1 : 0);
     #endif // DISABLE_VSYNC
-    }
 
     glutReshapeFunc(reshape);
     glutDisplayFunc(display);

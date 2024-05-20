@@ -21,13 +21,13 @@ Game::Game(int *scrW, int *scrH) : rng(time(nullptr)),
                                    level(1),
                                    firstBack(false),
                                    gameOver(false),
+                                   xpLevel(1),
+                                   xp(0),
                                    ballLaunchPosition((*scrW) / 2, 8*(*scrH/9)),
                                    ballLaunchDirection(Vector2::zero()),
                                    nextLaunchPosition(Vector2::zero()),
                                    ballSpeed(200.0f),
-                                   ballSpeedMultiplier(1.0f),
-                                   xpLevel(1),
-                                   xp(0)
+                                   ballSpeedMultiplier(1.0f)
 {
     // std::random_device r; <- versao 8.1.0 do g++ do codeblocks n suporta
     //                          passar a seed antiga direto pro mersene

@@ -23,10 +23,14 @@
 #define Y_CANVAS_CRESCE_PARA_CIMA 0
 
 
-class CV //classe Canvas2D
+/// @brief Classe estatica que define as funcoes 
+/// disponibilizadas pela Canvas2D.
+/// @remarks Se bem que agora ja esta uma Canvas2.5D
+class CV 
 {
 public:
 
+    /// @brief Retorna a largura e altura da janela.
     static void getSize(int* w, int* h);
 
     //funcoes para desenho de ponto e linha
@@ -90,22 +94,40 @@ public:
 
     //coordenada de offset para desenho de objetos.
     static void translate(float x, float y);
+
+    /// @brief Define uma nova origem no OpenGL para desenhos. Chamadas
+    /// nao sao cumulativas.
+    /// @param pos A nova origem.
     static void translate(Vector2 pos);
 
+    /// @brief Retorna o tempo desde o inicio da aplicacao.
     static float time();
+
+    /// @brief Retorna o tempo entre o frame atual e o frame anterior.
+    /// @returns O tempo em segundos.
     static float delta();
 
     /// @brief Retorna uma media do FPS
     static float fps();
 
+    /// @brief Define se o OpenGL deve desenhar apenas as linhas ou o preenchimento
+    /// dos objetos.
     static void setWireframe(bool value);
 
     //funcao de inicializacao da Canvas2D. Recebe a largura, altura, e um titulo para a janela
+    /// @brief Configura os parametros para a Canvas2D.
+    /// @param w Largura da janela.
+    /// @param h Altura da janela.
+    /// @param title Titulo da janela.
+    /// @param antiAliasing Se deve usar anti-aliasing. Padrao eh MSAA 4x.
+    /// @param vsync Se deve usar vsync.
     static void init(int *w, int *h, const char *title, bool antiAliasing, bool vsync);
 
-    // inicia processo de saida do programa
+    /// @brief Sinaliza que o loop deve acabar. A execucao continua
+    /// apos a primeira chamada de run().
     static void close();
-    //funcao para executar a Canvas2D
+    
+    /// @brief Inicia o loop da aplicacao.
     static void run();
 };
 
