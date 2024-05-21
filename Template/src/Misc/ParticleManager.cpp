@@ -8,7 +8,7 @@ ParticleManager::ParticleManager(int seed) :
     gravity(0, +9.81*50),
     rng(seed) {}
 
-void ParticleManager::spawn(ObjFile *file, uint32_t count, Vector2 initialPos, Vector2 scale, std::vector<Vector3> colors, float ttl, float force, bool gravity){
+void ParticleManager::spawn(Model3D* file, uint32_t count, Vector2 initialPos, Vector2 scale, std::vector<Vector3> colors, float ttl, float force, bool gravity){
     ParticleSpawn spn;
     spn.file = file;
     spn.gravity = gravity;

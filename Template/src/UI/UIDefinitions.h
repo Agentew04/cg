@@ -1,5 +1,5 @@
-#ifndef __UI_DEFINITION_H__
-#define __UI_DEFINITION_H__
+#ifndef __UI_DEFINITIONS_H__
+#define __UI_DEFINITIONS_H__
 
 #include "../Math/Vector2.h"
 

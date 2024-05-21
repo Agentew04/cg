@@ -23,10 +23,10 @@
 #define Y_CANVAS_CRESCE_PARA_CIMA 0
 
 
-/// @brief Classe estatica que define as funcoes 
+/// @brief Classe estatica que define as funcoes
 /// disponibilizadas pela Canvas2D.
 /// @remarks Se bem que agora ja esta uma Canvas2.5D
-class CV 
+class CV
 {
 public:
 
@@ -72,13 +72,12 @@ public:
     static void color(Vector3 rgb);
     static void color(Vector3 rgb, float a);
     static void color(float r, float g, float b, float alpha);
-    static void color(int index);
 
     static void clear(float r, float g, float b);
     static void clear(Vector3 rgb);
 
     //3d
-    static void obj(ObjFile *obj, Vector2 pos, Vector2 scale);
+    static void obj(Model3D* obj, Vector2 pos, Vector2 scale);
 
     //desenha texto na coordenada (x,y)
     static float textWidth(const char *t, void* font);
@@ -90,7 +89,7 @@ public:
     static void text(Vector2 pos, const char *t);  //varias funcoes ainda nao tem implementacao. Faca como exercicio
     static void text(Vector2 pos, int valor);      //varias funcoes ainda nao tem implementacao. Faca como exercicio
     static void text(Vector2 pos, float valor);    //varias funcoes ainda nao tem implementacao. Faca como exercicio
-    static void text(Vector2 pos, const std::string& text, const CustomFont font, Vector2 scale, TextAlign align);
+    static void text(Vector2 pos, const std::string& text, FontName font, float pt, UIPlacement placement);
 
     //coordenada de offset para desenho de objetos.
     static void translate(float x, float y);
@@ -126,7 +125,7 @@ public:
     /// @brief Sinaliza que o loop deve acabar. A execucao continua
     /// apos a primeira chamada de run().
     static void close();
-    
+
     /// @brief Inicia o loop da aplicacao.
     static void run();
 };

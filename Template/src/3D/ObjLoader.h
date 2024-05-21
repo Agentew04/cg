@@ -6,15 +6,11 @@
 #include <map>
 #include "../Math/Vector3.h"
 
-/// @brief Estrutura que guarda as informacoes de um arquivo .obj
-struct ObjFile {
-public:
-    /// @brief Lista com os vertices do modelo
+/// @brief Um struct que contem informacoes
+/// sobre um modelo 3d
+struct Model3D {
     std::vector<Vector3> vertices;
-    /// @brief Lista com as faces do modelo
     std::vector<std::vector<int>> faces;
-    /// @brief Posicao do modelo
-    Vector3 scale;
 };
 
 /// @brief Classe que carrega e salva na memoria interna
@@ -24,19 +20,25 @@ public:
 class ObjLoader {
 public:
 
-    /// @brief Carrega um arquivo .obj para a memoria
-    /// @param filename O nome do arquivo
-    /// @param id O identificador do arquivo
-    static void load(const std::string& filename, const std::string& id);
+    static void load(const std::string& filename, const std::string& fileId);
 
     /// @brief Libera todos os arquivos .obj da memoria
     static void free();
 
     /// @brief Pega um arquivo .obj da memoria ja carregado
     /// @param id O identificador do arquivo
-    static ObjFile* get(const std::string& id);
+    static Model3D* get(const std::string& id, const std::string& objectName = "");
+
+    static std::vector<std::string> getModelNames(const std::string& id);
+    static std::vector<std::string> getIds();
 private:
-    static std::map<std::string, ObjFile*> objFiles;
+    static std::map<std::string, std::map<std::string, Model3D>> models;
+
+    struct obj{
+        std::string name;
+        std::vector<Vector3> vertices;
+        std::vector<std::vector<int>> faces;
+    };
 };
 
 #endif // __OBJLOADER_H__

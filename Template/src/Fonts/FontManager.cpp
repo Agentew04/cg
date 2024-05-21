@@ -1,154 +1,97 @@
 #include "FontManager.h"
 
 #include <map>
-#include <tuple>    
+#include <tuple>
 
 #include "../3D/ObjLoader.h"
 
+std::map<FontName, FontManager::Font> FontManager::fonts;
 
-std::map<std::tuple<CustomFont, char>, std::tuple<float,float>> FontManager::glyphSize;
-std::map<std::tuple<CustomFont, char>, std::string> FontManager::objNames;
-std::map<CustomFont, bool> FontManager::loadedFonts;
-std::map<std::tuple<CustomFont, char>, bool> FontManager::definedChars;
-
-void FontManager::load(CustomFont font)
-{
-    if (loadedFonts[font])
+void FontManager::load(const std::string& fontPath, FontName fontName){
+    if (fonts.find(fontName) != fonts.end())
     {
         return;
     }
-    loadedFonts[font] = true;
 
-    switch (font)
+    // load glyphs into 3d engine
+    ObjLoader::load(fontPath, fontPath);
+
+    // create metrics for each glyph
+    auto availableGlyphs = ObjLoader::getModelNames(fontPath);
+
+    Font font;
+    float averageHeight = 0;
+    float averageWidth = 0;
+
+    for (auto &glyph : availableGlyphs)
     {
-    case CustomFont::AgencyFB_Digits:
-        // load glyphs
-        ObjLoader::load("./Trab3RodrigoAppelt/models/agency_digit0.3d", "agency_digit0");
-        ObjLoader::load("./Trab3RodrigoAppelt/models/agency_digit1.3d", "agency_digit1");
-        ObjLoader::load("./Trab3RodrigoAppelt/models/agency_digit2.3d", "agency_digit2");
-        ObjLoader::load("./Trab3RodrigoAppelt/models/agency_digit3.3d", "agency_digit3");
-        ObjLoader::load("./Trab3RodrigoAppelt/models/agency_digit4.3d", "agency_digit4");
-        ObjLoader::load("./Trab3RodrigoAppelt/models/agency_digit5.3d", "agency_digit5");
-        ObjLoader::load("./Trab3RodrigoAppelt/models/agency_digit6.3d", "agency_digit6");
-        ObjLoader::load("./Trab3RodrigoAppelt/models/agency_digit7.3d", "agency_digit7");
-        ObjLoader::load("./Trab3RodrigoAppelt/models/agency_digit8.3d", "agency_digit8");
-        ObjLoader::load("./Trab3RodrigoAppelt/models/agency_digit9.3d", "agency_digit9");
-
-        // calculate glyph sizes
-        for (int i = 0; i < 10; i++)
-        {
-            char c = '0' + i;
-            float width, height;
-
-            // get max delta in Y of the '1' vertices
-            objNames[std::make_tuple(font, c)] = "agency_digit" + std::to_string(i);
-            ObjFile *obj = ObjLoader::get("agency_digit" + std::to_string(i));
-            float minX = 0, maxX = 0, minY = 0, maxY = 0;
-            for (auto &v : obj->vertices)
-            {
-                if (v.x < minX)
-                {
-                    minX = v.x;
-                }
-                if (v.x > maxX)
-                {
-                    maxX = v.x;
-                }
-                if (v.y < minY)
-                {
-                    minY = v.y;
-                }
-                if (v.y > maxY)
-                {
-                    maxY = v.y;
-                }
+        Model3D* model = ObjLoader::get(fontPath, glyph);
+        font.glyphs[glyph[0]] = model;
+        float maxX = 0, maxY = 0;
+        for(auto &v: model->vertices){
+            if(v.x > maxX){
+                maxX = v.x;
             }
-            width = maxX - minX;
-            height = maxY - minY;
-            glyphSize[std::make_tuple(font, c)] = std::make_tuple(width, height);
-            definedChars[std::make_tuple(font, c)] = true;
+            if(v.y > maxY){
+                maxY = v.y;
+            }
         }
-        
-        // space glyph
-        glyphSize[std::make_tuple(font, ' ')] = std::make_tuple(0.2f, 0.2f);
-        definedChars[std::make_tuple(font, ' ')] = true;
-        break;
-    default:
-        break;
+        averageHeight += maxY;
+        averageWidth += maxX;
+
+        font.metrics.glyphSize[glyph[0]] = Vector2(maxX, maxY);
+        font.metrics.availableGlyphs.push_back(glyph[0]);
     }
+
+    font.metrics.lineHeight = (averageHeight / availableGlyphs.size()) * 1.3f;
+    font.metrics.spaceSize = averageWidth / availableGlyphs.size();
+    font.metrics.glyphSpacing = font.metrics.spaceSize / 10.0f;
+
+    fonts[fontName] = font;
 }
 
-void FontManager::getLineHeight(CustomFont font, float &lineHeight)
+
+float FontManager::getLineHeight(FontName font, float pt)
 {
-    switch (font)
-    {
-    case CustomFont::AgencyFB_Digits:
-        // read '1' height
-        float width, height;
-        FontManager::getGlyphSize(font, '1', width, height);
-        lineHeight = height;
-        break;
-    default:
-        break;
-    }
+    return fonts[font].metrics.lineHeight * pt;
 }
 
-void FontManager::getGlyphSize(CustomFont font, char c, float &width, float &height){
-    switch (font)
-    {
-    case CustomFont::AgencyFB_Digits:
-        std::tie(width, height) = glyphSize[std::make_tuple(font, c)];
-        break;
-    default:
-        break;
+Vector2 FontManager::getGlyphSize(FontName font, char c, float pt){
+    if(c == ' '){
+        return Vector2(fonts[font].metrics.spaceSize * pt, 0);
     }
-
+    if(c == '\n'){
+        return Vector2(0, fonts[font].metrics.lineHeight * pt);
+    }
+    return fonts[font].metrics.glyphSize[c].multiply(Vector2(pt));
 }
 
-void FontManager::getTextSize(CustomFont font, const std::string &text, float &width, float &height){
-    width = 0;
-    height = 0;
+Vector2 FontManager::getTextSize(FontName font, const std::string &text, float pt){
+    float width = 0;
+    float height = 0;
     for (auto &c : text)
     {
-        float glyphWidth, glyphHeight;
-        FontManager::getGlyphSize(font, c, glyphWidth, glyphHeight);
-        width += glyphWidth;
-        if (glyphHeight > height)
+        Vector2 glyphSize = FontManager::getGlyphSize(font, c, pt);
+        width += glyphSize.x;
+        if (glyphSize.y > height)
         {
-            height = glyphHeight;
+            height = glyphSize.y;
         }
     }
+    return Vector2(width, height);
 }
 
-ObjFile* FontManager::getGlyph(CustomFont font, char c){
-    switch (font)
-    {
-    case CustomFont::AgencyFB_Digits:
-        return ObjLoader::get(objNames[std::make_tuple(font, c)]);
-        break;
-    default:
-        break;
-    }
-    std::cout << "Nao achei glifo '" << c << "' na fonte " << (int)font << std::endl;
-    return nullptr;
+Model3D* FontManager::getGlyph(FontName font, char c){
+    return fonts[font].glyphs[c];
 }
 
-float FontManager::getFontSpacing(CustomFont font){
-    switch (font)
-    {
-    case CustomFont::AgencyFB_Digits:
-        return 0.07f;
-        break;
-    default:
-        break;
-    }
-    return 0;
+float FontManager::getFontSpacing(FontName font, float pt){
+    return fonts[font].metrics.glyphSpacing * pt;
 }
 
-bool FontManager::isDefined(CustomFont font, char c){
-    if (definedChars.find(std::make_tuple(font, c)) == definedChars.end())
-    {
-        return false;
+bool FontManager::isDefined(FontName font, char c){
+    if(c==' ' || c=='\n'){
+        return true;
     }
-    return definedChars[std::make_tuple(font, c)];
+    return fonts[font].metrics.glyphSize.find(c) != fonts[font].metrics.glyphSize.end();
 }

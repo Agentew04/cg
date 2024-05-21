@@ -30,25 +30,6 @@
 
 int *scrWidth, *scrHeight; // guarda referencia para as variaveis de altura e largura da main()
 
-// conjunto de cores predefinidas. Pode-se adicionar mais cores.
-float Colors[14][3] =
-    {
-        {0, 0, 0},       // Black
-        {0.5, 0.5, 0.5}, // Gray
-        {1, 0, 0},       // Red
-        {0, 1, 0},       // Green
-        {0, 0, 1},       // Blue
-        {0, 1, 1},       // Cyan
-        {1, 0, 1},       // Magenta
-        {1, 1, 0},       // Yellow
-        {1, 0.5, 0},     // Orange
-        {0.5, 0, 0},     // Brown
-        {0.5, 0.5, 0},   // Olive
-        {0, 0.5, 0.5},   //
-        {0.5, 0, 0.5},   //
-        {1, 1, 1},       // white
-};
-
 void ConvertMouseCoord(int button, int state, int wheel, int direction, int x, int y);
 
 // funcoes de CALLBACK da biblioteca Glut
@@ -289,46 +270,37 @@ void CV::text(float x, float y, const char *t, void *font, TextAlign align)
     CV::text(finalX, y, t, font);
 }
 
-void CV::text(Vector2 pos, const std::string& text, const CustomFont font, Vector2 scale, TextAlign align){
-    FontManager::load(font);
+void CV::text(Vector2 pos, const std::string& text, const FontName font, float pt, UIPlacement placement){
 
-    if(scale.y > 0){
-        scale.y *= -1;
-    }
+    Vector2 textSize = FontManager::getTextSize(font, text, pt);
+    translateCoordinates(pos, textSize, placement);
 
-    float textWidth, textHeight;
-    FontManager::getTextSize(font, text, textWidth, textHeight);
-    textWidth *= scale.x;
-    textHeight *= scale.y;
-    if(align == TextAlign::CENTER){
-        pos.x -= textWidth / 2;
-    }
-
-    float lineHeight;
-    FontManager::getLineHeight(font, lineHeight);
-    lineHeight *= scale.y;
+    float lineHeight = FontManager::getLineHeight(font, pt);
 
     float x = pos.x;
     float y = pos.y;
-
     for(auto c : text){
-        if(!FontManager::isDefined(font, c))
+        if(!FontManager::isDefined(font, c)){
+            std::cout << "Not defined: " << c << std::endl;
             continue;
+        }
         if(c == '\n'){
             y += lineHeight;
             x = pos.x;
             continue;
         }
-        float glyphWidth, glyphHeight;
-        FontManager::getGlyphSize(font, c, glyphWidth, glyphHeight);
-        glyphWidth *= scale.x;
+        if(c == ' '){
+            x += FontManager::getFontSpacing(font, pt);
+            continue;
+        }
+        Vector2 glyphSize = FontManager::getGlyphSize(font, c, pt);
 
         auto glyph = FontManager::getGlyph(font, c);
-        if(glyph != nullptr){
-            CV::obj(glyph, Vector2(x, y), scale);
-        }
-        x += glyphWidth + FontManager::getFontSpacing(font) * scale.x;
+        //CV::rect(x, y, x + glyphSize.x, y - glyphSize.y);
+        CV::obj(glyph, Vector2(x, y), Vector2(pt, pt));
+        x += glyphSize.x + FontManager::getFontSpacing(font, pt);
     }
+
 }
 
 void CV::text(float x, float y, const char *t, TextAlign align)
@@ -346,13 +318,18 @@ void CV::clear(Vector3 rgb)
     glClearColor(rgb.x, rgb.y, rgb.z, 1);
 }
 
-void CV::obj(ObjFile *obj, Vector2 pos, Vector2 scale){
+void CV::obj(Model3D* obj, Vector2 pos, Vector2 scale){
+    // talvez daria pra transformar isso em um desenho em batch p/
+    // otimizar texto
     glBegin(GL_TRIANGLES);
     for(auto face : obj->faces){
         for(auto vertex : face){
-            auto v = obj->vertices[vertex-1];
-
-            v = v.multiply(Vector3(scale.x, scale.y, 1));
+            auto v = obj->vertices[vertex];
+            v = v.multiply(Vector3(scale.x, 
+            #ifdef Y_CANVAS_CRESCE_PARA_CIMA
+            -
+            #endif
+            scale.y, 1));
             v = v + Vector3(pos.x, pos.y, 0);
             glVertex3f(v.x, v.y, v.z);
         }
@@ -369,7 +346,7 @@ void CV::circle(float x, float y, float radius, int div)
     {
         x1 = (cos(ang) * radius);
         y1 = (sin(ang) * radius);
-        glVertex2d(x1 + x, y1 + y);
+        glVertex2f(x1 + x, y1 + y);
         ang += inc;
     }
     glEnd();
@@ -389,7 +366,7 @@ void CV::circleFill(float x, float y, float radius, int div)
     {
         x1 = (cos(ang) * radius);
         y1 = (sin(ang) * radius);
-        glVertex2d(x1 + x, y1 + y);
+        glVertex2f(x1 + x, y1 + y);
         ang += inc;
     }
     glEnd();
@@ -449,15 +426,10 @@ void CV::color(float r, float g, float b)
     glColor3f(r, g, b);
 }
 
-void CV::color(int idx)
-{
-    glColor3fv(Colors[idx]);
-}
 
 void CV::color(float r, float g, float b, float alpha)
 {
     glColor4f(r, g, b, alpha);
-    // glTexImage2D(GL_TEXTURE_2D, 0, )
 }
 
 void CV::color(Vector3 rgb)
@@ -611,8 +583,6 @@ void CV::setWireframe(bool value)
     }
     #endif // DISABLE_WIREFRAME
 }
-
-typedef int (APIENTRY *PFNWGLSWAPINTERVALEXT)(int);
 
 ////////////////////////////////////////////////////////////////////////////////////////
 //  inicializa o OpenGL

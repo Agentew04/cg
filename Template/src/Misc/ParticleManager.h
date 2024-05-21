@@ -20,7 +20,7 @@ public:
     /// @param ttl O tempo minimo de vida de cada particula. O tempo final eh isso + até 10% do ttl
     /// @param force A força que as particulas sao jogadas para fora do centro
     /// @param gravity Se elas sao afetaddas pela gravidade ou nao
-    void spawn(ObjFile *file, uint32_t count, Vector2 initialPos, Vector2 scale, std::vector<Vector3> colors, float ttl, float force, bool gravity);
+    void spawn(Model3D* file, uint32_t count, Vector2 initialPos, Vector2 scale, std::vector<Vector3> colors, float ttl, float force, bool gravity);
 
     /// @brief Deleta todas as particulas que estao aparecento imediatamente
     void reset();
@@ -44,7 +44,7 @@ private:
             float life;
             float maxLife;
         };
-        ObjFile *file;
+        Model3D *file;
         Vector2 scale;
         std::vector<Particle> particles;
         bool gravity;

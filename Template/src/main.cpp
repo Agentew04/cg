@@ -20,6 +20,7 @@
 #include <stdlib.h>
 
 #include "gl_canvas2d.h"
+#include "Fonts/FontManager.h"
 
 
 //largura e altura inicial da tela . Alteram com o redimensionamento de tela.
@@ -30,8 +31,25 @@ void update(float delta){
 
 }
 
-void render(float delta)
+void render()
 {
+    CV::clear(1,1,1);
+    CV::translate(0,0);
+    CV::color(1,0,0);
+    // CV::obj(ObjLoader::get("./Template/assets/fonts/jetbrainsmono.font", "a"), 
+    //     Vector2(300,300),
+    //     Vector2(50,50));
+    // CV::setWireframe(true);
+    // CV::obj(ObjLoader::get("moeda"), 
+    //     Vector2(300,300),
+    //     Vector2(50,50));
+    CV::text(
+        Vector2(300,300),
+        "Hello\nWorld!\n NewLine",
+        FontName::JetBrainsMono,
+        40,
+        UIPlacement::LEFT
+    );
     Sleep(10); //nao eh controle de FPS. Somente um limitador de FPS.
 }
 
@@ -66,7 +84,9 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
 
 int main(void)
 {
-    CV::init(&screenWidth, &screenHeight, "Canvas2D - Custom Template", false);
+    FontManager::load("./Template/assets/fonts/jetbrainsmono.font", FontName::JetBrainsMono);
+
+    CV::init(&screenWidth, &screenHeight, "Canvas2D - Custom Template", true, true);
     CV::run();
     cleanup();
 }
