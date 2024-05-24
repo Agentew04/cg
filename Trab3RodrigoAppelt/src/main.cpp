@@ -41,7 +41,7 @@ Manual de Uso:
   - Sua melhor pontuacao
   - O placar de lideres online
 - A sua pontuacao vai ser enviada para o placar apenas quando voce perder.
-  - Se forcar o fechamento do jogo pelo CodeBlocks(e nao pelo X da janela), 
+  - Se forcar o fechamento do jogo pelo CodeBlocks(e nao pelo X da janela),
   talvez alguns valores nao serao persistidos no disco tambem!
 - No menu de game over, tem dois botoes para voltar ao menu
   principal e para tentar novamente
@@ -130,7 +130,8 @@ void render()
 
     CV::translate(Vector2(0, 0));
     CV::color(1, 1, 1);
-    CV::text(screenWidth, 25, ("FPS: " + std::to_string((int)std::round(CV::fps()))).c_str(), TextAlign::RIGHT);
+    CV::text(Vector2(screenWidth, 0), ("FPS: " + std::to_string((int)std::round(CV::fps()))), 20, FontName::JetBrainsMono, UIPlacement::TOP_RIGHT);
+    // CV::text(screenWidth, 25, ("FPS: " + std::to_string((int)std::round(CV::fps()))).c_str(), TextAlign::RIGHT);
     TaskManager::update();
     CursorManager::applyCursor();
 }
@@ -175,6 +176,7 @@ void mouse(int, int state, int, int, int x, int y)
 
 void load()
 {
+    FontManager::load("./Trab3RodrigoAppelt/fonts/jetbrainsmono.font", FontName::JetBrainsMono);
     PersistentStorage::load("./Trab3RodrigoAppelt/saves/save.dat");
     ObjLoader::load("./Trab3RodrigoAppelt/models/moeda.3d", "coin");
     ObjLoader::load("./Trab3RodrigoAppelt/models/logo.3d", "logo");
@@ -205,10 +207,10 @@ int main(void)
 {
     load();
     CV::init(
-        /* Screen Width*/&screenWidth, 
-        /* Screen Height*/&screenHeight, 
-        /* Title*/ "Bolas Saltitantes do Rodrigo Appelt", 
-        /*anti-aliasing: */ true, 
+        /* Screen Width*/&screenWidth,
+        /* Screen Height*/&screenHeight,
+        /* Title*/ "Bolas Saltitantes do Rodrigo Appelt",
+        /*anti-aliasing: */ true,
         /*vsync: */ true);
     CV::run();
     cleanup();

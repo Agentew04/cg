@@ -78,7 +78,7 @@ public:
     static void clear(Vector3 rgb);
 
     //3d
-    static void obj(ObjFile *obj, Vector2 pos, Vector2 scale);
+    static void obj(Model3D* obj, Vector2 pos, Vector2 scale);
 
     //desenha texto na coordenada (x,y)
     static float textWidth(const char *t, void* font);
@@ -90,7 +90,18 @@ public:
     static void text(Vector2 pos, const char *t);  //varias funcoes ainda nao tem implementacao. Faca como exercicio
     static void text(Vector2 pos, int valor);      //varias funcoes ainda nao tem implementacao. Faca como exercicio
     static void text(Vector2 pos, float valor);    //varias funcoes ainda nao tem implementacao. Faca como exercicio
-    static void text(Vector2 pos, const std::string& text, const CustomFont font, Vector2 scale, TextAlign align);
+    
+    /// @brief Desenha um texto na tela de acordo com parametros passados.
+    /// @param pos A posicao da ancora do texto.
+    /// @param text Uma string com o texto a ser desenhado.
+    /// @param pt O tamanho da fonte. Geralmente eh em pixels.
+    /// @param font O nome da fonte a ser usada. Registrada em FontManager.h
+    /// @param placement A posicao do texto em relacao com a ancora.
+    static void text(Vector2 pos, const std::string& text, 
+        float pt = 25.0f, 
+        FontName font = FontName::JetBrainsMono, 
+        UIPlacement placement = UIPlacement::CENTER);
+
 
     //coordenada de offset para desenho de objetos.
     static void translate(float x, float y);

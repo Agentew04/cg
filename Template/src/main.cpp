@@ -43,13 +43,33 @@ void render()
     // CV::obj(ObjLoader::get("moeda"), 
     //     Vector2(300,300),
     //     Vector2(50,50));
+    std::string msg = "H#llo W0rld!\nNew Lin*.";
+    Vector2 origin = Vector2(300,300);
+    float pt = 40;
+
+    // CV::color(0,1,0);
+    // CV::circleFill(origin, 5, 10);
+    float textWidth = FontManager::getTextWidth(
+        FontName::JetBrainsMono, 
+        msg, 
+        pt);
+    float textHeight = FontManager::getTextHeight(
+        FontName::JetBrainsMono, 
+        msg, 
+        pt);
+
+    CV::color(1,0,0);
     CV::text(
-        Vector2(300,300),
-        "Hello\nWorld!\n NewLine",
+        origin,
+        msg,
         FontName::JetBrainsMono,
-        40,
-        UIPlacement::LEFT
+        pt,
+        UIPlacement::CENTER
     );
+    CV::color(0,0,1);
+    CV::line(origin, origin + Vector2(textWidth, 0));
+    CV::line(origin, origin + Vector2(0, textHeight));
+
     Sleep(10); //nao eh controle de FPS. Somente um limitador de FPS.
 }
 

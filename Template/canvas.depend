@@ -432,13 +432,12 @@
 	<iostream>
 	"lodepng.h"
 
-1716329273 source:e:\universidade\cg\trabalhos\template\src\fonts\fontmanager.cpp
+1716578664 source:e:\universidade\cg\trabalhos\template\src\fonts\fontmanager.cpp
 	"FontManager.h"
 	<map>
-	<tuple>
 	"../3D/ObjLoader.h"
 
-1716320929 e:\universidade\cg\trabalhos\template\src\fonts\fontmanager.h
+1716578712 e:\universidade\cg\trabalhos\template\src\fonts\fontmanager.h
 	<string>
 	<vector>
 	"../3D/ObjLoader.h"
@@ -453,7 +452,7 @@
 1712981618 e:\universidade\cg\trabalhos\template\src\math\vector3.h
 	<iostream>
 
-1716329170 source:e:\universidade\cg\trabalhos\template\src\gl_canvas2d.cpp
+1716579215 source:e:\universidade\cg\trabalhos\template\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 	<string>
@@ -880,7 +879,7 @@
 	<vector>
 	<fstream>
 
-1716329197 source:e:\universidade\cg\trabalhos\template\src\main.cpp
+1716579201 source:e:\universidade\cg\trabalhos\template\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>

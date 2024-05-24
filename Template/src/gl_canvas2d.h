@@ -89,7 +89,10 @@ public:
     static void text(Vector2 pos, const char *t);  //varias funcoes ainda nao tem implementacao. Faca como exercicio
     static void text(Vector2 pos, int valor);      //varias funcoes ainda nao tem implementacao. Faca como exercicio
     static void text(Vector2 pos, float valor);    //varias funcoes ainda nao tem implementacao. Faca como exercicio
-    static void text(Vector2 pos, const std::string& text, FontName font, float pt, UIPlacement placement);
+    static void text(Vector2 pos, const std::string& text, 
+        float pt = 25.0f, 
+        FontName font = FontName::JetBrainsMono, 
+        UIPlacement placement = UIPlacement::CENTER);
 
     //coordenada de offset para desenho de objetos.
     static void translate(float x, float y);

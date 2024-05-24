@@ -31,7 +31,23 @@ public:
     /// @brief Retorna a largura e altura de um texto
     /// @param font A fonte a ser usada
     /// @param text O texto a ser medido
+    /// @param pt O tamanho da fonte
+    /// @return As dimensoes do texto(largura, altura)
     static Vector2 getTextSize(FontName font, const std::string &text, float pt);
+
+    /// @brief Retorna a largura de um texto
+    /// @param font A fonte usada
+    /// @param text O texto
+    /// @param pt O tamanho da fonte
+    /// @return A largura
+    static float getTextWidth(FontName font, const std::string &text, float pt);
+
+    /// @brief Retorna a altura de um texto
+    /// @param font A fonte usada
+    /// @param text O texto
+    /// @param pt O tamanho da fonte
+    /// @return A altura
+    static float getTextHeight(FontName font, const std::string &text, float pt);
 
     /// @brief Retorna o arquivo 3d correspondente do caractere 'c' na fonte 'font'
     /// @param font A fonte a ser usada

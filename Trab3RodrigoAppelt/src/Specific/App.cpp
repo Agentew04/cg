@@ -231,7 +231,7 @@ void App::renderMainMenu()
     CV::translate(0,0);
     CV::obj(ObjLoader::get("logo"), 
         Vector2((*screenWidth)/2, 2.75*(*screenHeight)/11),
-        Vector2(75,-75));
+        Vector2(75,75));
     int coins = PersistentStorage::getOrSetDefault<int>("user","coins",0);
     CV::text(
         (*screenWidth)/2, 5*(*screenHeight)/11,
@@ -477,7 +477,7 @@ void App::submitButtons(){
             return Vector2(*screenWidth/7, (*screenHeight)/8-10);
         },
         UIPlacement::CENTER,
-        "MENU INICIAL(salvar)",
+        "MENU INICIAL\n(salvar)",
         [&](Button*){
             game.saveState();
             PersistentStorage::set("game", "hasSavedGame", 1);

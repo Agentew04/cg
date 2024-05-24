@@ -46,7 +46,7 @@ Game::Game(int *scrW, int *scrH) : rng(time(nullptr)),
     }; //suficiente p/ loopar e nao repetir cores na tela!
     blockLines.push_back(createNewLine(level));
     pushLines();
-    
+
     //cria a progress bar
     xpBar = ProgressBar(
         [&](){return Vector2(5 * (*screenWidth) / 14, 1 * (*screenHeight) / 9);},
@@ -128,7 +128,7 @@ void Game::update(float delta)
 
         // atualiza os colisores
         updateColliders();
-        
+
         //verifica colisoes
         for(auto &ball: balls){
             // verifica colisoes com os blocos
@@ -138,7 +138,7 @@ void Game::update(float delta)
                     processCollisions(ball, block);
                 }
             }
-            
+
             // remove blocos com 0 de vida
             for(auto &line: blockLines){
                 for(auto it = line.begin(); it != line.end();){
@@ -313,33 +313,30 @@ void Game::renderHeader()
     // render current score(fase)
     CV::text(headerSize * 0.5f,
         std::to_string(level),
-        CustomFont::AgencyFB_Digits,
-        Vector2(35,35),
-        TextAlign::CENTER);
+        35);
 
     // render coins and highscore
     int coins = PersistentStorage::get<int>("user", "coins", 0);
     int highscore = PersistentStorage::get<int>("user", "highscore", 0);
     auto coinObj = ObjLoader::get("coin");
-    float lineHeight;
-    FontManager::getLineHeight(CustomFont::AgencyFB_Digits, lineHeight);
+    float lineHeight = FontManager::getLineHeight(FontName::JetBrainsMono, 25);
     CV::color(Vector3::fromHex(0xFFD700));
-    CV::obj(coinObj, Vector2(headerSize.x - 50, headerSize.y / 3), Vector2(7,-7));
-    CV::text(Vector2(headerSize.x - 30, headerSize.y / 3 + (lineHeight*25)/2),
+    CV::obj(coinObj, Vector2(headerSize.x - 50, headerSize.y / 3), Vector2(7,7));
+    CV::text(Vector2(headerSize.x - 30, headerSize.y / 3 + lineHeight/2),
         std::to_string(coins),
-        CustomFont::AgencyFB_Digits,
-        Vector2(25,25),
-        TextAlign::LEFT
+        25,
+        FontName::JetBrainsMono,
+        UIPlacement::BOTTOM_LEFT
     );
 
     auto trophyObj = ObjLoader::get("trophy");
     CV::color(Vector3::fromHex(0xFFFFFF));
-    CV::obj(trophyObj, Vector2(headerSize.x - 50, 2 * headerSize.y / 3), Vector2(15,-15));
-    CV::text(Vector2(headerSize.x - 30, 2 * headerSize.y / 3 + (lineHeight*25)/2),
+    CV::obj(trophyObj, Vector2(headerSize.x - 50, 2 * headerSize.y / 3), Vector2(15,15));
+    CV::text(Vector2(headerSize.x - 30, 2 * headerSize.y / 3 + lineHeight/2),
         std::to_string(highscore),
-        CustomFont::AgencyFB_Digits,
-        Vector2(25,25),
-        TextAlign::LEFT
+        25,
+        FontName::JetBrainsMono,
+        UIPlacement::BOTTOM_LEFT
     );
 }
 
@@ -425,13 +422,17 @@ void Game::renderLine(std::vector<Block> line)
             screenPos + Vector2(blockSize) - Vector2(blockmargin));
         CV::color(Vector3::fromHex(0xFFFFFF));
 
-        float lineHeight;
-        FontManager::getLineHeight(CustomFont::AgencyFB_Digits, lineHeight);
-        CV::text(Vector2(screenPos.x + blockSize * 0.5f, screenPos.y + blockSize * 0.5f + (lineHeight*25)/2.0f),
+        float pt = blockSize * 0.5f;
+        CV::text(
+            Vector2(
+                screenPos.x + blockSize * 0.5f,
+                screenPos.y + blockSize * 0.5f/* + FontManager::getLineHeight(FontName::JetBrainsMono, pt) / 2*/
+            ),
             std::to_string(block.life).c_str(),
-            CustomFont::AgencyFB_Digits,
-            Vector2(25,25),
-            TextAlign::CENTER);
+            pt,
+            FontName::JetBrainsMono,
+            UIPlacement::CENTER
+        );
 
         #if PHYSICS_DEBUG
         // render collider
@@ -555,7 +556,7 @@ std::vector<Block> Game::createNewLine(int level)
         }
         if(livre != -1){
             bool isHorizontal = rng()%2;
-            Laser l = Laser(Vector2(livre,1), 
+            Laser l = Laser(Vector2(livre,1),
                 isHorizontal ? Laser::Direction::Horizontal : Laser::Direction::Vertical);
             l.collider.id = rng();
             laserPowerups.push_back(l);
@@ -647,11 +648,11 @@ Block* Game::getBlockAt(Vector2 pos){
 void Game::hitBlock(Ball *ball, Block& block){
     block.life--;
 
-    if(ball != nullptr){ 
+    if(ball != nullptr){
         particleManager.spawn(
             ObjLoader::get("collisionParticle"),
             5,
-            ball->collider.position 
+            ball->collider.position
                 + (((block.collider.position+block.collider.size.multiply(0.5))
                 - ball->collider.position).normalized() * ball->collider.radius),
             Vector2(5,5),
@@ -709,7 +710,7 @@ void Game::hitBlock(Ball *ball, Block& block){
             xp = 0;
             xpLevel++;
             xpBar.setMaxValue(25); // n precisa, mas deixa aqui caso
-                                   // queira adicionar dificuldade 
+                                   // queira adicionar dificuldade
                                    // de nivel em nivel
             TaskManager::schedule( // display level up! na direita
                 [&](){
@@ -818,13 +819,13 @@ void Game::updateColliders(){
         ball.collider.radius = ball.radius;
     }
     for(auto &eb: ballPowerups){
-        eb.collider.position = gameAreaStart 
+        eb.collider.position = gameAreaStart
             + eb.position.multiply(blockSize) ;
             // + eb.position.multiply(blockSize/0.5f);
         eb.collider.radius = 25;
     }
     for(auto &laser: laserPowerups){
-        laser.collider.position = gameAreaStart 
+        laser.collider.position = gameAreaStart
             + laser.position.multiply(blockSize) ;
             // + laser.position.multiply(blockSize/0.5f);
         laser.collider.size = Vector2(25,25);

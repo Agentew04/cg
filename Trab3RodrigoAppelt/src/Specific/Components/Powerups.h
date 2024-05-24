@@ -23,8 +23,6 @@ public:
     Direction direction;
     Vector2 position;
     bool dirty;
-    float *blockSize;
-    Vector2 *gameAreaStart;
     void render(float blockSize, Vector2 gameAreaStart);
     void activateVFX(float blockSize, Vector2 gameAreaStart, Vector2 gameAreaSize);
     Rectangle2D collider;

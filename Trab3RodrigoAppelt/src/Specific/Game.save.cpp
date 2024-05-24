@@ -19,6 +19,8 @@ void Game::saveState(){
     // vetores:
     // blocos(posicao e vida)
     // bolas(posicao e velocidade)
+    // powerups de bola(posicao na grid)
+    // powerups de laser(posicao na grid, orientacao, se estah dirty)
     
     //simples:
     PersistentStorage::set<int>("game", "level", level);
@@ -74,6 +76,36 @@ void Game::saveState(){
             ball.velocity);
         i++;
     }
+
+    // powerups de bola
+    PersistentStorage::set<int>("game", "powerupBallsCount", ballPowerups.size());
+    i=0;
+    for(auto& powerup: ballPowerups){
+        PersistentStorage::set<Vector2>(
+            "game", 
+            "powerupBall"+std::to_string(i)+"pos",
+            powerup.position);
+        i++;
+    }
+
+    // powerups de laser
+    PersistentStorage::set<int>("game", "powerupLasersCount", laserPowerups.size());
+    i=0;
+    for(auto& powerup: laserPowerups){
+        PersistentStorage::set<Vector2>(
+            "game", 
+            "powerupLaser"+std::to_string(i)+"pos",
+            powerup.position);
+        PersistentStorage::set<int>(
+            "game", 
+            "powerupLaser"+std::to_string(i)+"dir",
+            (int)powerup.direction);
+        PersistentStorage::set<bool>(
+            "game", 
+            "powerupLaser"+std::to_string(i)+"dirty",
+            powerup.dirty);
+        i++;
+    }
 }
 
 void Game::loadState(){
@@ -92,6 +124,8 @@ void Game::loadState(){
     // vetores:
     // blocos(posicao e vida)
     // bolas(posicao e velocidade)
+    // powerups de bola(posicao na grid)
+    // powerups de laser(posicao na grid, orientacao, se estah dirty)
 
     //simples:
 
@@ -159,5 +193,35 @@ void Game::loadState(){
 
     for(auto &ball: balls){
         ball.collider.id = rng();
+    }
+
+    // powerups de bola
+    int powerupBallsCount = PersistentStorage::get<int>("game", "powerupBallsCount", 0);
+    for(int i=0;i<powerupBallsCount;i++){
+        ExtraBall p(PersistentStorage::get<Vector2>(
+            "game", 
+            "powerupBall"+std::to_string(i)+"pos",
+            Vector2::zero()));
+        ballPowerups.push_back(p);
+    }
+
+    // powerups de laser
+    int powerupLasersCount = PersistentStorage::get<int>("game", "powerupLasersCount", 0);
+    for(int i=0;i<powerupLasersCount;i++){
+        Vector2 pos = PersistentStorage::get<Vector2>(
+            "game", 
+            "powerupLaser"+std::to_string(i)+"pos",
+            Vector2::zero());
+        Laser::Direction dir = (Laser::Direction)PersistentStorage::get<int>(
+            "game", 
+            "powerupLaser"+std::to_string(i)+"dir",
+            0);
+        bool dirty = PersistentStorage::get<bool>(
+            "game", 
+            "powerupLaser"+std::to_string(i)+"dirty",
+            false);
+        Laser p(pos, dir);
+        p.dirty = dirty;
+        laserPowerups.push_back(p);
     }
 }

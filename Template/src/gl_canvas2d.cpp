@@ -270,12 +270,21 @@ void CV::text(float x, float y, const char *t, void *font, TextAlign align)
     CV::text(finalX, y, t, font);
 }
 
-void CV::text(Vector2 pos, const std::string& text, const FontName font, float pt, UIPlacement placement){
+void CV::text(Vector2 pos, const std::string& text, float pt, const FontName font, UIPlacement placement){
 
     Vector2 textSize = FontManager::getTextSize(font, text, pt);
+    #if TEXT_DEBUG
+    CV::rect(pos, pos + textSize);
+    CV::circleFill(pos, 3, 8);
+    #endif
     translateCoordinates(pos, textSize, placement);
+    #if TEXT_DEBUG
+    CV::rect(pos, pos + textSize);
+    CV::circleFill(pos, 3, 8);
+    #endif
 
     float lineHeight = FontManager::getLineHeight(font, pt);
+    float characterSpacing = FontManager::getFontSpacing(font, pt);
 
     float x = pos.x;
     float y = pos.y;
@@ -290,17 +299,18 @@ void CV::text(Vector2 pos, const std::string& text, const FontName font, float p
             continue;
         }
         if(c == ' '){
-            x += FontManager::getFontSpacing(font, pt);
+            x += FontManager::getGlyphSize(font, ' ', pt).x;
             continue;
         }
         Vector2 glyphSize = FontManager::getGlyphSize(font, c, pt);
 
         auto glyph = FontManager::getGlyph(font, c);
-        //CV::rect(x, y, x + glyphSize.x, y - glyphSize.y);
-        CV::obj(glyph, Vector2(x, y), Vector2(pt, pt));
-        x += glyphSize.x + FontManager::getFontSpacing(font, pt);
+        #if TEXT_DEBUG
+        CV::rect(x, y+lineHeight, x + glyphSize.x, y+lineHeight-glyphSize.y);
+        #endif
+        CV::obj(glyph, Vector2(x, y+std::max(glyphSize.y, lineHeight)), Vector2(pt, pt));
+        x += glyphSize.x + characterSpacing;
     }
-
 }
 
 void CV::text(float x, float y, const char *t, TextAlign align)
@@ -325,7 +335,7 @@ void CV::obj(Model3D* obj, Vector2 pos, Vector2 scale){
     for(auto face : obj->faces){
         for(auto vertex : face){
             auto v = obj->vertices[vertex];
-            v = v.multiply(Vector3(scale.x, 
+            v = v.multiply(Vector3(scale.x,
             #ifdef Y_CANVAS_CRESCE_PARA_CIMA
             -
             #endif

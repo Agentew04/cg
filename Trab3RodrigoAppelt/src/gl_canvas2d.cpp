@@ -289,45 +289,46 @@ void CV::text(float x, float y, const char *t, void *font, TextAlign align)
     CV::text(finalX, y, t, font);
 }
 
-void CV::text(Vector2 pos, const std::string& text, const CustomFont font, Vector2 scale, TextAlign align){
-    FontManager::load(font);
+void CV::text(Vector2 pos, const std::string& text, float pt, const FontName font, UIPlacement placement){
 
-    if(scale.y > 0){
-        scale.y *= -1;
-    }
+    Vector2 textSize = FontManager::getTextSize(font, text, pt);
+    #if TEXT_DEBUG
+    CV::rect(pos, pos + textSize);
+    CV::circleFill(pos, 3, 8);
+    #endif
+    translateCoordinates(pos, textSize, placement);
+    #if TEXT_DEBUG
+    CV::rect(pos, pos + textSize);
+    CV::circleFill(pos, 3, 8);
+    #endif
 
-    float textWidth, textHeight;
-    FontManager::getTextSize(font, text, textWidth, textHeight);
-    textWidth *= scale.x;
-    textHeight *= scale.y;
-    if(align == TextAlign::CENTER){
-        pos.x -= textWidth / 2;
-    }
-
-    float lineHeight;
-    FontManager::getLineHeight(font, lineHeight);
-    lineHeight *= scale.y;
+    float lineHeight = FontManager::getLineHeight(font, pt);
+    float characterSpacing = FontManager::getCharacterSpacing(font, pt);
 
     float x = pos.x;
     float y = pos.y;
-
     for(auto c : text){
-        if(!FontManager::isDefined(font, c))
+        if(!FontManager::isDefined(font, c)){
+            std::cout << "Not defined: " << c << std::endl;
             continue;
+        }
         if(c == '\n'){
             y += lineHeight;
             x = pos.x;
             continue;
         }
-        float glyphWidth, glyphHeight;
-        FontManager::getGlyphSize(font, c, glyphWidth, glyphHeight);
-        glyphWidth *= scale.x;
+        if(c == ' '){
+            x += FontManager::getGlyphSize(font, ' ', pt).x;
+            continue;
+        }
+        Vector2 glyphSize = FontManager::getGlyphSize(font, c, pt);
 
         auto glyph = FontManager::getGlyph(font, c);
-        if(glyph != nullptr){
-            CV::obj(glyph, Vector2(x, y), scale);
-        }
-        x += glyphWidth + FontManager::getFontSpacing(font) * scale.x;
+        #if TEXT_DEBUG
+        CV::rect(x, y+lineHeight, x + glyphSize.x, y+lineHeight-glyphSize.y);
+        #endif
+        CV::obj(glyph, Vector2(x, y+std::max(glyphSize.y, lineHeight)), Vector2(pt, pt));
+        x += glyphSize.x + characterSpacing;
     }
 }
 
@@ -346,13 +347,18 @@ void CV::clear(Vector3 rgb)
     glClearColor(rgb.x, rgb.y, rgb.z, 1);
 }
 
-void CV::obj(ObjFile *obj, Vector2 pos, Vector2 scale){
+void CV::obj(Model3D* obj, Vector2 pos, Vector2 scale){
+    // talvez daria pra transformar isso em um desenho em batch p/
+    // otimizar texto
     glBegin(GL_TRIANGLES);
     for(auto face : obj->faces){
         for(auto vertex : face){
-            auto v = obj->vertices[vertex-1];
-
-            v = v.multiply(Vector3(scale.x, scale.y, 1));
+            auto v = obj->vertices[vertex];
+            v = v.multiply(Vector3(scale.x,
+            #ifdef Y_CANVAS_CRESCE_PARA_CIMA
+            -
+            #endif
+            scale.y, 1));
             v = v + Vector3(pos.x, pos.y, 0);
             glVertex3f(v.x, v.y, v.z);
         }
