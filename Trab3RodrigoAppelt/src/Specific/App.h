@@ -6,6 +6,7 @@
 
 #include "../Math/Vector2.h"
 #include "Game.h"
+#include "Store.h"
 #include "../Keyboard.h"
 #include "../UI/ButtonManager.h"
 #include "../UI/TextBox.h"
@@ -32,6 +33,8 @@ public:
     void mouseDown();
     void updateMousePos(Vector2 pos);
 
+    /// @brief usado para voltar ao menu principal da loja. codigo cola
+    void goToMainMenu();
 private:
     enum class MenuState{
         MAIN_MENU, // feito
@@ -42,7 +45,9 @@ private:
         //RATING, // ignorar
         GAME, // feito
         PAUSED,
-        GAME_OVER
+        GAME_OVER,
+        HIGHSCORES,
+        STORE
     };
     MenuState currentMenu;
 
@@ -51,6 +56,7 @@ private:
     Vector2 mousePos;
 
     Game game;
+    Store store;
 
     /// @brief Cria os botoes de todos os menus
     void submitButtons();
@@ -61,7 +67,8 @@ private:
     void renderGame();
     void renderPauseMenu();
     void renderGameOver();
-    void renderPostGameStats();
+    void renderHighscores();
+    void renderStore();
 
     // per screen variables
     ButtonManager mainMenuButtons;
@@ -72,6 +79,7 @@ private:
     ButtonManager pauseButtons;
     ButtonManager gameButtons;
     ButtonManager gameOverButtons;
+    ButtonManager highscoresButtons;
 
     // user data
     // int coins; <-     precisamos aqui? talvez soh no

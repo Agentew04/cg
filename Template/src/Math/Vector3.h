@@ -17,6 +17,8 @@ public:
 
     Vector3(float _x, float _y, float _z);
 
+    static Vector3 fromHex(uint32_t hex);
+
     void normalize();
 
     Vector3 normalized();

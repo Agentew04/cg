@@ -55,7 +55,6 @@ void ButtonManager::updateMousePos(Vector2 mousePos){
         if(b == nullptr){
             continue;
         }
-
         if(b->state == ButtonState::HOVER){
             CursorManager::setCursor(CursorManager::CursorType::CLICKABLE);
         }

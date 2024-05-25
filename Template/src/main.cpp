@@ -20,6 +20,7 @@
 #include <stdlib.h>
 
 #include "gl_canvas2d.h"
+#include "Fonts/FontManager.h"
 
 
 //largura e altura inicial da tela . Alteram com o redimensionamento de tela.
@@ -30,8 +31,45 @@ void update(float delta){
 
 }
 
-void render(float delta)
+void render()
 {
+    CV::clear(1,1,1);
+    CV::translate(0,0);
+    CV::color(1,0,0);
+    // CV::obj(ObjLoader::get("./Template/assets/fonts/jetbrainsmono.font", "a"), 
+    //     Vector2(300,300),
+    //     Vector2(50,50));
+    // CV::setWireframe(true);
+    // CV::obj(ObjLoader::get("moeda"), 
+    //     Vector2(300,300),
+    //     Vector2(50,50));
+    std::string msg = "H#llo W0rld!\nNew Lin*.";
+    Vector2 origin = Vector2(300,300);
+    float pt = 40;
+
+    // CV::color(0,1,0);
+    // CV::circleFill(origin, 5, 10);
+    float textWidth = FontManager::getTextWidth(
+        FontName::JetBrainsMono, 
+        msg, 
+        pt);
+    float textHeight = FontManager::getTextHeight(
+        FontName::JetBrainsMono, 
+        msg, 
+        pt);
+
+    CV::color(1,0,0);
+    CV::text(
+        origin,
+        msg,
+        FontName::JetBrainsMono,
+        pt,
+        UIPlacement::CENTER
+    );
+    CV::color(0,0,1);
+    CV::line(origin, origin + Vector2(textWidth, 0));
+    CV::line(origin, origin + Vector2(0, textHeight));
+
     Sleep(10); //nao eh controle de FPS. Somente um limitador de FPS.
 }
 
@@ -66,7 +104,9 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
 
 int main(void)
 {
-    CV::init(&screenWidth, &screenHeight, "Canvas2D - Custom Template", false);
+    FontManager::load("./Template/assets/fonts/jetbrainsmono.font", FontName::JetBrainsMono);
+
+    CV::init(&screenWidth, &screenHeight, "Canvas2D - Custom Template", true, true);
     CV::run();
     cleanup();
 }

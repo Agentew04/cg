@@ -236,7 +236,7 @@ public:
 
         if(!isValidIdentifier(container, key)){
             std::cout << "Invalid id!" << std::endl;
-            return T();
+            return;
         }
 
         if(has(container, key) == false){

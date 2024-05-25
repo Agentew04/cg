@@ -789,3 +789,354 @@
 
 1713197090 d:\universidade\cg\playground\src\keyboard.h
 
+1715562379 source:e:\universidade\cg\trabalhos\playground\src\3d\objloader.cpp
+	"ObjLoader.h"
+	<iostream>
+	<vector>
+	<fstream>
+
+1715562379 e:\universidade\cg\trabalhos\playground\src\3d\objloader.h
+	<string>
+	<vector>
+	<map>
+	"../Math/Vector3.h"
+
+1715562379 e:\universidade\cg\trabalhos\playground\src\math\vector3.h
+	<iostream>
+
+1715562379 source:e:\universidade\cg\trabalhos\playground\src\fonts\fontmanager.cpp
+	"FontManager.h"
+	<map>
+	<tuple>
+	"../3D/ObjLoader.h"
+
+1715562379 e:\universidade\cg\trabalhos\playground\src\fonts\fontmanager.h
+	<string>
+	<vector>
+	"../3D/ObjLoader.h"
+
+1715562380 source:e:\universidade\cg\trabalhos\playground\src\gl_canvas2d.cpp
+	"gl_canvas2d.h"
+	<GL/glut.h>
+	<string>
+	"Fonts/FontManager.h"
+	"Math/Matrix.h"
+
+1715562380 e:\universidade\cg\trabalhos\playground\src\gl_canvas2d.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	"Math/Vector2.h"
+	"Math/Vector3.h"
+	"Math/Matrix.h"
+	"Math/Polygon2D.h"
+	"UI/UIDefinitions.h"
+	"3D/ObjLoader.h"
+	"Fonts/FontManager.h"
+
+1632060799 e:\universidade\cg\trabalhos\include\gl\glut.h
+	"freeglut_std.h"
+
+1632060797 e:\universidade\cg\trabalhos\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1632060794 e:\universidade\cg\trabalhos\include\gl\freeglut_ext.h
+	<stdarg.h>
+
+1715562379 e:\universidade\cg\trabalhos\playground\src\math\vector2.h
+	<cmath>
+	<iostream>
+
+1715562379 e:\universidade\cg\trabalhos\playground\src\math\matrix.h
+	<string.h>
+	<iostream>
+	<vector>
+	"Vector2.h"
+	"Vector3.h"
+
+1715562379 e:\universidade\cg\trabalhos\playground\src\math\polygon2d.h
+	<vector>
+	<map>
+	"Vector2.h"
+
+1715562380 e:\universidade\cg\trabalhos\playground\src\ui\uidefinitions.h
+	"../Math/Vector2.h"
+
+1712887873 source:e:\universidade\cg\trabalhos\playground\src\image\bmp.cpp
+	"Bmp.h"
+	<string.h>
+	<cstdint>
+	<iostream>
+
+1712887873 e:\universidade\cg\trabalhos\playground\src\image\bmp.h
+	<stdio.h>
+	<stdlib.h>
+
+1715562379 source:e:\universidade\cg\trabalhos\playground\src\image\imagemanipulation.cpp
+	<iostream>
+	<cstring>
+	"ImageManipulation.h"
+	"../Math/Vector2.h"
+
+1715562379 e:\universidade\cg\trabalhos\playground\src\image\imagemanipulation.h
+	<cstdint>
+	"../Math/Vector2.h"
+
+1712887873 source:e:\universidade\cg\trabalhos\playground\src\image\lodepng.cpp
+	"lodepng.h"
+	<limits.h>
+	<stdio.h>
+	<stdlib.h>
+
+1712887873 e:\universidade\cg\trabalhos\playground\src\image\lodepng.h
+	<string.h>
+	<vector>
+	<string>
+	"lodepng.h"
+	<iostream>
+	"lodepng.h"
+
+1715562380 source:e:\universidade\cg\trabalhos\playground\src\main.cpp
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	<cmath>
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	<string>
+	<vector>
+	"gl_canvas2d.h"
+	"Math/Vector2.h"
+	"Math/Vector3.h"
+	"Math/Matrix.h"
+
+1715562379 source:e:\universidade\cg\trabalhos\playground\src\math\matrix.cpp
+	"Matrix.h"
+	<string.h>
+	<iostream>
+
+1715562379 source:e:\universidade\cg\trabalhos\playground\src\math\polygon2d.cpp
+	"Polygon2D.h"
+	<map>
+	<chrono>
+	<algorithm>
+	"../Misc/Tuple.h"
+
+1715562380 e:\universidade\cg\trabalhos\playground\src\misc\tuple.h
+
+1715562379 source:e:\universidade\cg\trabalhos\playground\src\math\vector2.cpp
+	"Vector2.h"
+
+1715562379 source:e:\universidade\cg\trabalhos\playground\src\math\vector3.cpp
+	<cmath>
+	"Vector3.h"
+
+1715562379 source:e:\universidade\cg\trabalhos\playground\src\misc\particlemanager.cpp
+	"ParticleManager.h"
+	<cmath>
+	"../gl_canvas2d.h"
+
+1715562379 e:\universidade\cg\trabalhos\playground\src\misc\particlemanager.h
+	<vector>
+	<random>
+	"../3D/ObjLoader.h"
+	"../Math/Vector2.h"
+
+1715562379 source:e:\universidade\cg\trabalhos\playground\src\misc\soundplayer.cpp
+	"SoundPlayer.h"
+	<system_error>
+	<iostream>
+
+1715562379 e:\universidade\cg\trabalhos\playground\src\misc\soundplayer.h
+	<string>
+	<map>
+	<windows.h>
+	<mmsystem.h>
+
+1715562379 source:e:\universidade\cg\trabalhos\playground\src\misc\taskmanager.cpp
+	"TaskManager.h"
+	<iostream>
+
+1715562379 e:\universidade\cg\trabalhos\playground\src\misc\taskmanager.h
+	<functional>
+	<vector>
+	"../gl_canvas2d.h"
+
+1715562380 source:e:\universidade\cg\trabalhos\playground\src\storage\persistentstorage.cpp
+	<fstream>
+	<algorithm>
+	<iterator>
+	<iostream>
+	<sstream>
+	<vector>
+	<string>
+	<iomanip>
+	"PersistentStorage.h"
+
+1715562380 e:\universidade\cg\trabalhos\playground\src\storage\persistentstorage.h
+	<string>
+	<map>
+	<iostream>
+	<iomanip>
+	"../Math/Vector2.h"
+	"../Math/Vector3.h"
+
+1715562380 source:e:\universidade\cg\trabalhos\playground\src\ui\button.cpp
+	"Button.h"
+	<iostream>
+	"../gl_canvas2d.h"
+	"UIDefinitions.h"
+
+1715562380 e:\universidade\cg\trabalhos\playground\src\ui\button.h
+	<string>
+	<functional>
+	<map>
+	"../Math/Vector2.h"
+	"../Math/Vector3.h"
+	"UIDefinitions.h"
+
+1715562380 source:e:\universidade\cg\trabalhos\playground\src\ui\buttonmanager.cpp
+	<vector>
+	<iostream>
+	<algorithm>
+	"ButtonManager.h"
+	"CursorManager.h"
+
+1712887873 e:\universidade\cg\trabalhos\playground\src\ui\buttonmanager.h
+	<vector>
+	"Button.h"
+
+1712887873 e:\universidade\cg\trabalhos\playground\src\ui\cursormanager.h
+	<windows.h>
+	<map>
+
+1712887873 source:e:\universidade\cg\trabalhos\playground\src\ui\chart.cpp
+	<algorithm>
+	<vector>
+	"Chart.h"
+	"../gl_canvas2d.h"
+
+1715562380 e:\universidade\cg\trabalhos\playground\src\ui\chart.h
+	<vector>
+	<map>
+	"../Math/Vector2.h"
+	"../Math/Vector3.h"
+
+1712887873 source:e:\universidade\cg\trabalhos\playground\src\ui\checkbox.cpp
+	<iostream>
+	<cmath>
+	"CheckBox.h"
+	"../gl_canvas2d.h"
+
+1715562380 e:\universidade\cg\trabalhos\playground\src\ui\checkbox.h
+	<map>
+	<functional>
+	"../Math/Vector2.h"
+	"../Math/Vector3.h"
+
+1715562380 source:e:\universidade\cg\trabalhos\playground\src\ui\checkboxmanager.cpp
+	<vector>
+	<iostream>
+	<algorithm>
+	"CheckBoxManager.h"
+	"CursorManager.h"
+
+1712887873 e:\universidade\cg\trabalhos\playground\src\ui\checkboxmanager.h
+	<vector>
+	"CheckBox.h"
+
+1712887873 source:e:\universidade\cg\trabalhos\playground\src\ui\cursormanager.cpp
+	<windows.h>
+	<map>
+	<iostream>
+	"CursorManager.h"
+
+1712887873 source:e:\universidade\cg\trabalhos\playground\src\ui\imagerenderer.cpp
+	"ImageRenderer.h"
+	"../gl_canvas2d.h"
+	<iostream>
+
+1715562380 e:\universidade\cg\trabalhos\playground\src\ui\imagerenderer.h
+	<vector>
+	"../Image/ImageManipulation.h"
+	"../Math/Vector2.h"
+	"../Math/Matrix.h"
+
+1715562380 source:e:\universidade\cg\trabalhos\playground\src\ui\progressring.cpp
+	"ProgressRing.h"
+	<cmath>
+	<algorithm>
+	"../gl_canvas2d.h"
+
+1715562380 e:\universidade\cg\trabalhos\playground\src\ui\progressring.h
+	<vector>
+	"../Math/Vector2.h"
+	"UIDefinitions.h"
+
+1715562380 source:e:\universidade\cg\trabalhos\playground\src\ui\slider.cpp
+	"Slider.h"
+	"../gl_canvas2d.h"
+	<iostream>
+	<cmath>
+
+1715562380 e:\universidade\cg\trabalhos\playground\src\ui\slider.h
+	<map>
+	<functional>
+	"../Math/Vector2.h"
+	"../Math/Vector3.h"
+
+1712887873 source:e:\universidade\cg\trabalhos\playground\src\ui\slidermanager.cpp
+	<vector>
+	<iostream>
+	<algorithm>
+	"SliderManager.h"
+
+1712887873 e:\universidade\cg\trabalhos\playground\src\ui\slidermanager.h
+	<vector>
+	"Slider.h"
+
+1715562380 source:e:\universidade\cg\trabalhos\playground\src\ui\textbox.cpp
+	"TextBox.h"
+	<iostream>
+	<vector>
+	<string>
+	"../gl_canvas2d.h"
+	"../Keyboard.h"
+
+1715562380 e:\universidade\cg\trabalhos\playground\src\ui\textbox.h
+	<functional>
+	<map>
+	"UIDefinitions.h"
+	"../Keyboard.h"
+	"../Math/Vector2.h"
+	"../Math/Vector3.h"
+
+1715562379 e:\universidade\cg\trabalhos\playground\src\keyboard.h
+
+1712887873 source:e:\universidade\cg\trabalhos\playground\src\ui\uimanager.cpp
+	<vector>
+	<iostream>
+	"UIManager.h"
+
+1712887873 e:\universidade\cg\trabalhos\playground\src\ui\uimanager.h
+	<vector>
+	"Button.h"
+	"Slider.h"
+	"CheckBox.h"
+	"ButtonManager.h"
+	"SliderManager.h"
+	"CheckBoxManager.h"
+	"Chart.h"
+	"ImageRenderer.h"
+

@@ -53,12 +53,28 @@ void Vector2::flip()
     y = temp;
 }
 
-float Vector2::distance(Vector2 point)
+float Vector2::distance(const Vector2& point) const
 {
     return std::sqrt( ((point.x - x)*(point.x - x)) + ((point.y - y)*(point.y - y)));
 }
 
-Vector2 Vector2::operator+(const Vector2 &v)
+float Vector2::angle(const Vector2& v) const{
+    return std::acos((*this * v) / (magnitude * v.magnitude));
+}
+
+bool Vector2::isClockwise(const Vector2& v) const{
+    if(this->y*v.x > this->x*v.y){
+        return false;
+    }
+    return true;
+}
+
+Vector2 Vector2::reflection(const Vector2& normal) const
+{
+    return *this - (normal * (2 * (normal * *this)));
+}
+
+Vector2 Vector2::operator+(const Vector2 &v)  const
 {
     return Vector2(x + v.x, y + v.y);
 }
@@ -70,7 +86,7 @@ Vector2 Vector2::operator+=(const Vector2 &v)
     return *this;
 }
 
-Vector2 Vector2::operator-(const Vector2 &v)
+Vector2 Vector2::operator-(const Vector2 &v) const
 {
     return Vector2(x - v.x, y - v.y);
 }
@@ -82,7 +98,7 @@ Vector2 Vector2::operator-=(const Vector2 &v)
     return *this;
 }
 
-Vector2 Vector2::operator*(const float f)
+Vector2 Vector2::operator*(const float f) const
 {
     return Vector2(x * f, y * f);
 }
@@ -94,7 +110,7 @@ Vector2 Vector2::operator*=(const float f)
     return *this;
 }
 
-Vector2 Vector2::operator/(const float f)
+Vector2 Vector2::operator/(const float f) const
 {
     return Vector2(x / f, y / f);
 }
@@ -106,28 +122,28 @@ Vector2 Vector2::operator/=(const float f)
     return *this;
 }
 
-float Vector2::operator*(const Vector2 &v)
+float Vector2::operator*(const Vector2 &v) const
 {
     return x * v.x + y * v.y;
 }
 
-float Vector2::dot(const Vector2 &v)
+float Vector2::dot(const Vector2 &v) const
 {
     return x * v.x + y * v.y;
 }
 
-Vector2 Vector2::multiply(const Vector2 &v)
+Vector2 Vector2::multiply(const Vector2 &v) const
 {
     return Vector2(x * v.x, y * v.y);
 }
 
-bool Vector2::operator==(const Vector2 &v)
+bool Vector2::operator==(const Vector2 &v) const
 {
-    float epsilon = 0.00001;
+    float epsilon = 0.0001;
     return fabs(x - v.x) < epsilon && fabs(y - v.y) < epsilon;
 }
 
-bool Vector2::operator!=(const Vector2 &v)
+bool Vector2::operator!=(const Vector2 &v) const
 {
     return !(*this == v);
 }
@@ -136,4 +152,9 @@ std::ostream &operator<<(std::ostream &os, const Vector2 &obj)
 {
     os << "(" << obj.x << ", " << obj.y << ")";
     return os;
+}
+
+Vector2 Vector2::scale(float a) const
+{
+    return Vector2(x * a, y * a);
 }

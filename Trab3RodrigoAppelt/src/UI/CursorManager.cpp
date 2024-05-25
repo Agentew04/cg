@@ -16,19 +16,21 @@ void CursorManager::loadCursor(CursorType type){
     HCURSOR cursor = NULL;
 
     LPCTSTR cursorName;
-    if(type == CursorType::ROTATE){
-        cursor = (HCURSOR)LoadImageA(
-            nullptr,
-            ".\\T1-RodrigoAppelt\\images\\rotate-cursor-icon.cur",
-            IMAGE_CURSOR,
-            0,
-            0,
-            LR_LOADFROMFILE
-        );
-    }else{
-        cursorName = cursorTypeToString(type);
-        cursor = LoadCursor(NULL, cursorName);
-    }
+    // esse codigo vem do T1, usado p/ mouse customizado
+
+    // if(type == CursorType::ROTATE){
+    //     cursor = (HCURSOR)LoadImageA(
+    //         nullptr,
+    //         ".\\Trab3RodrigoAppelt\\images\\rotate-cursor-icon.cur",
+    //         IMAGE_CURSOR,
+    //         0,
+    //         0,
+    //         LR_LOADFROMFILE
+    //     );
+    // }else{
+    cursorName = cursorTypeToString(type);
+    cursor = LoadCursor(NULL, cursorName);
+    // }
 
     if(cursor == nullptr){
         std::cout << "Error loading cursor <" << cursorName << ">: " << GetLastError() << std::endl;

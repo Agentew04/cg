@@ -29,7 +29,7 @@ ButtonStyle* ButtonStyle::Windows10(){
         windows10Style->foreground = Vector3::fromHex(0x000000);
         windows10Style->setState(ButtonState::NORMAL, Vector3(0.882,0.882,0.882), Vector3(0.678,0.678,0.678));
         windows10Style->setState(ButtonState::HOVER, Vector3(0.898, 0.945, 0.984), Vector3(0.000, 0.470, 0.843));
-        windows10Style->setState(ButtonState::CLICK, Vector3(0.800, 0.894, 0.968), Vector3(0.000, 0.329, 0.600));   
+        windows10Style->setState(ButtonState::CLICK, Vector3(0.800, 0.894, 0.968), Vector3(0.000, 0.329, 0.600));
     }
     return windows10Style;
 }
@@ -128,11 +128,11 @@ void ButtonStyle::freeStyles(){
 
 
 Button::Button(std::function<Vector2()> positionFunc,
-        std::function<Vector2()> sizeFunc, 
+        std::function<Vector2()> sizeFunc,
         UIPlacement placement,
-        std::string text, 
+        std::string text,
         std::function<void(Button*)> callback) :
-        positionFunc(positionFunc), 
+        positionFunc(positionFunc),
         sizeFunc(sizeFunc),
         placement(placement),
         text(text),
@@ -159,9 +159,9 @@ void Button::render(){
 
     // draw text
     CV::color(style->foreground);
-    float lineHeightRatio = 0.65;
-    CV::text(sz.x/2,
-             (sz.y/2)+(glutBitmapHeight(GLUT_BITMAP_HELVETICA_18)*lineHeightRatio/2), text.c_str(), GLUT_BITMAP_HELVETICA_18, TextAlign::CENTER);
+    CV::text(sz*0.5, text, 30);
+    // CV::text(sz.x/2,
+    //          (sz.y/2)+(glutBitmapHeight(GLUT_BITMAP_HELVETICA_18)*lineHeightRatio/2), text.c_str(), GLUT_BITMAP_HELVETICA_18, TextAlign::CENTER);
 }
 
 void Button::call(){

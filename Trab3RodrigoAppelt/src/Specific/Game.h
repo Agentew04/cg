@@ -7,6 +7,7 @@
 #include "../Math/Vector2.h"
 #include "../Keyboard.h"
 #include "../Misc/ParticleManager.h"
+#include "../UI/ProgressBar.h"
 
 #include "Components/Ball.h"
 #include "Components/Block.h"
@@ -43,6 +44,7 @@ public:
 private:
     std::mt19937 rng;
     ParticleManager particleManager;
+    ProgressBar xpBar;
 
     int *screenWidth;
     int *screenHeight;
@@ -53,12 +55,14 @@ private:
     // left, right, ceiling
     std::vector<Rectangle2D> gameAreaWalls;
     void updateGameAreaBounds();
+    void updateColliders();
 
     const Vector2 blockAreaSize = Vector2(7,10);
 
     void renderHeader();
     void renderGameArea();
     void renderLine(std::vector<Block> line);
+    void renderPowerups(float blockSize, Vector2 gameAreaStart);
     void renderArrow();
 
     bool hasActivePlay;
@@ -69,10 +73,13 @@ private:
     int level;
     bool firstBack;
     bool gameOver;
+    int xpLevel; // a cada 25xp, xplevel++; a cada blockBreak, moeda+=xplevel
+    int xp; 
 
     std::vector<Ball> balls;
     std::vector<std::vector<Block>> blockLines;
-    std::vector<Powerup> powerups;
+    std::vector<ExtraBall> ballPowerups; // era pra ter polimorfia
+    std::vector<Laser> laserPowerups;
     std::vector<Vector3> blockColors;
 
     Vector2 ballLaunchPosition;
@@ -83,11 +90,13 @@ private:
 
     std::vector<Block> createNewLine(int level);
     void pushLines();
+    void hitBlock(Ball* ball, Block& block);
 
     // funcoes para gerenciar a colisao melhor
     Block* getBlockAt(Vector2 pos);
     bool processCollisions(Ball& ball, Block& block);
     void defineGameOver();
+    void computeSizes(float *blockSize, Vector2 *gameAreaStart, Vector2 *gameAreaSize);
 };
 
 #endif

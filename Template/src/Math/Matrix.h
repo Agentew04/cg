@@ -13,7 +13,7 @@ class Matrix{
 public:
     /// @brief Cria nova matrix nxn
     /// @param n A dimensao da matriz
-    Matrix(int n);
+    Matrix(size_t n);
 
     /// @brief Copia uma matriz
     /// @param m A matriz a ser copiada
@@ -22,7 +22,7 @@ public:
     /// @brief Cria uma nova matriz nxn com dados
     /// @param n A dimensao da matriz
     /// @param data Os dados da matriz
-    Matrix(int n, float *data, bool dealloc = false);
+    Matrix(size_t n, float *data, bool dealloc = false);
 
     /// @brief Destroi a matriz
     ~Matrix();
@@ -31,18 +31,18 @@ public:
     /// @param i A coordenada i
     /// @param j A coordenada j
     /// @return O elemento na posicao i,j
-    float at(int i, int j) const;
+    float at(uint32_t i, uint32_t j) const;
 
     /// @brief Seta um elemento na posicao i,j
     /// @param i A coordenada i
     /// @param j A coordenada j
     /// @param val O valor a ser setado
-    void set(int i, int j, float val);
+    void set(uint32_t i, uint32_t j, float val);
 
     /// @brief Retorna uma matriz identidade
     /// @param n o tamanho da matriz
     /// @return a matriz criada
-    static Matrix identity(int n);
+    static Matrix identity(size_t n);
 
     /// @brief Cria uma matriz de rotacao 2D
     /// @param angle Angulo em radianos
@@ -67,7 +67,7 @@ public:
     static Matrix scale2DHomo(float x, float y);
 
     /// @brief Retorna a dimensao da matriz quadrada
-    int dim() const;
+    size_t dim() const;
 
     /// @brief Calcula o determinante da matriz
     float det() const;
@@ -114,7 +114,7 @@ public:
     
 private:
     float *data;
-    int n;
+    size_t n;
 };
 
 #endif
