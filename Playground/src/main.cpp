@@ -123,10 +123,19 @@ void keyboardUp(int key)
 {
 }
 
+Vector2 ctrlPts[4] = {
+    Vector2(0,0),
+    Vector2(50, 100),
+    Vector2(100, 0),
+    Vector2(150, 100)
+};
+
 //funcao para tratamento de mouse: cliques, movimentos e arrastos
 void mouse(int button, int state, int wheel, int direction, int x, int y)
 {
     mousePos = Vector2(x,y);
+
+    ctrlPts[2] = Vector2(x - screenWidth/2, y - screenHeight/2);
     if(state == 0){
     }else if(state == 1){
         // mouse up
@@ -202,15 +211,126 @@ void p1_2022_1(){
 }
 
 void p1_2021_1(){
-    
+
 }
+
+void renderBezierBlendingFunctions(){
+    float scaleX = 100;
+    float scaleY = 100;
+
+    for(float t=0; t<1; t+=0.0001){
+        float x = t*scaleX;
+        float y = std::pow(1-t, 3)*scaleY;
+        CV::color(0,0,0);
+        CV::point(x, y);
+
+        y = (3*t * std::pow(1-t,2)) * scaleY;
+        CV::color(1,0,0);
+        CV::point(x, y);
+
+        y = (3*t*t * (1-t)) * scaleY;
+        CV::color(0,1,0);
+        CV::point(x, y);
+
+        y = (t*t*t) * scaleY;
+        CV::color(0,0,1);
+        CV::point(x, y);
+    }
+}
+
+void renderBSplineBlendingFunctions(){
+    float scaleX = 100;
+    float scaleY = 100;
+
+    for(float t=0; t<1; t+=0.0001){
+        float x = t*scaleX;
+        float y = std::pow(1-t, 3) * scaleY/6;
+        CV::color(0,0,0);
+        CV::point(x, y);
+
+        y = (3*t*t*t - 6*t*t + 4) * scaleY/6;
+        CV::color(1,0,0);
+        CV::point(x, y);
+
+        y = (-3*t*t*t + 3*t*t + 3*t + 1) * scaleY/6;
+        CV::color(0,1,0);
+        CV::point(x, y);
+
+        y = t*t*t * scaleY/6;
+        CV::color(0,0,1);
+        CV::point(x, y);
+    }
+}
+
+
+void renderControlPoints(){
+    for(int i=0; i<4; i++){
+        CV::color(0,0,0);
+        CV::circleFill(ctrlPts[i].x, ctrlPts[i].y, 5, 10);
+        if(i!=4-1){
+            CV::lineDashed(ctrlPts[i], ctrlPts[i+1], 5, 3);
+        }
+    }
+}
+
+Vector2 lerp(Vector2 a, Vector2 b, float t){
+    return a*(1-t) + b*t;
+}
+
+void renderBezierLerp(){
+    for(float t=0; t<1; t+=0.001){
+        Vector2 p0 = lerp(ctrlPts[0], ctrlPts[1], t);
+        Vector2 p1 = lerp(ctrlPts[1], ctrlPts[2], t);
+        Vector2 p2 = lerp(ctrlPts[2], ctrlPts[3], t);
+
+        Vector2 p01 = lerp(p0, p1, t);
+        Vector2 p12 = lerp(p1, p2, t);
+
+        Vector2 p = lerp(p01, p12, t);
+        CV::color(0,0,0);
+        CV::point(p.x, p.y);
+    }
+}
+
+void renderBezier(){
+    for(float t=0; t<50; t+=0.001){
+        float p1 = std::pow(1-t, 3);
+        float p2 = (3*t * std::pow(1-t,2));
+        float p3 = (3*t*t * (1-t));
+        float p4 = (t*t*t);
+
+        Vector2 p = ctrlPts[0]*p1 + ctrlPts[1]*p2 + ctrlPts[2]*p3 + ctrlPts[3]*p4;
+        CV::color(0,1,1);
+        CV::point(p.x, p.y);
+    }
+}
+
+void renderBSpline(){
+    for(float t=0; t<1; t+=0.001){
+        float p1 = std::pow(1-t, 3) * 1/6;
+        float p2 = (3*t*t*t - 6*t*t + 4) * 1/6;
+        float p3 = (-3*t*t*t + 3*t*t + 3*t + 1) * 1/6;
+        float p4 = t*t*t * 1/6;
+
+        Vector2 p = ctrlPts[0]*p1 + ctrlPts[1]*p2 + ctrlPts[2]*p3 + ctrlPts[3]*p4;
+        CV::color(0,1,1);
+        CV::point(p.x, p.y);
+    }
+}
+
 void render()
 {
     CV::clear(1,1,1);
     CV::translate(screenWidth/2, screenHeight/2);
 
-    // p1_2023_1();
-    p1_2022_1();
+    //p1_2023_1();
+    //p1_2022_1();
+    //renderBlendingFunctions();
+    renderControlPoints();
+    //renderBezier();
+    //renderBezierLerp();
+    //renderBSplineBlendingFunctions();
+    renderBSpline();
 
 
     Sleep(10); //nao eh controle de FPS. Somente um limitador de FPS.
@@ -218,6 +338,7 @@ void render()
 
 int main(void)
 {
+
     CV::init(&screenWidth, &screenHeight, "Canvas2D - Custom Template", false, true);
     CV::run();
     cleanup();

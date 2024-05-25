@@ -251,10 +251,10 @@
 	"Vector2.h"
 	"Vector3.h"
 
-1710420252 d:\universidade\cg\include\gl\glut.h
+1710416652 d:\universidade\cg\include\gl\glut.h
 	"freeglut_std.h"
 
-1710420252 d:\universidade\cg\include\gl\freeglut_std.h
+1710416652 d:\universidade\cg\include\gl\freeglut_std.h
 	<windows.h>
 	<EGL/egl.h>
 	<GLES/gl.h>
@@ -265,7 +265,7 @@
 	<GL/glu.h>
 	<stdlib.h>
 
-1710420252 d:\universidade\cg\include\gl\freeglut_ext.h
+1710416652 d:\universidade\cg\include\gl\freeglut_ext.h
 	<stdarg.h>
 
 1710420599 d:\universidade\cg\template\src\vector2.h
@@ -432,14 +432,14 @@
 	<iostream>
 	"lodepng.h"
 
-1714307794 source:d:\universidade\cg\playground\src\gl_canvas2d.cpp
+1716293025 source:d:\universidade\cg\playground\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 	<string>
 	"Fonts/FontManager.h"
 	"Math/Matrix.h"
 
-1714753794 d:\universidade\cg\playground\src\gl_canvas2d.h
+1714750194 d:\universidade\cg\playground\src\gl_canvas2d.h
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
@@ -465,13 +465,13 @@
 	<vector>
 	"../Vector2.h"
 
-1713200690 source:d:\universidade\cg\playground\src\ui\button.cpp
+1713197090 source:d:\universidade\cg\playground\src\ui\button.cpp
 	"Button.h"
 	<iostream>
 	"../gl_canvas2d.h"
 	"UIDefinitions.h"
 
-1713200690 d:\universidade\cg\playground\src\ui\button.h
+1713197090 d:\universidade\cg\playground\src\ui\button.h
 	<string>
 	<functional>
 	<map>
@@ -479,72 +479,72 @@
 	"../Math/Vector3.h"
 	"UIDefinitions.h"
 
-1713817949 source:d:\universidade\cg\playground\src\ui\buttonmanager.cpp
+1713814349 source:d:\universidade\cg\playground\src\ui\buttonmanager.cpp
 	<vector>
 	<iostream>
 	<algorithm>
 	"ButtonManager.h"
 	"CursorManager.h"
 
-1713200690 d:\universidade\cg\playground\src\ui\buttonmanager.h
+1713197090 d:\universidade\cg\playground\src\ui\buttonmanager.h
 	<vector>
 	"Button.h"
 
-1713200690 d:\universidade\cg\playground\src\ui\cursormanager.h
+1713197090 d:\universidade\cg\playground\src\ui\cursormanager.h
 	<windows.h>
 	<map>
 
-1713200690 source:d:\universidade\cg\playground\src\ui\checkbox.cpp
+1713197090 source:d:\universidade\cg\playground\src\ui\checkbox.cpp
 	<iostream>
 	<cmath>
 	"CheckBox.h"
 	"../gl_canvas2d.h"
 
-1713200690 d:\universidade\cg\playground\src\ui\checkbox.h
+1713197090 d:\universidade\cg\playground\src\ui\checkbox.h
 	<map>
 	<functional>
 	"../Math/Vector2.h"
 	"../Math/Vector3.h"
 
-1713200690 source:d:\universidade\cg\playground\src\ui\checkboxmanager.cpp
+1713197090 source:d:\universidade\cg\playground\src\ui\checkboxmanager.cpp
 	<vector>
 	<iostream>
 	<algorithm>
 	"CheckBoxManager.h"
 	"CursorManager.h"
 
-1713200690 d:\universidade\cg\playground\src\ui\checkboxmanager.h
+1713197090 d:\universidade\cg\playground\src\ui\checkboxmanager.h
 	<vector>
 	"CheckBox.h"
 
-1713200690 source:d:\universidade\cg\playground\src\ui\slider.cpp
+1713197090 source:d:\universidade\cg\playground\src\ui\slider.cpp
 	"Slider.h"
 	"../gl_canvas2d.h"
 	<iostream>
 	<cmath>
 
-1713200690 d:\universidade\cg\playground\src\ui\slider.h
+1713197090 d:\universidade\cg\playground\src\ui\slider.h
 	<map>
 	<functional>
 	"../Math/Vector2.h"
 	"../Math/Vector3.h"
 
-1713200690 source:d:\universidade\cg\playground\src\ui\slidermanager.cpp
+1713197090 source:d:\universidade\cg\playground\src\ui\slidermanager.cpp
 	<vector>
 	<iostream>
 	<algorithm>
 	"SliderManager.h"
 
-1713200690 d:\universidade\cg\playground\src\ui\slidermanager.h
+1713197090 d:\universidade\cg\playground\src\ui\slidermanager.h
 	<vector>
 	"Slider.h"
 
-1713200690 source:d:\universidade\cg\playground\src\ui\uimanager.cpp
+1713197090 source:d:\universidade\cg\playground\src\ui\uimanager.cpp
 	<vector>
 	<iostream>
 	"UIManager.h"
 
-1713200690 d:\universidade\cg\playground\src\ui\uimanager.h
+1713197090 d:\universidade\cg\playground\src\ui\uimanager.h
 	<vector>
 	"Button.h"
 	"Slider.h"
@@ -555,30 +555,30 @@
 	"Chart.h"
 	"ImageRenderer.h"
 
-1713200690 d:\universidade\cg\playground\src\ui\chart.h
+1713197090 d:\universidade\cg\playground\src\ui\chart.h
 	<vector>
 	<map>
 	"../Math/Vector2.h"
 	"../Math/Vector3.h"
 
-1713200690 d:\universidade\cg\playground\src\ui\imagerenderer.h
+1713197090 d:\universidade\cg\playground\src\ui\imagerenderer.h
 	<vector>
 	"../Image/ImageManipulation.h"
 	"../Math/Vector2.h"
 	"../Math/Matrix.h"
 
-1713200690 d:\universidade\cg\playground\src\image\imagemanipulation.h
+1713197090 d:\universidade\cg\playground\src\image\imagemanipulation.h
 	<cstdint>
 	"../Math/Vector2.h"
 
-1713200690 d:\universidade\cg\playground\src\math\matrix.h
+1713197090 d:\universidade\cg\playground\src\math\matrix.h
 	<string.h>
 	<iostream>
 	<vector>
 	"Vector2.h"
 	"Vector3.h"
 
-1714754760 source:d:\universidade\cg\playground\src\main.cpp
+1716296111 source:d:\universidade\cg\playground\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<cmath>
@@ -592,29 +592,29 @@
 	"Math/Vector3.h"
 	"Math/Matrix.h"
 
-1713200690 source:d:\universidade\cg\playground\src\image\bmp.cpp
+1713197090 source:d:\universidade\cg\playground\src\image\bmp.cpp
 	"Bmp.h"
 	<string.h>
 	<cstdint>
 	<iostream>
 
-1713200690 d:\universidade\cg\playground\src\image\bmp.h
+1713197090 d:\universidade\cg\playground\src\image\bmp.h
 	<stdio.h>
 	<stdlib.h>
 
-1713200690 source:d:\universidade\cg\playground\src\image\imagemanipulation.cpp
+1713197090 source:d:\universidade\cg\playground\src\image\imagemanipulation.cpp
 	<iostream>
 	<cstring>
 	"ImageManipulation.h"
 	"../Math/Vector2.h"
 
-1711300260 source:d:\universidade\cg\playground\src\image\lodepng.cpp
+1711296660 source:d:\universidade\cg\playground\src\image\lodepng.cpp
 	"lodepng.h"
 	<limits.h>
 	<stdio.h>
 	<stdlib.h>
 
-1711300260 d:\universidade\cg\playground\src\image\lodepng.h
+1711296660 d:\universidade\cg\playground\src\image\lodepng.h
 	<string.h>
 	<vector>
 	<string>
@@ -622,38 +622,38 @@
 	<iostream>
 	"lodepng.h"
 
-1713200690 source:d:\universidade\cg\playground\src\math\matrix.cpp
+1713197090 source:d:\universidade\cg\playground\src\math\matrix.cpp
 	"Matrix.h"
 	<string.h>
 	<iostream>
 
-1713200690 d:\universidade\cg\playground\src\math\vector2.h
+1713197090 d:\universidade\cg\playground\src\math\vector2.h
 	<cmath>
 	<iostream>
 
-1713200690 d:\universidade\cg\playground\src\math\vector3.h
+1713197090 d:\universidade\cg\playground\src\math\vector3.h
 	<iostream>
 
-1714348390 source:d:\universidade\cg\playground\src\math\polygon2d.cpp
+1714344790 source:d:\universidade\cg\playground\src\math\polygon2d.cpp
 	"Polygon2D.h"
 	<map>
 	<chrono>
 	<algorithm>
 	"../Misc/Tuple.h"
 
-1714348292 d:\universidade\cg\playground\src\math\polygon2d.h
+1714344692 d:\universidade\cg\playground\src\math\polygon2d.h
 	<vector>
 	<map>
 	"Vector2.h"
 
-1714335909 source:d:\universidade\cg\playground\src\math\vector2.cpp
+1714332309 source:d:\universidade\cg\playground\src\math\vector2.cpp
 	"Vector2.h"
 
-1713200690 source:d:\universidade\cg\playground\src\math\vector3.cpp
+1713197090 source:d:\universidade\cg\playground\src\math\vector3.cpp
 	<cmath>
 	"Vector3.h"
 
-1713448108 source:d:\universidade\cg\playground\src\storage\persistentstorage.cpp
+1713444508 source:d:\universidade\cg\playground\src\storage\persistentstorage.cpp
 	<fstream>
 	<algorithm>
 	<iterator>
@@ -664,7 +664,7 @@
 	<iomanip>
 	"PersistentStorage.h"
 
-1714387486 d:\universidade\cg\playground\src\storage\persistentstorage.h
+1714383886 d:\universidade\cg\playground\src\storage\persistentstorage.h
 	<string>
 	<map>
 	<iostream>
@@ -684,94 +684,94 @@
 1712415516 source:d:\universidade\cg\playground\src\storage\persistentstorage.vec3.cpp
 	"PersistentStorage.h"
 
-1713200690 source:d:\universidade\cg\playground\src\ui\chart.cpp
+1713197090 source:d:\universidade\cg\playground\src\ui\chart.cpp
 	<algorithm>
 	<vector>
 	"Chart.h"
 	"../gl_canvas2d.h"
 
-1713200690 source:d:\universidade\cg\playground\src\ui\cursormanager.cpp
+1713197090 source:d:\universidade\cg\playground\src\ui\cursormanager.cpp
 	<windows.h>
 	<map>
 	<iostream>
 	"CursorManager.h"
 
-1713200690 source:d:\universidade\cg\playground\src\ui\imagerenderer.cpp
+1713197090 source:d:\universidade\cg\playground\src\ui\imagerenderer.cpp
 	"ImageRenderer.h"
 	"../gl_canvas2d.h"
 	<iostream>
 
-1713959457 d:\universidade\cg\playground\src\misc\tuple.h
+1713955857 d:\universidade\cg\playground\src\misc\tuple.h
 
-1713818078 source:d:\universidade\cg\playground\src\3d\objloader.cpp
+1713814478 source:d:\universidade\cg\playground\src\3d\objloader.cpp
 	"ObjLoader.h"
 	<iostream>
 	<vector>
 	<fstream>
 
-1713200690 d:\universidade\cg\playground\src\3d\objloader.h
+1713197090 d:\universidade\cg\playground\src\3d\objloader.h
 	<string>
 	<vector>
 	<map>
 	"../Math/Vector3.h"
 
-1713826170 source:d:\universidade\cg\playground\src\fonts\fontmanager.cpp
+1713822570 source:d:\universidade\cg\playground\src\fonts\fontmanager.cpp
 	"FontManager.h"
 	<map>
 	<tuple>
 	"../3D/ObjLoader.h"
 
-1713652439 d:\universidade\cg\playground\src\fonts\fontmanager.h
+1713648839 d:\universidade\cg\playground\src\fonts\fontmanager.h
 	<string>
 	<vector>
 	"../3D/ObjLoader.h"
 
-1713817036 source:d:\universidade\cg\playground\src\misc\particlemanager.cpp
+1713813436 source:d:\universidade\cg\playground\src\misc\particlemanager.cpp
 	"ParticleManager.h"
 	<cmath>
 	"../gl_canvas2d.h"
 
-1713959651 d:\universidade\cg\playground\src\misc\particlemanager.h
+1713956051 d:\universidade\cg\playground\src\misc\particlemanager.h
 	<vector>
 	<random>
 	"../3D/ObjLoader.h"
 	"../Math/Vector2.h"
 
-1713200690 d:\universidade\cg\playground\src\ui\uidefinitions.h
+1713197090 d:\universidade\cg\playground\src\ui\uidefinitions.h
 	"../Math/Vector2.h"
 
-1714753317 source:d:\universidade\cg\playground\src\misc\soundplayer.cpp
+1714749717 source:d:\universidade\cg\playground\src\misc\soundplayer.cpp
 	"SoundPlayer.h"
 	<system_error>
 	<iostream>
 
-1714335748 d:\universidade\cg\playground\src\misc\soundplayer.h
+1714332148 d:\universidade\cg\playground\src\misc\soundplayer.h
 	<string>
 	<map>
 	<windows.h>
 	<mmsystem.h>
 
-1713956657 source:d:\universidade\cg\playground\src\misc\taskmanager.cpp
+1713953057 source:d:\universidade\cg\playground\src\misc\taskmanager.cpp
 	"TaskManager.h"
 	<iostream>
 
-1713957482 d:\universidade\cg\playground\src\misc\taskmanager.h
+1713953882 d:\universidade\cg\playground\src\misc\taskmanager.h
 	<functional>
 	<vector>
 	"../gl_canvas2d.h"
 
-1713200690 source:d:\universidade\cg\playground\src\ui\progressring.cpp
+1713197090 source:d:\universidade\cg\playground\src\ui\progressring.cpp
 	"ProgressRing.h"
 	<cmath>
 	<algorithm>
 	"../gl_canvas2d.h"
 
-1713200690 d:\universidade\cg\playground\src\ui\progressring.h
+1713197090 d:\universidade\cg\playground\src\ui\progressring.h
 	<vector>
 	"../Math/Vector2.h"
 	"UIDefinitions.h"
 
-1713200690 source:d:\universidade\cg\playground\src\ui\textbox.cpp
+1713197090 source:d:\universidade\cg\playground\src\ui\textbox.cpp
 	"TextBox.h"
 	<iostream>
 	<vector>
@@ -779,7 +779,7 @@
 	"../gl_canvas2d.h"
 	"../Keyboard.h"
 
-1713200690 d:\universidade\cg\playground\src\ui\textbox.h
+1713197090 d:\universidade\cg\playground\src\ui\textbox.h
 	<functional>
 	<map>
 	"UIDefinitions.h"
@@ -787,5 +787,5 @@
 	"../Math/Vector2.h"
 	"../Math/Vector3.h"
 
-1713200690 d:\universidade\cg\playground\src\keyboard.h
+1713197090 d:\universidade\cg\playground\src\keyboard.h
 
