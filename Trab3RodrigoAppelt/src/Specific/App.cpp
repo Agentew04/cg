@@ -7,13 +7,15 @@
 #include "../Storage/PersistentStorage.h"
 #include "../3D/ObjLoader.h"
 #include "../Web/WebManager.h"
+#include "Store.h"
 
 App::App(int *scrW, int *scrH)
     :
     currentMenu(MenuState::IDENTIFICATION),
     screenWidth(scrW), screenHeight(scrH),
     mousePos(0,0),
-    game(scrW, scrH)
+    game(scrW, scrH),
+    store(scrW, scrH, this)
 {
     submitButtons();
 
@@ -106,6 +108,16 @@ void App::keyDown(Key key){
             currentMenu = MenuState::GAME;
         }
         break;
+    case MenuState::HIGHSCORES:
+        if(key == ESC){
+            currentMenu = MenuState::MAIN_MENU;
+        }
+        break;
+    case MenuState::STORE:
+        if(key == ESC){
+            currentMenu = MenuState::MAIN_MENU;
+        }
+        break;
     default:
         break;
     }
@@ -145,6 +157,12 @@ void App::mouseUp()
     case MenuState::GAME_OVER:
         gameOverButtons.mouseUp();
         break;
+    case MenuState::HIGHSCORES:
+        highscoresButtons.mouseUp();
+        break;
+    case MenuState::STORE:
+        store.mouseUp();
+        break;
     }
 }
 
@@ -168,6 +186,12 @@ void App::mouseDown()
         break;
     case MenuState::GAME_OVER:
         gameOverButtons.mouseDown();
+        break;
+    case MenuState::HIGHSCORES:
+        highscoresButtons.mouseDown();
+        break;
+    case MenuState::STORE:
+        store.mouseDown();
         break;
     }
 }
@@ -194,6 +218,12 @@ void App::updateMousePos(Vector2 pos)
     case MenuState::GAME_OVER:
         gameOverButtons.updateMousePos(pos);
         break;
+    case MenuState::HIGHSCORES:
+        highscoresButtons.updateMousePos(pos);
+        break;
+    case MenuState::STORE:
+        store.updateMousePos(pos);
+        break;
     }
 }
 
@@ -219,6 +249,12 @@ void App::render()
     case MenuState::GAME_OVER:
         renderGameOver();
         break;
+    case MenuState::HIGHSCORES:
+        renderHighscores();
+        break;
+    case MenuState::STORE:
+        renderStore();
+        break;
     }
 }
 
@@ -227,17 +263,17 @@ void App::renderMainMenu()
     CV::clear(Vector3::fromHex(0x1D1E30));
     CV::color(Vector3::fromHex(0xFFFFFF));
 
-    
+
     CV::translate(0,0);
-    CV::obj(ObjLoader::get("logo"), 
-        Vector2((*screenWidth)/2, 2.75*(*screenHeight)/11),
+    CV::obj(ObjLoader::get("logo"),
+        Vector2((*screenWidth)/2, 2*(*screenHeight)/11),
         Vector2(75,75));
     int coins = PersistentStorage::getOrSetDefault<int>("user","coins",0);
-    CV::text(
-        (*screenWidth)/2, 5*(*screenHeight)/11,
-        ("Coins: " + std::to_string(coins)).c_str(),
-        GLUT_BITMAP_HELVETICA_18,
-        TextAlign::CENTER
+    CV::text(Vector2(
+            (*screenWidth)/2, 4.2*(*screenHeight)/11
+        ),
+        "Moedas: " + std::to_string(coins),
+        20
     );
     mainMenuButtons.draw();
 }
@@ -263,14 +299,13 @@ void App::renderPauseMenu()
 
     // draw PAUSED title
     CV::color(Vector3::fromHex(0xFFFFFF));
-    CV::text(
-        *screenWidth/2,
-        *screenHeight/6,
+    CV::text(Vector2(
+            *screenWidth/2, *screenHeight/6
+        ),
         "PAUSED",
-        GLUT_BITMAP_HELVETICA_18,
-        TextAlign::CENTER
+        25
     );
-    
+
     // render buttons
     pauseButtons.draw();
 }
@@ -289,26 +324,23 @@ void App::renderGameOver()
     CV::translate(Vector2(1* *screenWidth/9, 1* *screenHeight/7));
     // draw game over and stats
     CV::color(Vector3::fromHex(0xFFFFFF));
-    CV::text(
-        1.5* *screenWidth/9,
-        0.5* *screenHeight/7,
+    CV::text(Vector2(
+            1.5* *screenWidth/9, 0.5* *screenHeight/7
+        ),
         "GAME OVER",
-        GLUT_BITMAP_HELVETICA_18,
-        TextAlign::CENTER
+        25
     );
-    CV::text(
-        1.5* *screenWidth/9,
-        2* *screenHeight/7,
-        ("Score: " + std::to_string(game.getScore())).c_str(),
-        GLUT_BITMAP_HELVETICA_18,
-        TextAlign::CENTER
+    CV::text(Vector2(
+            1.5* *screenWidth/9, 2* *screenHeight/7
+        ),
+        ("Score: " + std::to_string(game.getScore())),
+        25
     );
-    CV::text(
-        1.5* *screenWidth/9,
-        2.5* *screenHeight/7,
-        ("Highscore: " + std::to_string(PersistentStorage::get<int>("user", "highscore",0))).c_str(),
-        GLUT_BITMAP_HELVETICA_18,
-        TextAlign::CENTER
+    CV::text(Vector2(
+            1.5* *screenWidth/9, 2.5* *screenHeight/7
+        ),
+        ("Highscore: " + std::to_string(PersistentStorage::get<int>("user", "highscore",0))),
+        25
     );
 
 
@@ -321,32 +353,31 @@ void App::renderGameOver()
     CV::translate(Vector2(5* *screenWidth/9, 1* *screenHeight/7));
     // draw highscores panel
     CV::color(Vector3::fromHex(0xFFFFFF));
-    CV::text(
-        1.5* *screenWidth/9,
-        0.5* *screenHeight/7,
+    CV::text(Vector2(
+            1.5* *screenWidth/9, 0.5* *screenHeight/7
+        ),
         "Placar de Lideres",
-        GLUT_BITMAP_HELVETICA_18,
-        TextAlign::CENTER
+        25
     );
     if(!highscoresFetched){
-        CV::text(
-            1.5* *screenWidth/9,
-            3* *screenHeight/7,
+        CV::text(Vector2(
+                1.5* *screenWidth/9, 3* *screenHeight/7
+            ),
             "Nao foi possivel carregar\nEsta sem internet?",
-            GLUT_BITMAP_HELVETICA_18,
-            TextAlign::CENTER
+            25
         );
     }else{
         // draw highscore list
         int i = 0;
         for(auto score : highscoresBuffer){
             std::string line = std::to_string(i+1) + ". " + score.first + ": " + std::to_string(score.second);
-            CV::text(
-                1* *screenWidth/9,
-                (0.5+((i+1)/2.0))* *screenHeight/7, //comeca em 1, sobe 0.5 a cada linha
-                line.c_str(),
-                GLUT_BITMAP_HELVETICA_18,
-                TextAlign::LEFT
+            CV::text(Vector2(
+                    1* *screenWidth/9, (0.5+((i+1)/2.0))* *screenHeight/7
+                ), //comeca em 1, sobe 0.5 a cada linha
+                line,
+                25,
+                FontName::JetBrainsMono,
+                UIPlacement::LEFT
             );
             i++;
         }
@@ -354,6 +385,50 @@ void App::renderGameOver()
 
     // draw buttons
     gameOverButtons.draw();
+}
+
+void App::renderHighscores(){
+    CV::clear(Vector3::fromHex(0x1D1E30));
+
+    // draw highscores
+    CV::color(Vector3::fromHex(0xFFFFFF));
+    CV::text(Vector2(
+            *screenWidth/2, *screenHeight/6
+        ),
+        "Placar de Lideres",
+        20
+    );
+
+    if(!highscoresFetched){
+        CV::text(Vector2(
+                *screenWidth/2, 3* *screenHeight/6
+            ),
+            "Nao foi possivel carregar\nEsta sem internet?",
+            20
+        );
+    }else{
+        // draw highscore list
+        int i = 0;
+        for(auto score : highscoresBuffer){
+            std::string line = std::to_string(i+1) + ". " + score.first + ": " + std::to_string(score.second);
+            CV::text(Vector2(
+                    *screenWidth/2, (0.5+((i+2)/2.0))* *screenHeight/6
+                ), //comeca em 1, sobe 0.5 a cada linha
+                line,
+                20,
+                FontName::JetBrainsMono,
+                UIPlacement::LEFT
+            );
+            i++;
+        }
+    }
+
+    // draw buttons
+    highscoresButtons.draw();
+}
+
+void App::renderStore(){
+
 }
 
 // ENDREGION RENDER
@@ -364,7 +439,7 @@ void App::submitButtons(){
     // mainmenu
     auto mainmenuPlay = new Button(
         [&](){
-            return Vector2((*screenWidth)/2, 6.5*(*screenHeight)/11);
+            return Vector2((*screenWidth)/2, 5*(*screenHeight)/11);
         },
         [](){
             return Vector2(200, 50);
@@ -384,7 +459,7 @@ void App::submitButtons(){
 
     auto mainmenuContinue = new Button(
         [&](){
-            return Vector2((*screenWidth)/2, 8*(*screenHeight)/11);
+            return Vector2((*screenWidth)/2, 6.5*(*screenHeight)/11);
         },
         [](){
             return Vector2(200, 50);
@@ -402,6 +477,57 @@ void App::submitButtons(){
     mainmenuContinue->style = ButtonStyle::FlatLightBlue();
     mainMenuButtons.registerButton(mainmenuContinue);
 
+    auto mainmenuhighscores = new Button(
+        [&](){
+            return Vector2((*screenWidth)/2, 8*(*screenHeight)/11);
+        },
+        [](){
+            return Vector2(200, 50);
+        },
+        UIPlacement::CENTER,
+        "Placar de Lideres",
+        [this](Button*){
+            currentMenu = MenuState::HIGHSCORES;
+            // fetch highscores
+            bool success = false;
+            auto res = WebManager::get(
+                "ballsbounce.rodrigoappelt.com",
+                "/highscores",
+                {
+                    { "maxEntries", "10"}
+                },
+                &success
+            );
+            if(success){
+                highscoresBuffer.clear();
+                auto arr = WebManager::fromJsonArray(res);
+                for(auto obj : arr){
+                    highscoresBuffer.push_back({obj["name"], std::stoi(obj["score"])});
+                }
+                highscoresFetched = true;
+            }
+        }
+    );
+    mainmenuhighscores->style = ButtonStyle::FlatLightBlue();
+    mainMenuButtons.registerButton(mainmenuhighscores);
+
+    auto mainmenustore = new Button(
+        [&](){
+            return Vector2((*screenWidth)/2, 9.5*(*screenHeight)/11);
+        },
+        [](){
+            return Vector2(200, 50);
+        },
+        UIPlacement::CENTER,
+        "Loja",
+        [this](Button*){
+            currentMenu = MenuState::STORE;
+        }
+    );
+    mainmenustore->style = ButtonStyle::FlatLightBlue();
+    mainMenuButtons.registerButton(mainmenustore);
+
+    // IDENTIFICATION
     idTextBox = new TextBox(
         [&](){
             return Vector2((*screenWidth)/2, 5*(*screenHeight)/11);
@@ -524,6 +650,27 @@ void App::submitButtons(){
     gameOverButtons.registerButton(retryGameOver);
     // play again button
     // main menu button
+
+    // HIGHSCORE MENU
+    auto highscoreback = new Button(
+        [&](){
+            return Vector2(25);
+        },
+        [&](){
+            return Vector2(75, 50);
+        },
+        UIPlacement::TOP_LEFT,
+        "VOLTAR",
+        [&](Button*){
+            currentMenu = MenuState::MAIN_MENU;
+        }
+    );
+    highscoreback->style = ButtonStyle::FlatRed();
+    highscoresButtons.registerButton(highscoreback);
 }
 
 // ENDREGION UI
+
+void App::goToMainMenu(){
+    currentMenu = MenuState::MAIN_MENU;
+}

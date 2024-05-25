@@ -38,6 +38,7 @@
 			<Add option="-std=c++17" />
 			<Add option="-fexceptions" />
 			<Add option="-DPHYSICS_DEBUG=0" />
+			<Add option="-DTEXT_DEBUG=0" />
 			<Add directory="../include" />
 		</Compiler>
 		<Linker>
@@ -78,6 +79,8 @@
 		<Unit filename="src/Specific/Game.cpp" />
 		<Unit filename="src/Specific/Game.h" />
 		<Unit filename="src/Specific/Game.save.cpp" />
+		<Unit filename="src/Specific/Store.cpp" />
+		<Unit filename="src/Specific/Store.h" />
 		<Unit filename="src/Storage/PersistentStorage.cpp" />
 		<Unit filename="src/Storage/PersistentStorage.h" />
 		<Unit filename="src/UI/Button.cpp" />

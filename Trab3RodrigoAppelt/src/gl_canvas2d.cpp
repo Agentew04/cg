@@ -292,13 +292,9 @@ void CV::text(float x, float y, const char *t, void *font, TextAlign align)
 void CV::text(Vector2 pos, const std::string& text, float pt, const FontName font, UIPlacement placement){
 
     Vector2 textSize = FontManager::getTextSize(font, text, pt);
-    #if TEXT_DEBUG
-    CV::rect(pos, pos + textSize);
-    CV::circleFill(pos, 3, 8);
-    #endif
     translateCoordinates(pos, textSize, placement);
     #if TEXT_DEBUG
-    CV::rect(pos, pos + textSize);
+    CV::rect(pos, pos + textSize); // desenha bounding box + ancora
     CV::circleFill(pos, 3, 8);
     #endif
 
@@ -325,6 +321,7 @@ void CV::text(Vector2 pos, const std::string& text, float pt, const FontName fon
 
         auto glyph = FontManager::getGlyph(font, c);
         #if TEXT_DEBUG
+        // desenha bounding box do caractere
         CV::rect(x, y+lineHeight, x + glyphSize.x, y+lineHeight-glyphSize.y);
         #endif
         CV::obj(glyph, Vector2(x, y+std::max(glyphSize.y, lineHeight)), Vector2(pt, pt));

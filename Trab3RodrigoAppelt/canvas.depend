@@ -432,7 +432,7 @@
 	<iostream>
 	"lodepng.h"
 
-1716580072 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\gl_canvas2d.cpp
+1716580597 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 	<string>
@@ -827,17 +827,18 @@
 	"Components/Block.h"
 	"Components/Powerups.h"
 
-1715712171 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\app.h
+1716595664 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\app.h
 	<vector>
 	<string>
 	"../Math/Vector2.h"
 	"Game.h"
+	"Store.h"
 	"../Keyboard.h"
 	"../UI/ButtonManager.h"
 	"../UI/TextBox.h"
 	"../Misc/Tuple.h"
 
-1716386382 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\app.cpp
+1716595934 source:e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\app.cpp
 	"App.h"
 	<random>
 	<ctime>
@@ -845,6 +846,7 @@
 	"../Storage/PersistentStorage.h"
 	"../3D/ObjLoader.h"
 	"../Web/WebManager.h"
+	"Store.h"
 
 1713040491 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\ui\uidefinitions.h
 	"../Math/Vector2.h"
@@ -1431,7 +1433,7 @@
 	"../3D/ObjLoader.h"
 	"../Math/Vector2.h"
 
-1715562380 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\misc\tuple.h
+1716595538 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\misc\tuple.h
 
 1715562380 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\misc\taskmanager.h
 	<functional>
@@ -1512,4 +1514,11 @@
 	<type_traits>
 	<utility>
 	<functional>
+
+1716596443 e:\universidade\cg\trabalhos\trab3rodrigoappelt\src\specific\store.h
+	<vector>
+	"../Math/Vector2.h"
+	"../Math/Vector3.h"
+	"../UI/ButtonManager.h"
+	"../Misc/Tuple.h"
 

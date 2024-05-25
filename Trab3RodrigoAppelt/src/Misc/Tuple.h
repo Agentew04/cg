@@ -1,3 +1,5 @@
+#ifndef __TUPLE_H__
+#define __TUPLE_H__
 
 /// @brief Uma recriacao da std::tuple por causa
 /// de relatos de incompatibilidade
@@ -12,7 +14,7 @@ public:
     T1 first;
     T2 second;
 
-    /// @brief Metodo estatico para criar uma tupla. Usa o 
+    /// @brief Metodo estatico para criar uma tupla. Usa o
     /// construtor por baixo. Feito para uma maior simularidade
     /// com a API da std::tuple.
     /// @param first O primeiro item
@@ -62,3 +64,5 @@ public:
         return *this > other || *this == other;
     }
 };
+
+#endif
