@@ -3,12 +3,14 @@
 Trabalho 3 (Balls Bounce) - Computacao Grafica
 Autor: Rodrigo Appelt
 Matricula: 202210244
+Data da versao: 26/05/2024
 
 Features Implementadas:
 - Menu principal
 - Placar de lideres online
 - Menu de pausa
 - Menu de game over
+- Loja para mudar a textura das bolinhas
 - Salvamento em disco da partida atual
 - Efeitos de audio quando quebra bloco/perde jogo
 - Explosoes com particulas quando quebra um bloco
@@ -19,18 +21,25 @@ Features Implementadas:
   - Bola Extra
 - Modo raio x
 - Carregamento de arquivos 3D
+- Carregamento de fontes customizadas para desenho de texto
 - Controle de Anti-Aliasing na Canvas2D
 - Controle de VSync na Canvas2D
 
 
 Manual de Uso:
 - Na primeira vez abrindo o aplicativo, voce deve clicar na caixa de texto
-  e digitar o seu apelido e clicar no botao.
+  e digitar o seu apelido e clicar no botao. (ele vai user usado no placar online)
 - Clique na tecla 'w' para ligar/desligar o modo raio x a qualquer momento
-- Apos abrir a aplicacao, clicar em 'Jogar' ou 'Carregar'
-  - se nao houver partida salva anterior, o carregar nao fara nada
+- Apos abrir a aplicacao, voce tem 4 escolhas:
+  - Clicar em 'Jogar' para criar uma nova partida
+  - Clicar em 'Continuar' para continuar uma partida salva anteriormente
+  - Clicar em 'Placar de Lideres' para ver a pontuacao maxima dos outros
+    jogadores
+  - Clicar em 'Loja' para ver quais texturas de bolinhas podem ser compradas
+
 - Durante o jogo, use o mouse para selecionar a direcao de lancamento
   e clique para comecar a lancar as bolinhas
+- Segure ESPACO para acelerar a velocidade do jogo
 - Clique ESC para pausar/despausar o jogo.
   - Clique em continuar para voltar ao jogo
   - Clique em reiniciar para desistir da partida atual
@@ -45,6 +54,9 @@ Manual de Uso:
   talvez alguns valores nao serao persistidos no disco tambem!
 - No menu de game over, tem dois botoes para voltar ao menu
   principal e para tentar novamente
+- Na loja, voce pode ver quantas moedas voce tem e comprar uma nova textura
+  para sua bolinha se quiser.
+  - Depois de comprar, clique em equipar para usar 
 
 - A cada 25 blocos quebrados o jogador passa de nivel
   - Progresso indicado na barra de experiencia no topo da area de jogo
@@ -57,12 +69,20 @@ Observacoes:
   para desabilitar funcoes especificas:
 
   - Em Web/WebManager.cpp:L10 (DISABLE_WEB)
+    - Essa funcionalidade nao funciona com MinGW_32, apenas
+      o MinGW_64. Nota que o MinGW_32 ou 64 nao tem a ver com
+      o compilador usado(32 ou 64 bits), e sim com a instalacao feita.
+      - A instalacao mingw inclusa no setup do codeblocks 17.12 e 20.03
+      eh 64 e deve funcionar corretamente.
     - Para tentar corrigir algum problema com relacao a link
       da httplib, tenha certeza de incluir a flag -lws2_32.
     - Nos arquivos(esquerda), botao direito no projeto
       'Canvas 2D' > Properties > Project's build options >
       > Linker Settings > Link Libraries
       - Adicionar 'ws2_32' na lista da esquerda
+    - As bibliotecas mingw.invoke.h e mingw.thread.h foram inclusas
+      para tentar mitigar problemas de compilacao devido a falta
+      de suporte ao MinGW_32
 
   - Em Misc/SoundPlayer.cpp:L9 (DISABLE_SOUND)
     - Para tentar corrigir algum problema com relacao a link
@@ -120,7 +140,6 @@ App *app;
 
 void update(float delta)
 {
-    CursorManager::startFrame();
     app->update(delta);
 }
 
@@ -133,7 +152,6 @@ void render()
     CV::text(Vector2(screenWidth, 0), ("FPS: " + std::to_string((int)std::round(CV::fps()))), 20, FontName::JetBrainsMono, UIPlacement::TOP_RIGHT);
     // CV::text(screenWidth, 25, ("FPS: " + std::to_string((int)std::round(CV::fps()))).c_str(), TextAlign::RIGHT);
     TaskManager::update();
-    CursorManager::applyCursor();
 }
 
 // funcao chamada toda vez que uma tecla for pressionada.
@@ -161,6 +179,7 @@ void keyboardUp(int key)
 // funcao para tratamento de mouse: cliques, movimentos e arrastos
 void mouse(int, int state, int, int, int x, int y)
 {
+    CursorManager::startFrame();
     mousePos = Vector2(x, y);
     app->updateMousePos(mousePos);
 
@@ -172,24 +191,26 @@ void mouse(int, int state, int, int, int x, int y)
     {
         app->mouseUp();
     }
+    CursorManager::applyCursor();
+
 }
 
 void load()
 {
-    FontManager::load("./Trab3RodrigoAppelt/fonts/jetbrainsmono.font", FontName::JetBrainsMono);
-    PersistentStorage::load("./Trab3RodrigoAppelt/saves/save.dat");
-    ObjLoader::load("./Trab3RodrigoAppelt/models/moeda.3d", "coin");
-    ObjLoader::load("./Trab3RodrigoAppelt/models/logo.3d", "logo");
-    ObjLoader::load("./Trab3RodrigoAppelt/models/trophy.3d", "trophy");
-    ObjLoader::load("./Trab3RodrigoAppelt/models/music.3d", "music");
-    ObjLoader::load("./Trab3RodrigoAppelt/models/pause.3d", "pause");
-    ObjLoader::load("./Trab3RodrigoAppelt/models/star.3d", "star");
-    ObjLoader::load("./Trab3RodrigoAppelt/models/collisionParticle.3d", "collisionParticle");
-    ObjLoader::load("./Trab3RodrigoAppelt/models/powerupBall.3d", "powerupBall");
-    ObjLoader::load("./Trab3RodrigoAppelt/models/powerupLaser.3d", "powerupLaser");
-    SoundPlayer::load("./Trab3RodrigoAppelt/audio/ballHit1.wav", "ballHit");
-    SoundPlayer::load("./Trab3RodrigoAppelt/audio/ballHit2.wav", "ballExit");
-    SoundPlayer::load("./Trab3RodrigoAppelt/audio/laserZap.wav", "laserZap");
+    FontManager::load(".\\Trab3RodrigoAppelt\\fonts\\jetbrainsmono.font", FontName::JetBrainsMono);
+    PersistentStorage::load(".\\Trab3RodrigoAppelt\\saves\\save.dat");
+    ObjLoader::load(".\\Trab3RodrigoAppelt\\models\\moeda.3d", "coin");
+    ObjLoader::load(".\\Trab3RodrigoAppelt\\models\\logo.3d", "logo");
+    ObjLoader::load(".\\Trab3RodrigoAppelt\\models\\trophy.3d", "trophy");
+    ObjLoader::load(".\\Trab3RodrigoAppelt\\models\\music.3d", "music");
+    ObjLoader::load(".\\Trab3RodrigoAppelt\\models\\pause.3d", "pause");
+    ObjLoader::load(".\\Trab3RodrigoAppelt\\models\\star.3d", "star");
+    ObjLoader::load(".\\Trab3RodrigoAppelt\\models\\collisionParticle.3d", "collisionParticle");
+    ObjLoader::load(".\\Trab3RodrigoAppelt\\models\\powerupBall.3d", "powerupBall");
+    ObjLoader::load(".\\Trab3RodrigoAppelt\\models\\powerupLaser.3d", "powerupLaser");
+    SoundPlayer::load(".\\Trab3RodrigoAppelt\\audio\\ballHit1.wav", "ballHit");
+    SoundPlayer::load(".\\Trab3RodrigoAppelt\\audio\\ballHit2.wav", "ballExit");
+    SoundPlayer::load(".\\Trab3RodrigoAppelt\\audio\\laserZap.wav", "laserZap");
     app = new App(&screenWidth, &screenHeight);
 }
 
@@ -207,11 +228,11 @@ int main(void)
 {
     load();
     CV::init(
-        /* Screen Width*/&screenWidth,
-        /* Screen Height*/&screenHeight,
-        /* Title*/ "Bolas Saltitantes do Rodrigo Appelt",
-        /*anti-aliasing: */ true,
-        /*vsync: */ true);
+    /* Largura Padrao */ &screenWidth,
+    /* Altura Padrao */  &screenHeight,
+    /* Titulo Janela */  "Bolas Saltitantes do Rodrigo Appelt",
+    /* Anti-Aliasing */  true,
+    /* V-Sync */         true);
     CV::run();
     cleanup();
 }

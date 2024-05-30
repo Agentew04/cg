@@ -74,7 +74,7 @@ public:
     static void clear(Vector3 rgb);
 
     //3d
-    static void obj(ObjFile *obj, Vector2 pos, Vector2 scale);
+    static void obj(Model3D *obj, Vector2 pos, Vector2 scale);
 
     //desenha texto na coordenada (x,y)
     static float textWidth(const char *t, void* font);
@@ -86,7 +86,7 @@ public:
     static void text(Vector2 pos, const char *t);  //varias funcoes ainda nao tem implementacao. Faca como exercicio
     static void text(Vector2 pos, int valor);      //varias funcoes ainda nao tem implementacao. Faca como exercicio
     static void text(Vector2 pos, float valor);    //varias funcoes ainda nao tem implementacao. Faca como exercicio
-    static void text(Vector2 pos, const std::string& text, const CustomFont font, Vector2 scale, TextAlign align);
+    static void text(Vector2 pos, const std::string& text, float pt, const FontName font, UIPlacement placement);
 
     //coordenada de offset para desenho de objetos.
     static void translate(float x, float y);
@@ -97,6 +97,8 @@ public:
 
     /// @brief Retorna uma media do FPS
     static float fps();
+
+    static void setMatrix(Matrix &mat);
 
     static void setWireframe(bool value);
 

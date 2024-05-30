@@ -347,6 +347,10 @@ void CV::clear(Vector3 rgb)
 void CV::obj(Model3D* obj, Vector2 pos, Vector2 scale){
     // talvez daria pra transformar isso em um desenho em batch p/
     // otimizar texto
+    if(obj == nullptr){
+        return;
+    }
+
     glBegin(GL_TRIANGLES);
     for(auto face : obj->faces){
         for(auto vertex : face){

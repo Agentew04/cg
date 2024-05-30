@@ -289,45 +289,42 @@ void CV::text(float x, float y, const char *t, void *font, TextAlign align)
     CV::text(finalX, y, t, font);
 }
 
-void CV::text(Vector2 pos, const std::string& text, const CustomFont font, Vector2 scale, TextAlign align){
-    FontManager::load(font);
+void CV::text(Vector2 pos, const std::string& text, float pt, const FontName font, UIPlacement placement){
+    Vector2 textSize = FontManager::getTextSize(font, text, pt);
+    translateCoordinates(pos, textSize, placement);
+    #if TEXT_DEBUG
+    CV::rect(pos, pos + textSize); // desenha bounding box + ancora
+    CV::circleFill(pos, 3, 8);
+    #endif
 
-    if(scale.y > 0){
-        scale.y *= -1;
-    }
-
-    float textWidth, textHeight;
-    FontManager::getTextSize(font, text, textWidth, textHeight);
-    textWidth *= scale.x;
-    textHeight *= scale.y;
-    if(align == TextAlign::CENTER){
-        pos.x -= textWidth / 2;
-    }
-
-    float lineHeight;
-    FontManager::getLineHeight(font, lineHeight);
-    lineHeight *= scale.y;
+    float lineHeight = FontManager::getLineHeight(font, pt);
+    float characterSpacing = FontManager::getCharacterSpacing(font, pt);
 
     float x = pos.x;
     float y = pos.y;
-
     for(auto c : text){
-        if(!FontManager::isDefined(font, c))
+        if(!FontManager::isDefined(font, c)){
+            std::cout << "Not defined: " << c << std::endl;
             continue;
+        }
         if(c == '\n'){
             y += lineHeight;
             x = pos.x;
             continue;
         }
-        float glyphWidth, glyphHeight;
-        FontManager::getGlyphSize(font, c, glyphWidth, glyphHeight);
-        glyphWidth *= scale.x;
+        if(c == ' '){
+            x += FontManager::getGlyphSize(font, ' ', pt).x;
+            continue;
+        }
+        Vector2 glyphSize = FontManager::getGlyphSize(font, c, pt);
 
         auto glyph = FontManager::getGlyph(font, c);
-        if(glyph != nullptr){
-            CV::obj(glyph, Vector2(x, y), scale);
-        }
-        x += glyphWidth + FontManager::getFontSpacing(font) * scale.x;
+        #if TEXT_DEBUG
+        // desenha bounding box do caractere
+        CV::rect(x, y+lineHeight, x + glyphSize.x, y+lineHeight-glyphSize.y);
+        #endif
+        CV::obj(glyph, Vector2(x, y+std::max(glyphSize.y, lineHeight)), Vector2(pt, pt));
+        x += glyphSize.x + characterSpacing;
     }
 }
 
@@ -346,7 +343,10 @@ void CV::clear(Vector3 rgb)
     glClearColor(rgb.x, rgb.y, rgb.z, 1);
 }
 
-void CV::obj(ObjFile *obj, Vector2 pos, Vector2 scale){
+void CV::obj(Model3D *obj, Vector2 pos, Vector2 scale){
+    if(obj == nullptr){
+        return;
+    }
     glBegin(GL_TRIANGLES);
     for(auto face : obj->faces){
         for(auto vertex : face){
@@ -457,7 +457,6 @@ void CV::color(int idx)
 void CV::color(float r, float g, float b, float alpha)
 {
     glColor4f(r, g, b, alpha);
-    // glTexImage2D(GL_TEXTURE_2D, 0, )
 }
 
 void CV::color(Vector3 rgb)
@@ -533,7 +532,6 @@ void reshape(int w, int h)
     // parametros: left, right, bottom, top
     gluOrtho2D(0.0, w, h, 0.0); // o eixo y cresce para baixo
 #endif
-
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
@@ -561,6 +559,7 @@ void display(void)
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+
     int time = glutGet(GLUT_ELAPSED_TIME);
     deltaTime = ((float)time - lastTime) / 1000.0f;
     lastTime = time;

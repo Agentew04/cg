@@ -14,6 +14,13 @@ bool inside(Vector2 buttonPos, Vector2 buttonSize, Vector2 mousePos){
 
 void ButtonManager::registerButton(Button *button){
     button->state = ButtonState::NORMAL;
+
+    // check if button already exists
+    for(size_t i=0; i<this->buttons.size(); i++){
+        if(this->buttons[i] == button){
+            return;
+        }
+    }
     this->buttons.push_back(button);
 }
 

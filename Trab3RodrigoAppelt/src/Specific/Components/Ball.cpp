@@ -1,12 +1,18 @@
 #include "Ball.h"
 
 #include "../../gl_canvas2d.h"
+#include "../Store.h"
 
 void Ball::render()
 {
     CV::translate(position);
-    CV::color(1, 1, 1);
-    CV::circleFill(0, 0, radius, 16);
+
+    Vector3 ballColor = Store::getCurrentSkinColor();
+    Model3D* ballModel = Store::getCurrentSkinModel();
+
+    CV::color(ballColor);
+    CV::obj(ballModel, Vector2::zero(), Vector2(radius));
+    //CV::circleFill(0, 0, radius, 16);
 
     #if PHYSICS_DEBUG
     // ball collider

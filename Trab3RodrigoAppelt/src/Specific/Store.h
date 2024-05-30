@@ -7,23 +7,22 @@
 #include "../Math/Vector3.h"
 #include "../UI/ButtonManager.h"
 #include "../Misc/Tuple.h"
-
-class App;
-
-
+#include "../3D/ObjLoader.h"
 
 
 /// @brief Classe que agrega a logica da compra de
 /// skins para a bola
 class Store {
 public:
-    Store(int *screenWidth, int *screenHeight, App* app);
+    Store(int *screenWidth, int *screenHeight);
 
     /// @brief Carrega os assets necessarios para a loja
     void load();
 
-    static std::string getCurrentSkinModelIdentifier();
+    static Model3D* getCurrentSkinModel();
     static Vector3 getCurrentSkinColor();
+
+    bool wantToGoBack = false;
 
     // event forwarding
     void render();
@@ -35,7 +34,6 @@ private:
 
     struct Skin{
         std::string name;
-        std::string modelPath;
         std::string modelId;
         Vector3 color;
         int price;
@@ -45,7 +43,7 @@ private:
     int *screenWidth, *screenHeight;
 
     int cardColumns = 3;
-    void renderCard(int index, Vector2 pos, Vector2 cardSize, float margin);
+    void renderCard(int index, Vector2 pos, Vector2 cardSize);
 
     void buySkin(int index);
     void equipSkin(int index);
@@ -53,11 +51,12 @@ private:
 
     int selectedSkinIndex;
 
-    static std::vector<Tuple<Button*, Button*>> buttons;
+    std::vector<Tuple<Button*, Button*>> buttons;
 
     ButtonManager buttonManager;
 
-    App *app;
+    Vector2 getPosForCard(int i);
+    Vector2 getCardSize();
 };
 
 #endif

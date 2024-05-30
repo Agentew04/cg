@@ -14,7 +14,6 @@
 std::vector<Store::Skin> Store::skins = {
     {
         "Padrao",
-        "./Trab3RodrigoAppelt/models/ball1model.3d",
         "ball1",
         Vector3(1, 1, 1),
         0,
@@ -22,71 +21,63 @@ std::vector<Store::Skin> Store::skins = {
     },
     {
         "Quadrado",
-        "./Trab3RodrigoAppelt/models/ball2model.3d",
         "ball2",
-        Vector3(0, 1, 1),
+        Vector3::fromHex(0x2db7fc),
         10,
         false
     },
     {
         "Triangulo",
-        "./Trab3RodrigoAppelt/models/ball3model.3d",
         "ball3",
-        Vector3(1, 0, 0),
+        Vector3::fromHex(0xed4242),
         25,
         false
     },
     {
         "Pentagono",
-        "./Trab3RodrigoAppelt/models/ball4model.3d",
         "ball4",
-        Vector3(0, 1, 0),
+        Vector3::fromHex(0x09ba2a),
         50,
         false
     },
     {
-        "$$$",
-        "./Trab3RodrigoAppelt/models/moeda.3d",
+        "Dinheiro",
         "ball5",
-        Vector3(1, 0, 0),
+        Vector3::fromHex(0xfcba03),
         100,
         false
     },
     {
         "Caveira",
-        "./Trab3RodrigoAppelt/models/skull.3d",
         "ball6",
-        Vector3(1, 1, 1),
+        Vector3::fromHex(0xd9dbdb),
         200,
         false
     }
 };
 Store* Store::instance = nullptr;
 
-Store::Store(int *screenWidth, int *screenHeight, App* app) :
+Store::Store(int *screenWidth, int *screenHeight) :
     screenWidth(screenWidth),
-    screenHeight(screenHeight),
-    app(app){
+    screenHeight(screenHeight){
     if(instance == nullptr){
         instance = this;
     }
 }
 
-// forward declaration of app.goToMainMenu
-void App::goToMainMenu();
-
 void Store::load(){
-    selectedSkinIndex = 0; // a default
+    selectedSkinIndex = PersistentStorage::getOrSetDefault<int>("store", "selectedSkin", 0);
+    if(selectedSkinIndex >= skins.size()){
+        selectedSkinIndex = 0;
+        PersistentStorage::set<int>("store", "selectedSkin", selectedSkinIndex);
+    }
 
     if(skins.size() == 0){
         std::cout << "ERROR: Sem skins para carregar. Pode dar tudo errado" << std::endl;
     }
 
     // carregar os modelos na engine
-    for(auto &skin: skins){
-        ObjLoader::load(skin.modelPath, skin.modelId);
-        std::cout << "Carreguei " << skin.modelId << " em " << skin.modelPath << std::endl;
-    }
+    ObjLoader::load(".\\Trab3RodrigoAppelt\\models\\balls.3d", "ballAssets");
 
     // ve se o usuario ja comprou alguma skin
     for(uint32_t i=0; i<skins.size(); i++){
@@ -94,7 +85,13 @@ void Store::load(){
         bool has = PersistentStorage::has("store", key);
 
         if(has){
-            skins[i].unlocked = PersistentStorage::get<bool>("store", key, false);
+            bool value = PersistentStorage::get<bool>("store", key, false);
+            if(i == selectedSkinIndex && !value){
+                // anti-cheat primitivo
+                selectedSkinIndex = 0;
+                PersistentStorage::set<int>("store", "selectedSkin", selectedSkinIndex);
+            }
+            skins[i].unlocked = value;
         } else {
             PersistentStorage::set<bool>("store", key, skins[i].unlocked);
         }
@@ -103,11 +100,13 @@ void Store::load(){
     // cria os botoes
     for(uint32_t i=0; i<skins.size(); i++){
         auto buybtn = new Button(
-            [&]() {
-                return Vector2();
+            [=]() {
+                Vector2 cardPos = Store::getPosForCard(i);
+                Vector2 cardSize = Store::getCardSize();
+                return cardPos + cardSize.multiply(Vector2(0.5f, 0.8f));
             },
             [](){
-                return Vector2(100, 50);
+                return Vector2(100, 40);
             },
             UIPlacement::CENTER,
             "Comprar",
@@ -118,11 +117,13 @@ void Store::load(){
         buybtn->style= ButtonStyle::FlatRed();
 
         auto equipbtn = new Button(
-            [&]() {
-                return Vector2();
+            [=]() {
+                Vector2 cardPos = Store::getPosForCard(i);
+                Vector2 cardSize = Store::getCardSize();
+                return cardPos + cardSize.multiply(Vector2(0.5f, 0.8f));
             },
             [](){
-                return Vector2(100, 50);
+                return Vector2(100, 40);
             },
             UIPlacement::CENTER,
             "Equipar",
@@ -131,10 +132,12 @@ void Store::load(){
             }
         );
         equipbtn->style = ButtonStyle::FlatLightBlue();
-        buttons.push_back(Tuple<Button*, Button*>(buybtn, equipbtn));
+        buttons.push_back(Tuple<Button*, Button* >(buybtn, equipbtn));
 
         if(skins[i].unlocked){
-            buttonManager.registerButton(equipbtn);
+            if(i != selectedSkinIndex){
+                buttonManager.registerButton(equipbtn);
+            }
         } else {
             buttonManager.registerButton(buybtn);
         }
@@ -151,15 +154,15 @@ void Store::load(){
         UIPlacement::TOP_LEFT,
         "VOLTAR",
         [this](Button*){
-            app->goToMainMenu();
+            wantToGoBack = true;
         }
     );
     storeback->style = ButtonStyle::FlatRed();
     buttonManager.registerButton(storeback);
 }
 
-std::string Store::getCurrentSkinModelIdentifier(){
-    return skins[instance->selectedSkinIndex].modelId;
+Model3D* Store::getCurrentSkinModel(){
+    return ObjLoader::get("ballAssets", skins[instance->selectedSkinIndex].modelId);
 }
 
 Vector3 Store::getCurrentSkinColor(){
@@ -168,54 +171,65 @@ Vector3 Store::getCurrentSkinColor(){
 
 void Store::render(){
     CV::translate(Vector2::zero());
-    float usableWidth = 3* *screenWidth / 5.0f;
-    float minCardMargin = 15;
+    CV::clear(Vector3::fromHex(0x1D1E30));
 
-    float cardWidth = (usableWidth-minCardMargin*(cardColumns-1)) / cardColumns;
-    float cardHeight = 400;
-
-    Vector2 cardAreaStart = Vector2(1* *screenWidth/5.0f, 1* *screenHeight/5.0f);
+    // renderiza a quantidade de moedas em cima
+    int coins = PersistentStorage::get<int>("user", "coins", 0);
+    CV::color(Vector3::fromHex(0xfcba03));
+    CV::text(Vector2(*screenWidth*0.5f, 0.5f * *screenHeight / 5.0f), "Moedas: "+std::to_string(coins), 20);
 
     // renderiza as skins
     for(int i=0; i<skins.size(); i++){
-        Vector2 cardIndex = Vector2(i % cardColumns, i / cardColumns);
-        Vector2 cardPos = cardAreaStart;
-        cardPos.x += cardIndex.x * (cardWidth + minCardMargin);
-        cardPos.y += cardIndex.y * (cardWidth + minCardMargin);
-
-        renderCard(i, cardPos, Vector2(cardWidth, cardHeight), minCardMargin);
+        renderCard(i, getPosForCard(i), getCardSize());
     }
+
+    buttonManager.draw();
 }
 
-void Store::renderCard(int index, Vector2 pos, Vector2 cardSize, float margin){
+void Store::renderCard(int index, Vector2 pos, Vector2 cardSize){
+    CV::translate(pos);
+
     // renderiza o background(sombra + card)
     float shadowDropoff = 10;
     Vector3 shadowColor = Vector3::fromHex(0x242535);
     CV::color(shadowColor);
-    CV::rectFill(pos + Vector2(shadowDropoff), pos + cardSize + Vector2(shadowDropoff));
+    CV::rectFill(Vector2(shadowDropoff), cardSize + Vector2(shadowDropoff));
     Vector3 cardColor = Vector3::fromHex(0x383947);
     CV::color(cardColor);
-    CV::rectFill(pos, pos + cardSize);
+    CV::rectFill(Vector2::zero(), cardSize);
 
     // renderiza o modelo
     CV::color(skins[index].color);
     CV::obj(
-        ObjLoader::get(skins[index].modelId),
-        pos + cardSize*0.5,
-        Vector2(cardSize.x * 0.75f)
+        ObjLoader::get("ballAssets", skins[index].modelId),
+        Vector2(
+            cardSize.x * 0.5f,
+            cardSize.y * 0.25f
+        ),
+        Vector2(cardSize.x * 0.1f)
     );
 
-    if(skins[index].unlocked){
-        // renderiza o botao de equipar
-    } else {
-        // renderiza o botao de comprar
-    }
+    // botoes sao renderizados pelo buttonManager
 
-    // renderiza o nome
+    // renderiza o nome da skin
     CV::color(1,1,1);
-    CV::text(pos + Vector2(0, cardSize.y), skins[index].name, 20);
+    CV::text(
+        Vector2(
+            cardSize.x * 0.5f, 
+            cardSize.y * 0.5f
+        ), 
+        skins[index].name, 
+        20
+    );
     // renderiza o preco
-    CV::text(pos + Vector2(0, cardSize.y + 20), "$"+std::to_string(skins[index].price), 20);
+    CV::text(
+        Vector2(
+            cardSize.x * 0.5f, 
+            cardSize.y * 0.6f
+        ), 
+        "$"+std::to_string(skins[index].price), 
+        20
+    );
 }
 
 void Store::buySkin(int index){
@@ -223,9 +237,9 @@ void Store::buySkin(int index){
         return;
     }
 
-    int coins = PersistentStorage::get<int>("store", "coins", 0);
+    int coins = PersistentStorage::get<int>("user", "coins", 0);
     if(coins >= skins[index].price){
-        PersistentStorage::set<int>("store", "coins", coins - skins[index].price);
+        PersistentStorage::set<int>("user", "coins", coins - skins[index].price);
         PersistentStorage::set<bool>("store", "ball"+std::to_string(index)+"unlocked", true);
         skins[index].unlocked = true;
         buttonManager.unregisterButton(buttons[index].first);
@@ -238,7 +252,15 @@ void Store::equipSkin(int index){
         return;
     }
 
+    // registra dnv o botao de equipar da skin antiga
+    buttonManager.registerButton(buttons[selectedSkinIndex].second);
+
     selectedSkinIndex = index;
+
+    PersistentStorage::set<int>("store", "selectedSkin", selectedSkinIndex);
+
+    // desregistra o botao de equipar dessa skin
+    buttonManager.unregisterButton(buttons[index].second);
 }
 
 void Store::mouseDown(){
@@ -251,4 +273,26 @@ void Store::mouseUp(){
 
 void Store::updateMousePos(Vector2 pos){
     buttonManager.updateMousePos(pos);
+}
+
+Vector2 Store::getPosForCard(int i){
+    float minCardMargin = 15;
+    auto cardSize = getCardSize();
+    Vector2 cardAreaStart = Vector2(1* *screenWidth/5.0f, 1* *screenHeight/5.0f);
+
+    Vector2 cardIndex = Vector2(i % cardColumns, i / cardColumns);
+    Vector2 cardPos = cardAreaStart;
+    cardPos.x += cardIndex.x * (cardSize.x + minCardMargin);
+    cardPos.y += cardIndex.y * (cardSize.y + minCardMargin);
+
+    return cardPos;
+}
+
+Vector2 Store::getCardSize(){
+    float usableWidth = 3* *screenWidth / 5.0f;
+    float minCardMargin = 15;
+
+    float cardWidth = (usableWidth-minCardMargin*(cardColumns-1)) / cardColumns;
+    float cardHeight = 200;
+    return Vector2(cardWidth, cardHeight);
 }

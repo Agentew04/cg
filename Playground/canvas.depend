@@ -789,13 +789,13 @@
 
 1713197090 d:\universidade\cg\playground\src\keyboard.h
 
-1715562379 source:e:\universidade\cg\trabalhos\playground\src\3d\objloader.cpp
+1717086862 source:e:\universidade\cg\trabalhos\playground\src\3d\objloader.cpp
 	"ObjLoader.h"
 	<iostream>
 	<vector>
 	<fstream>
 
-1715562379 e:\universidade\cg\trabalhos\playground\src\3d\objloader.h
+1717086868 e:\universidade\cg\trabalhos\playground\src\3d\objloader.h
 	<string>
 	<vector>
 	<map>
@@ -804,25 +804,25 @@
 1715562379 e:\universidade\cg\trabalhos\playground\src\math\vector3.h
 	<iostream>
 
-1715562379 source:e:\universidade\cg\trabalhos\playground\src\fonts\fontmanager.cpp
+1717086843 source:e:\universidade\cg\trabalhos\playground\src\fonts\fontmanager.cpp
 	"FontManager.h"
 	<map>
-	<tuple>
 	"../3D/ObjLoader.h"
 
-1715562379 e:\universidade\cg\trabalhos\playground\src\fonts\fontmanager.h
+1717086848 e:\universidade\cg\trabalhos\playground\src\fonts\fontmanager.h
 	<string>
 	<vector>
 	"../3D/ObjLoader.h"
+	"../Math/Vector2.h"
 
-1715562380 source:e:\universidade\cg\trabalhos\playground\src\gl_canvas2d.cpp
+1717093400 source:e:\universidade\cg\trabalhos\playground\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 	<string>
 	"Fonts/FontManager.h"
 	"Math/Matrix.h"
 
-1715562380 e:\universidade\cg\trabalhos\playground\src\gl_canvas2d.h
+1717086937 e:\universidade\cg\trabalhos\playground\src\gl_canvas2d.h
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
@@ -907,7 +907,7 @@
 	<iostream>
 	"lodepng.h"
 
-1715562380 source:e:\universidade\cg\trabalhos\playground\src\main.cpp
+1717092843 source:e:\universidade\cg\trabalhos\playground\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<cmath>
@@ -942,12 +942,12 @@
 	<cmath>
 	"Vector3.h"
 
-1715562379 source:e:\universidade\cg\trabalhos\playground\src\misc\particlemanager.cpp
+1717086962 source:e:\universidade\cg\trabalhos\playground\src\misc\particlemanager.cpp
 	"ParticleManager.h"
 	<cmath>
 	"../gl_canvas2d.h"
 
-1715562379 e:\universidade\cg\trabalhos\playground\src\misc\particlemanager.h
+1717086967 e:\universidade\cg\trabalhos\playground\src\misc\particlemanager.h
 	<vector>
 	<random>
 	"../3D/ObjLoader.h"

@@ -33,8 +33,6 @@ public:
     void mouseDown();
     void updateMousePos(Vector2 pos);
 
-    /// @brief usado para voltar ao menu principal da loja. codigo cola
-    void goToMainMenu();
 private:
     enum class MenuState{
         MAIN_MENU, // feito

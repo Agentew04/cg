@@ -160,8 +160,6 @@ void Button::render(){
     // draw text
     CV::color(style->foreground);
     CV::text(sz*0.5, text, 30);
-    // CV::text(sz.x/2,
-    //          (sz.y/2)+(glutBitmapHeight(GLUT_BITMAP_HELVETICA_18)*lineHeightRatio/2), text.c_str(), GLUT_BITMAP_HELVETICA_18, TextAlign::CENTER);
 }
 
 void Button::call(){

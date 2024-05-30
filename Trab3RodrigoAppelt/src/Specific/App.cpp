@@ -15,7 +15,7 @@ App::App(int *scrW, int *scrH)
     screenWidth(scrW), screenHeight(scrH),
     mousePos(0,0),
     game(scrW, scrH),
-    store(scrW, scrH, this)
+    store(scrW, scrH)
 {
     submitButtons();
 
@@ -30,7 +30,7 @@ App::App(int *scrW, int *scrH)
     username = PersistentStorage::getOrSetDefault<std::string>("user","name", "");
     PersistentStorage::setIfNot("user","coins",0);
     PersistentStorage::setIfNot("user","highscore",0);
-    // std::cout << "Username: " << username << std::endl;
+    store.load();
 }
 
 App::~App()
@@ -39,12 +39,14 @@ App::~App()
 
 void App::update(float delta)
 {
-    if(currentMenu == MenuState::IDENTIFICATION){
+    switch (currentMenu)
+    {
+    case MenuState::IDENTIFICATION:
         if(username != ""){
             currentMenu = MenuState::MAIN_MENU;
         }
-    }
-    if(currentMenu == MenuState::GAME){
+        break;
+    case MenuState::GAME:
         game.update(delta);
         if(game.isGameOver()){
             // primeiro frame que ele perdeu.
@@ -88,6 +90,15 @@ void App::update(float delta)
 
             currentMenu = MenuState::GAME_OVER;
         }
+        break;
+    case MenuState::STORE:
+        if(store.wantToGoBack){
+            currentMenu = MenuState::MAIN_MENU;
+            store.wantToGoBack = false;
+        }
+        break;
+    default:
+        break;
     }
 }
 
@@ -415,9 +426,7 @@ void App::renderHighscores(){
                     *screenWidth/2, (0.5+((i+2)/2.0))* *screenHeight/6
                 ), //comeca em 1, sobe 0.5 a cada linha
                 line,
-                20,
-                FontName::JetBrainsMono,
-                UIPlacement::LEFT
+                20
             );
             i++;
         }
@@ -428,7 +437,7 @@ void App::renderHighscores(){
 }
 
 void App::renderStore(){
-
+    store.render();
 }
 
 // ENDREGION RENDER
@@ -670,7 +679,3 @@ void App::submitButtons(){
 }
 
 // ENDREGION UI
-
-void App::goToMainMenu(){
-    currentMenu = MenuState::MAIN_MENU;
-}

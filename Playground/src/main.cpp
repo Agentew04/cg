@@ -27,6 +27,8 @@
 #include "Math/Vector3.h"
 #include "Math/Matrix.h"
 
+#pragma region P1Q4
+
 struct Square{
     Vector2 vertices[4];
 
@@ -58,6 +60,7 @@ Vector2 mousePos;
 void update(float delta){
 
 }
+
 
 
 
@@ -99,46 +102,6 @@ Square scaleSquare(Square sq, Vector2 factor){
 void drawSquare(Square sq){
     for(int i=0; i<4; i++){
         CV::line(sq.vertices[i], sq.vertices[(i+1)%4]);
-    }
-}
-
-void cleanup(){
-}
-
-//funcao chamada toda vez que uma tecla for pressionada.
-void keyboard(int key)
-{
-    printf("\nTecla: %d" , key);
-
-    switch(key)
-    {
-        case 27:
-            CV::close();
-        break;
-    }
-}
-
-//funcao chamada toda vez que uma tecla for liberada
-void keyboardUp(int key)
-{
-}
-
-Vector2 ctrlPts[4] = {
-    Vector2(0,0),
-    Vector2(50, 100),
-    Vector2(100, 0),
-    Vector2(150, 100)
-};
-
-//funcao para tratamento de mouse: cliques, movimentos e arrastos
-void mouse(int button, int state, int wheel, int direction, int x, int y)
-{
-    mousePos = Vector2(x,y);
-
-    ctrlPts[2] = Vector2(x - screenWidth/2, y - screenHeight/2);
-    if(state == 0){
-    }else if(state == 1){
-        // mouse up
     }
 }
 
@@ -210,9 +173,16 @@ void p1_2022_1(){
     drawSquare(final);
 }
 
-void p1_2021_1(){
+#pragma endregion
 
-}
+#pragma region curves2d
+
+Vector2 ctrlPts[4] = {
+    Vector2(0,0),
+    Vector2(50, 100),
+    Vector2(100, 0),
+    Vector2(150, 100)
+};
 
 void renderBezierBlendingFunctions(){
     float scaleX = 100;
@@ -318,20 +288,110 @@ void renderBSpline(){
     }
 }
 
+#pragma endregion
+
+void cleanup(){
+}
+
+//funcao chamada toda vez que uma tecla for pressionada.
+void keyboard(int key)
+{
+    printf("\nTecla: %d" , key);
+
+    switch(key)
+    {
+        case 27:
+            CV::close();
+        break;
+    }
+}
+
+//funcao chamada toda vez que uma tecla for liberada
+void keyboardUp(int key)
+{
+}
+
+
+//funcao para tratamento de mouse: cliques, movimentos e arrastos
+void mouse(int button, int state, int wheel, int direction, int x, int y)
+{
+    mousePos = Vector2(x,y);
+
+    ctrlPts[2] = Vector2(x - screenWidth/2, y - screenHeight/2);
+    if(state == 0){
+    }else if(state == 1){
+        // mouse up
+    }
+}
+
+Vector3 cubeCoordinates[] = {
+    Vector3(-1,-1,-1),
+    Vector3(1,-1,-1),
+    Vector3(1,1,-1),
+    Vector3(-1,1,-1),
+    Vector3(-1,-1,1),
+    Vector3(1,-1,1),
+    Vector3(1,1,1),
+    Vector3(-1,1,1)
+};
+Vector3 cubeScale = Vector3(100,100,100);
+
+float cubeAngle = 0.0f;
+float d = 150.0f;
+
+// TODO mover essas funcoes para Vector3.cpp?
+Vector3 rotateY(Vector3 point, float angle){
+    float x = point.x * std::cos(angle) - point.z * std::sin(angle);
+    float z = point.x * std::sin(angle) + point.z * std::cos(angle);
+    return Vector3(x, point.y, z);
+}
+
+Vector3 translateZ(Vector3 point, float z){
+    return Vector3(point.x, point.y, point.z + z);
+}
+
+Vector3 scale(Vector3 point, Vector3 factor){
+    return Vector3(point.x * factor.x, point.y * factor.y, point.z * factor.z);
+}
+
+Vector2 perspectiveProjection(Vector3 point, float distance){
+    float x = point.x * distance / point.z;
+    float y = point.y * distance / point.z;
+    return Vector2(x, y);
+}
+
+void drawCubePerspective(){
+    Vector3 p;
+
+    Vector2 output[8];
+    for(int i=0; i<8; i++){
+        p = cubeCoordinates[i];
+
+        //p = scale(p, cubeScale);
+        p = rotateY(p, cubeAngle);
+        p = translateZ(p, 5);
+
+        output[i] = perspectiveProjection(p, d);
+        std::cout << "output[" << i << "]: " << output[i].x << ", " << output[i].y << std::endl;
+    }
+
+    // draw cube wireframe(12 lines)
+    for(int i=0; i<4; i++){
+        CV::line(output[i], output[(i+1)%4]);
+        CV::line(output[i+4], output[((i+1)%4)+4]);
+        CV::line(output[i], output[i+4]);
+    }
+
+    cubeAngle += 0.01f;
+}
+
 void render()
 {
     CV::clear(1,1,1);
     CV::translate(screenWidth/2, screenHeight/2);
+    CV::color(1,0,0);
 
-    //p1_2023_1();
-    //p1_2022_1();
-    //renderBlendingFunctions();
-    renderControlPoints();
-    //renderBezier();
-    //renderBezierLerp();
-    //renderBSplineBlendingFunctions();
-    renderBSpline();
-
+    drawCubePerspective();
 
     Sleep(10); //nao eh controle de FPS. Somente um limitador de FPS.
 }
