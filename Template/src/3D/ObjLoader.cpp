@@ -15,7 +15,9 @@ void ObjLoader::load(const std::string& filename, const std::string& id){
 
     obj currentObj;
     int vertexIndex = 1;
-    int objStartIndex = 1;
+    int objVertexStartIndex = 1;
+    int normalIndex = 1;
+    int objNormalStartIndex = 1;
 
     std::map<std::string, Model3D> models;
 
@@ -37,33 +39,62 @@ void ObjLoader::load(const std::string& filename, const std::string& id){
                 Model3D model;
                 model.vertices = currentObj.vertices;
                 model.faces = currentObj.faces;
+                model.normals = currentObj.normals;
+                model.faceNormals = currentObj.faceNormals;
+                model.hasNormalData = currentObj.normals.size() > 0 && currentObj.faceNormals.size() > 0;
                 models[currentObj.name] = model;
             }
             // comeca novo objeto
             currentObj.name = line.substr(2);
             currentObj.vertices.clear();
             currentObj.faces.clear();
-            objStartIndex = vertexIndex;
+            currentObj.normals.clear();
+            currentObj.faceNormals.clear();
+            objVertexStartIndex = vertexIndex;
+            objNormalStartIndex = normalIndex;
         }
 
         if(line[0] == 'v'){
-            float x, y, z;
-            sscanf(line.c_str(), "v %f %f %f", &x, &y, &z);
-            Vector3 vertex(x, y, z);
-            currentObj.vertices.push_back(vertex);
-            vertexIndex++;
-            continue;
+            if(line[1] == ' '){ // definicao de vertice
+                float x, y, z;
+                sscanf(line.c_str(), "v %f %f %f", &x, &y, &z);
+                Vector3 vertex(x, y, z);
+                currentObj.vertices.push_back(vertex);
+                vertexIndex++;
+                continue;
+            }
+            if(line[1] == 'n'){ // vetor normal
+                float x, y, z;
+                sscanf(line.c_str(), "vn %f %f %f", &x, &y, &z);
+                Vector3 normal(x, y, z);
+                currentObj.normals.push_back(normal);
+                normalIndex++;
+                continue;
+            }
         }
 
         if(line[0] == 'f'){
-            std::vector<int> face;
-            int v1, v2, v3;
-            sscanf(line.c_str(), "f %d %d %d", &v1, &v2, &v3);
-            face.push_back(v1 - objStartIndex);
-            face.push_back(v2 - objStartIndex);
-            face.push_back(v3 - objStartIndex);
-            currentObj.faces.push_back(face);
-            continue;
+            // support normals
+            if(line.find("//") != std::string::npos){
+                // we have normal data and dont have texture data
+                int v1, v2, v3, n1, n2, n3;
+                sscanf(line.c_str(), "f %d//%d %d//%d %d//%d", &v1, &n1, &v2, &n2, &v3, &n3);
+                std::vector<int> face = {v1 - objVertexStartIndex, v2 - objVertexStartIndex, v3 - objVertexStartIndex};
+                std::vector<int> faceNormal = {n1 - objNormalStartIndex, n2 - objNormalStartIndex, n3 - objNormalStartIndex};
+                currentObj.faces.push_back(face);
+                currentObj.faceNormals.push_back(faceNormal);
+                std::cout << "normal on face" << std::endl;
+            } else {
+                // no normal data on face
+                std::vector<int> face;
+                int v1, v2, v3;
+                sscanf(line.c_str(), "f %d %d %d", &v1, &v2, &v3);
+                face.push_back(v1 - objVertexStartIndex);
+                face.push_back(v2 - objVertexStartIndex);
+                face.push_back(v3 - objVertexStartIndex);
+                currentObj.faces.push_back(face);
+                continue;
+            }
         }
     }
 
@@ -73,6 +104,10 @@ void ObjLoader::load(const std::string& filename, const std::string& id){
         Model3D model;
         model.vertices = currentObj.vertices;
         model.faces = currentObj.faces;
+        model.normals = currentObj.normals;
+        model.faceNormals = currentObj.faceNormals;
+        model.hasNormalData = currentObj.normals.size() > 0 && currentObj.faceNormals.size() > 0;
+        std::cout << "with nomrals: " << model.hasNormalData << std::endl;
         models[currentObj.name] = model;
     }
 

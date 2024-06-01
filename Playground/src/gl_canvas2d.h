@@ -20,7 +20,7 @@
 #define PI_2 6.28318530717
 #define PI   3.14159265359
 
-#define Y_CANVAS_CRESCE_PARA_CIMA 1
+#define Y_CANVAS_CRESCE_PARA_CIMA 0
 
 
 class CV //classe Canvas2D
@@ -86,7 +86,10 @@ public:
     static void text(Vector2 pos, const char *t);  //varias funcoes ainda nao tem implementacao. Faca como exercicio
     static void text(Vector2 pos, int valor);      //varias funcoes ainda nao tem implementacao. Faca como exercicio
     static void text(Vector2 pos, float valor);    //varias funcoes ainda nao tem implementacao. Faca como exercicio
-    static void text(Vector2 pos, const std::string& text, float pt, const FontName font, UIPlacement placement);
+    static void text(Vector2 pos, const std::string& text, 
+        float pt = 25.0f, 
+        FontName font = FontName::JetBrainsMono, 
+        UIPlacement placement = UIPlacement::CENTER);
 
     //coordenada de offset para desenho de objetos.
     static void translate(float x, float y);

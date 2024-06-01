@@ -290,6 +290,7 @@ void CV::text(float x, float y, const char *t, void *font, TextAlign align)
 }
 
 void CV::text(Vector2 pos, const std::string& text, float pt, const FontName font, UIPlacement placement){
+
     Vector2 textSize = FontManager::getTextSize(font, text, pt);
     translateCoordinates(pos, textSize, placement);
     #if TEXT_DEBUG
@@ -343,17 +344,30 @@ void CV::clear(Vector3 rgb)
     glClearColor(rgb.x, rgb.y, rgb.z, 1);
 }
 
-void CV::obj(Model3D *obj, Vector2 pos, Vector2 scale){
+void CV::obj(Model3D* obj, Vector2 pos, Vector2 scale){
+    // talvez daria pra transformar isso em um desenho em batch p/
+    // otimizar texto
     if(obj == nullptr){
         return;
     }
+
     glBegin(GL_TRIANGLES);
     for(auto face : obj->faces){
         for(auto vertex : face){
-            auto v = obj->vertices[vertex-1];
-
-            v = v.multiply(Vector3(scale.x, scale.y, 1));
+            auto v = obj->vertices[vertex];
+            v = v.multiply(Vector3(scale.x,
+            #ifdef Y_CANVAS_CRESCE_PARA_CIMA
+            -
+            #endif
+            scale.y, 1));
             v = v + Vector3(pos.x, pos.y, 0);
+
+            if(obj->hasNormalData){
+                auto n = obj->normals[obj->faceNormals[vertex][0]];
+                std::cout << "Normal" << n << std::endl;
+                glNormal3f(n.x, n.y, n.z);
+            }
+
             glVertex3f(v.x, v.y, v.z);
         }
     }

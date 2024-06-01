@@ -70,6 +70,16 @@ float FontManager::getLineHeight(FontName font, float pt)
     return fonts[font].metrics.lineHeight * pt;
 }
 
+Vector2 FontManager::getGlyphSize(FontName font, char c, float pt){
+    if(c == ' '){
+        return Vector2(fonts[font].metrics.spaceSize * pt, 0);
+    }
+    if(c == '\n'){
+        return Vector2(0, fonts[font].metrics.lineHeight * pt);
+    }
+    return fonts[font].metrics.glyphSize[c].multiply(Vector2(pt));
+}
+
 float FontManager::getTextWidth(FontName font, const std::string &text, float pt){
     float maxWidth = 0;
     float width = 0;
@@ -80,7 +90,7 @@ float FontManager::getTextWidth(FontName font, const std::string &text, float pt
             continue;
         }
         width += FontManager::getGlyphSize(font, c, pt).x;
-        width += FontManager::getFontSpacing(font, pt);
+        width += FontManager::getCharacterSpacing(font, pt);
         if(width > maxWidth){
             maxWidth = width;
         }
@@ -111,15 +121,6 @@ float FontManager::getTextHeight(FontName font, const std::string &text, float p
     }
 }
 
-Vector2 FontManager::getGlyphSize(FontName font, char c, float pt){
-    if(c == ' '){
-        return Vector2(fonts[font].metrics.spaceSize * pt, 0);
-    }
-    if(c == '\n'){
-        return Vector2(0, fonts[font].metrics.lineHeight * pt);
-    }
-    return fonts[font].metrics.glyphSize[c].multiply(Vector2(pt));
-}
 
 Vector2 FontManager::getTextSize(FontName font, const std::string &text, float pt){
     return Vector2(
@@ -132,7 +133,7 @@ Model3D* FontManager::getGlyph(FontName font, char c){
     return fonts[font].glyphs[c];
 }
 
-float FontManager::getFontSpacing(FontName font, float pt){
+float FontManager::getCharacterSpacing(FontName font, float pt){
     return fonts[font].metrics.glyphSpacing * pt;
 }
 

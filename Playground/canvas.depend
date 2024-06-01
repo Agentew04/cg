@@ -789,13 +789,13 @@
 
 1713197090 d:\universidade\cg\playground\src\keyboard.h
 
-1717086862 source:e:\universidade\cg\trabalhos\playground\src\3d\objloader.cpp
+1717263463 source:e:\universidade\cg\trabalhos\playground\src\3d\objloader.cpp
 	"ObjLoader.h"
 	<iostream>
 	<vector>
 	<fstream>
 
-1717086868 e:\universidade\cg\trabalhos\playground\src\3d\objloader.h
+1717263443 e:\universidade\cg\trabalhos\playground\src\3d\objloader.h
 	<string>
 	<vector>
 	<map>
@@ -815,14 +815,14 @@
 	"../3D/ObjLoader.h"
 	"../Math/Vector2.h"
 
-1717093400 source:e:\universidade\cg\trabalhos\playground\src\gl_canvas2d.cpp
+1717263701 source:e:\universidade\cg\trabalhos\playground\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 	<string>
 	"Fonts/FontManager.h"
 	"Math/Matrix.h"
 
-1717086937 e:\universidade\cg\trabalhos\playground\src\gl_canvas2d.h
+1717095571 e:\universidade\cg\trabalhos\playground\src\gl_canvas2d.h
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
@@ -907,7 +907,7 @@
 	<iostream>
 	"lodepng.h"
 
-1717092843 source:e:\universidade\cg\trabalhos\playground\src\main.cpp
+1717263217 source:e:\universidade\cg\trabalhos\playground\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<cmath>

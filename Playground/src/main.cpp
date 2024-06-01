@@ -290,6 +290,118 @@ void renderBSpline(){
 
 #pragma endregion
 
+#pragma region cube3d
+
+Vector3 cubeCoordinates[] = {
+    Vector3(-0.5f, -0.5f, -0.5f),
+    Vector3(0.5f, -0.5f, -0.5f),
+    Vector3(0.5f, 0.5f, -0.5f),
+    Vector3(-0.5f, 0.5f, -0.5f),
+    Vector3(-0.5f, -0.5f, 0.5f),
+    Vector3(0.5f, -0.5f, 0.5f),
+    Vector3(0.5f, 0.5f, 0.5f),
+    Vector3(-0.5f, 0.5f, 0.5f)
+};
+Vector3 cubeScale = Vector3(1,1,1);
+
+float cubeAngle = 0.0f;
+float d = 150.0f;
+
+// TODO mover essas funcoes para Vector3.cpp?
+Vector3 rotateY(Vector3 point, float angle){
+    float x = point.x * std::cos(angle) - point.z * std::sin(angle);
+    float z = point.x * std::sin(angle) + point.z * std::cos(angle);
+    return Vector3(x, point.y, z);
+}
+
+Vector3 translateZ(Vector3 point, float z){
+    return Vector3(point.x, point.y, point.z + z);
+}
+
+Vector3 scale(Vector3 point, Vector3 factor){
+    return Vector3(point.x * factor.x, point.y * factor.y, point.z * factor.z);
+}
+
+Vector2 perspectiveProjection(Vector3 point, float distance){
+    float x = point.x * distance / point.z;
+    float y = point.y * distance / point.z;
+    return Vector2(x, y);
+}
+
+void drawObjPerspective(Model3D* obj){
+    Vector3 p;
+
+    Vector2 *output = new Vector2[obj->vertices.size()];
+
+    for(int i=0; i<obj->vertices.size(); i++){
+        p = obj->vertices[i];
+
+        p = scale(p, cubeScale);
+        p = rotateY(p, cubeAngle);
+        p = translateZ(p, 5);
+
+        output[i] = perspectiveProjection(p, d);
+    }
+
+    for(int i=0; i<obj->faces.size(); i++){
+        for(int j=0; j<obj->faces[i].size(); j++){
+            CV::line(output[obj->faces[i][j]], output[obj->faces[i][(j+1)%obj->faces[i].size()]]);
+        }
+    }
+
+    CV::color(0,0,0);
+    CV::text(
+        Vector2(50,50), 
+        "d="+std::to_string((int)d),
+        30
+    );
+    CV::text(
+        Vector2(50,80), 
+        "size="+std::to_string(cubeScale.x),
+        30
+    );
+
+    cubeAngle += 0.01f;
+}
+
+void drawCubePerspective(){
+    Vector3 p;
+
+    Vector2 output[8];
+    for(int i=0; i<8; i++){
+        p = cubeCoordinates[i];
+
+        p = scale(p, cubeScale);
+        p = rotateY(p, cubeAngle);
+        p = translateZ(p, 5);
+
+        output[i] = perspectiveProjection(p, d);
+    }
+
+    // draw cube wireframe(12 lines)
+    for(int i=0; i<4; i++){
+        CV::line(output[i], output[(i+1)%4]);
+        CV::line(output[i+4], output[((i+1)%4)+4]);
+        CV::line(output[i], output[i+4]);
+    }
+
+    CV::color(0,0,0);
+    CV::text(
+        Vector2(50,50), 
+        "d="+std::to_string((int)d),
+        30
+    );
+    CV::text(
+        Vector2(50,80), 
+        "size="+std::to_string(cubeScale.x),
+        30
+    );
+
+    cubeAngle += 0.01f;
+}
+
+#pragma endregion
+
 void cleanup(){
 }
 
@@ -318,72 +430,19 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
     mousePos = Vector2(x,y);
 
     ctrlPts[2] = Vector2(x - screenWidth/2, y - screenHeight/2);
+
+    float middleX = x - screenWidth/2;
+    float middleY = y - screenHeight/2;
+    d = middleY;
+    cubeScale = Vector3(1 + middleX/100, 1 + middleX/100, 1 + middleX/100);
+
     if(state == 0){
     }else if(state == 1){
         // mouse up
     }
 }
 
-Vector3 cubeCoordinates[] = {
-    Vector3(-1,-1,-1),
-    Vector3(1,-1,-1),
-    Vector3(1,1,-1),
-    Vector3(-1,1,-1),
-    Vector3(-1,-1,1),
-    Vector3(1,-1,1),
-    Vector3(1,1,1),
-    Vector3(-1,1,1)
-};
-Vector3 cubeScale = Vector3(100,100,100);
 
-float cubeAngle = 0.0f;
-float d = 150.0f;
-
-// TODO mover essas funcoes para Vector3.cpp?
-Vector3 rotateY(Vector3 point, float angle){
-    float x = point.x * std::cos(angle) - point.z * std::sin(angle);
-    float z = point.x * std::sin(angle) + point.z * std::cos(angle);
-    return Vector3(x, point.y, z);
-}
-
-Vector3 translateZ(Vector3 point, float z){
-    return Vector3(point.x, point.y, point.z + z);
-}
-
-Vector3 scale(Vector3 point, Vector3 factor){
-    return Vector3(point.x * factor.x, point.y * factor.y, point.z * factor.z);
-}
-
-Vector2 perspectiveProjection(Vector3 point, float distance){
-    float x = point.x * distance / point.z;
-    float y = point.y * distance / point.z;
-    return Vector2(x, y);
-}
-
-void drawCubePerspective(){
-    Vector3 p;
-
-    Vector2 output[8];
-    for(int i=0; i<8; i++){
-        p = cubeCoordinates[i];
-
-        //p = scale(p, cubeScale);
-        p = rotateY(p, cubeAngle);
-        p = translateZ(p, 5);
-
-        output[i] = perspectiveProjection(p, d);
-        std::cout << "output[" << i << "]: " << output[i].x << ", " << output[i].y << std::endl;
-    }
-
-    // draw cube wireframe(12 lines)
-    for(int i=0; i<4; i++){
-        CV::line(output[i], output[(i+1)%4]);
-        CV::line(output[i+4], output[((i+1)%4)+4]);
-        CV::line(output[i], output[i+4]);
-    }
-
-    cubeAngle += 0.01f;
-}
 
 void render()
 {
@@ -391,14 +450,16 @@ void render()
     CV::translate(screenWidth/2, screenHeight/2);
     CV::color(1,0,0);
 
-    drawCubePerspective();
+    //drawCubePerspective();
+    drawObjPerspective(ObjLoader::get("monkey"));
 
     Sleep(10); //nao eh controle de FPS. Somente um limitador de FPS.
 }
 
 int main(void)
 {
-
+    FontManager::load(".\\Playground\\assets\\fonts\\jetbrainsmono.font", FontName::JetBrainsMono);
+    ObjLoader::load(".\\Playground\\assets\\models\\monkey-normal.obj", "monkey");
     CV::init(&screenWidth, &screenHeight, "Canvas2D - Custom Template", false, true);
     CV::run();
     cleanup();

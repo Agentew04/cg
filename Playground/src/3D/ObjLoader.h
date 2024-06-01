@@ -10,13 +10,17 @@
 /// sobre um modelo 3d
 struct Model3D {
     std::vector<Vector3> vertices;
+    std::vector<Vector3> normals;
     std::vector<std::vector<int>> faces;
+    std::vector<std::vector<int>> faceNormals;
+    bool hasNormalData;
 };
 
 /// @brief Classe que carrega e salva na memoria interna
 /// arquivos .obj simples
-/// @remark Apenas suporta arquivos .obj com vertices e faces.
-/// Nao suporta texturas, normais, multiplos objetos no mesmo arquivo, etc
+/// @remark Apenas suporta arquivos .obj com multiplos objetos
+/// contendo vertices, faces e normais.
+/// Nao suporta texturas, materiais(arquivos .mtl) e cores.
 class ObjLoader {
 public:
 
@@ -37,7 +41,9 @@ private:
     struct obj{
         std::string name;
         std::vector<Vector3> vertices;
+        std::vector<Vector3> normals;
         std::vector<std::vector<int>> faces;
+        std::vector<std::vector<int>> faceNormals;
     };
 };
 

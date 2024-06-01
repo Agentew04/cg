@@ -32,7 +32,7 @@ public:
     /// @param font A fonte a ser usada
     /// @param text O texto a ser medido
     /// @param pt O tamanho da fonte
-    /// @return As dimensoes do texto(largura, altura)
+    /// @return O tamanho do texto (largura, altura)
     static Vector2 getTextSize(FontName font, const std::string &text, float pt);
 
     /// @brief Retorna a largura de um texto
@@ -56,7 +56,7 @@ public:
     static Model3D* getGlyph(FontName font, char c);
 
     /// @brief Retorna o espacamento entre caracteres
-    static float getFontSpacing(FontName font, float pt);
+    static float getCharacterSpacing(FontName font, float pt);
 
     /// @brief Retorna se um caractere esta definido na fonte
     static bool isDefined(FontName font, char c);

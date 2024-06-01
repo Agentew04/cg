@@ -284,7 +284,7 @@ void CV::text(Vector2 pos, const std::string& text, float pt, const FontName fon
     #endif
 
     float lineHeight = FontManager::getLineHeight(font, pt);
-    float characterSpacing = FontManager::getFontSpacing(font, pt);
+    float characterSpacing = FontManager::getCharacterSpacing(font, pt);
 
     float x = pos.x;
     float y = pos.y;
@@ -341,6 +341,13 @@ void CV::obj(Model3D* obj, Vector2 pos, Vector2 scale){
             #endif
             scale.y, 1));
             v = v + Vector3(pos.x, pos.y, 0);
+
+            if(obj->hasNormalData){
+                auto n = obj->normals[obj->faceNormals[vertex][0]];
+                std::cout << "Normal" << n << std::endl;
+                glNormal3f(n.x, n.y, n.z);
+            }
+
             glVertex3f(v.x, v.y, v.z);
         }
     }
