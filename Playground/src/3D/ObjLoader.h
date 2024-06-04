@@ -9,6 +9,7 @@
 /// @brief Um struct que contem informacoes
 /// sobre um modelo 3d
 struct Model3D {
+public:
     std::vector<Vector3> vertices;
     std::vector<Vector3> normals;
     std::vector<std::vector<int>> faces;

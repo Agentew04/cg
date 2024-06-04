@@ -83,7 +83,7 @@ void ObjLoader::load(const std::string& filename, const std::string& id){
                 std::vector<int> faceNormal = {n1 - objNormalStartIndex, n2 - objNormalStartIndex, n3 - objNormalStartIndex};
                 currentObj.faces.push_back(face);
                 currentObj.faceNormals.push_back(faceNormal);
-                std::cout << "normal on face" << std::endl;
+
             } else {
                 // no normal data on face
                 std::vector<int> face;

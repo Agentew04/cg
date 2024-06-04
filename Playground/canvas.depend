@@ -432,14 +432,14 @@
 	<iostream>
 	"lodepng.h"
 
-1716293025 source:d:\universidade\cg\playground\src\gl_canvas2d.cpp
+1717501479 source:d:\universidade\cg\playground\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 	<string>
 	"Fonts/FontManager.h"
 	"Math/Matrix.h"
 
-1714750194 d:\universidade\cg\playground\src\gl_canvas2d.h
+1717501479 d:\universidade\cg\playground\src\gl_canvas2d.h
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
@@ -578,7 +578,7 @@
 	"Vector2.h"
 	"Vector3.h"
 
-1716296111 source:d:\universidade\cg\playground\src\main.cpp
+1717506349 source:d:\universidade\cg\playground\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<cmath>
@@ -703,35 +703,35 @@
 
 1713955857 d:\universidade\cg\playground\src\misc\tuple.h
 
-1713814478 source:d:\universidade\cg\playground\src\3d\objloader.cpp
+1717502325 source:d:\universidade\cg\playground\src\3d\objloader.cpp
 	"ObjLoader.h"
 	<iostream>
 	<vector>
 	<fstream>
 
-1713197090 d:\universidade\cg\playground\src\3d\objloader.h
+1717504331 d:\universidade\cg\playground\src\3d\objloader.h
 	<string>
 	<vector>
 	<map>
 	"../Math/Vector3.h"
 
-1713822570 source:d:\universidade\cg\playground\src\fonts\fontmanager.cpp
+1717501479 source:d:\universidade\cg\playground\src\fonts\fontmanager.cpp
 	"FontManager.h"
 	<map>
-	<tuple>
 	"../3D/ObjLoader.h"
 
-1713648839 d:\universidade\cg\playground\src\fonts\fontmanager.h
+1717501479 d:\universidade\cg\playground\src\fonts\fontmanager.h
 	<string>
 	<vector>
 	"../3D/ObjLoader.h"
+	"../Math/Vector2.h"
 
-1713813436 source:d:\universidade\cg\playground\src\misc\particlemanager.cpp
+1717501479 source:d:\universidade\cg\playground\src\misc\particlemanager.cpp
 	"ParticleManager.h"
 	<cmath>
 	"../gl_canvas2d.h"
 
-1713956051 d:\universidade\cg\playground\src\misc\particlemanager.h
+1717501479 d:\universidade\cg\playground\src\misc\particlemanager.h
 	<vector>
 	<random>
 	"../3D/ObjLoader.h"

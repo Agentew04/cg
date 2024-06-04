@@ -302,6 +302,15 @@ Vector3 cubeCoordinates[] = {
     Vector3(0.5f, 0.5f, 0.5f),
     Vector3(-0.5f, 0.5f, 0.5f)
 };
+Vector3 cubeNormals[] = {
+    Vector3(0,0,-1),
+    Vector3(0,0,1),
+    Vector3(0,-1,0),
+    Vector3(0,1,0),
+    Vector3(-1,0,0),
+    Vector3(1,0,0)
+};
+
 Vector3 cubeScale = Vector3(1,1,1);
 
 float cubeAngle = 0.0f;
@@ -328,6 +337,7 @@ Vector2 perspectiveProjection(Vector3 point, float distance){
     return Vector2(x, y);
 }
 
+
 void drawObjPerspective(Model3D* obj){
     Vector3 p;
 
@@ -343,20 +353,43 @@ void drawObjPerspective(Model3D* obj){
         output[i] = perspectiveProjection(p, d);
     }
 
+    glBegin(GL_TRIANGLES);
     for(int i=0; i<obj->faces.size(); i++){
+        Vector3 cameraDir = Vector3(0,0,1);
+        Vector3 n1 = obj->normals[obj->faceNormals[i][0]];
+        Vector3 n2 = obj->normals[obj->faceNormals[i][1]];
+        Vector3 n3 = obj->normals[obj->faceNormals[i][2]];
+        n1 = rotateY(n1, cubeAngle);
+        n2 = rotateY(n2, cubeAngle);
+        n3 = rotateY(n3, cubeAngle);
+
+        if(cameraDir.dot(n1) > 0 && cameraDir.dot(n2) > 0 && cameraDir.dot(n3) > 0) continue;
+
+
         for(int j=0; j<obj->faces[i].size(); j++){
-            CV::line(output[obj->faces[i][j]], output[obj->faces[i][(j+1)%obj->faces[i].size()]]);
+            Vector3 normal =  obj->normals[obj->faceNormals[i][j]];
+            normal = rotateY(normal, cubeAngle);
+            Vector3 sun = Vector3(-1,-1,-1);
+            sun = sun / sun.magnitude;
+            float intensity = sun.dot(normal);
+            if(intensity < 0) intensity = 0;
+            glColor3f(intensity, intensity, intensity);
+            glNormal3f(normal.x, normal.y, normal.z);
+            glFrontFace(GL_CCW);
+            glVertex3f(output[obj->faces[i][j]].x, output[obj->faces[i][j]].y, 1);
+            //CV::line(output[obj->faces[i][j]], output[obj->faces[i][(j+1)%obj->faces[i].size()]]);
         }
     }
+    glEnd();
 
     CV::color(0,0,0);
     CV::text(
-        Vector2(50,50), 
+        Vector2(50,50),
         "d="+std::to_string((int)d),
         30
     );
     CV::text(
-        Vector2(50,80), 
+        Vector2(50,80),
         "size="+std::to_string(cubeScale.x),
         30
     );
@@ -378,21 +411,42 @@ void drawCubePerspective(){
         output[i] = perspectiveProjection(p, d);
     }
 
-    // draw cube wireframe(12 lines)
-    for(int i=0; i<4; i++){
-        CV::line(output[i], output[(i+1)%4]);
-        CV::line(output[i+4], output[((i+1)%4)+4]);
-        CV::line(output[i], output[i+4]);
+    // // draw cube wireframe(12 lines)
+    // for(int i=0; i<4; i++){
+    //     CV::line(output[i], output[(i+1)%4]);
+    //     CV::line(output[i+4], output[((i+1)%4)+4]);
+    //     CV::line(output[i], output[i+4]);
+    // }
+    glBegin(GL_QUADS);
+    for(int i=0; i<6; i++){
+        Vector3 cameraDir = Vector3(0,0,1);
+        Vector3 n1 = cubeNormals[i];
+        n1 = rotateY(n1, cubeAngle);
+
+        if(cameraDir.dot(n1) > 0) continue;
+
+
+        for(int j=0; j<4; j++){
+            Vector3 normal =  cubeNormals[i];
+            normal = rotateY(normal, cubeAngle);
+            Vector3 sun = Vector3(-1,-1,-1);
+            sun = sun / sun.magnitude;
+            float intensity = sun.dot(normal);
+            if(intensity < 0) intensity = 0;
+            glColor3f(intensity, intensity, intensity);
+            glVertex3f(output[(i*4)+j].x, output[(i*4)+j].y, 1);
+            //CV::line(output[obj->faces[i][j]], output[obj->faces[i][(j+1)%obj->faces[i].size()]]);
+        }
     }
 
     CV::color(0,0,0);
     CV::text(
-        Vector2(50,50), 
+        Vector2(50,50),
         "d="+std::to_string((int)d),
         30
     );
     CV::text(
-        Vector2(50,80), 
+        Vector2(50,80),
         "size="+std::to_string(cubeScale.x),
         30
     );
@@ -451,7 +505,9 @@ void render()
     CV::color(1,0,0);
 
     //drawCubePerspective();
+
     drawObjPerspective(ObjLoader::get("monkey"));
+    // drawObjPerspective(ObjLoader::get("person"));
 
     Sleep(10); //nao eh controle de FPS. Somente um limitador de FPS.
 }
@@ -460,6 +516,7 @@ int main(void)
 {
     FontManager::load(".\\Playground\\assets\\fonts\\jetbrainsmono.font", FontName::JetBrainsMono);
     ObjLoader::load(".\\Playground\\assets\\models\\monkey-normal.obj", "monkey");
+    ObjLoader::load(".\\Playground\\assets\\models\\person.obj", "person");
     CV::init(&screenWidth, &screenHeight, "Canvas2D - Custom Template", false, true);
     CV::run();
     cleanup();
