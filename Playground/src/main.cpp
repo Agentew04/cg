@@ -374,8 +374,6 @@ void drawObjPerspective(Model3D* obj){
             float intensity = sun.dot(normal);
             if(intensity < 0) intensity = 0;
             glColor3f(intensity, intensity, intensity);
-            glNormal3f(normal.x, normal.y, normal.z);
-            glFrontFace(GL_CCW);
             glVertex3f(output[obj->faces[i][j]].x, output[obj->faces[i][j]].y, 1);
             //CV::line(output[obj->faces[i][j]], output[obj->faces[i][(j+1)%obj->faces[i].size()]]);
         }
@@ -411,33 +409,33 @@ void drawCubePerspective(){
         output[i] = perspectiveProjection(p, d);
     }
 
-    // // draw cube wireframe(12 lines)
-    // for(int i=0; i<4; i++){
-    //     CV::line(output[i], output[(i+1)%4]);
-    //     CV::line(output[i+4], output[((i+1)%4)+4]);
-    //     CV::line(output[i], output[i+4]);
-    // }
-    glBegin(GL_QUADS);
-    for(int i=0; i<6; i++){
-        Vector3 cameraDir = Vector3(0,0,1);
-        Vector3 n1 = cubeNormals[i];
-        n1 = rotateY(n1, cubeAngle);
-
-        if(cameraDir.dot(n1) > 0) continue;
-
-
-        for(int j=0; j<4; j++){
-            Vector3 normal =  cubeNormals[i];
-            normal = rotateY(normal, cubeAngle);
-            Vector3 sun = Vector3(-1,-1,-1);
-            sun = sun / sun.magnitude;
-            float intensity = sun.dot(normal);
-            if(intensity < 0) intensity = 0;
-            glColor3f(intensity, intensity, intensity);
-            glVertex3f(output[(i*4)+j].x, output[(i*4)+j].y, 1);
-            //CV::line(output[obj->faces[i][j]], output[obj->faces[i][(j+1)%obj->faces[i].size()]]);
-        }
+    // draw cube wireframe(12 lines)
+    for(int i=0; i<4; i++){
+        CV::line(output[i], output[(i+1)%4]);
+        CV::line(output[i+4], output[((i+1)%4)+4]);
+        CV::line(output[i], output[i+4]);
     }
+    // glBegin(GL_QUADS);
+    // for(int i=0; i<6; i++){
+    //     Vector3 cameraDir = Vector3(0,0,1);
+    //     Vector3 n1 = cubeNormals[i];
+    //     n1 = rotateY(n1, cubeAngle);
+
+    //     if(cameraDir.dot(n1) > 0) continue;
+
+
+    //     for(int j=0; j<4; j++){
+    //         Vector3 normal =  cubeNormals[i];
+    //         normal = rotateY(normal, cubeAngle);
+    //         Vector3 sun = Vector3(-1,-1,-1);
+    //         sun = sun / sun.magnitude;
+    //         float intensity = sun.dot(normal);
+    //         if(intensity < 0) intensity = 0;
+    //         glColor3f(intensity, intensity, intensity);
+    //         glVertex3f(output[(i*4)+j].x, output[(i*4)+j].y, 1);
+    //         //CV::line(output[obj->faces[i][j]], output[obj->faces[i][(j+1)%obj->faces[i].size()]]);
+    //     }
+    // }
 
     CV::color(0,0,0);
     CV::text(
@@ -506,8 +504,8 @@ void render()
 
     //drawCubePerspective();
 
-    drawObjPerspective(ObjLoader::get("monkey"));
-    // drawObjPerspective(ObjLoader::get("person"));
+    //drawObjPerspective(ObjLoader::get("monkey"));
+    drawObjPerspective(ObjLoader::get("person"));
 
     Sleep(10); //nao eh controle de FPS. Somente um limitador de FPS.
 }
