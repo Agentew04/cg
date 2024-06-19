@@ -32,10 +32,6 @@
 int screenWidth = 1280, screenHeight = 720;
 Vector2 mousePos;
 
-void update(float delta){
-
-}
-
 template <typename T>
 /// @brief junta inumeros vetores em um so
 std::vector<T> accumulate(int count, ...){
@@ -95,6 +91,12 @@ std::vector<Vector3> createPiston(Vector3 origin, float length, float angle){
 
 Camera3D cam;
 
+
+void update(float delta){
+    cam.update(delta);
+}
+
+
 void render()
 {
     CV::translate(screenWidth/2, screenHeight/2);
@@ -119,9 +121,9 @@ void render()
 
     CV::color(1, 0, 0);
     auto cube = Primitive::createCube(5);
-    //cube.vertexList = P3D::rotateVector(cube.vertexList, Vector3(CV::time()));
-    cube.vertexList = cam.worldToCamera(cube.vertexList);
-    //cube.vertexList = P3D::translateVector(cube.vertexList, Vector3(0,0,15));
+    cube.vertexList = P3D::rotateVector(cube.vertexList, Vector3(CV::time()));
+    //cube.vertexList = cam.worldToCamera(cube.vertexList);
+    cube.vertexList = P3D::translateVector(cube.vertexList, Vector3(0,0,15));
     auto vp = P3D::perspectiveProjectionVector(cube.vertexList, 200);
     for(auto edge : cube.edgeList){
         Vector2 v1 = vp[edge[0]];
@@ -160,13 +162,13 @@ void keyboard(int key)
 //funcao chamada toda vez que uma tecla for liberada
 void keyboardUp(int key)
 {
+    cam.keyUp(key);
 }
 
 //funcao para tratamento de mouse: cliques, movimentos e arrastos
 void mouse(int button, int state, int wheel, int direction, int x, int y)
 {
     mousePos = Vector2(x,y);
-    cam.updateMousePos(mousePos);
 
     if(state == 0){
         // mouse down

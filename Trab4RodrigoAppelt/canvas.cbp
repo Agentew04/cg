@@ -44,8 +44,14 @@
 			<Add library="winmm" />
 			<Add library="ws2_32" />
 		</Linker>
+		<Unit filename="src/3D/Camera.cpp" />
+		<Unit filename="src/3D/Camera.h" />
 		<Unit filename="src/3D/ObjLoader.cpp" />
 		<Unit filename="src/3D/ObjLoader.h" />
+		<Unit filename="src/3D/Perspective.cpp" />
+		<Unit filename="src/3D/Perspective.h" />
+		<Unit filename="src/3D/Primitive.cpp" />
+		<Unit filename="src/3D/Primitive.h" />
 		<Unit filename="src/Fonts/FontManager.cpp" />
 		<Unit filename="src/Fonts/FontManager.h" />
 		<Unit filename="src/Image/Bmp.h" />

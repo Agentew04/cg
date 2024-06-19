@@ -906,7 +906,7 @@
 	<map>
 	"../Math/Vector3.h"
 
-1718755951 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\math\vector3.h
+1718758181 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\math\vector3.h
 	<iostream>
 	"Vector2.h"
 
@@ -977,7 +977,7 @@
 1715562380 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\math\vector2.cpp
 	"Vector2.h"
 
-1718750879 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\math\vector3.cpp
+1718758191 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\math\vector3.cpp
 	<cmath>
 	"Vector2.h"
 	"Vector3.h"
@@ -1338,7 +1338,7 @@
 	<vector>
 	"../Math/Vector3.h"
 
-1718756939 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\main.cpp
+1718761804 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -1352,9 +1352,13 @@
 	"3D/Perspective.h"
 	"3D/Camera.h"
 
-1718756972 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\camera.h
+1718761873 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\camera.h
 	<vector>
 	"../Math/Vector2.h"
 	"../Math/Vector3.h"
 	"../Keyboard.h"
+
+1718762268 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\camera.cpp
+	"Camera.h"
+	"../gl_canvas2d.h"
 
