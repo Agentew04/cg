@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Canvas 2D" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="../__bin/Debug/canvas2d" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../" />
+				<Option object_output="../__obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="../__bin/Release/canvas2d" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../" />
+				<Option object_output="../__obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2 -Wall" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-std=c++17" />
+			<Add option="-fexceptions" />
+			<Add option="-DTEXT_DEBUG=1" />
+			<Add directory="../include" />
+		</Compiler>
+		<Linker>
+			<Add library="../lib/libfreeglut32.a" />
+			<Add library="../lib/libopengl32.a" />
+			<Add library="../lib/libglu32.a" />
+			<Add library="winmm" />
+			<Add library="ws2_32" />
+		</Linker>
+		<Unit filename="src/3D/ObjLoader.cpp" />
+		<Unit filename="src/3D/ObjLoader.h" />
+		<Unit filename="src/Fonts/FontManager.cpp" />
+		<Unit filename="src/Fonts/FontManager.h" />
+		<Unit filename="src/Image/Bmp.h" />
+		<Unit filename="src/Image/ImageManipulation.cpp" />
+		<Unit filename="src/Image/ImageManipulation.h" />
+		<Unit filename="src/Image/bmp.cpp" />
+		<Unit filename="src/Image/lodepng.cpp" />
+		<Unit filename="src/Image/lodepng.h" />
+		<Unit filename="src/Keyboard.h" />
+		<Unit filename="src/Math/Matrix.cpp" />
+		<Unit filename="src/Math/Matrix.h" />
+		<Unit filename="src/Math/Polygon2D.cpp" />
+		<Unit filename="src/Math/Polygon2D.h" />
+		<Unit filename="src/Math/Vector2.cpp" />
+		<Unit filename="src/Math/Vector2.h" />
+		<Unit filename="src/Math/Vector3.cpp" />
+		<Unit filename="src/Math/Vector3.h" />
+		<Unit filename="src/Misc/ParticleManager.cpp" />
+		<Unit filename="src/Misc/ParticleManager.h" />
+		<Unit filename="src/Misc/SoundPlayer.cpp" />
+		<Unit filename="src/Misc/SoundPlayer.h" />
+		<Unit filename="src/Misc/TaskManager.cpp" />
+		<Unit filename="src/Misc/TaskManager.h" />
+		<Unit filename="src/Misc/Tuple.h" />
+		<Unit filename="src/Storage/PersistentStorage.cpp" />
+		<Unit filename="src/Storage/PersistentStorage.h" />
+		<Unit filename="src/UI/Button.cpp" />
+		<Unit filename="src/UI/Button.h" />
+		<Unit filename="src/UI/ButtonManager.cpp" />
+		<Unit filename="src/UI/ButtonManager.h" />
+		<Unit filename="src/UI/Chart.cpp" />
+		<Unit filename="src/UI/Chart.h" />
+		<Unit filename="src/UI/CheckBox.cpp" />
+		<Unit filename="src/UI/CheckBox.h" />
+		<Unit filename="src/UI/CheckBoxManager.cpp" />
+		<Unit filename="src/UI/CheckBoxManager.h" />
+		<Unit filename="src/UI/CursorManager.cpp" />
+		<Unit filename="src/UI/CursorManager.h" />
+		<Unit filename="src/UI/ImageRenderer.cpp" />
+		<Unit filename="src/UI/ImageRenderer.h" />
+		<Unit filename="src/UI/ProgressBar.cpp" />
+		<Unit filename="src/UI/ProgressBar.h" />
+		<Unit filename="src/UI/ProgressRing.cpp" />
+		<Unit filename="src/UI/ProgressRing.h" />
+		<Unit filename="src/UI/Slider.cpp" />
+		<Unit filename="src/UI/Slider.h" />
+		<Unit filename="src/UI/SliderManager.cpp" />
+		<Unit filename="src/UI/SliderManager.h" />
+		<Unit filename="src/UI/TextBox.cpp" />
+		<Unit filename="src/UI/TextBox.h" />
+		<Unit filename="src/UI/UIDefinitions.h" />
+		<Unit filename="src/UI/UIManager.cpp" />
+		<Unit filename="src/UI/UIManager.h" />
+		<Unit filename="src/Web/WebManager.cpp" />
+		<Unit filename="src/Web/WebManager.h" />
+		<Unit filename="src/Web/httplib.h" />
+		<Unit filename="src/Web/mingw.invoke.h" />
+		<Unit filename="src/Web/mingw.thread.h" />
+		<Unit filename="src/gl_canvas2d.cpp" />
+		<Unit filename="src/gl_canvas2d.h" />
+		<Unit filename="src/main.cpp" />
+		<Extensions>
+			<DoxyBlocks>
+				<comment_style block="2" line="0" />
+				<doxyfile_project />
+				<doxyfile_build />
+				<doxyfile_warnings />
+				<doxyfile_output />
+				<doxyfile_dot />
+				<general />
+			</DoxyBlocks>
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
