@@ -1321,24 +1321,25 @@
 	"Fonts/FontManager.h"
 	"Math/Matrix.h"
 
-1718755750 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\perspective.cpp
+1718835947 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\perspective.cpp
 	"Perspective.h"
 	<vector>
+	<algorithm>
 	"../Math/Vector3.h"
 
-1718755761 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\perspective.h
+1718831873 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\perspective.h
 	<vector>
 	"../Math/Vector2.h"
 	"../Math/Vector3.h"
 
-1718751955 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\primitive.cpp
+1718837748 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\primitive.cpp
 	"Primitive.h"
 
-1718751886 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\primitive.h
+1718835829 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\primitive.h
 	<vector>
 	"../Math/Vector3.h"
 
-1718761804 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\main.cpp
+1718837797 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -1352,13 +1353,13 @@
 	"3D/Perspective.h"
 	"3D/Camera.h"
 
-1718761873 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\camera.h
+1718832798 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\camera.h
 	<vector>
 	"../Math/Vector2.h"
 	"../Math/Vector3.h"
 	"../Keyboard.h"
 
-1718762268 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\camera.cpp
+1718837899 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\camera.cpp
 	"Camera.h"
 	"../gl_canvas2d.h"
 

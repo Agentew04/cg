@@ -31,6 +31,8 @@ static std::vector<Vector3> rotateVector(std::vector<Vector3> v, Vector3 angles)
 static Vector2 perspectiveProjection(Vector3 v, float d);
 static std::vector<Vector2> perspectiveProjectionVector(std::vector<Vector3> v, float d);
 
+static void sortFaces(const std::vector<Vector3>& vertices, std::vector<std::vector<int>>& faces);
+
 };
 
 #endif

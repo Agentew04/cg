@@ -7,7 +7,7 @@ Primitive Primitive::createSphere(int horizontalResolution, int verticalResoluti
     float verticalStep = 3.1415 / verticalResolution;
 
     // vertices
-    for(int i = 0; i < verticalResolution; i++){
+    for(int i = 0; i < verticalResolution+1; i++){
         for(int j = 0; j < horizontalResolution; j++){
             float x = cos(j * horizontalStep) * sin(i * verticalStep);
             float y = sin(j * horizontalStep) * sin(i * verticalStep);
@@ -40,11 +40,25 @@ Primitive Primitive::createSphere(int horizontalResolution, int verticalResoluti
             sphere.faceList.push_back({a, b, d, c});
         }
     }
+
+    // normais
+    for (const auto& face : sphere.faceList) {
+        Vector3 v0 = sphere.vertexList[face[0]];
+        Vector3 v1 = sphere.vertexList[face[1]];
+        Vector3 v2 = sphere.vertexList[face[2]];
+
+        Vector3 edge1 = v1 - v0;
+        Vector3 edge2 = v2 - v0;
+
+        Vector3 normal = edge1.cross(edge2).normalized();
+        sphere.normalList.push_back(normal);
+    }
+
     return sphere;
 }
 
 Primitive Primitive::createCylinder(int resolution, float height, float radius){
-    Primitive cylinder;
+    Primitive sphere;
 
     float step = 2 * 3.1415 / resolution;
 
@@ -52,31 +66,46 @@ Primitive Primitive::createCylinder(int resolution, float height, float radius){
     for(int i = 0; i < resolution; i++){
         float x = cos(i * step) * radius;
         float y = sin(i * step) * radius;
-        cylinder.vertexList.push_back(Vector3(x, y, height/2));
-        cylinder.vertexList.push_back(Vector3(x, y, -height/2));
+        sphere.vertexList.push_back(Vector3(x, y, -height/2));
+        sphere.vertexList.push_back(Vector3(x, y, height/2));
     }
+    sphere.vertexList.push_back(Vector3(0, 0, -height/2));
+    sphere.vertexList.push_back(Vector3(0, 0, height/2));
+
+    int capIdx = resolution * 2;
 
     // arestas
     for(int i = 0; i < resolution; i++){
-        int a = i;
-        int b = (i + 1) % resolution;
-        int c = i + resolution;
-        int d = (i + 1) % resolution + resolution;
-        cylinder.edgeList.push_back({a, b});
-        cylinder.edgeList.push_back({c, d});
-        cylinder.edgeList.push_back({a, c});
+        // centro de cima ate borda de cima
+        sphere.edgeList.push_back({capIdx, i*2});
+        // borda cima -> borda baixo
+        sphere.edgeList.push_back({i*2, (i*2)+1});
+        // borda baixo -> centro
+        sphere.edgeList.push_back({(i*2)+1, capIdx+1});
+        // borda cima -> borda cima lado
+        sphere.edgeList.push_back({i*2, (i*2+2) % (resolution*2)});
+        // borda baixo -> borda baixo lado
+        sphere.edgeList.push_back({(i*2)+1, (i*2+3) % (resolution*2)});
     }
 
     // faces
     for(int i = 0; i < resolution; i++){
-        int a = i;
-        int b = (i + 1) % resolution;
-        int c = i + resolution;
-        int d = (i + 1) % resolution + resolution;
-        cylinder.faceList.push_back({a, b, d, c});
+        // parte de cima
+        sphere.faceList.push_back({capIdx, i*2, ((i+1)*2) % (resolution*2)});
+        sphere.normalList.push_back(Vector3(0, 0, -1));
+        // parte de baixo
+        sphere.faceList.push_back({capIdx+1, (i*2)+1, ((i+1)*2+1) % (resolution*2)});
+        sphere.normalList.push_back(Vector3(0, 0, 1));
+        // lado(vao ser 2 triangulos)
+        sphere.faceList.push_back({i*2, (i*2)+1, ((i+1)*2) % (resolution*2)});
+        sphere.faceList.push_back({(i*2)+1, ((i+1)*2) % (resolution*2), ((i+1)*2+1) % (resolution*2)});
+        sphere.normalList.push_back((sphere.vertexList[(i*2)+1] - sphere.vertexList[i*2]).cross(sphere.vertexList[((i+1)*2)] - sphere.vertexList[i*2]).normalized());
+        sphere.normalList.push_back((sphere.vertexList[((i+1)*2)+1] - sphere.vertexList[(i*2)+1]).cross(sphere.vertexList[((i+1)*2)+1] - sphere.vertexList[((i+1)*2)]).normalized());
     }
-
-    return cylinder;
+    
+    // normais
+    
+    return sphere;
 }
 
 Primitive Primitive::createCube(float size){
@@ -114,6 +143,14 @@ Primitive Primitive::createCube(float size){
     cube.faceList.push_back({0, 1, 5, 4});
     cube.faceList.push_back({3, 2, 6, 7});
 
+    // normais
+    cube.normalList.push_back(Vector3(0, 0, -1));
+    cube.normalList.push_back(Vector3(0, 0, 1));
+    cube.normalList.push_back(Vector3(0, -1, 0));
+    cube.normalList.push_back(Vector3(0, 1, 0));
+    cube.normalList.push_back(Vector3(-1, 0, 0));
+    cube.normalList.push_back(Vector3(1, 0, 0));
+    
     return cube;
 }
 

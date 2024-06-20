@@ -1,6 +1,7 @@
 #include "Perspective.h"
 
 #include <vector>
+#include <algorithm>
 #include "../Math/Vector3.h"
 
 Vector3 P3D::scaleX(Vector3 v, float s){
@@ -91,4 +92,21 @@ std::vector<Vector2> P3D::perspectiveProjectionVector(std::vector<Vector3> v, fl
         result.push_back(perspectiveProjection(vec, d));
     }
     return result;
+}
+
+
+void P3D::sortFaces(const std::vector<Vector3>& vertices, std::vector<std::vector<int>>& faces){
+    auto zDistance = [&vertices](const std::vector<int>& face) {
+        float sumZ = 0.0f;
+        for (int index : face) {
+            sumZ += vertices[index].z;
+        }
+        return sumZ / face.size();
+    };
+
+
+    // Sort the faces based on the average Z-coordinate
+    std::sort(faces.begin(), faces.end(), [&zDistance](const std::vector<int>& face1, const std::vector<int>& face2) {
+        return zDistance(face1) > zDistance(face2);
+    });
 }

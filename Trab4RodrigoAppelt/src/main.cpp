@@ -32,64 +32,118 @@
 int screenWidth = 1280, screenHeight = 720;
 Vector2 mousePos;
 
-template <typename T>
-/// @brief junta inumeros vetores em um so
-std::vector<T> accumulate(int count, ...){
-    std::vector<T> result;
-    va_list args;
-    va_start(args, count);
-    for(int i = 0; i < count; i++){
-        std::vector<T> v = va_arg(args, std::vector<T>);
-        result.insert(result.end(), v.begin(), v.end());
-    }
-    va_end(args);
-    return result;
-}
-
-float speed = 5.0f;
+float speed = 2.0f;
 
 std::vector<Primitive> createCrankShaft(Vector3 origin, float length, float angle){
     float axisRadius = 10;
-    auto axis = Primitive::createCylinder(100, 10, axisRadius);
+    float axisHeight = 10;
+    auto axis = Primitive::createCylinder(15, axisHeight, axisRadius);
+    axis.vertexList = P3D::rotateVector(axis.vertexList, Vector3(0,  3.1415f/2, 0));
 
     std::vector<Primitive> crankShaft;
     crankShaft.push_back(axis);
 
     // criar 'manivela', maozinha
     auto shaft = Primitive::createCube(1);
-    shaft.vertexList = P3D::scaleVector(shaft.vertexList, Vector3(1, 1, length));
-    shaft.vertexList = P3D::translateVector(shaft.vertexList, Vector3(0, 0, length+axisRadius));
-    shaft.vertexList = P3D::rotateVector(shaft.vertexList, Vector3(0, 0, angle));
+    shaft.vertexList = P3D::scaleVector(shaft.vertexList, Vector3(1, 1, length-axisRadius));
+    shaft.vertexList = P3D::translateVector(shaft.vertexList, Vector3(0, 0, (length-axisRadius)/2+axisRadius));
+    shaft.vertexList = P3D::scaleVector(shaft.vertexList, Vector3(axisHeight, axisHeight, 1));
+    shaft.vertexList = P3D::rotateVector(shaft.vertexList, Vector3(angle, 0, 0));
     crankShaft.push_back(shaft);
 
     // agora, cria a pontinha. quase igual ao centro
-    auto endPoint = Primitive::createCylinder(100, 10, axisRadius);
-    endPoint.vertexList = P3D::translateVector(endPoint.vertexList, Vector3(0, 0, axisRadius+length+axisRadius));
-    endPoint.vertexList = P3D::rotateVector(endPoint.vertexList, Vector3(0, 0, angle));
+    auto endPoint = Primitive::createCylinder(15, axisHeight, axisRadius);
+    endPoint.vertexList = P3D::rotateVector(endPoint.vertexList, Vector3(0,  3.1415f/2, 0));
+    endPoint.vertexList = P3D::translateVector(endPoint.vertexList, Vector3(0, 0, length+axisRadius));
+    endPoint.vertexList = P3D::rotateVector(endPoint.vertexList, Vector3(angle, 0, 0));
     crankShaft.push_back(endPoint);
 
     return crankShaft;
 }
 
-void drawWireframe(const Primitive& p){
-    auto v = P3D::translateVector(p.vertexList, Vector3(0, 0, 5));
-    auto vr = P3D::rotateVector(v, Vector3(0, 0, CV::time() * speed));
-    auto vp = P3D::perspectiveProjectionVector(vr, 200);
 
-    for(auto edge : p.edgeList){
-        Vector2 v1 = vp[edge[0]];
-        Vector2 v2 = vp[edge[1]];
-        CV::line(v1, v2);
+std::vector<Primitive> createPiston(Vector3 origin, float length, Vector3 crankshaftEnd){
+    Vector3 pistonVector = (crankshaftEnd - origin).normalized();
+    float angle = acos(Vector3(0,0,1).dot(pistonVector));
+    std::cout << "angle: " << angle * (180/3.1415f) << std::endl;
+    auto piston = Primitive::createCube(1);
+    piston.vertexList = P3D::translateVector(piston.vertexList, Vector3(0, 0, -0.5f));
+    piston.vertexList = P3D::scaleVector(piston.vertexList, Vector3(10, 10, length));
+    piston.vertexList = P3D::rotateVector(piston.vertexList, Vector3(angle, 0, 0));
+    piston.vertexList = P3D::translateVector(piston.vertexList, Vector3(origin.x, origin.z, -origin.y));
+    return { piston };
+}
+
+Camera3D cam = Camera3D(Vector3(-200, 0, 0));
+Vector3 sun(-1,1,-1);
+
+void draw(const Primitive& p, const Camera3D& cam, bool wireframe = true){
+    auto vc = cam.worldToCamera(p.vertexList);
+    auto cameraSun = cam.worldToCamera(sun);
+
+    // para nao wireframe(preenchido), nos ordenamos as faces de acordo com
+    // a distancia delas ate a camera
+    auto vp = P3D::perspectiveProjectionVector(vc, cam.getD());
+
+    if(wireframe){
+        for(auto edge : p.edgeList){
+            Vector2 v1 = vp[edge[0]];
+            Vector2 v2 = vp[edge[1]];
+            if(cam.isOnFrustumCS(vc[edge[0]]) && cam.isOnFrustumCS(vc[edge[1]])){
+                CV::line(v1, v2);
+            }
+        }
+    }else{
+        auto sortedFaces = p.faceList;
+        P3D::sortFaces(vc, sortedFaces);
+        // temos que transformar as normais tambem
+        auto csNormals = cam.worldToCamera(p.normalList);
+        std::vector<bool> drawFaces = std::vector<bool>(sortedFaces.size(), true);
+
+        int vertexFaceCount = sortedFaces[0].size();
+        bool accumulateFaces = vertexFaceCount == 3 || vertexFaceCount == 4;
+        for(int i = 0; i < sortedFaces.size(); i++){
+            auto face = sortedFaces[i];
+            bool drawFace = true;
+            for(auto v: face){
+                if(!cam.isOnFrustumCS(vc[v])){
+                    drawFace = false;
+                    break;
+                }
+            }
+            if(!accumulateFaces && drawFace){
+                glBegin(GL_POLYGON);
+                Vector3 normal = csNormals[i];
+                for(auto v: face){
+                    Vector2 p = vp[v];
+                    float shade = normal.normalized().dot(cameraSun.normalized());
+                    glColor3f(shade, shade, shade);
+                    glVertex2f(p.x, p.y);
+                }
+                glEnd();
+            }
+        }
+        if(accumulateFaces){
+            std::cout << "accum" << std::endl;
+            glBegin(vertexFaceCount == 3 ? GL_TRIANGLES : GL_QUADS);
+            for(int i = 0; i < sortedFaces.size(); i++){
+                if(drawFaces[i]){
+                    Vector3 normal = csNormals[i];
+                    auto face = sortedFaces[i];
+                    for(auto v: face){
+                        Vector2 p = vp[v];
+                        float shade = normal.normalized().dot(cameraSun.normalized());
+                        glColor3f(shade, shade, shade);
+                        glVertex2f(p.x, p.y);
+                    }
+                }
+            }
+
+            glEnd();
+        }
     }
+    
 }
-
-std::vector<Vector3> createPiston(Vector3 origin, float length, float angle){
-    std::vector<Vector3> piston;
-    //
-    return piston;
-}
-
-Camera3D cam;
 
 
 void update(float delta){
@@ -103,36 +157,38 @@ void render()
 
     Vector3 crankshaftOrigin = Vector3::zero();
     float crankshaftLength = 100;
+    Vector3 crankShaftEnd = crankshaftOrigin + Vector3(cos(CV::time() * speed), -sin(CV::time() * speed),0) * crankshaftLength;
     auto crankShaft = createCrankShaft(crankshaftOrigin, crankshaftLength, CV::time() * speed);
 
-    Vector3 pistonOrigin = Vector3(0, -250,0);
+    Vector3 pistonOrigin = Vector3(0,-250,0);
     float pistonLength = 100;
-
-
-    // calculate end point of crankshaft
-    Vector3 crankShaftEnd = crankshaftOrigin + Vector3(cos(CV::time() * speed), -sin(CV::time() * speed),0) * crankshaftLength;
-
-    // piston Vector
     Vector3 pistonVector = (crankShaftEnd - pistonOrigin).normalized() * pistonLength;
     Vector3 pistonEnd = pistonOrigin + pistonVector;
-
-
-
+    auto piston = createPiston(pistonOrigin, pistonLength, crankShaftEnd);
 
     CV::color(1, 0, 0);
-    auto cube = Primitive::createCube(5);
-    cube.vertexList = P3D::rotateVector(cube.vertexList, Vector3(CV::time()));
-    //cube.vertexList = cam.worldToCamera(cube.vertexList);
-    cube.vertexList = P3D::translateVector(cube.vertexList, Vector3(0,0,15));
-    auto vp = P3D::perspectiveProjectionVector(cube.vertexList, 200);
-    for(auto edge : cube.edgeList){
-        Vector2 v1 = vp[edge[0]];
-        Vector2 v2 = vp[edge[1]];
-        CV::line(v1, v2);
+    for(auto &p : crankShaft){
+        draw(p, cam);
     }
-    // for(auto p : crankShaft){
-    //     drawWireframe(p);
-    // }
+
+    CV::color(0,1,0);
+    for(auto &p : piston){
+        draw(p, cam);
+    }
+
+    // draw axis for reference
+    auto xaxis = Primitive::createCylinder(15, 100, 5);
+    xaxis.vertexList = P3D::rotateVector(xaxis.vertexList, Vector3(0,  3.1415f/2, 0));
+    auto yaxis = Primitive::createCylinder(15, 100, 5);
+    yaxis.vertexList = P3D::rotateVector(yaxis.vertexList, Vector3(3.1415f/2, 0, 0));
+    auto zaxis = Primitive::createCylinder(15, 100, 5);
+    CV::color(1,0,0);
+    draw(xaxis, cam);
+    CV::color(0,1,0);
+    draw(yaxis, cam);
+    CV::color(0,0,1);
+    draw(zaxis, cam);
+
     // CV::circleFill(crankshaftOrigin.toVector2(), 5, 25);
     // CV::circleFill(crankShaftEnd.toVector2(), 5, 25);
     // CV::line(crankshaftOrigin.toVector2(), crankShaftEnd.toVector2());
@@ -143,7 +199,7 @@ void render()
 
     // CV::color(0,0,1);
     // CV::line(crankShaftEnd.toVector2(), pistonEnd.toVector2());
-    Sleep(10); //nao eh controle de FPS. Somente um limitador de FPS.
+    //Sleep(10); //nao eh controle de FPS. Somente um limitador de FPS.
 }
 
 void cleanup(){
@@ -180,6 +236,7 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
 int main(void)
 {
     FontManager::load("./Template/assets/fonts/jetbrainsmono.font", FontName::JetBrainsMono);
+    cam.setD(640); // eh mais ou menos 90 graus de fov horizontal
 
     CV::init(&screenWidth, &screenHeight, "Canvas2D - Custom Template", true, true);
     CV::run();
