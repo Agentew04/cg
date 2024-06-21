@@ -33,7 +33,7 @@ public:
     // OPERADORES
 
     /// @brief Adiciona dois vetore
-    Vector3 operator + (const Vector3& v);
+    Vector3 operator + (const Vector3& v) const;
     Vector3& operator += (const Vector3& v);
 
     /// @brief Inverte o sinal do vetor
@@ -42,19 +42,19 @@ public:
     void invert();
 
     /// @brief Subtrai dois vetores
-    Vector3 operator - (const Vector3& v);
-    Vector3& operator -= (const Vector3& v);
+    Vector3 operator - (const Vector3& v) const;
+    Vector3& operator -= (const Vector3& v) ;
 
     /// @brief Multiplica por um escalar
-    Vector3 operator * (float value);
+    Vector3 operator * (float value) const;
     Vector3& operator *= (float value);
 
     /// @brief Divide por um escalar
-    Vector3 operator / (float value);
+    Vector3 operator / (float value) const;
     Vector3& operator /= (float value);
 
     /// @brief Produtor escalar
-    float operator * (const Vector3& v);
+    float operator * (const Vector3& v) const;
     float dot(const Vector3& v);
 
     /// @brief Produtor vetorial

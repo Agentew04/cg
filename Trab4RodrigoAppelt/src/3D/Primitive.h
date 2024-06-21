@@ -12,8 +12,11 @@ public:
     std::vector<Vector3> vertexList;
     std::vector<std::vector<int>> edgeList; // usado para wireframe
     std::vector<std::vector<int>> faceList; // usado para modo com preenchimento
-    /// @brief Aponta para a 
+    
+    // TODO: arrumar isso
     std::vector<Vector3> normalList; // usado para modo com preenchimento + iluminacao
+    Vector3 color;
+
 
     /// @brief Cria uma esfera com coordenadas polares de raio unitario e centrada na origem.
     /// @param horizontalResolution Quantidade de linhas verticais. Essas linhas se movem na horizontal

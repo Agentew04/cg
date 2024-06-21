@@ -22,6 +22,14 @@ Vector3 Camera3D::getRotation() const{
     return eulerRotation;
 }
 
+void Camera3D::setPosition(Vector3 position){
+    this->cameraPosition = position;
+}
+
+void Camera3D::setRotation(Vector3 rotation){
+    this->eulerRotation = rotation;
+}
+
 Vector3 Camera3D::worldToCamera(Vector3 worldPos) const{
     Vector3 forward = getForward();
     Vector3 right = getRight();

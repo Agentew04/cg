@@ -66,7 +66,7 @@ float Vector3::distance(Vector3 point)
     return sqrt( pow(point.x - x, 2) + pow(point.y - y, 2) + pow(point.z - z, 2) );
 }
 
-Vector3 Vector3::operator + (const Vector3& v)
+Vector3 Vector3::operator + (const Vector3& v) const
 {
     Vector3 aux( x + v.x, y + v.y, z + v.z);
     return( aux );
@@ -80,7 +80,7 @@ Vector3& Vector3::operator += (const Vector3& v)
     return *this;
 }
 
-Vector3 Vector3::operator - (const Vector3& v)
+Vector3 Vector3::operator - (const Vector3& v) const
 {
     Vector3 aux( x - v.x, y - v.y, z - v.z);
     return( aux );
@@ -113,7 +113,7 @@ Vector3& Vector3::operator -= (const Vector3& v)
     return *this;
 }
 
-Vector3 Vector3::operator * (float value)
+Vector3 Vector3::operator * (float value) const
 {
     Vector3 aux( x * value, y * value, z * value);
     return( aux );
@@ -127,7 +127,7 @@ Vector3& Vector3::operator *= (float value)
     return *this;
 }
 
-Vector3 Vector3::operator / (float value)
+Vector3 Vector3::operator / (float value) const
 {
     Vector3 aux( x / value, y / value, z / value);
     return( aux );
@@ -141,7 +141,7 @@ Vector3& Vector3::operator /= (float value)
     return *this;
 }
 
-float Vector3::operator * (const Vector3& v)
+float Vector3::operator * (const Vector3& v) const
 {
     return( x*v.x + y*v.y + z*v.z );
 }
