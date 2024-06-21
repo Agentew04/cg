@@ -22,6 +22,7 @@ public:
     static Primitive createSphere(int horizontalResolution, int verticalResolution);
 
     /// @brief Cria um cilindro com coordenadas polares de raio unitario e centrado na origem.
+    /// Ele esta alinhado no eixo Z.
     /// @param resolution Quantidade de vertices na base do cilindro
     /// @param height Altura do cilindro
     /// @param radius Raio do cilindro

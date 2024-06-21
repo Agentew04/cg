@@ -28,6 +28,30 @@ std::vector<Vector3> P3D::scaleVector(std::vector<Vector3> v, Vector3 factor){
     return result;
 }
 
+std::vector<Vector3> P3D::scaleVectorX(std::vector<Vector3> v, float factor){
+    std::vector<Vector3> result;
+    for(Vector3 vec : v){
+        result.push_back(scaleX(vec, factor));
+    }
+    return result;
+}
+
+std::vector<Vector3> P3D::scaleVectorY(std::vector<Vector3> v, float factor){
+    std::vector<Vector3> result;
+    for(Vector3 vec : v){
+        result.push_back(scaleY(vec, factor));
+    }
+    return result;
+}
+
+std::vector<Vector3> P3D::scaleVectorZ(std::vector<Vector3> v, float factor){
+    std::vector<Vector3> result;
+    for(Vector3 vec : v){
+        result.push_back(scaleZ(vec, factor));
+    }
+    return result;
+}
+
 Vector3 P3D::translateX(Vector3 v, float t){
     return Vector3(v.x + t, v.y, v.z);
 }
@@ -48,6 +72,30 @@ std::vector<Vector3> P3D::translateVector(std::vector<Vector3> v, Vector3 t){
     std::vector<Vector3> result;
     for(Vector3 vec : v){
         result.push_back(translate(vec, t));
+    }
+    return result;
+}
+
+std::vector<Vector3> P3D::translateVectorX(std::vector<Vector3> v, float t){
+    std::vector<Vector3> result;
+    for(Vector3 vec : v){
+        result.push_back(translateX(vec, t));
+    }
+    return result;
+}
+
+std::vector<Vector3> P3D::translateVectorY(std::vector<Vector3> v, float t){
+    std::vector<Vector3> result;
+    for(Vector3 vec : v){
+        result.push_back(translateY(vec, t));
+    }
+    return result;
+}
+
+std::vector<Vector3> P3D::translateVectorZ(std::vector<Vector3> v, float t){
+    std::vector<Vector3> result;
+    for(Vector3 vec : v){
+        result.push_back(translateZ(vec, t));
     }
     return result;
 }
@@ -78,6 +126,30 @@ std::vector<Vector3> P3D::rotateVector(std::vector<Vector3> v, Vector3 angles){
     std::vector<Vector3> result;
     for(Vector3 vec : v){
         result.push_back(rotate(vec, angles));
+    }
+    return result;
+}
+
+std::vector<Vector3> P3D::rotateVectorX(std::vector<Vector3> v, float angles){
+    std::vector<Vector3> result;
+    for(Vector3 vec : v){
+        result.push_back(rotateX(vec, angles));
+    }
+    return result;
+}
+
+std::vector<Vector3> P3D::rotateVectorY(std::vector<Vector3> v, float angles){
+    std::vector<Vector3> result;
+    for(Vector3 vec : v){
+        result.push_back(rotateY(vec, angles));
+    }
+    return result;
+}
+
+std::vector<Vector3> P3D::rotateVectorZ(std::vector<Vector3> v, float angles){
+    std::vector<Vector3> result;
+    for(Vector3 vec : v){
+        result.push_back(rotateZ(vec, angles));
     }
     return result;
 }

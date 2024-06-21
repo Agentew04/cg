@@ -1321,13 +1321,13 @@
 	"Fonts/FontManager.h"
 	"Math/Matrix.h"
 
-1718835947 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\perspective.cpp
+1718989717 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\perspective.cpp
 	"Perspective.h"
 	<vector>
 	<algorithm>
 	"../Math/Vector3.h"
 
-1718831873 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\perspective.h
+1718989617 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\perspective.h
 	<vector>
 	"../Math/Vector2.h"
 	"../Math/Vector3.h"
@@ -1335,11 +1335,11 @@
 1718837748 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\primitive.cpp
 	"Primitive.h"
 
-1718835829 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\primitive.h
+1718988038 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\primitive.h
 	<vector>
 	"../Math/Vector3.h"
 
-1718837797 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\main.cpp
+1718988284 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
