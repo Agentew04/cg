@@ -13,17 +13,25 @@
 class Manager {
 public:
 
-    enum class CameraMode{
+    enum class CameraMode {
         PERSPECTIVE_FREE,
         ORTHO_SIDE,
         ORTHO_FRONT,
         ORTHO_TOP
     };
 
+    enum class SimulationPart {
+        CRANKSHAFT,
+        PISTON_BASE,
+        PISTON_ARM,
+        COUNT
+    };
+
     Manager(int* screenWidth, int* screenHeight);
 
     // functions
     void setCameraMode(CameraMode cameraMode);
+    void setVisibility(SimulationPart part, bool visibility);
 
     // event forwarding
     void keyDown(Key key);
@@ -50,8 +58,10 @@ private:
 
     // estado especifico
     CameraMode cameraMode = CameraMode::PERSPECTIVE_FREE;
+    std::map<SimulationPart, bool> partsVisibility;
 
     // utilitarias
+    void drawParts();
     void draw(const Primitive& p) const;
 };
 

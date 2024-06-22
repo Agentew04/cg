@@ -20,6 +20,10 @@ Manager::Manager(int* screenWidth, int* screenHeight) :
 
     cam2d_top.setPosition(Vector3(0,0, 300));
     cam2d_top.setRotation(Vector3(DEG_90, 0, 0));
+
+    for(int i=0;i<(int)SimulationPart::COUNT;i++){
+        partsVisibility[(SimulationPart)i] = true;
+    }
 }
 
 #pragma region Events
@@ -83,15 +87,9 @@ void Manager::render() {
     CV::clear(mainBackgroundColor);
     CV::translate(*scrW/2, *scrH/2);
 
-    auto crankshaft = sim.createCrankShaft(sim.getValues());
-    auto piston = sim.createPiston(sim.getValues());
+    
 
-    for(auto &p : crankshaft){
-        draw(p);
-    }
-    for(auto &p : piston){
-        draw(p);
-    }
+    drawParts();
 
     sidebar.render();
 }
@@ -129,4 +127,29 @@ void Manager::draw(const Primitive& p) const {
 
 void Manager::setCameraMode(CameraMode cameraMode){
     this->cameraMode = cameraMode;
+}
+
+void Manager::setVisibility(SimulationPart part, bool visibility){
+    partsVisibility[part] = visibility;
+}
+
+void Manager::drawParts() {
+    auto crankshaft = sim.createCrankShaft(sim.getValues());
+    auto piston = sim.createPiston(sim.getValues());
+    auto pistonArm = piston[0];
+    auto pistonBase = piston[1];
+
+    if(partsVisibility[SimulationPart::CRANKSHAFT]){
+        for(auto &p : crankshaft){
+            draw(p);
+        }
+    }
+
+    if(partsVisibility[SimulationPart::PISTON_BASE]){
+        draw(pistonBase);
+    }
+
+    if(partsVisibility[SimulationPart::PISTON_ARM]){
+        draw(pistonArm);
+    }
 }

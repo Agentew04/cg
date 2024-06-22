@@ -155,6 +155,9 @@ void Sidebar::submitUI(){
         "Virabrequim",
         true
     );
+    chk_vis_crankshaft->setCallback([&](bool value){
+        manager->setVisibility(Manager::SimulationPart::CRANKSHAFT, value);
+    });
     auto chk_stl = Checkbox::Style::Windows10();
     chk_vis_crankshaft->style = chk_stl;
     checkboxManager.registerCheckbox(chk_vis_crankshaft);
@@ -169,6 +172,9 @@ void Sidebar::submitUI(){
         "Pistao",
         true
     );
+    chk_vis_pistonarm->setCallback([&](bool value){
+        manager->setVisibility(Manager::SimulationPart::PISTON_ARM, value);
+    });
     chk_vis_pistonarm->style = chk_stl;
     checkboxManager.registerCheckbox(chk_vis_pistonarm);
 
@@ -182,6 +188,9 @@ void Sidebar::submitUI(){
         "Cilindro",
         true
     );
+    chk_vis_pistonbase->setCallback([&](bool value){
+        manager->setVisibility(Manager::SimulationPart::PISTON_BASE, value);
+    });
     chk_vis_pistonbase->style = chk_stl;
     checkboxManager.registerCheckbox(chk_vis_pistonbase);
 }
