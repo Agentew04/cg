@@ -906,7 +906,7 @@
 	<map>
 	"../Math/Vector3.h"
 
-1718758181 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\math\vector3.h
+1719000258 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\math\vector3.h
 	<iostream>
 	"Vector2.h"
 
@@ -977,7 +977,7 @@
 1715562380 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\math\vector2.cpp
 	"Vector2.h"
 
-1718758191 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\math\vector3.cpp
+1719000283 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\math\vector3.cpp
 	<cmath>
 	"Vector2.h"
 	"Vector3.h"
@@ -993,7 +993,7 @@
 	"../3D/ObjLoader.h"
 	"../Math/Vector2.h"
 
-1716579530 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\gl_canvas2d.h
+1719015533 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\gl_canvas2d.h
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
@@ -1152,13 +1152,13 @@
 	"../Math/Vector2.h"
 	"UIDefinitions.h"
 
-1716245001 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\ui\slider.cpp
+1719012043 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\ui\slider.cpp
 	"Slider.h"
 	"../gl_canvas2d.h"
 	<iostream>
 	<cmath>
 
-1716245001 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\ui\slider.h
+1719010011 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\ui\slider.h
 	<map>
 	<functional>
 	"../Math/Vector2.h"
@@ -1335,31 +1335,76 @@
 1718837748 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\primitive.cpp
 	"Primitive.h"
 
-1718988038 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\primitive.h
+1718998551 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\primitive.h
 	<vector>
 	"../Math/Vector3.h"
 
-1718988284 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\main.cpp
+1719016250 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
 	<iostream>
 	<stdio.h>
 	<stdlib.h>
-	<cstdarg>
 	"gl_canvas2d.h"
 	"Fonts/FontManager.h"
-	"3D/Primitive.h"
-	"3D/Perspective.h"
-	"3D/Camera.h"
+	"UI/CursorManager.h"
+	"Specific/Manager.h"
 
-1718832798 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\camera.h
+1719011501 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\camera.h
 	<vector>
 	"../Math/Vector2.h"
 	"../Math/Vector3.h"
 	"../Keyboard.h"
+	"Primitive.h"
 
 1718837899 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\camera.cpp
 	"Camera.h"
+	"../gl_canvas2d.h"
+
+1719016409 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\camera.2d.cpp
+	"Camera.h"
+	"../gl_canvas2d.h"
+	"Primitive.h"
+	"Perspective.h"
+
+1719005157 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\camera.3d.cpp
+	"Camera.h"
+	"../gl_canvas2d.h"
+	"Primitive.h"
+	"Perspective.h"
+
+1719014937 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.h
+	"../Math/Vector2.h"
+	"../Keyboard.h"
+	"Simulator.h"
+	"Sidebar.h"
+	"../3D/Camera.h"
+
+1719012543 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\simulator.h
+	<vector>
+	"../Math/Vector3.h"
+	"../3D/Primitive.h"
+
+1719015255 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\sidebar.h
+	"../Math/Vector2.h"
+	"../UI/Slider.h"
+	"../UI/SliderManager.h"
+	"../UI/ButtonManager.h"
+
+1719015606 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\sidebar.cpp
+	"SideBar.h"
+	"../gl_canvas2d.h"
+	"../Math/Vector2.h"
+	"Manager.h"
+
+1719015518 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\simulator.cpp
+	"Simulator.h"
+	"../gl_canvas2d.h"
+	"../3D/Primitive.h"
+	"../3D/Perspective.h"
+
+1719016381 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.cpp
+	"Manager.h"
 	"../gl_canvas2d.h"
 

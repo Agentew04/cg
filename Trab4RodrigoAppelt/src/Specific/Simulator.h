@@ -29,15 +29,17 @@ struct SimulationValues {
 class Simulator {
 public:
 
+    Simulator();
+
     /// @brief Faz todos os calculos e atualiza pontos/vetores.
-    void update();
+    void update(float delta);
 
     SimulationValues& getValues();
-private:
-    SimulationValues simval;
 
     std::vector<Primitive> createCrankShaft(SimulationValues& simval);
     std::vector<Primitive> createPiston(SimulationValues& simval);
+private:
+    SimulationValues simval;
 };
 
 #endif

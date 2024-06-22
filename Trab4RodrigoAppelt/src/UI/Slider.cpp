@@ -29,31 +29,23 @@ Slider::Style::~Style(){
 }
 
 
-Slider::Slider(Vector2 pos, Vector2 size, float minValue, float maxValue, float defaultValue, Slider::Orientation orientation) {
-    this->value = defaultValue;
-    this->minValue = minValue;
-    this->maxValue = maxValue;
-
-    // check if sizes match
-    if(orientation == Slider::Orientation::VERTICAL){
-        std::cout << "Vertical Slider is not supported yet, defaulting to Horizontal" << std::endl;
-        orientation = Slider::Orientation::HORIZONTAL;
-    }
-    if(orientation == Slider::Orientation::HORIZONTAL){
-        if(size.y > size.x){
-            size = size.flipped();
-        }
-    }
-    this->orientation = orientation;
-    this->pos = pos;
-    this->sz = size;
-}
+Slider::Slider(
+    std::function<Vector2()> posFunc, 
+    std::function<Vector2()> sizeFunc, 
+    float minValue, 
+    float maxValue, 
+    float defaultValue) :
+    posFunc(posFunc), sizeFunc(sizeFunc),
+    minValue(minValue), maxValue(maxValue),
+    value(defaultValue) { }
 
 Slider::~Slider(){
     //this->callback = default;
 }
 
 void Slider::draw(){
+    auto pos = posFunc();
+    auto size = sizeFunc();
     CV::translate(pos);
 
     // offsets declarations
@@ -68,12 +60,12 @@ void Slider::draw(){
 
     // draw slider back rectangle
     CV::color(style->backSliderColor);
-    CV::rectFill(backSliderMargin, Vector2(this->sz.x - backSliderMargin.x, backSliderMargin.y+backSliderHeight));
+    CV::rectFill(backSliderMargin, Vector2(size.x - backSliderMargin.x, backSliderMargin.y+backSliderHeight));
     CV::color(style->outSliderColor);
-    CV::rect(backSliderMargin, Vector2(this->sz.x - backSliderMargin.x, backSliderMargin.y+backSliderHeight));
+    CV::rect(backSliderMargin, Vector2(size.x - backSliderMargin.x, backSliderMargin.y+backSliderHeight));
 
     // draw ticks
-    float tickSpacing = (this->sz.x-(tickMargin.x*2))/(numTicks-1);
+    float tickSpacing = (size.x-(tickMargin.x*2))/(numTicks-1);
     CV::color(style->tickColor);
     for(int i=0; i<numTicks; i++){
         int x0 = backSliderMargin.x + tickMargin.x + tickSpacing*i;
@@ -86,7 +78,7 @@ void Slider::draw(){
     // draw handle
     float vx[] = {0, 0,  5,  10, 10};
     float vy[] = {0, 13, 18, 13, 0};
-    float handleX = pos.x + ((this->sz.x-(tickMargin.x*2))/(maxValue-minValue))*this->value;
+    float handleX = pos.x + ((size.x-(tickMargin.x*2))/(maxValue-minValue))*this->value;
     CV::translate(handleX , pos.y);
     CV::color(style->handleColor[this->state]);
     CV::polygonFill(vx,vy, sizeof(vx)/sizeof(float));
@@ -94,11 +86,11 @@ void Slider::draw(){
 
 
 Vector2 Slider::getPos(){
-    return this->pos;
+    return posFunc();
 }
 
 Vector2 Slider::getSize(){
-    return this->sz;
+    return sizeFunc();
 }
 
 void Slider::getValueBounds(float *minValue, float *maxValue){

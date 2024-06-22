@@ -34,7 +34,7 @@
 			<Add option="-Wall" />
 			<Add option="-std=c++17" />
 			<Add option="-fexceptions" />
-			<Add option="-DTEXT_DEBUG=1" />
+			<Add option="-DTEXT_DEBUG=0" />
 			<Add directory="../include" />
 		</Compiler>
 		<Linker>
@@ -44,7 +44,8 @@
 			<Add library="winmm" />
 			<Add library="ws2_32" />
 		</Linker>
-		<Unit filename="src/3D/Camera.cpp" />
+		<Unit filename="src/3D/Camera.2D.cpp" />
+		<Unit filename="src/3D/Camera.3D.cpp" />
 		<Unit filename="src/3D/Camera.h" />
 		<Unit filename="src/3D/ObjLoader.cpp" />
 		<Unit filename="src/3D/ObjLoader.h" />
@@ -76,6 +77,12 @@
 		<Unit filename="src/Misc/TaskManager.cpp" />
 		<Unit filename="src/Misc/TaskManager.h" />
 		<Unit filename="src/Misc/Tuple.h" />
+		<Unit filename="src/Specific/Manager.cpp" />
+		<Unit filename="src/Specific/Manager.h" />
+		<Unit filename="src/Specific/Sidebar.cpp" />
+		<Unit filename="src/Specific/Sidebar.h" />
+		<Unit filename="src/Specific/Simulator.cpp" />
+		<Unit filename="src/Specific/Simulator.h" />
 		<Unit filename="src/Storage/PersistentStorage.cpp" />
 		<Unit filename="src/Storage/PersistentStorage.h" />
 		<Unit filename="src/UI/Button.cpp" />
@@ -105,11 +112,6 @@
 		<Unit filename="src/UI/UIDefinitions.h" />
 		<Unit filename="src/UI/UIManager.cpp" />
 		<Unit filename="src/UI/UIManager.h" />
-		<Unit filename="src/Web/WebManager.cpp" />
-		<Unit filename="src/Web/WebManager.h" />
-		<Unit filename="src/Web/httplib.h" />
-		<Unit filename="src/Web/mingw.invoke.h" />
-		<Unit filename="src/Web/mingw.thread.h" />
 		<Unit filename="src/gl_canvas2d.cpp" />
 		<Unit filename="src/gl_canvas2d.h" />
 		<Unit filename="src/main.cpp" />

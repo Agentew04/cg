@@ -1,5 +1,9 @@
 #include "Camera.h"
 
+#include "../gl_canvas2d.h"
+#include "Primitive.h"
+#include "Perspective.h"
+
 Camera2D::Camera2D(Vector3 position, Vector3 rotation) :
     cameraPosition(position),
     eulerRotation(rotation){}
@@ -21,20 +25,34 @@ void Camera2D::setRotation(Vector3 rotation){
 }
 
 Vector3 Camera2D::worldToCamera(Vector3 worldPos) const {
-    return worldPos - cameraPosition;
+    Vector3 forward = getForward();
+    Vector3 right = getRight();
+    Vector3 up = getUp();
+
+    Vector3 delta = worldPos - cameraPosition;
+
+    float x = delta.dot(right);
+    float y = delta.dot(up);
+    float z = delta.dot(forward);
+
+    return Vector3(x, y, z);
 }
 
 std::vector<Vector3> Camera2D::worldToCamera(const std::vector<Vector3>& worldPos) const {
     std::vector<Vector3> arr(worldPos.size());
     for (size_t i = 0; i < worldPos.size(); i++)
     {
-        arr[i] = worldPos[i] - cameraPosition;
+        arr[i] = worldToCamera(worldPos[i]);
     }
     return arr;
 }
 
 bool Camera2D::isOnFrustum(Vector3 pos) const {
-    return pos.z > cameraPosition.z;
+    bool isOn = pos.z > cameraPosition.z;
+    // if(!isOn){
+    //     std::cout << "off" << std::endl;
+    // }
+    return true;//isOn;
 }
 
 Vector3 Camera2D::getForward() const{
@@ -145,4 +163,18 @@ void Camera2D::update(float delta){
     eulerRotation.z = 0;
     eulerRotation.x = std::max(-3.1415f/2, std::min(3.1415f/2, eulerRotation.x));
     eulerRotation.y = fmod(eulerRotation.y, 3.1415f * 2);
+}
+
+void Camera2D::draw(const Primitive& p) const{
+    auto vc = worldToCamera(p.vertexList);
+    CV::color(p.color);
+    for(auto edge : p.edgeList){
+        Vector3 v3_1 = vc[edge[0]];
+        Vector3 v3_2 = vc[edge[1]];
+        Vector2 v1 = Vector2(v3_1.x, v3_1.y);
+        Vector2 v2 = Vector2(v3_2.x, v3_2.y);
+        if(isOnFrustum(vc[edge[0]]) && isOnFrustum(vc[edge[1]])){
+            CV::line(v1, v2);
+        }
+    }
 }

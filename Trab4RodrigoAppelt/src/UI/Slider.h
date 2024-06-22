@@ -11,11 +11,6 @@
 class Slider{
 public:
 
-    enum Orientation {
-        HORIZONTAL,
-        VERTICAL
-    };
-
     enum State {
         NORMAL,
         HOVER,
@@ -40,7 +35,12 @@ public:
     };
 
 
-    Slider(Vector2 pos, Vector2 size, float minValue, float maxValue, float defaultValue, Orientation orientation);
+    Slider(
+        std::function<Vector2()> posFunc, 
+        std::function<Vector2()> sizeFunc, 
+        float minValue = 0.0f, 
+        float maxValue = 1.0f, 
+        float defaultValue = 0.5f);
     ~Slider();
 
     void draw();
@@ -58,9 +58,8 @@ public:
     void setBinding(float *target);
     void setCallback(std::function<void(float)> callback);
 private:
-    Vector2 pos;
-    Vector2 sz;
-    Orientation orientation;
+    std::function<Vector2()> posFunc;
+    std::function<Vector2()> sizeFunc;
     float minValue;
     float maxValue;
     float value;

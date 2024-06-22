@@ -1,6 +1,8 @@
 #include "Camera.h"
 
 #include "../gl_canvas2d.h"
+#include "Primitive.h"
+#include "Perspective.h"
 
 Camera3D::Camera3D(
     Vector3 position, 
@@ -237,4 +239,17 @@ Vector2 Camera3D::getFov(Vector2 screenSize) const{
     float horizontalFov = 2 * atan(screenSize.x / (2 * d));
     float verticalFov = 2 * atan(screenSize.y / (2 * d));
     return Vector2(horizontalFov, verticalFov);
+}
+
+void Camera3D::draw(const Primitive& p) const{
+    auto vc = worldToCamera(p.vertexList);
+    auto vp = P3D::perspectiveProjectionVector(vc, d);
+    CV::color(p.color);
+    for(auto edge : p.edgeList){
+        Vector2 v1 = vp[edge[0]];
+        Vector2 v2 = vp[edge[1]];
+        if(isOnFrustumCS(vc[edge[0]]) && isOnFrustumCS(vc[edge[1]])){
+            CV::line(v1, v2);
+        }
+    }
 }

@@ -7,6 +7,8 @@
 #include "../Math/Vector3.h"
 #include "../Keyboard.h"
 
+#include "Primitive.h"
+
 /// @brief Camera em perspectiva para campos 3d.
 class Camera3D {
 public:
@@ -72,6 +74,9 @@ public:
     /// @return Um vetor com o fov horizontal e vertical
     Vector2 getFov(Vector2 screenSize) const;
 
+    /// @brief Desenha uma primitiva em wireframe com a cor guardada nela.
+    void draw(const Primitive& p) const;
+
     // event forwarding
     void keyDown(Key key);
     void keyUp(Key key);
@@ -95,7 +100,7 @@ private:
     float d = 200;
     float farPlane = 1000;
     float nearPlane = 0.1;
-    float moveSpeed = 20;
+    float moveSpeed = 50;
     Vector3 cameraPosition;
     Vector3 eulerRotation;
     float sensitivity = 2.0f;
@@ -108,7 +113,7 @@ class Camera2D {
 public:
     /// @brief Cria uma camera 2D ortografica
     /// @param position A posicao da camera no mundo 2d
-    /// @param rotation 
+    /// @param rotation
     Camera2D(
         Vector3 position = Vector3::zero(),
         Vector3 rotation = Vector3::zero());
@@ -127,6 +132,9 @@ public:
     Vector3 getForward() const;
     Vector3 getRight() const;
     Vector3 getUp() const;
+
+    /// @brief Desenha uma primitiva em wireframe com a cor guardada nela.
+    void draw(const Primitive& p) const;
 
 
     // event forwarding
