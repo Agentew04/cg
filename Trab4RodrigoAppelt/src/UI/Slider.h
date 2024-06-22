@@ -49,7 +49,7 @@ public:
     Vector2 getSize();
 
     Style *style;
-    State state;
+    State state = State::NORMAL;
 
     void getValueBounds(float *minValue, float *maxValue);
     float getValue();

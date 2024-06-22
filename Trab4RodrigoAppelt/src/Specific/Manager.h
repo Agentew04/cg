@@ -24,6 +24,7 @@ public:
         CRANKSHAFT,
         PISTON_BASE,
         PISTON_ARM,
+        GEARS,
         COUNT
     };
 

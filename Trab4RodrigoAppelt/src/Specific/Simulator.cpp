@@ -56,14 +56,9 @@ void Simulator::update(float delta){
     simval.pistonOrigin.z += simval.crankshaftLength + simval.spacePistonCrankshaft + simval.pistonArmLength;
     simval.pistonDirection = (simval.crankshaftEnd - simval.pistonOrigin).normalized() * simval.pistonBaseLength;
     simval.pistonBaseEnd = simval.pistonOrigin + simval.pistonDirection;
-
-    auto crankShaft = createCrankShaft(simval);
-    auto piston = createPiston(simval);
 }
 
-
-
-std::vector<Primitive> Simulator::createCrankShaft(SimulationValues& simval){
+std::vector<Primitive> Simulator::createCrankShaft() const{
     float axisRadius = 6;
     float axisHeight = 10;
 
@@ -99,7 +94,7 @@ std::vector<Primitive> Simulator::createCrankShaft(SimulationValues& simval){
     return crankShaft;
 }
 
-std::vector<Primitive> Simulator::createPiston(SimulationValues& simval){
+std::vector<Primitive> Simulator::createPiston() const{
     float displacement = 10;
     Vector3 reference = Vector3(0,1,0);
 
@@ -124,4 +119,25 @@ std::vector<Primitive> Simulator::createPiston(SimulationValues& simval){
     arm.color = Vector3(0.5, 0.5, 0.5);
 
     return { arm, base };
+}
+
+std::vector<Primitive> Simulator::createGears() const {
+    std::vector<Primitive> parts;
+    float step= 2*3.14159 /20 / 4;
+
+    Primitive gear1 = Primitive::createGear(20, 0.05);
+    scale(gear1, 10, 10, 10);
+    rotateZ(gear1, step * 0.5f);
+    gear1.color = Vector3(1,0,0);
+
+    Primitive gear2 = Primitive::createGear(20, 0.05);
+    scale(gear2, 10, 10, 10);
+    rotateZ(gear2, step * 1.5f);
+    translateX(gear2, 20);
+    gear2.color = Vector3(0,0,1);
+
+    parts.push_back(gear1);
+    parts.push_back(gear2);
+
+    return parts;
 }

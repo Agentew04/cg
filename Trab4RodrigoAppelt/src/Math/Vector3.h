@@ -23,12 +23,12 @@ public:
 
     void normalize();
 
-    Vector3 normalized();
+    Vector3 normalized() const;
 
     Vector2 toVector2() const;
 
     /// @brief Calcula a distancia entre dois pontos
-    float distance(Vector3 point);
+    float distance(Vector3 point) const;
 
     // OPERADORES
 

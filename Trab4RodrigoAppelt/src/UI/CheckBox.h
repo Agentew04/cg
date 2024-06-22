@@ -48,7 +48,7 @@ public:
     Vector2 getSize();
 
     Style *style;
-    State state;
+    State state = State::NORMAL;
 
     bool getValue();
     void setValue(bool value, bool notify = true);

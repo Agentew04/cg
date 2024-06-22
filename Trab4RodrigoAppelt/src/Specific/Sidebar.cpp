@@ -193,6 +193,22 @@ void Sidebar::submitUI(){
     });
     chk_vis_pistonbase->style = chk_stl;
     checkboxManager.registerCheckbox(chk_vis_pistonbase);
+
+    auto chk_vis_gears = new Checkbox(
+        [&](){
+            return Vector2(*scrW-sidebarWidth, 3*15 + 4*25 + 4*30 + 10*margin) + Vector2(margin, margin);
+        },
+        [&](){
+            return Vector2(sidebarWidth-2*margin, 15);
+        },
+        "Engrenagens",
+        true
+    );
+    chk_vis_gears->setCallback([&](bool value){
+        manager->setVisibility(Manager::SimulationPart::GEARS, value);
+    });
+    chk_vis_gears->style = chk_stl;
+    checkboxManager.registerCheckbox(chk_vis_gears);
 }
 
 float Sidebar::getRpm(){

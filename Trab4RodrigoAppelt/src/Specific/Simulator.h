@@ -36,8 +36,9 @@ public:
 
     SimulationValues& getValues();
 
-    std::vector<Primitive> createCrankShaft(SimulationValues& simval);
-    std::vector<Primitive> createPiston(SimulationValues& simval);
+    std::vector<Primitive> createCrankShaft() const;
+    std::vector<Primitive> createPiston() const;
+    std::vector<Primitive> createGears() const;
 private:
     SimulationValues simval;
 };

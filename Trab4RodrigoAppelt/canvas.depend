@@ -906,7 +906,7 @@
 	<map>
 	"../Math/Vector3.h"
 
-1719000258 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\math\vector3.h
+1719028589 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\math\vector3.h
 	<iostream>
 	"Vector2.h"
 
@@ -977,7 +977,7 @@
 1715562380 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\math\vector2.cpp
 	"Vector2.h"
 
-1719000283 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\math\vector3.cpp
+1719028595 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\math\vector3.cpp
 	<cmath>
 	"Vector2.h"
 	"Vector3.h"
@@ -1050,13 +1050,13 @@
 	"../Math/Vector2.h"
 	"../Math/Vector3.h"
 
-1719025063 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\ui\button.cpp
+1719027293 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\ui\button.cpp
 	"Button.h"
 	<iostream>
 	"../gl_canvas2d.h"
 	"UIDefinitions.h"
 
-1719024531 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\ui\button.h
+1719027347 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\ui\button.h
 	<string>
 	<functional>
 	<map>
@@ -1097,13 +1097,13 @@
 	"CheckBox.h"
 	"../gl_canvas2d.h"
 
-1719025345 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\ui\checkbox.h
+1719027362 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\ui\checkbox.h
 	<map>
 	<functional>
 	"../Math/Vector2.h"
 	"../Math/Vector3.h"
 
-1712984135 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\ui\checkboxmanager.cpp
+1719026317 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\ui\checkboxmanager.cpp
 	<vector>
 	<iostream>
 	<algorithm>
@@ -1158,13 +1158,13 @@
 	<iostream>
 	<cmath>
 
-1719010011 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\ui\slider.h
+1719027386 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\ui\slider.h
 	<map>
 	<functional>
 	"../Math/Vector2.h"
 	"../Math/Vector3.h"
 
-1716245001 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\ui\slidermanager.cpp
+1719026360 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\ui\slidermanager.cpp
 	<vector>
 	<iostream>
 	<algorithm>
@@ -1332,10 +1332,10 @@
 	"../Math/Vector2.h"
 	"../Math/Vector3.h"
 
-1718837748 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\primitive.cpp
+1719028386 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\primitive.cpp
 	"Primitive.h"
 
-1718998551 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\primitive.h
+1719027914 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\primitive.h
 	<vector>
 	"../Math/Vector3.h"
 
@@ -1374,14 +1374,14 @@
 	"Primitive.h"
 	"Perspective.h"
 
-1719027147 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.h
+1719028645 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.h
 	"../Math/Vector2.h"
 	"../Keyboard.h"
 	"Simulator.h"
 	"Sidebar.h"
 	"../3D/Camera.h"
 
-1719012543 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\simulator.h
+1719028681 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\simulator.h
 	<vector>
 	"../Math/Vector3.h"
 	"../3D/Primitive.h"
@@ -1393,19 +1393,21 @@
 	"../UI/ButtonManager.h"
 	"../UI/CheckBoxManager.h"
 
-1719025824 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\sidebar.cpp
+1719028837 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\sidebar.cpp
 	"SideBar.h"
+	<iomanip>
+	<sstream>
 	"../gl_canvas2d.h"
 	"../Math/Vector2.h"
 	"Manager.h"
 
-1719025156 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\simulator.cpp
+1719029845 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\simulator.cpp
 	"Simulator.h"
 	"../gl_canvas2d.h"
 	"../3D/Primitive.h"
 	"../3D/Perspective.h"
 
-1719016674 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.cpp
+1719028675 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.cpp
 	"Manager.h"
 	"../gl_canvas2d.h"
 

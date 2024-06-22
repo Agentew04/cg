@@ -194,6 +194,5 @@ float Button::findPt(){
             pt *= 0.75f;
         }
     }
-    std::cout << std::endl;
     return pt;
 }

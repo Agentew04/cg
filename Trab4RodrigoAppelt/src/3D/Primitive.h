@@ -34,6 +34,12 @@ public:
     /// @brief Cria um cubo centrado na origem.
     /// @param size Tamanho do lado do cubo
     static Primitive createCube(float size);
+
+    /// @brief Cria uma engrenagem de raio medio 1, espessura 0.5, centrada na origem
+    /// e orientada no eixo Z.
+    /// @param teeth O numero de dentes que a engrenagem vai ter
+    /// @param teethHeight A altura maxima de um dente. Isso significa que o raio minimo eh 1-teethHeight
+    static Primitive createGear(int teeth, float teethHeight);
 };
 
 #endif

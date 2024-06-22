@@ -49,7 +49,7 @@ void Vector3::normalize()
     magnitude = 1.0;
 }
 
-Vector3 Vector3::normalized()
+Vector3 Vector3::normalized() const
 {
     Vector3 v(x, y, z);
     v.normalize();
@@ -61,7 +61,7 @@ Vector2 Vector3::toVector2() const
     return Vector2(x, y);
 }
 
-float Vector3::distance(Vector3 point)
+float Vector3::distance(Vector3 point) const
 {
     return sqrt( pow(point.x - x, 2) + pow(point.y - y, 2) + pow(point.z - z, 2) );
 }

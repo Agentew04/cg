@@ -154,3 +154,57 @@ Primitive Primitive::createCube(float size){
     return cube;
 }
 
+Primitive Primitive::createGear(int teeth, float teethHeight){
+    Primitive gear;
+
+    float height = 0.5;
+
+    float bigStep = (2*3.14159) / teeth;
+    float smallStep = bigStep / 4;
+
+    float outerRadius = 1 + teethHeight;
+    float innerRadius = 1 - teethHeight;
+
+    // vertices
+    for(int i=0; i<teeth; i++){
+        for(int j=0; j<4; j++){
+            float angle = i*bigStep + j*smallStep;
+            float radius = (j == 0 || j == 1) ? outerRadius : innerRadius;
+
+            float x = radius * cos(angle);
+            float y = radius * sin(angle);
+            gear.vertexList.push_back(Vector3(x, y, height/2));
+            gear.vertexList.push_back(Vector3(x, y, -height/2));
+        }
+    }
+    gear.vertexList.push_back(Vector3(0,0,height/2)); // top cap
+    gear.vertexList.push_back(Vector3(0,0,-height/2)); // bottom cap
+
+    int topCapIdx = 2*teeth*4;
+    int bottomCapIdx = 2*teeth*4 + 1;
+
+    // arestas
+    for(int i=0; i<teeth; i++){
+        for(int j=0; j<4; j++){
+            int currentIdx = 8 * i + 2 * j;
+            int nextIdx = (currentIdx + 2) % (2 * teeth * 4);
+            
+            // Vertical edges
+            gear.edgeList.push_back({currentIdx, currentIdx + 1});
+            
+            // Horizontal edges (top)
+            gear.edgeList.push_back({currentIdx, nextIdx});
+            
+            // Horizontal edges (bottom)
+            gear.edgeList.push_back({currentIdx + 1, nextIdx + 1});
+            
+            // Edges to center
+            if (j == 3) { // connect last vertex of each tooth to center
+                gear.edgeList.push_back({currentIdx, topCapIdx});
+                gear.edgeList.push_back({currentIdx + 1, bottomCapIdx});
+            }
+        }
+    }
+
+    return gear;
+}

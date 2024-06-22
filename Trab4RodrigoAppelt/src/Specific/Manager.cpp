@@ -134,8 +134,9 @@ void Manager::setVisibility(SimulationPart part, bool visibility){
 }
 
 void Manager::drawParts() {
-    auto crankshaft = sim.createCrankShaft(sim.getValues());
-    auto piston = sim.createPiston(sim.getValues());
+    auto crankshaft = sim.createCrankShaft();
+    auto piston = sim.createPiston();
+    auto gears = sim.createGears();
     auto pistonArm = piston[0];
     auto pistonBase = piston[1];
 
@@ -151,5 +152,11 @@ void Manager::drawParts() {
 
     if(partsVisibility[SimulationPart::PISTON_ARM]){
         draw(pistonArm);
+    }
+
+    if(partsVisibility[SimulationPart::GEARS]){
+        for(auto &p : gears){
+            draw(p);
+        }
     }
 }
