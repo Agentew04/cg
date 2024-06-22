@@ -80,6 +80,8 @@ private:
     std::string text;
     std::function<void(Button*)> callback;
 
+    float findPt();
+
 };
 
 

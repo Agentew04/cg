@@ -34,9 +34,11 @@ CheckboxManager::~CheckboxManager(){
     for(size_t i=0; i<this->checkboxes.size(); i++){
         if (std::find(deleted.begin(), deleted.end(), this->checkboxes[i]->style) == deleted.end()) {
             deleted.push_back(this->checkboxes[i]->style);
-            delete this->checkboxes[i]->style;
         }
         delete this->checkboxes[i];
+    }
+    for(auto stl : deleted){
+        delete stl;
     }
 }
 

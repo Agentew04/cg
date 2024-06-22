@@ -33,19 +33,21 @@ Checkbox::Style::~Style(){
 }
 
 
-Checkbox::Checkbox(Vector2 pos, Vector2 size, std::string label, bool defaultValue) {
-    this->pos = pos;
-    this->sz = size;
-    this->bindingTarget = nullptr;
-
-    this->value = defaultValue;
-    this->label = label;
-}
+Checkbox::Checkbox(
+    std::function<Vector2()> posFunc, 
+    std::function<Vector2()> sizeFunc, 
+    std::string label, 
+    bool defaultValue) :
+    posFunc(posFunc), sizeFunc(sizeFunc),
+    label(label),
+    value(defaultValue),
+    bindingTarget(nullptr) { }
 
 Checkbox::~Checkbox(){
 }
 
 void Checkbox::draw(){
+    Vector2 pos = posFunc();
     CV::translate(pos);
 
     // offsets
@@ -69,20 +71,20 @@ void Checkbox::draw(){
 
     // draw label
     Vector2 labelPos = boxSize + labelOffset;
-    CV::text(labelPos.x, labelPos.y, this->label.c_str(), GLUT_BITMAP_HELVETICA_10, TextAlign::LEFT);
+    CV::text(labelPos, label, 25, FontName::JetBrainsMono, UIPlacement::BOTTOM_LEFT);
 }
 
 
 Vector2 Checkbox::getPos(){
-    return this->pos;
+    return posFunc();
 }
 
 Vector2 Checkbox::getSize(){
-    return this->sz;
+    return sizeFunc();
 }
 
 bool Checkbox::getValue(){
-    return this->value;
+    return value;
 }
 
 void Checkbox::setValue(bool value, bool notify){

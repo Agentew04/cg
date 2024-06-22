@@ -4,9 +4,30 @@
 #include "../3D/Primitive.h"
 #include "../3D/Perspective.h"
 
-//#define PI 3.1415926535897932384626433832795
+#define PI 3.1415926535897932384626433832795
 #define DEG_90 1.5707963267948966192313216916398
 #define RPM_TO_RADS 0.10471975511965977461542144610932 // 2pi/60
+
+/*
+Testando Macros
+*/
+#define scaleX(v,f) ((v).vertexList = P3D::scaleVectorX((v).vertexList,f))
+#define scaleY(v,f) ((v).vertexList = P3D::scaleVectorY((v).vertexList,f))
+#define scaleZ(v,f) ((v).vertexList = P3D::scaleVectorZ((v).vertexList,f))
+#define scale(v,fx,fy,fz) ((v).vertexList = P3D::scaleVector((v).vertexList, Vector3(fx,fy,fz)))
+#define scalev(v,f) ((v).vertexList = P3D::scaleVector((v).vertexList, f))
+
+#define translateX(v,f) ((v).vertexList = P3D::translateVectorX((v).vertexList,f))
+#define translateY(v,f) ((v).vertexList = P3D::translateVectorY((v).vertexList,f))
+#define translateZ(v,f) ((v).vertexList = P3D::translateVectorZ((v).vertexList,f))
+#define translate(v,fx,fy,fz) ((v).vertexList = P3D::translateVector((v).vertexList, Vector3(fx,fy,fz)))
+#define translatev(v,f) ((v).vertexList = P3D::translateVector((v).vertexList, f))
+
+#define rotateX(v,f) ((v).vertexList = P3D::rotateVectorX((v).vertexList,f))
+#define rotateY(v,f) ((v).vertexList = P3D::rotateVectorY((v).vertexList,f))
+#define rotateZ(v,f) ((v).vertexList = P3D::rotateVectorZ((v).vertexList,f))
+#define rotate(v,fx,fy,fz) ((v).vertexList = P3D::rotateVector((v).vertexList, Vector3(fx,fy,fz)))
+#define rotatev(v,f) ((v).vertexList = P3D::rotateVector((v).vertexList, f))
 
 Simulator::Simulator(){
     simval = {};
@@ -40,14 +61,18 @@ void Simulator::update(float delta){
     auto piston = createPiston(simval);
 }
 
+
+
 std::vector<Primitive> Simulator::createCrankShaft(SimulationValues& simval){
     float axisRadius = 6;
-    float axisPassLenght = 50;
     float axisHeight = 10;
 
-    auto axis = Primitive::createCylinder(15, axisPassLenght, axisRadius);
-    axis.vertexList = P3D::rotateVectorY(axis.vertexList, DEG_90); // deita o cilindro
-    axis.vertexList = P3D::rotateVectorX(axis.vertexList, simval.crankshaftAngle);
+    auto axis = Primitive::createCylinder(15, 1, axisRadius);
+    rotateY(axis, DEG_90); // deita o cilindro
+    translateX(axis,0.5f); // faz crescer pra um lado so
+    scaleX(axis, 100);     // teria q trocar isso para o eixo cardan
+    translateX(axis, -axisHeight/2);
+    rotateX(axis, simval.crankshaftAngle);
     axis.color = Vector3(0.2,0.2,0.2);
 
     std::vector<Primitive> crankShaft;
@@ -55,18 +80,19 @@ std::vector<Primitive> Simulator::createCrankShaft(SimulationValues& simval){
 
     // criar 'manivela', maozinha
     auto shaft = Primitive::createCube(1);
-    shaft.vertexList = P3D::translateVectorZ(shaft.vertexList, 0.5f);
-    shaft.vertexList = P3D::scaleVector(shaft.vertexList, Vector3(axisHeight, axisHeight, simval.crankshaftLength - 2*axisRadius));
-    shaft.vertexList = P3D::translateVectorZ(shaft.vertexList, axisRadius);
-    shaft.vertexList = P3D::rotateVectorX(shaft.vertexList, simval.crankshaftAngle);
+    translateZ(shaft, 0.5f);
+    scale(shaft, axisHeight, axisHeight, simval.crankshaftLength - 2*axisRadius);
+    translateZ(shaft, axisRadius);
+    rotateX(shaft, simval.crankshaftAngle);
     shaft.color = Vector3(0.2,0.2,0.2);
     crankShaft.push_back(shaft);
 
     // agora, cria a pontinha. quase igual ao centro
-    auto endPoint = Primitive::createCylinder(15, axisHeight, axisRadius);
-    endPoint.vertexList = P3D::rotateVectorY(endPoint.vertexList, DEG_90); // deita o cilindro tbm
-    endPoint.vertexList = P3D::rotateVectorX(endPoint.vertexList, simval.crankshaftAngle);
-    endPoint.vertexList = P3D::translateVector(endPoint.vertexList, simval.crankshaftEnd);
+    auto endPoint = Primitive::createCylinder(15, 2*axisHeight, axisRadius);
+    rotateY(endPoint, DEG_90); // deita o cilindro tbm
+    rotateX(endPoint, simval.crankshaftAngle);
+    translateX(endPoint, -axisHeight/2);
+    translatev(endPoint, simval.crankshaftEnd);
     endPoint.color = Vector3(0.2,0.2,0.2);
     crankShaft.push_back(endPoint);
 
@@ -74,26 +100,28 @@ std::vector<Primitive> Simulator::createCrankShaft(SimulationValues& simval){
 }
 
 std::vector<Primitive> Simulator::createPiston(SimulationValues& simval){
-
+    float displacement = 10;
     Vector3 reference = Vector3(0,1,0);
 
     float pistonAngle = -(acos(reference.dot(simval.pistonDirection.normalized())) - DEG_90);
 
     auto base = Primitive::createCylinder(15, 1, 1);
-    base.vertexList = P3D::translateVectorZ(base.vertexList, -0.5f);
-    base.vertexList = P3D::scaleVector(base.vertexList, Vector3(10, 10, simval.pistonBaseLength));
-    base.vertexList = P3D::rotateVectorX(base.vertexList, pistonAngle);
-    base.vertexList = P3D::translateVector(base.vertexList, simval.pistonOrigin);
+    translateZ(base, -0.5f);
+    scale(base, 7, 7, simval.pistonBaseLength);
+    rotateX(base, pistonAngle);
+    translatev(base, simval.pistonOrigin);
+    translateX(base, -displacement);
     base.color = Vector3(0.8, 0.8, 0);
 
     float armDelta = (simval.crankshaftEnd - simval.pistonBaseEnd).magnitude;
     auto arm = Primitive::createCylinder(15,1,1);
-    arm.vertexList = P3D::translateVectorZ(arm.vertexList, -0.5f);
-    arm.vertexList = P3D::scaleVector(arm.vertexList, Vector3(7, 7, simval.pistonBaseLength));
-    arm.vertexList = P3D::translateVectorZ(arm.vertexList, -armDelta);
-    arm.vertexList = P3D::rotateVectorX(arm.vertexList, pistonAngle);
-    arm.vertexList = P3D::translateVector(arm.vertexList, simval.pistonOrigin);
+    translateZ(arm, -0.5f);
+    scale(arm, 5, 5, simval.pistonBaseLength);
+    translateZ(arm, -armDelta);
+    rotateX(arm, pistonAngle);
+    translatev(arm, simval.pistonOrigin);
+    translateX(arm, -displacement);
     arm.color = Vector3(0.5, 0.5, 0.5);
 
-    return { base, arm };
+    return { arm, base };
 }

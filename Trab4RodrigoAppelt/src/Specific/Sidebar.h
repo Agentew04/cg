@@ -6,6 +6,7 @@
 #include "../UI/Slider.h"
 #include "../UI/SliderManager.h"
 #include "../UI/ButtonManager.h"
+#include "../UI/CheckBoxManager.h"
 
 class Manager;
 
@@ -41,6 +42,7 @@ private:
     Slider *rpmSlider = nullptr;
     SliderManager sliderManager;
     ButtonManager buttonManager;
+    CheckboxManager checkboxManager;
 };
 
 #endif

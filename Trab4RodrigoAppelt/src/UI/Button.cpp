@@ -159,9 +159,10 @@ void Button::render(){
 
     // draw text
     CV::color(style->foreground);
-    float lineHeightRatio = 0.65;
-    CV::text(sz.x/2,
-             (sz.y/2)+(glutBitmapHeight(GLUT_BITMAP_HELVETICA_18)*lineHeightRatio/2), text.c_str(), GLUT_BITMAP_HELVETICA_18, TextAlign::CENTER);
+    CV::text(sz*0.5f, text, findPt());
+    // float lineHeightRatio = 0.65;
+    // CV::text(sz.x/2,
+    //          (sz.y/2)+(glutBitmapHeight(GLUT_BITMAP_HELVETICA_18)*lineHeightRatio/2), text.c_str(), GLUT_BITMAP_HELVETICA_18, TextAlign::CENTER);
 }
 
 void Button::call(){
@@ -176,4 +177,23 @@ bool Button::inside(Vector2 mousePos){
     translateCoordinates(pos,sz,placement);
     return (mousePos.x >= pos.x && mousePos.x <= pos.x + sz.x) &&
            (mousePos.y >= pos.y && mousePos.y <= pos.y + sz.y);
+}
+
+float Button::findPt(){
+    int iterations = 10;
+    float pt = 25; // initial try
+    Vector2 maxSize = sizeFunc();
+    for(int i=0; i<iterations; i++){
+        Vector2 textSize = FontManager::getTextSize(FontName::JetBrainsMono, this->text, pt);
+
+        if(textSize.x < maxSize.x && textSize.y < maxSize.y){
+            // pode aumentar
+            pt *= 1.25f;
+        }else {
+            // passou, diminui
+            pt *= 0.75f;
+        }
+    }
+    std::cout << std::endl;
+    return pt;
 }

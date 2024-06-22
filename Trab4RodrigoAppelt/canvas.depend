@@ -1050,13 +1050,13 @@
 	"../Math/Vector2.h"
 	"../Math/Vector3.h"
 
-1715562380 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\ui\button.cpp
+1719025063 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\ui\button.cpp
 	"Button.h"
 	<iostream>
 	"../gl_canvas2d.h"
 	"UIDefinitions.h"
 
-1713045592 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\ui\button.h
+1719024531 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\ui\button.h
 	<string>
 	<functional>
 	<map>
@@ -1091,13 +1091,13 @@
 	"../Math/Vector2.h"
 	"../Math/Vector3.h"
 
-1712363607 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\ui\checkbox.cpp
+1719025855 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\ui\checkbox.cpp
 	<iostream>
 	<cmath>
 	"CheckBox.h"
 	"../gl_canvas2d.h"
 
-1712889744 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\ui\checkbox.h
+1719025345 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\ui\checkbox.h
 	<map>
 	<functional>
 	"../Math/Vector2.h"
@@ -1386,25 +1386,26 @@
 	"../Math/Vector3.h"
 	"../3D/Primitive.h"
 
-1719015255 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\sidebar.h
+1719024445 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\sidebar.h
 	"../Math/Vector2.h"
 	"../UI/Slider.h"
 	"../UI/SliderManager.h"
 	"../UI/ButtonManager.h"
+	"../UI/CheckBoxManager.h"
 
-1719015606 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\sidebar.cpp
+1719025824 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\sidebar.cpp
 	"SideBar.h"
 	"../gl_canvas2d.h"
 	"../Math/Vector2.h"
 	"Manager.h"
 
-1719015518 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\simulator.cpp
+1719025156 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\simulator.cpp
 	"Simulator.h"
 	"../gl_canvas2d.h"
 	"../3D/Primitive.h"
 	"../3D/Perspective.h"
 
-1719016381 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.cpp
+1719016674 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.cpp
 	"Manager.h"
 	"../gl_canvas2d.h"
 

@@ -1,5 +1,8 @@
 #include "SideBar.h"
 
+#include <iomanip>
+#include <sstream>
+
 #include "../gl_canvas2d.h"
 #include "../Math/Vector2.h"
 #include "Manager.h"
@@ -22,7 +25,10 @@ void Sidebar::render() {
 
     // rpm controls
     CV::color(Vector3::fromHex(0x000000));
-    CV::text(Vector2(margin,margin), "RPM:", 25, FontName::JetBrainsMono, UIPlacement::TOP_LEFT);
+    std::stringstream ss;
+    ss << std::fixed << std::setprecision(2) << rpmSlider->getValue();
+    std::string rpmtext = "RPM: " + ss.str();
+    CV::text(Vector2(margin,margin), rpmtext, 25, FontName::JetBrainsMono, UIPlacement::TOP_LEFT);
     sliderManager.draw();
 
     // camera controls
@@ -30,22 +36,31 @@ void Sidebar::render() {
     CV::color(Vector3::fromHex(0x000000));
     CV::text(Vector2(margin,margin), "Camera", 25, FontName::JetBrainsMono, UIPlacement::TOP_LEFT);
     buttonManager.draw();
+
+    // visibilidade controls
+    CV::translate(*scrW-sidebarWidth, 2*25 + 5*30 + 6*margin);
+    CV::color(Vector3::fromHex(0x000000));
+    CV::text(Vector2(margin,margin), "Visibilidade", 25, FontName::JetBrainsMono, UIPlacement::TOP_LEFT);
+    checkboxManager.draw();
 }
 
 void Sidebar::updateMousePos(Vector2 mousePos) {
     this->mousePos = mousePos;
     sliderManager.updateMousePos(mousePos);
     buttonManager.updateMousePos(mousePos);
+    checkboxManager.updateMousePos(mousePos);
 }
 
 void Sidebar::mouseDown() {
     sliderManager.mouseDown();
     buttonManager.mouseDown();
+    checkboxManager.mouseDown();
 }
 
 void Sidebar::mouseUp() {
     sliderManager.mouseUp();
     buttonManager.mouseUp();
+    checkboxManager.mouseUp();
 }
 
 #pragma endregion
@@ -84,7 +99,7 @@ void Sidebar::submitUI(){
 
     auto but_cam_ortho_front = new Button(
         [&](){
-            return Vector2(*scrW-sidebarWidth, 25+25+30+30+margin*3) + Vector2(margin, margin);
+            return Vector2(*scrW-sidebarWidth, 2*25 + 2*30 + 3*margin) + Vector2(margin, margin);
         },
         [&](){
             return Vector2(sidebarWidth-2*margin, 30);
@@ -100,7 +115,7 @@ void Sidebar::submitUI(){
 
     auto but_cam_ortho_side = new Button(
         [&](){
-            return Vector2(*scrW-sidebarWidth, 25+25+30+30+30+margin*4) + Vector2(margin, margin);
+            return Vector2(*scrW-sidebarWidth, 2*25 + 3*30 + 4*margin) + Vector2(margin, margin);
         },
         [&](){
             return Vector2(sidebarWidth-2*margin, 30);
@@ -116,7 +131,7 @@ void Sidebar::submitUI(){
 
     auto but_cam_ortho_top = new Button(
         [&](){
-            return Vector2(*scrW-sidebarWidth, 25+25+30+30+30+30+margin*5) + Vector2(margin, margin);
+            return Vector2(*scrW-sidebarWidth, 2*25 + 4*30 + 5*margin) + Vector2(margin, margin);
         },
         [&](){
             return Vector2(sidebarWidth-2*margin, 30);
@@ -129,6 +144,46 @@ void Sidebar::submitUI(){
     );
     but_cam_ortho_top->style = ButtonStyle::Windows10();
     buttonManager.registerButton(but_cam_ortho_top);
+
+    auto chk_vis_crankshaft = new Checkbox(
+        [&](){
+            return Vector2(*scrW-sidebarWidth, 4*25 + 4*30 + 7*margin) + Vector2(margin, margin);
+        },
+        [&](){
+            return Vector2(sidebarWidth-2*margin, 15);
+        },
+        "Virabrequim",
+        true
+    );
+    auto chk_stl = Checkbox::Style::Windows10();
+    chk_vis_crankshaft->style = chk_stl;
+    checkboxManager.registerCheckbox(chk_vis_crankshaft);
+
+    auto chk_vis_pistonarm = new Checkbox(
+        [&](){
+            return Vector2(*scrW-sidebarWidth, 15 + 4*25 + 4*30 + 8*margin) + Vector2(margin, margin);
+        },
+        [&](){
+            return Vector2(sidebarWidth-2*margin, 15);
+        },
+        "Pistao",
+        true
+    );
+    chk_vis_pistonarm->style = chk_stl;
+    checkboxManager.registerCheckbox(chk_vis_pistonarm);
+
+    auto chk_vis_pistonbase = new Checkbox(
+        [&](){
+            return Vector2(*scrW-sidebarWidth, 2*15 + 4*25 + 4*30 + 9*margin) + Vector2(margin, margin);
+        },
+        [&](){
+            return Vector2(sidebarWidth-2*margin, 15);
+        },
+        "Cilindro",
+        true
+    );
+    chk_vis_pistonbase->style = chk_stl;
+    checkboxManager.registerCheckbox(chk_vis_pistonbase);
 }
 
 float Sidebar::getRpm(){

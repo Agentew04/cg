@@ -35,7 +35,11 @@ public:
     };
 
 
-    Checkbox(Vector2 pos, Vector2 size, std::string label, bool defaultValue);
+    Checkbox(
+        std::function<Vector2()> posFunc, 
+        std::function<Vector2()> sizeFunc, 
+        std::string label, 
+        bool defaultValue = false);
     ~Checkbox();
 
     void draw();
@@ -52,10 +56,10 @@ public:
 
     void setCallback(std::function<void(bool)> callback);
 private:
-    Vector2 pos;
-    Vector2 sz;
+    std::function<Vector2()> posFunc;
+    std::function<Vector2()> sizeFunc;
     bool value;
-    bool *bindingTarget;
+    bool *bindingTarget = nullptr;
     std::string label;
     bool hasCallback = false;
     std::function<void(bool)> callback;

@@ -43,10 +43,12 @@ SliderManager::~SliderManager(){
     for(size_t i=0; i<this->sliders.size(); i++){
         if (std::find(deleted.begin(), deleted.end(), this->sliders[i]->style) == deleted.end()) {
             deleted.push_back(this->sliders[i]->style);
-            delete this->sliders[i]->style;
         }
 
         delete this->sliders[i];
+    }
+    for(auto stl : deleted){
+        delete stl;
     }
 }
 
