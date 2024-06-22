@@ -20,6 +20,12 @@ struct SimulationValues {
     Vector3 crankshaftEnd;
     float crankshaftLength;
     float crankshaftAngle;
+    float crankshaftAxisHeight;
+    float crankshaftAxisRadius;
+
+    float crankshaftGearLength;
+    Vector3 gearJointPosition;
+    float gearRadius;
 
     float rpm;
 };

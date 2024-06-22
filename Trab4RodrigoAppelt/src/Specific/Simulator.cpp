@@ -7,6 +7,8 @@
 #define PI 3.1415926535897932384626433832795
 #define DEG_90 1.5707963267948966192313216916398
 #define RPM_TO_RADS 0.10471975511965977461542144610932 // 2pi/60
+#define RAD_TO_DEG 180.0/PI // 180/pi
+#define DEG_TO_RAD PI/180.0 // pi/180
 
 /*
 Testando Macros
@@ -47,6 +49,8 @@ void Simulator::update(float delta){
     simval.crankshaftAngle = time * RPM_TO_RADS;
     simval.crankshaftDirection = Vector3(0, -sin(simval.crankshaftAngle), cos(simval.crankshaftAngle));
     simval.crankshaftEnd = simval.crankshaftOrigin + (simval.crankshaftDirection * simval.crankshaftLength);
+    simval.crankshaftAxisHeight = 10;
+    simval.crankshaftAxisRadius = 6;
 
     simval.spacePistonCrankshaft = 10;
 
@@ -56,17 +60,18 @@ void Simulator::update(float delta){
     simval.pistonOrigin.z += simval.crankshaftLength + simval.spacePistonCrankshaft + simval.pistonArmLength;
     simval.pistonDirection = (simval.crankshaftEnd - simval.pistonOrigin).normalized() * simval.pistonBaseLength;
     simval.pistonBaseEnd = simval.pistonOrigin + simval.pistonDirection;
+
+    simval.crankshaftGearLength = 100;
+    simval.gearJointPosition = simval.crankshaftOrigin + Vector3(simval.crankshaftGearLength - simval.crankshaftAxisHeight/2, 0, 0);
+    simval.gearRadius = 30;
 }
 
 std::vector<Primitive> Simulator::createCrankShaft() const{
-    float axisRadius = 6;
-    float axisHeight = 10;
-
-    auto axis = Primitive::createCylinder(15, 1, axisRadius);
+    auto axis = Primitive::createCylinder(15, 1, simval.crankshaftAxisRadius);
     rotateY(axis, DEG_90); // deita o cilindro
     translateX(axis,0.5f); // faz crescer pra um lado so
-    scaleX(axis, 100);     // teria q trocar isso para o eixo cardan
-    translateX(axis, -axisHeight/2);
+    scaleX(axis, simval.crankshaftGearLength); // teria q trocar isso para o eixo cardan
+    translateX(axis, -simval.crankshaftAxisHeight/2);
     rotateX(axis, simval.crankshaftAngle);
     axis.color = Vector3(0.2,0.2,0.2);
 
@@ -76,17 +81,17 @@ std::vector<Primitive> Simulator::createCrankShaft() const{
     // criar 'manivela', maozinha
     auto shaft = Primitive::createCube(1);
     translateZ(shaft, 0.5f);
-    scale(shaft, axisHeight, axisHeight, simval.crankshaftLength - 2*axisRadius);
-    translateZ(shaft, axisRadius);
+    scale(shaft, simval.crankshaftAxisHeight, simval.crankshaftAxisHeight, simval.crankshaftLength - 2*simval.crankshaftAxisRadius);
+    translateZ(shaft, simval.crankshaftAxisRadius);
     rotateX(shaft, simval.crankshaftAngle);
     shaft.color = Vector3(0.2,0.2,0.2);
     crankShaft.push_back(shaft);
 
     // agora, cria a pontinha. quase igual ao centro
-    auto endPoint = Primitive::createCylinder(15, 2*axisHeight, axisRadius);
+    auto endPoint = Primitive::createCylinder(15, 2*simval.crankshaftAxisHeight, simval.crankshaftAxisRadius);
     rotateY(endPoint, DEG_90); // deita o cilindro tbm
     rotateX(endPoint, simval.crankshaftAngle);
-    translateX(endPoint, -axisHeight/2);
+    translateX(endPoint, -simval.crankshaftAxisHeight/2);
     translatev(endPoint, simval.crankshaftEnd);
     endPoint.color = Vector3(0.2,0.2,0.2);
     crankShaft.push_back(endPoint);
@@ -123,17 +128,25 @@ std::vector<Primitive> Simulator::createPiston() const{
 
 std::vector<Primitive> Simulator::createGears() const {
     std::vector<Primitive> parts;
-    float step= 2*3.14159 /20 / 4;
+    int teeth = 20;
+    float displacement = 2*PI / teeth / 4.0; // 4 segmentos por dente
+    float baseAngle = simval.crankshaftAngle;
 
-    Primitive gear1 = Primitive::createGear(20, 0.05);
-    scale(gear1, 10, 10, 10);
-    rotateZ(gear1, step * 0.5f);
+    Primitive gear1 = Primitive::createGear(teeth, 0.05);
+    scale(gear1, simval.gearRadius, simval.gearRadius, simval.gearRadius); // escala pro tamanho da engrenagem
+    rotateY(gear1, DEG_90); // endireita
+    rotateX(gear1, displacement + simval.crankshaftAngle); // rotaciona ela
+    translatev(gear1, simval.gearJointPosition); // move pro local certo
+    translateX(gear1, simval.gearRadius * 0.25); // conecta extamente no virabrequim
     gear1.color = Vector3(1,0,0);
 
-    Primitive gear2 = Primitive::createGear(20, 0.05);
-    scale(gear2, 10, 10, 10);
-    rotateZ(gear2, step * 1.5f);
-    translateX(gear2, 20);
+    Primitive gear2 = Primitive::createGear(teeth, 0.05);
+    scale(gear2, simval.gearRadius, simval.gearRadius, simval.gearRadius);
+    rotateY(gear2, DEG_90); // endireita
+    rotateX(gear2, -simval.crankshaftAngle); // rotaciona ela
+    translatev(gear2, simval.gearJointPosition); // move pro local certo
+    translateY(gear2, 2*simval.gearRadius); // joga pro lado pra conectar
+    translateX(gear2, simval.gearRadius * 0.25);
     gear2.color = Vector3(0,0,1);
 
     parts.push_back(gear1);
