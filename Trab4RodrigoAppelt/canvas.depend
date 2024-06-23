@@ -22,7 +22,7 @@
 
 1715800493 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\keyboard.h
 
-1719027914 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\primitive.h
+1719080781 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\primitive.h
 	<vector>
 	"../Math/Vector3.h"
 
@@ -426,4 +426,10 @@
 	"SliderManager.h"
 	"CheckBoxManager.h"
 	"Chart.h"
+
+1719076842 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\simulator.cpp
+	"Simulator.h"
+	"../gl_canvas2d.h"
+	"../3D/Primitive.h"
+	"../3D/Perspective.h"
 

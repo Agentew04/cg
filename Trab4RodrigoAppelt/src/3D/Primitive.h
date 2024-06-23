@@ -17,6 +17,8 @@ public:
     std::vector<Vector3> normalList; // usado para modo com preenchimento + iluminacao
     Vector3 color;
 
+    /// @brief Transforma qualquer face que nao tenha 3 vertices um varias faces de 3 vertices.
+    void Triangulate();
 
     /// @brief Cria uma esfera com coordenadas polares de raio unitario e centrada na origem.
     /// @param horizontalResolution Quantidade de linhas verticais. Essas linhas se movem na horizontal

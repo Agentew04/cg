@@ -206,5 +206,34 @@ Primitive Primitive::createGear(int teeth, float teethHeight){
         }
     }
 
+    // faces
+    for(int i=0; i<teeth; i++){
+        for(int j=0; j<4; j++){
+            int currentIdx = 8 * i + 2 * j;
+            int nextIdx = (currentIdx + 2) % (2 * teeth * 4);
+
+            // Create faces for the sides of the teeth
+            gear.faceList.push_back({currentIdx, nextIdx, nextIdx + 1, currentIdx + 1});
+
+            // Create faces for the top and bottom surfaces of the gear
+            if (j == 3) {
+                // Top face
+                gear.faceList.push_back({topCapIdx, currentIdx, nextIdx});
+                // Bottom face
+                gear.faceList.push_back({bottomCapIdx, nextIdx + 1, currentIdx + 1});
+            }
+        }
+    }
+
     return gear;
+}
+
+void Primitive::Triangulate(){
+    std::vector<std::vector<int>> newFaceList;
+    for(auto& face : faceList){
+        for(int i = 1; i < face.size()-1; i++){
+            newFaceList.push_back({face[0], face[i], face[i+1]});
+        }
+    }
+    faceList = newFaceList;
 }
