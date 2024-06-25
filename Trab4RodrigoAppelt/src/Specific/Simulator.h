@@ -28,6 +28,15 @@ struct SimulationValues {
     float gearRadius;
 
     float rpm;
+
+    float driveshaftAngle; // 0 a 45 graus em radianos
+    Vector3 driveshaftJointPosition;
+    Vector3 driveshaftMiddleJointPosition;
+    float driveshaftJointDiameter; // controlam o formato da peca
+    float driveshaftAxisRadius;
+    float driveshaftLength;
+    float driveshaftOverhang;
+    float driveshaftCaliber;
 };
 
 /// @brief Classe que faz todos os calculos da simulacao.
@@ -45,8 +54,12 @@ public:
     std::vector<Primitive> createCrankShaft() const;
     std::vector<Primitive> createPiston() const;
     std::vector<Primitive> createGears() const;
+    std::vector<Primitive> createDriveShaft() const;
+    std::vector<Primitive> createDriveShaftConnector() const;
 private:
     SimulationValues simval;
+
+    std::vector<Primitive> createDriveShaftPart() const;
 };
 
 #endif

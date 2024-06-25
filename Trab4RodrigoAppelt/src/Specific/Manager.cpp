@@ -139,6 +139,7 @@ void Manager::drawParts() {
     auto gears = sim.createGears();
     auto pistonArm = piston[0];
     auto pistonBase = piston[1];
+    auto driveshaftparts = sim.createDriveShaft();
 
     if(partsVisibility[SimulationPart::CRANKSHAFT]){
         for(auto &p : crankshaft){
@@ -158,5 +159,9 @@ void Manager::drawParts() {
         for(auto &p : gears){
             draw(p);
         }
+    }
+
+    for(auto &p:driveshaftparts){
+        draw(p);
     }
 }

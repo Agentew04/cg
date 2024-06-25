@@ -108,7 +108,7 @@
 	<algorithm>
 	"../Math/Vector3.h"
 
-1719028386 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\primitive.cpp
+1719080983 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\primitive.cpp
 	"Primitive.h"
 
 1717095484 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\fonts\fontmanager.cpp
@@ -180,7 +180,7 @@
 	"Sidebar.h"
 	"../3D/Camera.h"
 
-1719075989 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\simulator.h
+1719274209 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\simulator.h
 	<vector>
 	"../Math/Vector3.h"
 	"../3D/Primitive.h"
@@ -277,7 +277,7 @@
 	<vector>
 	"../gl_canvas2d.h"
 
-1719028675 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.cpp
+1719271997 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.cpp
 	"Manager.h"
 	"../gl_canvas2d.h"
 

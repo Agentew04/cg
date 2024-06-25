@@ -43,6 +43,8 @@ SimulationValues& Simulator::getValues(){
 float time = 0;
 
 void Simulator::update(float delta){
+    
+    // virabrequim
     simval.crankshaftOrigin = Vector3::zero();
     simval.crankshaftLength = 100;
     time += delta * simval.rpm;
@@ -54,6 +56,7 @@ void Simulator::update(float delta){
 
     simval.spacePistonCrankshaft = 10;
 
+    // pistao 8pts
     simval.pistonArmLength = simval.crankshaftLength*2 + simval.spacePistonCrankshaft;
     simval.pistonBaseLength = simval.pistonArmLength; // a base vai ficar com um pouco de espaco sobrando em cima. intencional!
     simval.pistonOrigin = simval.crankshaftOrigin;
@@ -61,9 +64,21 @@ void Simulator::update(float delta){
     simval.pistonDirection = (simval.crankshaftEnd - simval.pistonOrigin).normalized() * simval.pistonBaseLength;
     simval.pistonBaseEnd = simval.pistonOrigin + simval.pistonDirection;
 
+    // engrenagens 2 pts
     simval.crankshaftGearLength = 100;
     simval.gearJointPosition = simval.crankshaftOrigin + Vector3(simval.crankshaftGearLength - simval.crankshaftAxisHeight/2, 0, 0);
     simval.gearRadius = 30;
+
+    // eixo cardan 6 pts
+    simval.driveshaftAngle = 0;
+    simval.driveshaftLength = 200;
+    simval.driveshaftJointPosition = simval.crankshaftOrigin - Vector3(simval.crankshaftGearLength + simval.crankshaftAxisHeight *1.5f, 0, 0);
+    simval.driveshaftAxisRadius = simval.crankshaftAxisRadius;
+    simval.driveshaftJointDiameter = simval.driveshaftAxisRadius*2;
+    simval.driveshaftLength = simval.crankshaftGearLength;
+    simval.driveshaftOverhang = simval.driveshaftAxisRadius*0.5;
+    simval.driveshaftCaliber = simval.driveshaftAxisRadius*0.5;
+    simval.driveshaftMiddleJointPosition = simval.driveshaftJointPosition - Vector3(simval.driveshaftLength, 0, 0);
 }
 
 std::vector<Primitive> Simulator::createCrankShaft() const{
@@ -88,13 +103,22 @@ std::vector<Primitive> Simulator::createCrankShaft() const{
     crankShaft.push_back(shaft);
 
     // agora, cria a pontinha. quase igual ao centro
-    auto endPoint = Primitive::createCylinder(15, 2*simval.crankshaftAxisHeight, simval.crankshaftAxisRadius);
+    auto endPoint = Primitive::createCylinder(15, 3*simval.crankshaftAxisHeight, simval.crankshaftAxisRadius);
     rotateY(endPoint, DEG_90); // deita o cilindro tbm
     rotateX(endPoint, simval.crankshaftAngle);
-    translateX(endPoint, -simval.crankshaftAxisHeight/2);
+    translateX(endPoint, -simval.crankshaftAxisHeight);
     translatev(endPoint, simval.crankshaftEnd);
     endPoint.color = Vector3(0.2,0.2,0.2);
     crankShaft.push_back(endPoint);
+
+    // outra maozinha pra engatar com o outro lado do virabrequim
+    translateX(shaft, -2*simval.crankshaftAxisHeight);
+    crankShaft.push_back(shaft);
+
+    // outro lado do eixo
+    translateX(axis, simval.crankshaftAxisHeight*0.5f);
+    translatev(axis, simval.driveshaftJointPosition);
+    crankShaft.push_back(axis);
 
     return crankShaft;
 }
@@ -151,6 +175,72 @@ std::vector<Primitive> Simulator::createGears() const {
 
     parts.push_back(gear1);
     parts.push_back(gear2);
+
+    return parts;
+}
+
+std::vector<Primitive> Simulator::createDriveShaft() const{
+    std::vector<Primitive> parts;
+
+    std::vector<Primitive> p1 = createDriveShaftPart();
+    std::vector<Primitive> p2 = createDriveShaftPart();
+    for(auto &p:p1){
+        rotateX(p, simval.crankshaftAngle);
+        translatev(p, simval.driveshaftJointPosition - Vector3(simval.driveshaftLength, 0, 0));
+    }
+
+    for(auto &p:p2){
+        scaleX(p, -1);
+        rotateX(p, simval.crankshaftAngle + DEG_90);
+        rotateY(p, simval.driveshaftAngle);
+        translatev(p, simval.driveshaftMiddleJointPosition);
+    }
+
+
+    for(auto &p:p1)
+        parts.push_back(p);
+    for(auto &p:p2)
+        parts.push_back(p);
+
+    return parts;
+}
+
+std::vector<Primitive> Simulator::createDriveShaftPart() const{
+    std::vector<Primitive> parts;
+
+    Primitive axis = Primitive::createCylinder(15, 1, simval.driveshaftAxisRadius);
+    rotateY(axis, DEG_90); // deita
+    translateX(axis, 0.5f); // coloca lado de baixo na origem
+    scaleX(axis, simval.driveshaftLength - simval.driveshaftCaliber - simval.driveshaftJointDiameter);
+    translateX(axis, simval.driveshaftCaliber + simval.driveshaftJointDiameter);
+    axis.color = Vector3(1,0,0);
+    parts.push_back(axis);
+
+    Primitive basePlate = Primitive::createCube(1);
+    scaleZ(basePlate, simval.driveshaftAxisRadius*2);
+    scaleY(basePlate, simval.driveshaftAxisRadius*2 + simval.driveshaftCaliber*2);
+    scaleX(basePlate, simval.driveshaftCaliber);
+    translateX(basePlate, simval.driveshaftJointDiameter + simval.driveshaftCaliber*0.5);
+    basePlate.color = Vector3(1,0,0);
+    parts.push_back(basePlate);
+
+    Primitive leftPlate = Primitive::createCube(1);
+    scaleZ(leftPlate, simval.driveshaftAxisRadius*2);
+    scaleY(leftPlate, simval.driveshaftCaliber);
+    scaleX(leftPlate, simval.driveshaftJointDiameter + simval.driveshaftOverhang);
+    translateY(leftPlate, simval.driveshaftAxisRadius + simval.driveshaftCaliber*0.5);
+    translateX(leftPlate, (simval.driveshaftJointDiameter + simval.driveshaftOverhang)*0.5 - simval.driveshaftOverhang);
+    leftPlate.color = Vector3(1,0,0);
+    parts.push_back(leftPlate);
+
+    Primitive rightPlate = Primitive::createCube(1);
+    scaleZ(rightPlate, simval.driveshaftAxisRadius*2);
+    scaleY(rightPlate, simval.driveshaftCaliber);
+    scaleX(rightPlate, simval.driveshaftJointDiameter + simval.driveshaftOverhang);
+    translateY(rightPlate, -(simval.driveshaftAxisRadius + simval.driveshaftCaliber*0.5));
+    translateX(rightPlate, (simval.driveshaftJointDiameter + simval.driveshaftOverhang)*0.5 - simval.driveshaftOverhang);
+    rightPlate.color = Vector3(1,0,0);
+    parts.push_back(rightPlate);
 
     return parts;
 }
