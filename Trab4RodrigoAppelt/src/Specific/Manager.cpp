@@ -66,6 +66,7 @@ void Manager::update(float delta) {
     sim.update(delta);
     sidebar.update(delta);
     sim.getValues().rpm = sidebar.getRpm();
+    sim.getValues().driveshaftAngle = -sidebar.getDriveshaftAngle();
 
     switch(cameraMode){
         case CameraMode::PERSPECTIVE_FREE:
@@ -134,14 +135,12 @@ void Manager::setVisibility(SimulationPart part, bool visibility){
 }
 
 void Manager::drawParts() {
-    auto crankshaft = sim.createCrankShaft();
     auto piston = sim.createPiston();
-    auto gears = sim.createGears();
     auto pistonArm = piston[0];
     auto pistonBase = piston[1];
-    auto driveshaftparts = sim.createDriveShaft();
-
+    
     if(partsVisibility[SimulationPart::CRANKSHAFT]){
+        auto crankshaft = sim.createCrankShaft();
         for(auto &p : crankshaft){
             draw(p);
         }
@@ -156,12 +155,21 @@ void Manager::drawParts() {
     }
 
     if(partsVisibility[SimulationPart::GEARS]){
+        auto gears = sim.createGears();
         for(auto &p : gears){
             draw(p);
         }
     }
 
-    for(auto &p:driveshaftparts){
-        draw(p);
+    if(partsVisibility[SimulationPart::DRIVESHAFT]){
+        auto driveshaftparts = sim.createDriveShaft();
+        auto driveshaftconn = sim.createDriveShaftConnector();
+        for(auto &p:driveshaftparts){
+            draw(p);
+        }
+        for(auto &p : driveshaftconn){
+            draw(p);
+        }
     }
+
 }

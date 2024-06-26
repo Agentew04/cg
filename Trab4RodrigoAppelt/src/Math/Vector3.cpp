@@ -146,12 +146,12 @@ float Vector3::operator * (const Vector3& v) const
     return( x*v.x + y*v.y + z*v.z );
 }
 
-float Vector3::dot(const Vector3& v)
+float Vector3::dot(const Vector3& v) const
 {
     return( x*v.x + y*v.y + z*v.z );
 }
 
-Vector3 Vector3::operator ^ (const Vector3& v)
+Vector3 Vector3::operator ^ (const Vector3& v) const
 {
     Vector3 aux( y*v.z - z*v.y, z*v.x - x*v.z, x*v.y - y*v.x);
     return( aux );
@@ -167,13 +167,13 @@ Vector3& Vector3::operator ^= (const Vector3& v)
     return *this;
 }
 
-Vector3 Vector3::cross(const Vector3& v)
+Vector3 Vector3::cross(const Vector3& v) const
 {
     Vector3 aux( y*v.z - z*v.y, z*v.x - x*v.z, x*v.y - y*v.x);
     return( aux );
 }
 
-Vector3 Vector3::multiply(const Vector3& v)
+Vector3 Vector3::multiply(const Vector3& v) const
 {
     Vector3 aux( x*v.x, y*v.y, z*v.z);
     return( aux );
@@ -186,13 +186,13 @@ std::ostream& operator<<(std::ostream& os, const Vector3& obj)
     return os;
 }
 
-bool Vector3::operator == (const Vector3& v)
+bool Vector3::operator == (const Vector3& v) const
 {
     float epsilon = 0.00001f;
     return( fabs(x - v.x) < epsilon && fabs(y - v.y) < epsilon && fabs(z - v.z) < epsilon );
 }
 
-bool Vector3::operator != (const Vector3& v)
+bool Vector3::operator != (const Vector3& v) const
 {
     return( !(*this == v) );
 }

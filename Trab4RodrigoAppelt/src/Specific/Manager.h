@@ -25,6 +25,7 @@ public:
         PISTON_BASE,
         PISTON_ARM,
         GEARS,
+        DRIVESHAFT,
         COUNT
     };
 

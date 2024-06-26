@@ -55,19 +55,19 @@ public:
 
     /// @brief Produtor escalar
     float operator * (const Vector3& v) const;
-    float dot(const Vector3& v);
+    float dot(const Vector3& v) const;
 
     /// @brief Produtor vetorial
-    Vector3 operator ^ (const Vector3& v);
+    Vector3 operator ^ (const Vector3& v) const;
     Vector3& operator ^= (const Vector3& v);
-    Vector3 cross(const Vector3& v);
+    Vector3 cross(const Vector3& v) const;
 
     /// @brief Multiplica componente a componente 2 vetores
-    Vector3 multiply(const Vector3& v);
+    Vector3 multiply(const Vector3& v) const;
 
     /// @brief Compara se dois vetores sao iguais
-    bool operator == (const Vector3& v);
-    bool operator != (const Vector3& v);
+    bool operator == (const Vector3& v) const;
+    bool operator != (const Vector3& v) const;
 
     // CONSTANTES
     static Vector3 zero() { return Vector3(0, 0, 0); }

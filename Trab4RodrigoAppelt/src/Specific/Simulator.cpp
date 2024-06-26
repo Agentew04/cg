@@ -70,11 +70,11 @@ void Simulator::update(float delta){
     simval.gearRadius = 30;
 
     // eixo cardan 6 pts
-    simval.driveshaftAngle = 0;
+    simval.driveshaftAngle = -DEG_90*0.5;
     simval.driveshaftLength = 200;
     simval.driveshaftJointPosition = simval.crankshaftOrigin - Vector3(simval.crankshaftGearLength + simval.crankshaftAxisHeight *1.5f, 0, 0);
     simval.driveshaftAxisRadius = simval.crankshaftAxisRadius;
-    simval.driveshaftJointDiameter = simval.driveshaftAxisRadius*2;
+    simval.driveshaftJointDiameter = simval.driveshaftAxisRadius*4;
     simval.driveshaftLength = simval.crankshaftGearLength;
     simval.driveshaftOverhang = simval.driveshaftAxisRadius*0.5;
     simval.driveshaftCaliber = simval.driveshaftAxisRadius*0.5;
@@ -218,7 +218,7 @@ std::vector<Primitive> Simulator::createDriveShaftPart() const{
 
     Primitive basePlate = Primitive::createCube(1);
     scaleZ(basePlate, simval.driveshaftAxisRadius*2);
-    scaleY(basePlate, simval.driveshaftAxisRadius*2 + simval.driveshaftCaliber*2);
+    scaleY(basePlate, simval.driveshaftJointDiameter + simval.driveshaftCaliber*2);
     scaleX(basePlate, simval.driveshaftCaliber);
     translateX(basePlate, simval.driveshaftJointDiameter + simval.driveshaftCaliber*0.5);
     basePlate.color = Vector3(1,0,0);
@@ -228,7 +228,7 @@ std::vector<Primitive> Simulator::createDriveShaftPart() const{
     scaleZ(leftPlate, simval.driveshaftAxisRadius*2);
     scaleY(leftPlate, simval.driveshaftCaliber);
     scaleX(leftPlate, simval.driveshaftJointDiameter + simval.driveshaftOverhang);
-    translateY(leftPlate, simval.driveshaftAxisRadius + simval.driveshaftCaliber*0.5);
+    translateY(leftPlate, simval.driveshaftJointDiameter*0.5 + simval.driveshaftCaliber*0.5);
     translateX(leftPlate, (simval.driveshaftJointDiameter + simval.driveshaftOverhang)*0.5 - simval.driveshaftOverhang);
     leftPlate.color = Vector3(1,0,0);
     parts.push_back(leftPlate);
@@ -237,10 +237,64 @@ std::vector<Primitive> Simulator::createDriveShaftPart() const{
     scaleZ(rightPlate, simval.driveshaftAxisRadius*2);
     scaleY(rightPlate, simval.driveshaftCaliber);
     scaleX(rightPlate, simval.driveshaftJointDiameter + simval.driveshaftOverhang);
-    translateY(rightPlate, -(simval.driveshaftAxisRadius + simval.driveshaftCaliber*0.5));
+    translateY(rightPlate, -(simval.driveshaftJointDiameter*0.5 + simval.driveshaftCaliber*0.5));
     translateX(rightPlate, (simval.driveshaftJointDiameter + simval.driveshaftOverhang)*0.5 - simval.driveshaftOverhang);
     rightPlate.color = Vector3(1,0,0);
     parts.push_back(rightPlate);
+
+    return parts;
+}
+
+std::vector<Primitive> Simulator::createDriveShaftConnector() const {
+    std::vector<Primitive> parts;
+
+    float connHeight = 2;
+    float bigConnRadius = simval.driveshaftJointDiameter*0.5*0.75;
+    float smallConnRadiusPos = bigConnRadius + simval.driveshaftJointDiameter*0.25*0.25;
+
+    Primitive middleCylinder = Primitive::createCylinder(15, connHeight, bigConnRadius);
+    rotateY(middleCylinder, DEG_90);
+    rotateX(middleCylinder, simval.crankshaftAngle);
+    Vector3 rotationAxis = simval.crankshaftDirection.cross(Vector3(-1,0,0));
+    //std::cout << "crankshaftangle: " << fmod(simval.crankshaftAngle * RAD_TO_DEG, 360) << "; driveshaftangle: " << fmod(cos(CV::time()*0.125)*simval.driveshaftAngle * RAD_TO_DEG,360) << std::endl;
+    float angle = fmod((sin(simval.crankshaftAngle)*0.4*cos(simval.driveshaftAngle*2.6)-(4/10.0f)),360);
+    std::cout << "angle: " << angle * RAD_TO_DEG << std::endl;
+    middleCylinder.vertexList = P3D::rotateVectorAxis(middleCylinder.vertexList, rotationAxis, angle);
+    translatev(middleCylinder, simval.driveshaftMiddleJointPosition);
+    middleCylinder.color = Vector3(0,1,0);
+    parts.push_back(middleCylinder);
+
+    Primitive conn1 = Primitive::createCylinder(5, simval.driveshaftJointDiameter*0.5*0.25, connHeight);
+    translateZ(conn1, smallConnRadiusPos);
+    rotateX(conn1, simval.crankshaftAngle);
+    rotateY(conn1, simval.driveshaftAngle);
+    translatev(conn1, simval.driveshaftMiddleJointPosition);
+    conn1.color = Vector3(0,1,0);
+    //parts.push_back(conn1);
+
+    Primitive conn2 = Primitive::createCylinder(5, simval.driveshaftJointDiameter*0.5*0.25, connHeight);
+    translateZ(conn2, smallConnRadiusPos);
+    rotateX(conn2, simval.crankshaftAngle + DEG_90);
+    rotateY(conn2, simval.driveshaftAngle);
+    translatev(conn2, simval.driveshaftMiddleJointPosition);
+    conn2.color = Vector3(0,1,0);
+    //parts.push_back(conn2);
+
+    Primitive conn3 = Primitive::createCylinder(5, simval.driveshaftJointDiameter*0.5*0.25, connHeight);
+    translateZ(conn3, -smallConnRadiusPos);
+    rotateX(conn3, simval.crankshaftAngle + 2*DEG_90);
+    rotateY(conn3, simval.driveshaftAngle);
+    translatev(conn3, simval.driveshaftMiddleJointPosition);
+    conn3.color = Vector3(0,1,0);
+    //parts.push_back(conn3);
+
+    Primitive conn4 = Primitive::createCylinder(5, simval.driveshaftJointDiameter*0.5*0.25, connHeight);
+    translateZ(conn4, -smallConnRadiusPos);
+    rotateX(conn4, simval.crankshaftAngle + 3*DEG_90);
+    rotateY(conn4, simval.driveshaftAngle);
+    translatev(conn4, simval.driveshaftMiddleJointPosition);
+    conn4.color = Vector3(0,1,0);
+    //parts.push_back(conn4);
 
     return parts;
 }

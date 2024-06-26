@@ -42,6 +42,15 @@ void Sidebar::render() {
     CV::color(Vector3::fromHex(0x000000));
     CV::text(Vector2(margin,margin), "Visibilidade", 25, FontName::JetBrainsMono, UIPlacement::TOP_LEFT);
     checkboxManager.draw();
+
+    // eixo cardan controls
+    CV::translate(*scrW-sidebarWidth, 5*15 + 3*25 + 5*30 + 11*margin);
+    CV::color(Vector3::fromHex(0x000000));
+    CV::text(Vector2(margin,margin), "Eixo Cardan", 25, FontName::JetBrainsMono, UIPlacement::TOP_LEFT);
+    std::stringstream ss2;
+    ss2 << std::fixed << std::setprecision(2) << driveshaftAngleSlider->getValue() * (180/PI);
+    std::string driveshafttext = "Angulo: " + ss2.str() + " graus";
+    CV::text(Vector2(margin,25+2*margin), driveshafttext, 25, FontName::JetBrainsMono, UIPlacement::TOP_LEFT);
 }
 
 void Sidebar::updateMousePos(Vector2 mousePos) {
@@ -209,8 +218,52 @@ void Sidebar::submitUI(){
     });
     chk_vis_gears->style = chk_stl;
     checkboxManager.registerCheckbox(chk_vis_gears);
+
+    auto chk_vis_driveshaft = new Checkbox(
+        [&](){
+            return Vector2(*scrW-sidebarWidth, 4*15 + 4*25 + 4*30 + 11*margin) + Vector2(margin, margin);
+        },
+        [&](){
+            return Vector2(sidebarWidth-2*margin, 15);
+        },
+        "Eixo Cardan",
+        true
+    );
+    chk_vis_driveshaft->setCallback([&](bool value){
+        manager->setVisibility(Manager::SimulationPart::DRIVESHAFT, value);
+    });
+    chk_vis_driveshaft->style = chk_stl;
+    checkboxManager.registerCheckbox(chk_vis_driveshaft);
+
+    driveshaftAngleSlider = new Slider(
+        [&](){
+            return Vector2(*scrW-sidebarWidth, 5*15 + 6*25 + 4*30 + 14*margin) + Vector2(margin,margin);
+        },
+        [&](){
+            return Vector2(sidebarWidth-2*margin, 30);
+        },
+        0.0f,
+        PI * 0.25f, // 45 graus
+        0.0f
+    );
+    driveshaftAngleSlider->style = sldstl;
+    sliderManager.registerSlider(driveshaftAngleSlider);
 }
 
 float Sidebar::getRpm(){
-    return rpmSlider->getValue();
+    if(rpmSlider != nullptr){
+        return rpmSlider->getValue();
+    }else{
+        std::cout << "RPM Slider eh null!" << std::endl;
+        return 0.0f;
+    }
+}
+
+float Sidebar::getDriveshaftAngle(){
+    if(driveshaftAngleSlider != nullptr){
+        return driveshaftAngleSlider->getValue();
+    }else{
+        std::cout << "Driveshaft Angle Slider eh null!" << std::endl;
+        return 0.0f;
+    }
 }

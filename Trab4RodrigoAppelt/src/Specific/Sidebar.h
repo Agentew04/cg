@@ -18,6 +18,7 @@ public:
 
     // functions
     float getRpm();
+    float getDriveshaftAngle();
 
     // event forwarding
     void update(float delta);
@@ -40,6 +41,7 @@ private:
 
     // componentes
     Slider *rpmSlider = nullptr;
+    Slider *driveshaftAngleSlider = nullptr;
     SliderManager sliderManager;
     ButtonManager buttonManager;
     CheckboxManager checkboxManager;

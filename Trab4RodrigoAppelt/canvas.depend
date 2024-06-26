@@ -16,7 +16,7 @@
 	<cmath>
 	<iostream>
 
-1719028589 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\math\vector3.h
+1719364160 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\math\vector3.h
 	<iostream>
 	"Vector2.h"
 
@@ -85,7 +85,7 @@
 	"../3D/ObjLoader.h"
 	"../Math/Vector2.h"
 
-1718989617 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\perspective.h
+1719363123 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\perspective.h
 	<vector>
 	"../Math/Vector2.h"
 	"../Math/Vector3.h"
@@ -102,7 +102,7 @@
 	<vector>
 	<fstream>
 
-1718989717 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\perspective.cpp
+1719363218 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\perspective.cpp
 	"Perspective.h"
 	<vector>
 	<algorithm>
@@ -173,7 +173,7 @@
 	<windows.h>
 	<map>
 
-1719028645 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.h
+1719360198 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.h
 	"../Math/Vector2.h"
 	"../Keyboard.h"
 	"Simulator.h"
@@ -185,7 +185,7 @@
 	"../Math/Vector3.h"
 	"../3D/Primitive.h"
 
-1719024445 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\sidebar.h
+1719360378 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\sidebar.h
 	"../Math/Vector2.h"
 	"../UI/Slider.h"
 	"../UI/SliderManager.h"
@@ -241,7 +241,7 @@
 1715562380 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\math\vector2.cpp
 	"Vector2.h"
 
-1719028595 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\math\vector3.cpp
+1719364181 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\math\vector3.cpp
 	<cmath>
 	"Vector2.h"
 	"Vector3.h"
@@ -277,11 +277,11 @@
 	<vector>
 	"../gl_canvas2d.h"
 
-1719271997 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.cpp
+1719364317 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.cpp
 	"Manager.h"
 	"../gl_canvas2d.h"
 
-1719028837 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\sidebar.cpp
+1719360701 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\sidebar.cpp
 	"SideBar.h"
 	<iomanip>
 	<sstream>
@@ -427,7 +427,7 @@
 	"CheckBoxManager.h"
 	"Chart.h"
 
-1719076842 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\simulator.cpp
+1719364090 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\simulator.cpp
 	"Simulator.h"
 	"../gl_canvas2d.h"
 	"../3D/Primitive.h"

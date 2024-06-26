@@ -182,3 +182,21 @@ void P3D::sortFaces(const std::vector<Vector3>& vertices, std::vector<std::vecto
         return zDistance(face1) > zDistance(face2);
     });
 }
+
+
+std::vector<Vector3> P3D::rotateVectorAxis(std::vector<Vector3> v, Vector3 axis, float angle){
+    std::vector<Vector3> out;
+
+    axis.normalize();
+    for(auto &point : v){
+        float dot = axis.dot(point);
+        Vector3 cross = axis.cross(point);
+
+        float x = point.x * cos(angle) + cross.x * sin(angle) + axis.x * dot * (1 - cos(angle));
+        float y = point.y * cos(angle) + cross.y * sin(angle) + axis.y * dot * (1 - cos(angle));
+        float z = point.z * cos(angle) + cross.z * sin(angle) + axis.z * dot * (1 - cos(angle));
+
+        out.push_back(Vector3(x, y, z));
+    }
+    return out;
+}
