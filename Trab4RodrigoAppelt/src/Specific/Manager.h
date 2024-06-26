@@ -14,6 +14,7 @@
 class Manager {
 public:
 
+    /// @brief Controla qual camera esta ativa para o 3D
     enum class CameraMode {
         PERSPECTIVE_FREE,
         ORTHO_SIDE,
@@ -21,6 +22,7 @@ public:
         ORTHO_TOP
     };
 
+    /// @brief Controla qual pecas da simulacao sao calculadas e visiveis
     enum class SimulationPart {
         CRANKSHAFT,
         PISTON_BASE,
@@ -30,10 +32,18 @@ public:
         COUNT
     };
 
-    enum class RenderingMode{
+    /// @brief Controla qual engine de renderizacao usada
+    enum class RenderingMode {
         WIREFRAME,
         SOLID_PIXEL
         // talvez solid vertex aqui tbm
+    };
+
+    /// @brief Representa um dos buffers da tela
+    enum class DisplayBuffer {
+        COLOR,
+        DEPTH
+        // se tivesse uso, o color e depth stencil iria aqui
     };
 
     Manager(int* screenWidth, int* screenHeight);
@@ -42,6 +52,7 @@ public:
     void setCameraMode(CameraMode cameraMode);
     void setVisibility(SimulationPart part, bool visibility);
     void setRenderingMode(RenderingMode renderingMode);
+    void setDisplayBuffer(DisplayBuffer displayBuffer);
 
     // event forwarding
     void keyDown(Key key);
@@ -72,6 +83,7 @@ private:
 
     // pixel rendering
     RenderingMode renderingMode = RenderingMode::WIREFRAME;
+    DisplayBuffer displayBuffer = DisplayBuffer::COLOR;
     Buffer *colorBuffer = nullptr;
     Buffer *zBuffer = nullptr;
     float renderScale = 1;

@@ -14,17 +14,35 @@ void Rasterizer::Rasterize(
     // define zbuffer como infinito
     depthBuffer->fill(std::numeric_limits<float>::infinity());
 
+    float* zbuffer = depthBuffer->getBuffer();
+    float* cbuf = colorBuffer->getBuffer();
+    float colorBufferWidth, colorBufferHeight;
+    colorBuffer->getSize(colorBufferWidth, colorBufferHeight);
+
     // transforma para posicao de camera e projecao
     for(auto &poly : primitives){
         poly.vertexList = camera.worldToCamera(poly.vertexList);
         poly.vertexList = P3D::perspectiveProjectionVector3(poly.vertexList, camera.getD());
+        poly.vertexList = P3D::translateVector(poly.vertexList, Vector3(colorBufferWidth*0.5, colorBufferHeight*0.5, 0));
+
+        for(auto it=poly.faceList.begin(); it!=poly.faceList.end(); it++){
+            bool cull = false;   
+            auto face = *it;
+            for(auto &v : face){
+                if(camera.isOnFrustumCS(poly.vertexList[v]) == false){
+                    cull = true;
+                    break;
+                }
+            }
+            if(cull){
+                it = poly.faceList.erase(it);
+                it--;
+            }
+        }
     }
-    float* zbuffer = depthBuffer->getBuffer();
-    float* cbuf = colorBuffer->getBuffer();
+    
     Vector3 localLightDirection = camera.worldToCamera(lightDirection);
 
-    float colorBufferWidth, colorBufferHeight;
-    colorBuffer->getSize(colorBufferWidth, colorBufferHeight);
 
     // para cada face(poligono) de cada primitiva
     for(auto &poly: primitives){

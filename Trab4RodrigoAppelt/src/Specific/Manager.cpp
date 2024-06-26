@@ -147,6 +147,10 @@ void Manager::setRenderingMode(RenderingMode renderingMode){
     this->renderingMode = renderingMode;
 }
 
+void Manager::setDisplayBuffer(DisplayBuffer displayBuffer){
+    this->displayBuffer = displayBuffer;
+}
+
 void Manager::drawParts() {
     auto piston = sim.createPiston();
     auto pistonArm = piston[0];
@@ -227,5 +231,9 @@ void Manager::drawPixel() {
         Vector3(-1,-1,-1),
         renderScale
     );
-    colorBuffer->display(1/renderScale);
+    if(displayBuffer == DisplayBuffer::COLOR){
+        colorBuffer->display(1/renderScale);
+    }else if(displayBuffer == DisplayBuffer::DEPTH){
+        zBuffer->display(1/renderScale);
+    }
 }

@@ -176,7 +176,7 @@
 	<windows.h>
 	<map>
 
-1719443423 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.h
+1719444523 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.h
 	"../Math/Vector2.h"
 	"../Keyboard.h"
 	"Simulator.h"
@@ -281,12 +281,12 @@
 	<vector>
 	"../gl_canvas2d.h"
 
-1719442559 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.cpp
+1719444541 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.cpp
 	"Manager.h"
 	"../gl_canvas2d.h"
 	"../3D/Rasterizer.h"
 
-1719440579 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\sidebar.cpp
+1719444719 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\sidebar.cpp
 	"SideBar.h"
 	<iomanip>
 	<sstream>
@@ -440,7 +440,7 @@
 
 1719442414 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\buffer.h
 
-1719442967 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\buffer.cpp
+1719444764 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\buffer.cpp
 	"Buffer.h"
 	<iostream>
 	<GL/glut.h>
@@ -452,7 +452,7 @@
 	"Buffer.h"
 	"Camera.h"
 
-1719443366 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\rasterizer.cpp
+1719445083 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\rasterizer.cpp
 	"Rasterizer.h"
 	<limits>
 	"Perspective.h"

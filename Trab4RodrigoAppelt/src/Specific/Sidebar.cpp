@@ -14,7 +14,7 @@ Sidebar::Sidebar(int* screenWidth, int* screenHeight, Manager* manager)
 
 #pragma region Events
 
-void Sidebar::update(float delta) {
+void Sidebar::update(float) {
 
 }
 
@@ -53,7 +53,7 @@ void Sidebar::render() {
     CV::text(Vector2(margin,25+2*margin), driveshafttext, 25, FontName::JetBrainsMono, UIPlacement::TOP_LEFT);
 
     // rasterizador controls
-    CV::translate(*scrW-sidebarWidth, 7*15 + 6*25 + 5*30 + 16*margin);
+    CV::translate(*scrW-sidebarWidth, 6*15 + 6*25 + 5*30 + 15*margin);
     CV::text(Vector2(margin,margin), "Rasterizador", 25, FontName::JetBrainsMono, UIPlacement::TOP_LEFT);
 }
 
@@ -250,6 +250,7 @@ void Sidebar::submitUI(){
         true
     );
     chk_vis_normals->setCallback([&](bool value){
+        // TODO: complete
     });
     chk_vis_normals->style = chk_stl;
     checkboxManager.registerCheckbox(chk_vis_normals);
@@ -268,9 +269,9 @@ void Sidebar::submitUI(){
     driveshaftAngleSlider->style = sldstl;
     sliderManager.registerSlider(driveshaftAngleSlider);
 
-    auto chk_en_rasterizer = new Checkbox(
+    auto chk_raster_enable = new Checkbox(
         [&](){
-            return Vector2(*scrW-sidebarWidth, 7*15 + 6*25 + 4*30 + 17*margin) + Vector2(margin, margin);
+            return Vector2(*scrW-sidebarWidth, 7*15 + 7*25 + 4*30 + 18*margin) + Vector2(margin, margin);
         },
         [&](){
             return Vector2(sidebarWidth-2*margin, 15);
@@ -278,11 +279,43 @@ void Sidebar::submitUI(){
         "Rasterizador",
         false
     );
-    chk_en_rasterizer->setCallback([&](bool value){
+    chk_raster_enable->setCallback([&](bool value){
         manager->setRenderingMode(value ? Manager::RenderingMode::SOLID_PIXEL : Manager::RenderingMode::WIREFRAME);
     });
-    chk_en_rasterizer->style = chk_stl;
-    checkboxManager.registerCheckbox(chk_en_rasterizer);
+    chk_raster_enable->style = chk_stl;
+    checkboxManager.registerCheckbox(chk_raster_enable);
+
+    auto but_raster_color = new Button(
+        [&](){
+            return Vector2(*scrW-sidebarWidth, 8*15 + 7*25 + 4*30 + 19*margin) + Vector2(margin, margin);
+        },
+        [&](){
+            return Vector2(sidebarWidth-2*margin, 30);
+        },
+        UIPlacement::TOP_LEFT,
+        "Mostrar Color Buffer",
+        [&](Button*){
+            manager->setDisplayBuffer(Manager::DisplayBuffer::COLOR);
+        }
+    );
+    but_raster_color->style = ButtonStyle::Windows10();
+    buttonManager.registerButton(but_raster_color);
+
+    auto but_raster_depth = new Button(
+        [&](){
+            return Vector2(*scrW-sidebarWidth, 8*15 + 7*25 + 5*30 + 20*margin) + Vector2(margin, margin);
+        },
+        [&](){
+            return Vector2(sidebarWidth-2*margin, 30);
+        },
+        UIPlacement::TOP_LEFT,
+        "Mostrar Depth Buffer",
+        [&](Button*){
+            manager->setDisplayBuffer(Manager::DisplayBuffer::DEPTH);
+        }
+    );
+    but_raster_depth->style = ButtonStyle::Windows10();
+    buttonManager.registerButton(but_raster_depth);
 }
 
 float Sidebar::getRpm(){
