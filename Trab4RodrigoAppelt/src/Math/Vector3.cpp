@@ -179,6 +179,17 @@ Vector3 Vector3::multiply(const Vector3& v) const
     return( aux );
 }
 
+float Vector3::angle(const Vector3& v) const 
+{
+    float dotProduct = (*this) * v;
+    float magnitudeProduct = magnitude * v.magnitude;
+    if(magnitudeProduct == 0.0) {
+        std::cout << "Angulo entre um vetor e o nulo eh zero" << std::endl;
+        return 0.0;
+    }
+    return acos(dotProduct / magnitudeProduct);
+}
+
 
 std::ostream& operator<<(std::ostream& os, const Vector3& obj)
 {

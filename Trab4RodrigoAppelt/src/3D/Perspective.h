@@ -43,6 +43,7 @@ static std::vector<Vector3> rotateVectorZ(std::vector<Vector3> v, float angle);
 /// @param angle O angulo de rotacao em radianos
 /// @return Um vetor com todos os pontos rotacionados
 static std::vector<Vector3> rotateVectorAxis(std::vector<Vector3> v, Vector3 axis, float angle);
+static Vector3 rotateAxis(Vector3 v, Vector3 axis, float angle);
 
 static Vector2 perspectiveProjection(Vector3 v, float d);
 static std::vector<Vector2> perspectiveProjectionVector(std::vector<Vector3> v, float d);

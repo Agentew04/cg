@@ -37,6 +37,7 @@ struct SimulationValues {
     float driveshaftLength;
     float driveshaftOverhang;
     float driveshaftCaliber;
+    float driveshaftConnectorAngle;
 };
 
 /// @brief Classe que faz todos os calculos da simulacao.

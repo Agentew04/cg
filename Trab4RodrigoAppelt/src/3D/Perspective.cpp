@@ -200,3 +200,14 @@ std::vector<Vector3> P3D::rotateVectorAxis(std::vector<Vector3> v, Vector3 axis,
     }
     return out;
 }
+
+Vector3 P3D::rotateAxis(Vector3 v, Vector3 axis, float angle){
+    axis.normalize();
+    auto point = v;
+    float dot = axis.dot(point);
+    Vector3 cross = axis.cross(point);
+    float x = point.x * cos(angle) + cross.x * sin(angle) + axis.x * dot * (1 - cos(angle));
+    float y = point.y * cos(angle) + cross.y * sin(angle) + axis.y * dot * (1 - cos(angle));
+    float z = point.z * cos(angle) + cross.z * sin(angle) + axis.z * dot * (1 - cos(angle));
+    return Vector3(x, y, z);
+}

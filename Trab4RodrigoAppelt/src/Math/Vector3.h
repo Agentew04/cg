@@ -65,6 +65,9 @@ public:
     /// @brief Multiplica componente a componente 2 vetores
     Vector3 multiply(const Vector3& v) const;
 
+    /// @brief Retorna o angulo entre os dois vetores
+    float angle(const Vector3& v) const;
+
     /// @brief Compara se dois vetores sao iguais
     bool operator == (const Vector3& v) const;
     bool operator != (const Vector3& v) const;

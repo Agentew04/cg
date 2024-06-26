@@ -18,6 +18,8 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sstream>
+#include <iomanip>
 
 #include "gl_canvas2d.h"
 #include "Fonts/FontManager.h"
@@ -42,7 +44,13 @@ void render()
     mngr.render();
     CV::translate(Vector2::zero());
     CV::color(0,0,0);
-    CV::text(Vector2(5), ("FPS: " + std::to_string((int)std::round(CV::fps()))), 20, FontName::JetBrainsMono, UIPlacement::TOP_LEFT);
+    int fps = (int)std::round(CV::fps());
+    float cpuMs = CV::delta() * 1000;
+    std::stringstream ss;
+    ss << std::fixed << std::setprecision(1) << cpuMs;
+    std::string header = "FPS: " + std::to_string(fps) + "; CPU: " + ss.str() + "ms";
+
+    CV::text(Vector2(5), header, 20, FontName::JetBrainsMono, UIPlacement::TOP_LEFT);
 }
 
 void cleanup(){
@@ -84,7 +92,7 @@ int main(void)
 {
     FontManager::load("./Template/assets/fonts/jetbrainsmono.font", FontName::JetBrainsMono);
     
-    CV::init(&screenWidth, &screenHeight, "Rodrigo Appelt - T4 - \"Motor\"", true, true);
+    CV::init(&screenWidth, &screenHeight, "Rodrigo Appelt - T4 - \"Motor\"", true, false);
     CV::run();
     cleanup();
 }

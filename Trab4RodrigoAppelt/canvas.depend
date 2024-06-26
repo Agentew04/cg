@@ -16,7 +16,7 @@
 	<cmath>
 	<iostream>
 
-1719364160 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\math\vector3.h
+1719429970 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\math\vector3.h
 	<iostream>
 	"Vector2.h"
 
@@ -85,7 +85,7 @@
 	"../3D/ObjLoader.h"
 	"../Math/Vector2.h"
 
-1719363123 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\perspective.h
+1719428787 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\perspective.h
 	<vector>
 	"../Math/Vector2.h"
 	"../Math/Vector3.h"
@@ -102,7 +102,7 @@
 	<vector>
 	<fstream>
 
-1719363218 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\perspective.cpp
+1719428839 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\perspective.cpp
 	"Perspective.h"
 	<vector>
 	<algorithm>
@@ -180,7 +180,7 @@
 	"Sidebar.h"
 	"../3D/Camera.h"
 
-1719274209 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\simulator.h
+1719428176 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\simulator.h
 	<vector>
 	"../Math/Vector3.h"
 	"../3D/Primitive.h"
@@ -241,7 +241,7 @@
 1715562380 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\math\vector2.cpp
 	"Vector2.h"
 
-1719364181 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\math\vector3.cpp
+1719430101 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\math\vector3.cpp
 	<cmath>
 	"Vector2.h"
 	"Vector3.h"
@@ -427,7 +427,7 @@
 	"CheckBoxManager.h"
 	"Chart.h"
 
-1719364090 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\simulator.cpp
+1719431124 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\simulator.cpp
 	"Simulator.h"
 	"../gl_canvas2d.h"
 	"../3D/Primitive.h"
