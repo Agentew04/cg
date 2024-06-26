@@ -19,7 +19,10 @@ e de UI.
   * Modularidade e reusabilidade de componentes
   * TDD para classes matemáticas
   * Carregamento de arquivos 3D
-* T4: Não divulgado
+* T4: Simulação de Pistão, Virabrequim, Engrenagens e Eixo Cardã em tempo real
+  * Modelam de objetos
+  * Coordenadas polares
+  * Projeção e 3D
 * T5: Não divulgado
 
 ## Ferramentas criadas e utilizadas
