@@ -7,6 +7,7 @@
 #include "Simulator.h"
 #include "Sidebar.h"
 #include "../3D/Camera.h"
+#include "../3D/Buffer.h"
 
 /// @brief Classe que junta todos os outros componentes da aplicacao.
 /// Cuida do estado e gerencia tudo.
@@ -29,11 +30,18 @@ public:
         COUNT
     };
 
+    enum class RenderingMode{
+        WIREFRAME,
+        SOLID_PIXEL
+        // talvez solid vertex aqui tbm
+    };
+
     Manager(int* screenWidth, int* screenHeight);
 
     // functions
     void setCameraMode(CameraMode cameraMode);
     void setVisibility(SimulationPart part, bool visibility);
+    void setRenderingMode(RenderingMode renderingMode);
 
     // event forwarding
     void keyDown(Key key);
@@ -62,8 +70,15 @@ private:
     CameraMode cameraMode = CameraMode::PERSPECTIVE_FREE;
     std::map<SimulationPart, bool> partsVisibility;
 
+    // pixel rendering
+    RenderingMode renderingMode = RenderingMode::WIREFRAME;
+    Buffer *colorBuffer = nullptr;
+    Buffer *zBuffer = nullptr;
+    float renderScale = 1;
+
     // utilitarias
     void drawParts();
+    void drawPixel();
     void draw(const Primitive& p) const;
 };
 

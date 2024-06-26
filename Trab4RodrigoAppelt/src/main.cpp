@@ -26,6 +26,7 @@
 #include "UI/CursorManager.h"
 
 #include "Specific/Manager.h"
+#include "3D/Buffer.h"
 
 
 //largura e altura inicial da tela . Alteram com o redimensionamento de tela.
@@ -39,6 +40,8 @@ void update(float delta){
     mngr.update(delta);
 }
 
+Buffer *buffer = nullptr;
+
 void render()
 {
     mngr.render();
@@ -49,7 +52,7 @@ void render()
     std::stringstream ss;
     ss << std::fixed << std::setprecision(1) << cpuMs;
     std::string header = "FPS: " + std::to_string(fps) + "; CPU: " + ss.str() + "ms";
-
+std::cout << fps << std::endl;
     CV::text(Vector2(5), header, 20, FontName::JetBrainsMono, UIPlacement::TOP_LEFT);
 }
 
@@ -91,8 +94,8 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
 int main(void)
 {
     FontManager::load("./Template/assets/fonts/jetbrainsmono.font", FontName::JetBrainsMono);
-    
-    CV::init(&screenWidth, &screenHeight, "Rodrigo Appelt - T4 - \"Motor\"", true, false);
+    buffer = new Buffer(screenWidth, screenHeight, 3);
+    CV::init(&screenWidth, &screenHeight, "Rodrigo Appelt - T4 - \"Motor\"", true, true);
     CV::run();
     cleanup();
 }

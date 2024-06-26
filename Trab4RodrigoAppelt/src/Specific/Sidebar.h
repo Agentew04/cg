@@ -20,6 +20,9 @@ public:
     float getRpm();
     float getDriveshaftAngle();
 
+    // ui
+    float getSidebarWidth();
+
     // event forwarding
     void update(float delta);
     void render();

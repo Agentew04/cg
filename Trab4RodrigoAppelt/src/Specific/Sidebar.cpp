@@ -44,13 +44,17 @@ void Sidebar::render() {
     checkboxManager.draw();
 
     // eixo cardan controls
-    CV::translate(*scrW-sidebarWidth, 5*15 + 3*25 + 5*30 + 11*margin);
+    CV::translate(*scrW-sidebarWidth, 6*15 + 3*25 + 5*30 + 11*margin);
     CV::color(Vector3::fromHex(0x000000));
     CV::text(Vector2(margin,margin), "Eixo Cardan", 25, FontName::JetBrainsMono, UIPlacement::TOP_LEFT);
     std::stringstream ss2;
     ss2 << std::fixed << std::setprecision(2) << driveshaftAngleSlider->getValue() * (180/PI);
     std::string driveshafttext = "Angulo: " + ss2.str() + " graus";
     CV::text(Vector2(margin,25+2*margin), driveshafttext, 25, FontName::JetBrainsMono, UIPlacement::TOP_LEFT);
+
+    // rasterizador controls
+    CV::translate(*scrW-sidebarWidth, 7*15 + 6*25 + 5*30 + 16*margin);
+    CV::text(Vector2(margin,margin), "Rasterizador", 25, FontName::JetBrainsMono, UIPlacement::TOP_LEFT);
 }
 
 void Sidebar::updateMousePos(Vector2 mousePos) {
@@ -235,9 +239,24 @@ void Sidebar::submitUI(){
     chk_vis_driveshaft->style = chk_stl;
     checkboxManager.registerCheckbox(chk_vis_driveshaft);
 
+    auto chk_vis_normals = new Checkbox(
+        [&](){
+            return Vector2(*scrW-sidebarWidth, 5*15 + 4*25 + 4*30 + 12*margin) + Vector2(margin, margin);
+        },
+        [&](){
+            return Vector2(sidebarWidth-2*margin, 15);
+        },
+        "Normais",
+        true
+    );
+    chk_vis_normals->setCallback([&](bool value){
+    });
+    chk_vis_normals->style = chk_stl;
+    checkboxManager.registerCheckbox(chk_vis_normals);
+
     driveshaftAngleSlider = new Slider(
         [&](){
-            return Vector2(*scrW-sidebarWidth, 5*15 + 6*25 + 4*30 + 14*margin) + Vector2(margin,margin);
+            return Vector2(*scrW-sidebarWidth, 6*15 + 6*25 + 4*30 + 15*margin) + Vector2(margin,margin);
         },
         [&](){
             return Vector2(sidebarWidth-2*margin, 30);
@@ -248,6 +267,22 @@ void Sidebar::submitUI(){
     );
     driveshaftAngleSlider->style = sldstl;
     sliderManager.registerSlider(driveshaftAngleSlider);
+
+    auto chk_en_rasterizer = new Checkbox(
+        [&](){
+            return Vector2(*scrW-sidebarWidth, 7*15 + 6*25 + 4*30 + 17*margin) + Vector2(margin, margin);
+        },
+        [&](){
+            return Vector2(sidebarWidth-2*margin, 15);
+        },
+        "Rasterizador",
+        false
+    );
+    chk_en_rasterizer->setCallback([&](bool value){
+        manager->setRenderingMode(value ? Manager::RenderingMode::SOLID_PIXEL : Manager::RenderingMode::WIREFRAME);
+    });
+    chk_en_rasterizer->style = chk_stl;
+    checkboxManager.registerCheckbox(chk_en_rasterizer);
 }
 
 float Sidebar::getRpm(){
@@ -266,4 +301,8 @@ float Sidebar::getDriveshaftAngle(){
         std::cout << "Driveshaft Angle Slider eh null!" << std::endl;
         return 0.0f;
     }
+}
+
+float Sidebar::getSidebarWidth(){
+    return sidebarWidth;
 }

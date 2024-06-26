@@ -167,6 +167,15 @@ std::vector<Vector2> P3D::perspectiveProjectionVector(std::vector<Vector3> v, fl
 }
 
 
+std::vector<Vector3> P3D::perspectiveProjectionVector3(std::vector<Vector3> v, float d){
+    std::vector<Vector3> result;
+    for(Vector3 vec : v){
+        result.push_back(Vector3((vec.x * d)/vec.z, (vec.y * d)/vec.z , vec.z));
+    }
+    return result;
+}
+
+
 void P3D::sortFaces(const std::vector<Vector3>& vertices, std::vector<std::vector<int>>& faces){
     auto zDistance = [&vertices](const std::vector<int>& face) {
         float sumZ = 0.0f;
@@ -175,7 +184,6 @@ void P3D::sortFaces(const std::vector<Vector3>& vertices, std::vector<std::vecto
         }
         return sumZ / face.size();
     };
-
 
     // Sort the faces based on the average Z-coordinate
     std::sort(faces.begin(), faces.end(), [&zDistance](const std::vector<int>& face1, const std::vector<int>& face2) {

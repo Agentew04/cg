@@ -85,7 +85,7 @@
 	"../3D/ObjLoader.h"
 	"../Math/Vector2.h"
 
-1719428787 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\perspective.h
+1719437869 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\perspective.h
 	<vector>
 	"../Math/Vector2.h"
 	"../Math/Vector3.h"
@@ -102,7 +102,7 @@
 	<vector>
 	<fstream>
 
-1719428839 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\perspective.cpp
+1719438028 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\perspective.cpp
 	"Perspective.h"
 	<vector>
 	<algorithm>
@@ -157,35 +157,39 @@
 	<iostream>
 	"lodepng.h"
 
-1719016250 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\main.cpp
+1719438052 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
 	<iostream>
 	<stdio.h>
 	<stdlib.h>
+	<sstream>
+	<iomanip>
 	"gl_canvas2d.h"
 	"Fonts/FontManager.h"
 	"UI/CursorManager.h"
 	"Specific/Manager.h"
+	"3D/Buffer.h"
 
 1711669734 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\ui\cursormanager.h
 	<windows.h>
 	<map>
 
-1719360198 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.h
+1719443423 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.h
 	"../Math/Vector2.h"
 	"../Keyboard.h"
 	"Simulator.h"
 	"Sidebar.h"
 	"../3D/Camera.h"
+	"../3D/Buffer.h"
 
 1719428176 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\simulator.h
 	<vector>
 	"../Math/Vector3.h"
 	"../3D/Primitive.h"
 
-1719360378 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\sidebar.h
+1719437630 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\sidebar.h
 	"../Math/Vector2.h"
 	"../UI/Slider.h"
 	"../UI/SliderManager.h"
@@ -277,11 +281,12 @@
 	<vector>
 	"../gl_canvas2d.h"
 
-1719364317 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.cpp
+1719442559 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.cpp
 	"Manager.h"
 	"../gl_canvas2d.h"
+	"../3D/Rasterizer.h"
 
-1719360701 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\sidebar.cpp
+1719440579 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\sidebar.cpp
 	"SideBar.h"
 	<iomanip>
 	<sstream>
@@ -432,4 +437,23 @@
 	"../gl_canvas2d.h"
 	"../3D/Primitive.h"
 	"../3D/Perspective.h"
+
+1719442414 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\buffer.h
+
+1719442967 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\buffer.cpp
+	"Buffer.h"
+	<iostream>
+	<GL/glut.h>
+
+1719441421 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\rasterizer.h
+	<vector>
+	<functional>
+	"Primitive.h"
+	"Buffer.h"
+	"Camera.h"
+
+1719443366 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\rasterizer.cpp
+	"Rasterizer.h"
+	<limits>
+	"Perspective.h"
 

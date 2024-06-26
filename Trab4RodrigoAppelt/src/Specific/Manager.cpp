@@ -1,12 +1,15 @@
 #include "Manager.h"
 
 #include "../gl_canvas2d.h"
+#include "../3D/Rasterizer.h"
 
 #define DEG_90 1.5707963267948966192313216916398
 
 Manager::Manager(int* screenWidth, int* screenHeight) :
     scrW(screenWidth), scrH(screenHeight),
-    sidebar(screenWidth, screenHeight, this)
+    sidebar(screenWidth, screenHeight, this),
+    colorBuffer(new Buffer(*screenWidth-sidebar.getSidebarWidth(), *screenHeight, 3)),
+    zBuffer(new Buffer(*screenWidth-sidebar.getSidebarWidth(), *screenHeight, 1))
 {
     // cria cameras
     cam3d.setD(640); // +- 90 de fov para 720p
@@ -63,6 +66,11 @@ void Manager::keyUp(Key key) {
 }
 
 void Manager::update(float delta) {
+    if(renderingMode == RenderingMode::SOLID_PIXEL){
+        colorBuffer->resizeIfNeeded((*scrW-sidebar.getSidebarWidth())*renderScale, *scrH*renderScale);
+        zBuffer->resizeIfNeeded((*scrW-sidebar.getSidebarWidth())*renderScale, *scrH*renderScale);
+    }
+
     sim.update(delta);
     sidebar.update(delta);
     sim.getValues().rpm = sidebar.getRpm();
@@ -88,10 +96,11 @@ void Manager::render() {
     CV::clear(mainBackgroundColor);
     CV::translate(*scrW/2, *scrH/2);
 
-    
-
-    drawParts();
-
+    if(renderingMode == RenderingMode::WIREFRAME){
+        drawParts();
+    }else if(renderingMode == RenderingMode::SOLID_PIXEL){
+        drawPixel();
+    }
     sidebar.render();
 }
 
@@ -134,11 +143,15 @@ void Manager::setVisibility(SimulationPart part, bool visibility){
     partsVisibility[part] = visibility;
 }
 
+void Manager::setRenderingMode(RenderingMode renderingMode){
+    this->renderingMode = renderingMode;
+}
+
 void Manager::drawParts() {
     auto piston = sim.createPiston();
     auto pistonArm = piston[0];
     auto pistonBase = piston[1];
-    
+
     if(partsVisibility[SimulationPart::CRANKSHAFT]){
         auto crankshaft = sim.createCrankShaft();
         for(auto &p : crankshaft){
@@ -172,4 +185,47 @@ void Manager::drawParts() {
         }
     }
 
+}
+
+void Manager::drawPixel() {
+    // cria apenas as formas visiveis
+    std::vector<Primitive> polys;
+    if(partsVisibility[SimulationPart::CRANKSHAFT]){
+        auto crankshaft = sim.createCrankShaft();
+        polys.insert(polys.end(), crankshaft.begin(), crankshaft.end());
+    }
+    if(partsVisibility[SimulationPart::PISTON_BASE] || partsVisibility[SimulationPart::PISTON_ARM]){
+        auto piston = sim.createPiston();
+        auto pistonBase = piston[1];
+        auto pistonArm = piston[0];
+        if(partsVisibility[SimulationPart::PISTON_BASE]){
+            polys.push_back(pistonBase);
+        }
+        if(partsVisibility[SimulationPart::PISTON_ARM]){
+            polys.push_back(pistonArm);
+        }
+    }
+    if(partsVisibility[SimulationPart::GEARS]){
+        auto gears = sim.createGears();
+        polys.insert(polys.end(), gears.begin(), gears.end());
+    }
+    if(partsVisibility[SimulationPart::DRIVESHAFT]){
+        auto driveshaftparts = sim.createDriveShaft();
+        auto driveshaftconn = sim.createDriveShaftConnector();
+        polys.insert(polys.end(), driveshaftparts.begin(), driveshaftparts.end());
+        polys.insert(polys.end(), driveshaftconn.begin(), driveshaftconn.end());
+    }
+
+    colorBuffer->fill(mainBackgroundColor.x, mainBackgroundColor.y, mainBackgroundColor.z);
+
+    std::cout << "comecando raster. scale: " << renderScale << std::endl;
+    Rasterizer::Rasterize(
+        polys,
+        cam3d,
+        colorBuffer,
+        zBuffer,
+        Vector3(-1,-1,-1),
+        renderScale
+    );
+    colorBuffer->display(1/renderScale);
 }
