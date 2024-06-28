@@ -253,3 +253,7 @@ void Camera3D::draw(const Primitive& p) const{
         }
     }
 }
+
+Vector2 Camera3D::getClipPanes() const {
+    return Vector2(nearPlane, farPlane);
+}

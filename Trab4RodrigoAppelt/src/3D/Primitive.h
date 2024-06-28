@@ -4,17 +4,28 @@
 #include <vector>
 
 #include "../Math/Vector3.h"
+#include "../Misc/Tuple.h"
 
 /// @brief Estrutura basica para um objeto 3D ser renderizado em wireframe.
 /// Possui funcoes para a criacao de primitivas.
 struct Primitive {
 public:
+
+    struct Face {
+    public:
+        std::vector<int> vertices;
+        std::vector<int> normals;
+    };
+
+    /// @brief Lista de vertices do objeto
     std::vector<Vector3> vertexList;
+    /// @brief Lista com a normais do objeto
+    std::vector<Vector3> normalList;
     std::vector<std::vector<int>> edgeList; // usado para wireframe
-    std::vector<std::vector<int>> faceList; // usado para modo com preenchimento
+    /// @brief Lista de faces. Cada
+    std::vector<Face> faceList; // usado para modo com preenchimento
     
     // TODO: arrumar isso
-    std::vector<Vector3> normalList; // usado para modo com preenchimento + iluminacao
     Vector3 color;
 
     /// @brief Transforma qualquer face que nao tenha 3 vertices um varias faces de 3 vertices.

@@ -26,26 +26,27 @@ public:
 private:
     static void BoundBox(
         const std::vector<Vector3>& vertexList,
-        const std::vector<int>& face,
+        const Primitive::Face& face,
         Vector2& p1,
         Vector2& p2);
 
     static bool isInside(
         const std::vector<Vector3>& vertexList,
-        const std::vector<int>& face,
+        const Primitive::Face& face,
         Vector2 point
     );
 
     static float interpolateZ(
         const std::vector<Vector3>& vertexList,
-        const std::vector<int>& face,
+        const Primitive::Face& face,
         Vector2 point
     );
 
-    static float interpolateNormal(
+    /// @brief Usa coordenadas baricentricas para interpolar a normal de um ponto em um poligono
+    static Vector3 interpolateNormal(
         const std::vector<Vector3>& vertexList,
         const std::vector<Vector3>& normalList,
-        const std::vector<int>& face,
+        const Primitive::Face& face,
         Vector2 point
     );
 };

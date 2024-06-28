@@ -74,6 +74,10 @@ public:
     /// @return Um vetor com o fov horizontal e vertical
     Vector2 getFov(Vector2 screenSize) const;
 
+    /// @brief Retorna os planos de corte da camera
+    /// @return A componente x eh o near plane e o y eh o far plane
+    Vector2 getClipPanes() const;
+
     /// @brief Desenha uma primitiva em wireframe com a cor guardada nela.
     void draw(const Primitive& p) const;
 
@@ -98,8 +102,8 @@ private:
     };
 
     float d = 200;
-    float farPlane = 1000;
-    float nearPlane = 0.1;
+    float farPlane = 10000;
+    float nearPlane = 0.01;
     float moveSpeed = 50;
     Vector3 cameraPosition;
     Vector3 eulerRotation;

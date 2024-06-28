@@ -159,6 +159,7 @@ void Manager::drawParts() {
     if(partsVisibility[SimulationPart::CRANKSHAFT]){
         auto crankshaft = sim.createCrankShaft();
         for(auto &p : crankshaft){
+            p.Triangulate();
             draw(p);
         }
     }
@@ -181,6 +182,9 @@ void Manager::drawParts() {
     if(partsVisibility[SimulationPart::DRIVESHAFT]){
         auto driveshaftparts = sim.createDriveShaft();
         auto driveshaftconn = sim.createDriveShaftConnector();
+        if(driveshaftconn.size() != 5){
+            std::cout << "ERRO NO CONECTOR: sz " << driveshaftconn.size() << std::endl;
+        }
         for(auto &p:driveshaftparts){
             draw(p);
         }
@@ -191,6 +195,7 @@ void Manager::drawParts() {
 
 }
 
+#include "../3D/Perspective.h"
 void Manager::drawPixel() {
     // cria apenas as formas visiveis
     std::vector<Primitive> polys;
@@ -220,7 +225,17 @@ void Manager::drawPixel() {
         polys.insert(polys.end(), driveshaftconn.begin(), driveshaftconn.end());
     }
 
+    for(auto &poly: polys){
+        poly.Triangulate();
+    }
+
     colorBuffer->fill(mainBackgroundColor.x, mainBackgroundColor.y, mainBackgroundColor.z);
+
+    // polys.clear();
+    // auto cube = Primitive::createCylinder(25, 25, 10);
+    // cube.vertexList = P3D::rotateVector(cube.vertexList, Vector3(0, -PI*0.5, 0));
+    // cube.normalList = P3D::rotateVector(cube.normalList, Vector3(0, -PI*0.5, 0));
+    // polys.push_back(cube);
 
     std::cout << "comecando raster. scale: " << renderScale << std::endl;
     Rasterizer::Rasterize(

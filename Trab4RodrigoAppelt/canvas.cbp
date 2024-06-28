@@ -44,6 +44,8 @@
 			<Add library="winmm" />
 			<Add library="ws2_32" />
 		</Linker>
+		<Unit filename="src/3D/Buffer.cpp" />
+		<Unit filename="src/3D/Buffer.h" />
 		<Unit filename="src/3D/Camera.2D.cpp" />
 		<Unit filename="src/3D/Camera.3D.cpp" />
 		<Unit filename="src/3D/Camera.h" />
@@ -53,6 +55,8 @@
 		<Unit filename="src/3D/Perspective.h" />
 		<Unit filename="src/3D/Primitive.cpp" />
 		<Unit filename="src/3D/Primitive.h" />
+		<Unit filename="src/3D/Rasterizer.cpp" />
+		<Unit filename="src/3D/Rasterizer.h" />
 		<Unit filename="src/Fonts/FontManager.cpp" />
 		<Unit filename="src/Fonts/FontManager.h" />
 		<Unit filename="src/Image/Bmp.h" />

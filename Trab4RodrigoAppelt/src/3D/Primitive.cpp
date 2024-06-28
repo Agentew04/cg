@@ -30,6 +30,11 @@ Primitive Primitive::createSphere(int horizontalResolution, int verticalResoluti
         }
     }
 
+    // normais
+    for (const auto& vertex : sphere.vertexList) {
+        sphere.normalList.push_back(vertex.normalized());
+    }
+
     // faces
     for(int i = 0; i < verticalResolution; i++){
         for(int j = 0; j < horizontalResolution; j++){
@@ -37,21 +42,9 @@ Primitive Primitive::createSphere(int horizontalResolution, int verticalResoluti
             int b = i * horizontalResolution + (j + 1) % horizontalResolution;
             int c = (i + 1) * horizontalResolution + j;
             int d = (i + 1) * horizontalResolution + (j + 1) % horizontalResolution;
-            sphere.faceList.push_back({a, b, d, c});
+            sphere.faceList.push_back({{a, b, d}, {a, b, d}});
+            sphere.faceList.push_back({{a, d, c}, {a, d, c}});
         }
-    }
-
-    // normais
-    for (const auto& face : sphere.faceList) {
-        Vector3 v0 = sphere.vertexList[face[0]];
-        Vector3 v1 = sphere.vertexList[face[1]];
-        Vector3 v2 = sphere.vertexList[face[2]];
-
-        Vector3 edge1 = v1 - v0;
-        Vector3 edge2 = v2 - v0;
-
-        Vector3 normal = edge1.cross(edge2).normalized();
-        sphere.normalList.push_back(normal);
     }
 
     return sphere;
@@ -76,31 +69,41 @@ Primitive Primitive::createCylinder(int resolution, float height, float radius){
 
     // arestas
     for(int i = 0; i < resolution; i++){
-        // centro de cima ate borda de cima
-        sphere.edgeList.push_back({capIdx, i*2});
-        // borda cima -> borda baixo
-        sphere.edgeList.push_back({i*2, (i*2)+1});
-        // borda baixo -> centro
-        sphere.edgeList.push_back({(i*2)+1, capIdx+1});
-        // borda cima -> borda cima lado
-        sphere.edgeList.push_back({i*2, (i*2+2) % (resolution*2)});
-        // borda baixo -> borda baixo lado
-        sphere.edgeList.push_back({(i*2)+1, (i*2+3) % (resolution*2)});
+        int nextI = (i + 1) % resolution;
+        sphere.edgeList.push_back({capIdx, 2*i});
+        sphere.edgeList.push_back({2*i,2*(nextI)});
+        sphere.edgeList.push_back({2*i, 2*i + 1});
+        sphere.edgeList.push_back({2*i + 1, 2*(nextI) + 1});
+        sphere.edgeList.push_back({2*i + 1, capIdx+1});
     }
+
+    // normais
+    for(int i = 0; i < resolution; i++){
+        sphere.normalList.push_back(Vector3(cos(i * step), sin(i * step), 0));
+    }
+    sphere.normalList.push_back(Vector3(0, 0, -1));
+    sphere.normalList.push_back(Vector3(0, 0, 1));
 
     // faces
     for(int i = 0; i < resolution; i++){
-        // parte de cima
-        sphere.faceList.push_back({capIdx, i*2, ((i+1)*2) % (resolution*2)});
-        sphere.normalList.push_back(Vector3(0, 0, -1));
-        // parte de baixo
-        sphere.faceList.push_back({capIdx+1, (i*2)+1, ((i+1)*2+1) % (resolution*2)});
-        sphere.normalList.push_back(Vector3(0, 0, 1));
-        // lado(vao ser 2 triangulos)
-        sphere.faceList.push_back({i*2, (i*2)+1, ((i+1)*2) % (resolution*2)});
-        sphere.faceList.push_back({(i*2)+1, ((i+1)*2) % (resolution*2), ((i+1)*2+1) % (resolution*2)});
-        sphere.normalList.push_back((sphere.vertexList[(i*2)+1] - sphere.vertexList[i*2]).cross(sphere.vertexList[((i+1)*2)] - sphere.vertexList[i*2]).normalized());
-        sphere.normalList.push_back((sphere.vertexList[((i+1)*2)+1] - sphere.vertexList[(i*2)+1]).cross(sphere.vertexList[((i+1)*2)+1] - sphere.vertexList[((i+1)*2)]).normalized());
+        int nextI = (i + 1) % resolution;
+        sphere.faceList.push_back({ // bottom
+            { capIdx, 2*i, 2*(nextI) }, 
+            { resolution, resolution, resolution}
+        });
+        sphere.faceList.push_back({ // side trig
+            { 2*i, 2*(nextI), 2*i+1 }, 
+            { i, nextI, i}
+        });
+        sphere.faceList.push_back({ // side trig
+            { 2*(nextI), 2*(nextI)+1, 2*i+1 }, 
+            { nextI, nextI, i}
+        });
+        sphere.faceList.push_back({
+            { capIdx+1, 2*i+1, 2*(nextI)+1 },
+            { resolution+1, resolution+1, resolution+1 }
+        });
+
     }
     
     // normais
@@ -135,14 +138,6 @@ Primitive Primitive::createCube(float size){
     cube.edgeList.push_back({2, 6});
     cube.edgeList.push_back({3, 7});
 
-    // faces
-    cube.faceList.push_back({0, 1, 2, 3});
-    cube.faceList.push_back({4, 5, 6, 7});
-    cube.faceList.push_back({0, 4, 7, 3});
-    cube.faceList.push_back({1, 5, 6, 2});
-    cube.faceList.push_back({0, 1, 5, 4});
-    cube.faceList.push_back({3, 2, 6, 7});
-
     // normais
     cube.normalList.push_back(Vector3(0, 0, -1));
     cube.normalList.push_back(Vector3(0, 0, 1));
@@ -150,6 +145,14 @@ Primitive Primitive::createCube(float size){
     cube.normalList.push_back(Vector3(0, 1, 0));
     cube.normalList.push_back(Vector3(-1, 0, 0));
     cube.normalList.push_back(Vector3(1, 0, 0));
+
+    // faces
+    cube.faceList.push_back({ { 0, 1, 2, 3 }, { 0, 0, 0, 0 } });
+    cube.faceList.push_back({ { 4, 5, 6, 7 }, { 1, 1, 1, 1 } });
+    cube.faceList.push_back({ { 0, 4, 7, 3 }, { 2, 2, 2, 2 } });
+    cube.faceList.push_back({ { 1, 5, 6, 2 }, { 3, 3, 3, 3 } });
+    cube.faceList.push_back({ { 0, 1, 5, 4 }, { 4, 4, 4, 4 } });
+    cube.faceList.push_back({ { 3, 2, 6, 7 }, { 5, 5, 5, 5 } });
     
     return cube;
 }
@@ -213,14 +216,14 @@ Primitive Primitive::createGear(int teeth, float teethHeight){
             int nextIdx = (currentIdx + 2) % (2 * teeth * 4);
 
             // Create faces for the sides of the teeth
-            gear.faceList.push_back({currentIdx, nextIdx, nextIdx + 1, currentIdx + 1});
+            //gear.faceList.push_back({currentIdx, nextIdx, nextIdx + 1, currentIdx + 1});
 
             // Create faces for the top and bottom surfaces of the gear
             if (j == 3) {
                 // Top face
-                gear.faceList.push_back({topCapIdx, currentIdx, nextIdx});
+                //gear.faceList.push_back({topCapIdx, currentIdx, nextIdx});
                 // Bottom face
-                gear.faceList.push_back({bottomCapIdx, nextIdx + 1, currentIdx + 1});
+                //gear.faceList.push_back({bottomCapIdx, nextIdx + 1, currentIdx + 1});
             }
         }
     }
@@ -229,10 +232,19 @@ Primitive Primitive::createGear(int teeth, float teethHeight){
 }
 
 void Primitive::Triangulate(){
-    std::vector<std::vector<int>> newFaceList;
-    for(auto& face : faceList){
-        for(int i = 1; i < face.size()-1; i++){
-            newFaceList.push_back({face[0], face[i], face[i+1]});
+    std::vector<Face> newFaceList;
+    std::vector<std::vector<int>> newEdgeList;
+    for(size_t i=0; i<faceList.size(); i++){
+        Face face = faceList[i];
+
+        if(face.vertices.size() == 3){
+            newFaceList.push_back(face);
+
+            continue;
+        }
+
+        for(int i = 1; i < face.vertices.size() - 1; i++){
+            newFaceList.push_back({{face.vertices[0], face.vertices[i], face.vertices[i+1]}, {face.normals[0], face.normals[i], face.normals[i+1]}});
         }
     }
     faceList = newFaceList;

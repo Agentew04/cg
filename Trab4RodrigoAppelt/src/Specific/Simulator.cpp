@@ -13,11 +13,11 @@
 /*
 Testando Macros
 */
-#define SCALEX(v,f) ((v).vertexList = P3D::scaleVectorX((v).vertexList,f))
-#define SCALEY(v,f) ((v).vertexList = P3D::scaleVectorY((v).vertexList,f))
-#define SCALEZ(v,f) ((v).vertexList = P3D::scaleVectorZ((v).vertexList,f))
-#define SCALE(v,fx,fy,fz) ((v).vertexList = P3D::scaleVector((v).vertexList, Vector3(fx,fy,fz)))
-#define SCALEv(v,f) ((v).vertexList = P3D::scaleVector((v).vertexList, f))
+#define SCALEZ(v,f) ((v).vertexList = P3D::scaleVectorZ((v).vertexList,f)); ((v).normalList = P3D::scaleVectorZ((v).normalList,f))
+#define SCALEY(v,f) ((v).vertexList = P3D::scaleVectorY((v).vertexList,f)); ((v).normalList = P3D::scaleVectorY((v).normalList,f))
+#define SCALEX(v,f) ((v).vertexList = P3D::scaleVectorX((v).vertexList,f)); ((v).normalList = P3D::scaleVectorX((v).normalList,f))
+#define SCALE(v,fx,fy,fz) ((v).vertexList = P3D::scaleVector((v).vertexList, Vector3(fx,fy,fz))); ((v).normalList = P3D::scaleVector((v).normalList, Vector3(fx,fy,fz)))
+#define SCALEv(v,f) ((v).vertexList = P3D::scaleVector((v).vertexList, f)); ((v).normalList = P3D::scaleVector((v).normalList, f))
 
 #define TRANSLATEX(v,f) ((v).vertexList = P3D::translateVectorX((v).vertexList,f))
 #define TRANSLATEY(v,f) ((v).vertexList = P3D::translateVectorY((v).vertexList,f))
@@ -25,11 +25,11 @@ Testando Macros
 #define TRANSLATE(v,fx,fy,fz) ((v).vertexList = P3D::translateVector((v).vertexList, Vector3(fx,fy,fz)))
 #define TRANSLATEv(v,f) ((v).vertexList = P3D::translateVector((v).vertexList, f))
 
-#define ROTATEX(v,f) ((v).vertexList = P3D::rotateVectorX((v).vertexList,f))
-#define ROTATEY(v,f) ((v).vertexList = P3D::rotateVectorY((v).vertexList,f))
-#define ROTATEZ(v,f) ((v).vertexList = P3D::rotateVectorZ((v).vertexList,f))
-#define ROTATE(v,fx,fy,fz) ((v).vertexList = P3D::rotateVector((v).vertexList, Vector3(fx,fy,fz)))
-#define ROTATEv(v,f) ((v).vertexList = P3D::rotateVector((v).vertexList, f))
+#define ROTATEX(v,f) ((v).vertexList = P3D::rotateVectorX((v).vertexList,f)); ((v).normalList = P3D::rotateVectorX((v).normalList,f))
+#define ROTATEY(v,f) ((v).vertexList = P3D::rotateVectorY((v).vertexList,f)); ((v).normalList = P3D::rotateVectorX((v).normalList,f))
+#define ROTATEZ(v,f) ((v).vertexList = P3D::rotateVectorZ((v).vertexList,f)); ((v).normalList = P3D::rotateVectorX((v).normalList,f))
+#define ROTATE(v,fx,fy,fz) ((v).vertexList = P3D::rotateVector((v).vertexList, Vector3(fx,fy,fz))); ((v).normalList = P3D::rotateVector((v).normalList, Vector3(fx,fy,fz)))
+#define ROTATEv(v,f) ((v).vertexList = P3D::rotateVector((v).vertexList, f)); ((v).normalList = P3D::rotateVector((v).normalList, f))
 
 Simulator::Simulator(){
     simval = {};
@@ -269,6 +269,7 @@ std::vector<Primitive> Simulator::createDriveShaftConnector() const {
     
     Vector3 rotationAxis = simval.crankshaftDirection.cross(Vector3(-1,0,0));
     middleCylinder.vertexList = P3D::rotateVectorAxis(middleCylinder.vertexList, rotationAxis, connAngle);
+    middleCylinder.normalList = P3D::rotateVectorAxis(middleCylinder.normalList, rotationAxis, connAngle);
     TRANSLATEv(middleCylinder, simval.driveshaftMiddleJointPosition);
     middleCylinder.color = Vector3(0,1,0);
     parts.push_back(middleCylinder);

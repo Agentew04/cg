@@ -52,7 +52,6 @@ void render()
     std::stringstream ss;
     ss << std::fixed << std::setprecision(1) << cpuMs;
     std::string header = "FPS: " + std::to_string(fps) + "; CPU: " + ss.str() + "ms";
-std::cout << fps << std::endl;
     CV::text(Vector2(5), header, 20, FontName::JetBrainsMono, UIPlacement::TOP_LEFT);
 }
 
