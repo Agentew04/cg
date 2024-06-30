@@ -196,6 +196,7 @@ void Manager::drawParts() {
 }
 
 #include "../3D/Perspective.h"
+#include <cmath>
 void Manager::drawPixel() {
     // cria apenas as formas visiveis
     std::vector<Primitive> polys;
@@ -231,22 +232,34 @@ void Manager::drawPixel() {
 
     colorBuffer->fill(mainBackgroundColor.x, mainBackgroundColor.y, mainBackgroundColor.z);
 
+    // static float angle = 0;
     // polys.clear();
     // auto cube = Primitive::createCylinder(25, 25, 10);
-    // cube.vertexList = P3D::rotateVector(cube.vertexList, Vector3(0, -PI*0.5, 0));
-    // cube.normalList = P3D::rotateVector(cube.normalList, Vector3(0, -PI*0.5, 0));
+    // cube.color = Vector3(1,0,0);
+    // cube.vertexList = P3D::rotateVectorY(cube.vertexList, -PI*0.5);
+    // cube.normalList = P3D::rotateVectorY(cube.normalList, -PI*0.5);
+
+    // cube.vertexList = P3D::rotateVectorZ(cube.vertexList, angle*0.5);
+    // cube.normalList = P3D::rotateVectorZ(cube.normalList, angle*0.5);
+
+    // cube.vertexList = P3D::scaleVectorX(cube.vertexList, 2);
+    // cube.normalList = P3D::scaleVectorX(cube.normalList, 2);
+
+    // cube.vertexList = P3D::translateVectorX(cube.vertexList, std::cos(CV::time()*0.5)*15);
+    // angle += CV::delta();
     // polys.push_back(cube);
 
-    std::cout << "comecando raster. scale: " << renderScale << std::endl;
     Rasterizer::Rasterize(
         polys,
         cam3d,
         colorBuffer,
         zBuffer,
         Vector3(-1,-1,-1),
-        renderScale
+        0.2f, // ambient light intensity
+        renderScale,
+        displayBuffer == DisplayBuffer::NORMALS
     );
-    if(displayBuffer == DisplayBuffer::COLOR){
+    if(displayBuffer == DisplayBuffer::COLOR || displayBuffer == DisplayBuffer::NORMALS){
         colorBuffer->display(1/renderScale);
     }else if(displayBuffer == DisplayBuffer::DEPTH){
         zBuffer->display(1/renderScale);

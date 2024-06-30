@@ -91,7 +91,7 @@
 	"../Math/Vector2.h"
 	"../Math/Vector3.h"
 
-1719592045 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\camera.3d.cpp
+1719596297 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\camera.3d.cpp
 	"Camera.h"
 	"../gl_canvas2d.h"
 	"Primitive.h"
@@ -109,7 +109,7 @@
 	<algorithm>
 	"../Math/Vector3.h"
 
-1719596088 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\primitive.cpp
+1719773167 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\primitive.cpp
 	"Primitive.h"
 
 1717095484 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\fonts\fontmanager.cpp
@@ -177,7 +177,7 @@
 	<windows.h>
 	<map>
 
-1719529566 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.h
+1719771255 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.h
 	"../Math/Vector2.h"
 	"../Keyboard.h"
 	"Simulator.h"
@@ -282,13 +282,14 @@
 	<vector>
 	"../gl_canvas2d.h"
 
-1719595938 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.cpp
+1719772801 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.cpp
 	"Manager.h"
 	"../gl_canvas2d.h"
 	"../3D/Rasterizer.h"
 	"../3D/Perspective.h"
+	<cmath>
 
-1719444719 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\sidebar.cpp
+1719771442 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\sidebar.cpp
 	"SideBar.h"
 	<iomanip>
 	<sstream>
@@ -434,7 +435,7 @@
 	"CheckBoxManager.h"
 	"Chart.h"
 
-1719595545 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\simulator.cpp
+1719772525 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\simulator.cpp
 	"Simulator.h"
 	"../gl_canvas2d.h"
 	"../3D/Primitive.h"
@@ -447,14 +448,14 @@
 	<iostream>
 	<GL/glut.h>
 
-1719528420 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\rasterizer.h
+1719772664 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\rasterizer.h
 	<vector>
 	<functional>
 	"Primitive.h"
 	"Buffer.h"
 	"Camera.h"
 
-1719595750 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\rasterizer.cpp
+1719772806 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\rasterizer.cpp
 	"Rasterizer.h"
 	<limits>
 	"Perspective.h"

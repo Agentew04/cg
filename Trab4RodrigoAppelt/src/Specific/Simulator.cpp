@@ -13,9 +13,9 @@
 /*
 Testando Macros
 */
-#define SCALEZ(v,f) ((v).vertexList = P3D::scaleVectorZ((v).vertexList,f)); ((v).normalList = P3D::scaleVectorZ((v).normalList,f))
-#define SCALEY(v,f) ((v).vertexList = P3D::scaleVectorY((v).vertexList,f)); ((v).normalList = P3D::scaleVectorY((v).normalList,f))
 #define SCALEX(v,f) ((v).vertexList = P3D::scaleVectorX((v).vertexList,f)); ((v).normalList = P3D::scaleVectorX((v).normalList,f))
+#define SCALEY(v,f) ((v).vertexList = P3D::scaleVectorY((v).vertexList,f)); ((v).normalList = P3D::scaleVectorY((v).normalList,f))
+#define SCALEZ(v,f) ((v).vertexList = P3D::scaleVectorZ((v).vertexList,f)); ((v).normalList = P3D::scaleVectorZ((v).normalList,f))
 #define SCALE(v,fx,fy,fz) ((v).vertexList = P3D::scaleVector((v).vertexList, Vector3(fx,fy,fz))); ((v).normalList = P3D::scaleVector((v).normalList, Vector3(fx,fy,fz)))
 #define SCALEv(v,f) ((v).vertexList = P3D::scaleVector((v).vertexList, f)); ((v).normalList = P3D::scaleVector((v).normalList, f))
 
@@ -26,8 +26,8 @@ Testando Macros
 #define TRANSLATEv(v,f) ((v).vertexList = P3D::translateVector((v).vertexList, f))
 
 #define ROTATEX(v,f) ((v).vertexList = P3D::rotateVectorX((v).vertexList,f)); ((v).normalList = P3D::rotateVectorX((v).normalList,f))
-#define ROTATEY(v,f) ((v).vertexList = P3D::rotateVectorY((v).vertexList,f)); ((v).normalList = P3D::rotateVectorX((v).normalList,f))
-#define ROTATEZ(v,f) ((v).vertexList = P3D::rotateVectorZ((v).vertexList,f)); ((v).normalList = P3D::rotateVectorX((v).normalList,f))
+#define ROTATEY(v,f) ((v).vertexList = P3D::rotateVectorY((v).vertexList,f)); ((v).normalList = P3D::rotateVectorY((v).normalList,f))
+#define ROTATEZ(v,f) ((v).vertexList = P3D::rotateVectorZ((v).vertexList,f)); ((v).normalList = P3D::rotateVectorZ((v).normalList,f))
 #define ROTATE(v,fx,fy,fz) ((v).vertexList = P3D::rotateVector((v).vertexList, Vector3(fx,fy,fz))); ((v).normalList = P3D::rotateVector((v).normalList, Vector3(fx,fy,fz)))
 #define ROTATEv(v,f) ((v).vertexList = P3D::rotateVector((v).vertexList, f)); ((v).normalList = P3D::rotateVector((v).normalList, f))
 
@@ -101,7 +101,7 @@ std::vector<Primitive> Simulator::createCrankShaft() const{
     SCALE(shaft, simval.crankshaftAxisHeight, simval.crankshaftAxisHeight, simval.crankshaftLength - 2*simval.crankshaftAxisRadius);
     TRANSLATEZ(shaft, simval.crankshaftAxisRadius);
     ROTATEX(shaft, simval.crankshaftAngle);
-    shaft.color = Vector3(0.2,0.2,0.2);
+    shaft.color = Vector3(0.7,0.7,0.7);
     crankShaft.push_back(shaft);
 
     // agora, cria a pontinha. quase igual ao centro
@@ -110,7 +110,7 @@ std::vector<Primitive> Simulator::createCrankShaft() const{
     ROTATEX(endPoint, simval.crankshaftAngle);
     TRANSLATEX(endPoint, -simval.crankshaftAxisHeight);
     TRANSLATEv(endPoint, simval.crankshaftEnd);
-    endPoint.color = Vector3(0.2,0.2,0.2);
+    endPoint.color = Vector3(0.7,0.7,0.7);
     crankShaft.push_back(endPoint);
 
     // outra maozinha pra engatar com o outro lado do virabrequim

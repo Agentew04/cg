@@ -316,6 +316,22 @@ void Sidebar::submitUI(){
     );
     but_raster_depth->style = ButtonStyle::Windows10();
     buttonManager.registerButton(but_raster_depth);
+
+    auto but_raster_normal = new Button(
+        [&](){
+            return Vector2(*scrW-sidebarWidth, 8*15 + 7*25 + 6*30 + 21*margin) + Vector2(margin, margin);
+        },
+        [&](){
+            return Vector2(sidebarWidth-2*margin, 30);
+        },
+        UIPlacement::TOP_LEFT,
+        "Mostrar Normais Interpoladas",
+        [&](Button*){
+            manager->setDisplayBuffer(Manager::DisplayBuffer::NORMALS);
+        }
+    );
+    but_raster_normal->style = ButtonStyle::Windows10();
+    buttonManager.registerButton(but_raster_normal);
 }
 
 float Sidebar::getRpm(){

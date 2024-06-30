@@ -141,10 +141,10 @@ Primitive Primitive::createCube(float size){
     // normais
     cube.normalList.push_back(Vector3(0, 0, -1));
     cube.normalList.push_back(Vector3(0, 0, 1));
-    cube.normalList.push_back(Vector3(0, -1, 0));
-    cube.normalList.push_back(Vector3(0, 1, 0));
     cube.normalList.push_back(Vector3(-1, 0, 0));
     cube.normalList.push_back(Vector3(1, 0, 0));
+    cube.normalList.push_back(Vector3(0, -1, 0));
+    cube.normalList.push_back(Vector3(0, 1, 0));
 
     // faces
     cube.faceList.push_back({ { 0, 1, 2, 3 }, { 0, 0, 0, 0 } });

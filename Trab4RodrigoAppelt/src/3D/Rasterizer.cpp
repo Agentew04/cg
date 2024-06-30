@@ -13,11 +13,14 @@ void Rasterizer::Rasterize(
         Camera3D& camera,
         Buffer* colorBuffer,
         Buffer* depthBuffer,
-        const Vector3& lightDirection,
-        float scale){
+        Vector3 lightDirection,
+        float ambientLightIntensity,
+        float scale,
+        bool displayNormals){
     // define zbuffer como infinito
     depthBuffer->fill(std::numeric_limits<float>::infinity());
 
+    lightDirection.normalize();
     float* zbuffer = depthBuffer->getBuffer();
     float* cbuf = colorBuffer->getBuffer();
     float colorBufferWidth, colorBufferHeight;
@@ -44,9 +47,14 @@ void Rasterizer::Rasterize(
                 it--;
             }
         }
+
+        for(auto &n : poly.normalList){
+            n.normalize();
+        }
     }
 
-    Vector3 localLightDirection = camera.worldToCamera(lightDirection);
+    Vector3 localLightDirection = lightDirection;
+    localLightDirection.normalize();
     Vector2 cameraPlanes = camera.getClipPanes();
 
 
@@ -76,11 +84,15 @@ void Rasterizer::Rasterize(
 
                             // calcula a cor do pixel
                             Vector3 normal = interpolateNormal(poly.vertexList, poly.normalList, face, Vector2(x, y));
-                            //float intensity = std::max(0.0f, normal.dot(localLightDirection));
-                            //Vector3 pixelcolor = color*intensity;
-                            cbuf[colorBuffer->getOffset(x, y)] = remap(normal.x, -1, 1, 0, 1);
-                            cbuf[colorBuffer->getOffset(x, y) + 1] = remap(normal.y, -1, 1, 0, 1);
-                            cbuf[colorBuffer->getOffset(x, y) + 2] = remap(normal.z, -1, 1, 0, 1);
+                            float intensity = std::max(ambientLightIntensity, std::min(1.0f, normal.dot(-localLightDirection)));
+                            Vector3 pixelcolor = color*intensity;
+
+                            float r = displayNormals ? remap(normal.x, -1, 1, 0, 1) : pixelcolor.x;
+                            float g = displayNormals ? remap(normal.y, -1, 1, 0, 1) : pixelcolor.y;
+                            float b = displayNormals ? remap(normal.z, -1, 1, 0, 1) : pixelcolor.z;
+                            cbuf[colorBuffer->getOffset(x, y) + 0] = r;
+                            cbuf[colorBuffer->getOffset(x, y) + 1] = g;
+                            cbuf[colorBuffer->getOffset(x, y) + 2] = b;
                         }
                     }
                 }

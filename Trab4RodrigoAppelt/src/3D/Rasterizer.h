@@ -20,8 +20,10 @@ public:
         Camera3D& camera,
         Buffer* colorBuffer,
         Buffer* depthBuffer,
-        const Vector3& lightDirection,
-        float scale
+        Vector3 lightDirection,
+        float ambientLightIntensity,
+        float scale,
+        bool displayNormals
     );
 private:
     static void BoundBox(

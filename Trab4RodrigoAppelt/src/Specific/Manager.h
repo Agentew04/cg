@@ -35,14 +35,15 @@ public:
     /// @brief Controla qual engine de renderizacao usada
     enum class RenderingMode {
         WIREFRAME,
-        SOLID_PIXEL
+        SOLID_PIXEL,
         // talvez solid vertex aqui tbm
     };
 
     /// @brief Representa um dos buffers da tela
     enum class DisplayBuffer {
         COLOR,
-        DEPTH
+        DEPTH,
+        NORMALS
         // se tivesse uso, o color e depth stencil iria aqui
     };
 
