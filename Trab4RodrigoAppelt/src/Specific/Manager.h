@@ -88,6 +88,7 @@ private:
     Buffer *colorBuffer = nullptr;
     Buffer *zBuffer = nullptr;
     float renderScale = 1;
+    float ambientLightIntensity = 0.2f;
 
     // utilitarias
     void drawParts();

@@ -32,29 +32,33 @@ void Sidebar::render() {
     sliderManager.draw();
 
     // camera controls
-    CV::translate(*scrW-sidebarWidth, 25+30+margin*2);
+    CV::translate(*scrW-sidebarWidth, 2*20+margin*2);
     CV::color(Vector3::fromHex(0x000000));
     CV::text(Vector2(margin,margin), "Camera", 25, FontName::JetBrainsMono, UIPlacement::TOP_LEFT);
     buttonManager.draw();
 
     // visibilidade controls
-    CV::translate(*scrW-sidebarWidth, 2*25 + 5*30 + 6*margin);
+    CV::translate(*scrW-sidebarWidth, 3*20 + 4*30 + 6*margin);
     CV::color(Vector3::fromHex(0x000000));
     CV::text(Vector2(margin,margin), "Visibilidade", 25, FontName::JetBrainsMono, UIPlacement::TOP_LEFT);
     checkboxManager.draw();
 
     // eixo cardan controls
-    CV::translate(*scrW-sidebarWidth, 6*15 + 3*25 + 5*30 + 11*margin);
+    CV::translate(*scrW-sidebarWidth, 5*15 + 4*20 + 4*30 + 11*margin);
     CV::color(Vector3::fromHex(0x000000));
     CV::text(Vector2(margin,margin), "Eixo Cardan", 25, FontName::JetBrainsMono, UIPlacement::TOP_LEFT);
     std::stringstream ss2;
     ss2 << std::fixed << std::setprecision(2) << driveshaftAngleSlider->getValue() * (180/PI);
     std::string driveshafttext = "Angulo: " + ss2.str() + " graus";
-    CV::text(Vector2(margin,25+2*margin), driveshafttext, 25, FontName::JetBrainsMono, UIPlacement::TOP_LEFT);
+    CV::translate(*scrW-sidebarWidth, 5*15 + 5*20 + 4*30 + 12*margin);
+    CV::text(Vector2(margin,margin), driveshafttext, 25, FontName::JetBrainsMono, UIPlacement::TOP_LEFT);
 
     // rasterizador controls
-    CV::translate(*scrW-sidebarWidth, 6*15 + 6*25 + 5*30 + 15*margin);
+    CV::translate(*scrW-sidebarWidth, 5*15 + 7*20 + 4*30 + 14*margin);
     CV::text(Vector2(margin,margin), "Rasterizador", 25, FontName::JetBrainsMono, UIPlacement::TOP_LEFT);
+
+    CV::translate(*scrW-sidebarWidth, 6*15 + 8*20 + 7*30 + 19*margin);
+    CV::text(Vector2(margin,margin), "Intensidade Luz Ambiente", 25, FontName::JetBrainsMono, UIPlacement::TOP_LEFT);
 }
 
 void Sidebar::updateMousePos(Vector2 mousePos) {
@@ -81,7 +85,7 @@ void Sidebar::mouseUp() {
 void Sidebar::submitUI(){
     rpmSlider = new Slider(
         [&](){
-            return Vector2(*scrW-sidebarWidth, margin+25) + Vector2(margin,margin);
+            return Vector2(*scrW-sidebarWidth, 20+margin) + Vector2(margin,margin);
         },
         [&](){
             return Vector2(sidebarWidth-2*margin, 30);
@@ -96,7 +100,7 @@ void Sidebar::submitUI(){
 
     auto but_cam_persp = new Button(
         [&](){
-            return Vector2(*scrW-sidebarWidth, 25+25+30+margin*2) + Vector2(margin, margin);
+            return Vector2(*scrW-sidebarWidth, 3*20 + 2*margin) + Vector2(margin, margin);
         },
         [&](){
             return Vector2(sidebarWidth-2*margin, 30);
@@ -112,7 +116,7 @@ void Sidebar::submitUI(){
 
     auto but_cam_ortho_front = new Button(
         [&](){
-            return Vector2(*scrW-sidebarWidth, 2*25 + 2*30 + 3*margin) + Vector2(margin, margin);
+            return Vector2(*scrW-sidebarWidth, 3*20 + 1*30 + 3*margin) + Vector2(margin, margin);
         },
         [&](){
             return Vector2(sidebarWidth-2*margin, 30);
@@ -128,7 +132,7 @@ void Sidebar::submitUI(){
 
     auto but_cam_ortho_side = new Button(
         [&](){
-            return Vector2(*scrW-sidebarWidth, 2*25 + 3*30 + 4*margin) + Vector2(margin, margin);
+            return Vector2(*scrW-sidebarWidth, 3*20 + 2*30 + 4*margin) + Vector2(margin, margin);
         },
         [&](){
             return Vector2(sidebarWidth-2*margin, 30);
@@ -144,7 +148,7 @@ void Sidebar::submitUI(){
 
     auto but_cam_ortho_top = new Button(
         [&](){
-            return Vector2(*scrW-sidebarWidth, 2*25 + 4*30 + 5*margin) + Vector2(margin, margin);
+            return Vector2(*scrW-sidebarWidth, 3*20 + 3*30 + 5*margin) + Vector2(margin, margin);
         },
         [&](){
             return Vector2(sidebarWidth-2*margin, 30);
@@ -160,7 +164,7 @@ void Sidebar::submitUI(){
 
     auto chk_vis_crankshaft = new Checkbox(
         [&](){
-            return Vector2(*scrW-sidebarWidth, 4*25 + 4*30 + 7*margin) + Vector2(margin, margin);
+            return Vector2(*scrW-sidebarWidth, 4*20 + 4*30 + 7*margin) + Vector2(margin, margin);
         },
         [&](){
             return Vector2(sidebarWidth-2*margin, 15);
@@ -177,7 +181,7 @@ void Sidebar::submitUI(){
 
     auto chk_vis_pistonarm = new Checkbox(
         [&](){
-            return Vector2(*scrW-sidebarWidth, 15 + 4*25 + 4*30 + 8*margin) + Vector2(margin, margin);
+            return Vector2(*scrW-sidebarWidth, 1*15 + 4*20 + 4*30 + 8*margin) + Vector2(margin, margin);
         },
         [&](){
             return Vector2(sidebarWidth-2*margin, 15);
@@ -193,7 +197,7 @@ void Sidebar::submitUI(){
 
     auto chk_vis_pistonbase = new Checkbox(
         [&](){
-            return Vector2(*scrW-sidebarWidth, 2*15 + 4*25 + 4*30 + 9*margin) + Vector2(margin, margin);
+            return Vector2(*scrW-sidebarWidth, 2*15 + 4*20 + 4*30 + 9*margin) + Vector2(margin, margin);
         },
         [&](){
             return Vector2(sidebarWidth-2*margin, 15);
@@ -209,7 +213,7 @@ void Sidebar::submitUI(){
 
     auto chk_vis_gears = new Checkbox(
         [&](){
-            return Vector2(*scrW-sidebarWidth, 3*15 + 4*25 + 4*30 + 10*margin) + Vector2(margin, margin);
+            return Vector2(*scrW-sidebarWidth, 3*15 + 4*20 + 4*30 + 10*margin) + Vector2(margin, margin);
         },
         [&](){
             return Vector2(sidebarWidth-2*margin, 15);
@@ -225,7 +229,7 @@ void Sidebar::submitUI(){
 
     auto chk_vis_driveshaft = new Checkbox(
         [&](){
-            return Vector2(*scrW-sidebarWidth, 4*15 + 4*25 + 4*30 + 11*margin) + Vector2(margin, margin);
+            return Vector2(*scrW-sidebarWidth, 4*15 + 4*20 + 4*30 + 11*margin) + Vector2(margin, margin);
         },
         [&](){
             return Vector2(sidebarWidth-2*margin, 15);
@@ -239,25 +243,9 @@ void Sidebar::submitUI(){
     chk_vis_driveshaft->style = chk_stl;
     checkboxManager.registerCheckbox(chk_vis_driveshaft);
 
-    auto chk_vis_normals = new Checkbox(
-        [&](){
-            return Vector2(*scrW-sidebarWidth, 5*15 + 4*25 + 4*30 + 12*margin) + Vector2(margin, margin);
-        },
-        [&](){
-            return Vector2(sidebarWidth-2*margin, 15);
-        },
-        "Normais",
-        true
-    );
-    chk_vis_normals->setCallback([&](bool value){
-        // TODO: complete
-    });
-    chk_vis_normals->style = chk_stl;
-    checkboxManager.registerCheckbox(chk_vis_normals);
-
     driveshaftAngleSlider = new Slider(
         [&](){
-            return Vector2(*scrW-sidebarWidth, 6*15 + 6*25 + 4*30 + 15*margin) + Vector2(margin,margin);
+            return Vector2(*scrW-sidebarWidth, 5*15 + 6*20 + 4*30 + 13*margin) + Vector2(margin,margin);
         },
         [&](){
             return Vector2(sidebarWidth-2*margin, 30);
@@ -271,7 +259,7 @@ void Sidebar::submitUI(){
 
     auto chk_raster_enable = new Checkbox(
         [&](){
-            return Vector2(*scrW-sidebarWidth, 7*15 + 7*25 + 4*30 + 18*margin) + Vector2(margin, margin);
+            return Vector2(*scrW-sidebarWidth, 5*15 + 8*20 + 4*30 + 15*margin) + Vector2(margin, margin);
         },
         [&](){
             return Vector2(sidebarWidth-2*margin, 15);
@@ -287,7 +275,7 @@ void Sidebar::submitUI(){
 
     auto but_raster_color = new Button(
         [&](){
-            return Vector2(*scrW-sidebarWidth, 8*15 + 7*25 + 4*30 + 19*margin) + Vector2(margin, margin);
+            return Vector2(*scrW-sidebarWidth, 6*15 + 8*20 + 4*30 + 16*margin) + Vector2(margin, margin);
         },
         [&](){
             return Vector2(sidebarWidth-2*margin, 30);
@@ -303,7 +291,7 @@ void Sidebar::submitUI(){
 
     auto but_raster_depth = new Button(
         [&](){
-            return Vector2(*scrW-sidebarWidth, 8*15 + 7*25 + 5*30 + 20*margin) + Vector2(margin, margin);
+            return Vector2(*scrW-sidebarWidth, 6*15 + 8*20 + 5*30 + 17*margin) + Vector2(margin, margin);
         },
         [&](){
             return Vector2(sidebarWidth-2*margin, 30);
@@ -319,7 +307,7 @@ void Sidebar::submitUI(){
 
     auto but_raster_normal = new Button(
         [&](){
-            return Vector2(*scrW-sidebarWidth, 8*15 + 7*25 + 6*30 + 21*margin) + Vector2(margin, margin);
+            return Vector2(*scrW-sidebarWidth, 6*15 + 8*20 + 6*30 + 18*margin) + Vector2(margin, margin);
         },
         [&](){
             return Vector2(sidebarWidth-2*margin, 30);
@@ -332,6 +320,21 @@ void Sidebar::submitUI(){
     );
     but_raster_normal->style = ButtonStyle::Windows10();
     buttonManager.registerButton(but_raster_normal);
+
+    ambientLightSlider = new Slider(
+        [&](){
+            return Vector2(*scrW-sidebarWidth, 6*15 + 9*20 + 7*30 + 20*margin) + Vector2(margin,margin);
+        },
+        [&](){
+            return Vector2(sidebarWidth-2*margin, 30);
+        },
+        0.0f,
+        1.0f,
+        0.2f
+    );
+    ambientLightSlider->style = sldstl;
+    sliderManager.registerSlider(ambientLightSlider);
+
 }
 
 float Sidebar::getRpm(){
@@ -348,6 +351,15 @@ float Sidebar::getDriveshaftAngle(){
         return driveshaftAngleSlider->getValue();
     }else{
         std::cout << "Driveshaft Angle Slider eh null!" << std::endl;
+        return 0.0f;
+    }
+}
+
+float Sidebar::getAmbientLight(){
+    if(ambientLightSlider != nullptr){
+        return ambientLightSlider->getValue();
+    }else{
+        std::cout << "Ambient Light Slider eh null!" << std::endl;
         return 0.0f;
     }
 }

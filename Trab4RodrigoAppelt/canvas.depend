@@ -97,7 +97,7 @@
 	"Primitive.h"
 	"Perspective.h"
 
-1717264072 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\objloader.cpp
+1719792985 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\objloader.cpp
 	"ObjLoader.h"
 	<iostream>
 	<vector>
@@ -109,7 +109,7 @@
 	<algorithm>
 	"../Math/Vector3.h"
 
-1719773167 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\primitive.cpp
+1719792026 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\primitive.cpp
 	"Primitive.h"
 
 1717095484 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\fonts\fontmanager.cpp
@@ -177,7 +177,7 @@
 	<windows.h>
 	<map>
 
-1719771255 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.h
+1719773860 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.h
 	"../Math/Vector2.h"
 	"../Keyboard.h"
 	"Simulator.h"
@@ -190,7 +190,7 @@
 	"../Math/Vector3.h"
 	"../3D/Primitive.h"
 
-1719437630 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\sidebar.h
+1719773855 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\sidebar.h
 	"../Math/Vector2.h"
 	"../UI/Slider.h"
 	"../UI/SliderManager.h"
@@ -282,14 +282,14 @@
 	<vector>
 	"../gl_canvas2d.h"
 
-1719772801 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.cpp
+1719792036 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.cpp
 	"Manager.h"
 	"../gl_canvas2d.h"
 	"../3D/Rasterizer.h"
 	"../3D/Perspective.h"
 	<cmath>
 
-1719771442 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\sidebar.cpp
+1719790966 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\sidebar.cpp
 	"SideBar.h"
 	<iomanip>
 	<sstream>
@@ -435,7 +435,7 @@
 	"CheckBoxManager.h"
 	"Chart.h"
 
-1719772525 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\simulator.cpp
+1719773959 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\simulator.cpp
 	"Simulator.h"
 	"../gl_canvas2d.h"
 	"../3D/Primitive.h"

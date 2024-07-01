@@ -186,6 +186,7 @@ Primitive Primitive::createGear(int teeth, float teethHeight){
     int topCapIdx = 2*teeth*4;
     int bottomCapIdx = 2*teeth*4 + 1;
 
+
     // arestas
     for(int i=0; i<teeth; i++){
         for(int j=0; j<4; j++){
@@ -209,22 +210,62 @@ Primitive Primitive::createGear(int teeth, float teethHeight){
         }
     }
 
+    Vector3 v1 = (gear.vertexList[2] - gear.vertexList[0]).normalized();
+    Vector3 v2 = (gear.vertexList[4] - gear.vertexList[2]).normalized();
+    float teethDescentAngle = acos(v1.dot(v2));
+
+    // normais
+    for(int i=0; i<teeth; i++){
+        for(int j=0; j<4; j++){
+            float angle = i*bigStep + j*smallStep;
+            
+            if(j == 0 || j == 2){
+                float x = cos(angle);
+                float y = sin(angle);
+
+                gear.normalList.push_back(Vector3(x, y, 0));
+            }else{
+                if(j == 1){
+                    Vector3 lastNormal = gear.normalList.back();
+                    auto rotatedNormal = Vector3(cos(teethDescentAngle) * lastNormal.x - sin(teethDescentAngle) * lastNormal.y, sin(teethDescentAngle) * lastNormal.x + cos(teethDescentAngle) * lastNormal.y, lastNormal.z);
+                    gear.normalList.push_back(rotatedNormal);
+                }else{
+                    Vector3 lastNormal = gear.normalList.back();
+                    auto rotatedNormal = Vector3(cos(-teethDescentAngle) * lastNormal.x - sin(-teethDescentAngle) * lastNormal.y, sin(-teethDescentAngle) * lastNormal.x + cos(-teethDescentAngle) * lastNormal.y, lastNormal.z);
+                    gear.normalList.push_back(rotatedNormal);
+                }
+            }
+        }
+    }
+    int topCapNormalIdx = teeth*4;
+    int bottomCapNormalIdx = teeth*4 + 1;
+    gear.normalList.push_back(Vector3(0, 0, 1)); // top cap
+    gear.normalList.push_back(Vector3(0, 0, -1)); // bottom cap
+
     // faces
     for(int i=0; i<teeth; i++){
         for(int j=0; j<4; j++){
             int currentIdx = 8 * i + 2 * j;
+            int currentNormal = 4 * i + j;
             int nextIdx = (currentIdx + 2) % (2 * teeth * 4);
 
-            // Create faces for the sides of the teeth
-            //gear.faceList.push_back({currentIdx, nextIdx, nextIdx + 1, currentIdx + 1});
+            gear.faceList.push_back({
+                {topCapIdx, currentIdx, nextIdx},
+                {topCapNormalIdx, topCapNormalIdx, topCapNormalIdx}
+            });
+            gear.faceList.push_back({
+                {bottomCapIdx, currentIdx+1, nextIdx+1},
+                {bottomCapNormalIdx, bottomCapNormalIdx, bottomCapNormalIdx}
+            });
 
-            // Create faces for the top and bottom surfaces of the gear
-            if (j == 3) {
-                // Top face
-                //gear.faceList.push_back({topCapIdx, currentIdx, nextIdx});
-                // Bottom face
-                //gear.faceList.push_back({bottomCapIdx, nextIdx + 1, currentIdx + 1});
-            }
+            gear.faceList.push_back({
+                {currentIdx, currentIdx+1, nextIdx},
+                {currentNormal, currentNormal, currentNormal}
+            });
+            gear.faceList.push_back({
+                {currentIdx+1, nextIdx, nextIdx+1},
+                {currentNormal, currentNormal, currentNormal}
+            });
         }
     }
 

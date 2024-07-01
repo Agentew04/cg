@@ -19,6 +19,7 @@ public:
     // functions
     float getRpm();
     float getDriveshaftAngle();
+    float getAmbientLight();
 
     // ui
     float getSidebarWidth();
@@ -45,6 +46,7 @@ private:
     // componentes
     Slider *rpmSlider = nullptr;
     Slider *driveshaftAngleSlider = nullptr;
+    Slider *ambientLightSlider = nullptr;
     SliderManager sliderManager;
     ButtonManager buttonManager;
     CheckboxManager checkboxManager;

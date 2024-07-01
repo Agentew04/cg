@@ -83,7 +83,6 @@ void ObjLoader::load(const std::string& filename, const std::string& id){
                 std::vector<int> faceNormal = {n1 - objNormalStartIndex, n2 - objNormalStartIndex, n3 - objNormalStartIndex};
                 currentObj.faces.push_back(face);
                 currentObj.faceNormals.push_back(faceNormal);
-                std::cout << "normal on face" << std::endl;
             } else {
                 // no normal data on face
                 std::vector<int> face;
@@ -107,7 +106,6 @@ void ObjLoader::load(const std::string& filename, const std::string& id){
         model.normals = currentObj.normals;
         model.faceNormals = currentObj.faceNormals;
         model.hasNormalData = currentObj.normals.size() > 0 && currentObj.faceNormals.size() > 0;
-        std::cout << "with nomrals: " << model.hasNormalData << std::endl;
         models[currentObj.name] = model;
     }
 

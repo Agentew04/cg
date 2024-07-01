@@ -137,7 +137,7 @@ std::vector<Primitive> Simulator::createPiston() const{
     ROTATEX(base, pistonAngle);
     TRANSLATEv(base, simval.pistonOrigin);
     TRANSLATEX(base, -displacement);
-    base.color = Vector3(0.8, 0.8, 0);
+    base.color = Vector3(1, 1, 0);
 
     float armDelta = (simval.crankshaftEnd - simval.pistonBaseEnd).magnitude;
     auto arm = Primitive::createCylinder(15,1,1);

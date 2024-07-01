@@ -75,6 +75,7 @@ void Manager::update(float delta) {
     sidebar.update(delta);
     sim.getValues().rpm = sidebar.getRpm();
     sim.getValues().driveshaftAngle = -sidebar.getDriveshaftAngle();
+    ambientLightIntensity = sidebar.getAmbientLight();
 
     switch(cameraMode){
         case CameraMode::PERSPECTIVE_FREE:
@@ -232,30 +233,13 @@ void Manager::drawPixel() {
 
     colorBuffer->fill(mainBackgroundColor.x, mainBackgroundColor.y, mainBackgroundColor.z);
 
-    // static float angle = 0;
-    // polys.clear();
-    // auto cube = Primitive::createCylinder(25, 25, 10);
-    // cube.color = Vector3(1,0,0);
-    // cube.vertexList = P3D::rotateVectorY(cube.vertexList, -PI*0.5);
-    // cube.normalList = P3D::rotateVectorY(cube.normalList, -PI*0.5);
-
-    // cube.vertexList = P3D::rotateVectorZ(cube.vertexList, angle*0.5);
-    // cube.normalList = P3D::rotateVectorZ(cube.normalList, angle*0.5);
-
-    // cube.vertexList = P3D::scaleVectorX(cube.vertexList, 2);
-    // cube.normalList = P3D::scaleVectorX(cube.normalList, 2);
-
-    // cube.vertexList = P3D::translateVectorX(cube.vertexList, std::cos(CV::time()*0.5)*15);
-    // angle += CV::delta();
-    // polys.push_back(cube);
-
     Rasterizer::Rasterize(
         polys,
         cam3d,
         colorBuffer,
         zBuffer,
-        Vector3(-1,-1,-1),
-        0.2f, // ambient light intensity
+        Vector3(1,-1,-1),
+        ambientLightIntensity,
         renderScale,
         displayBuffer == DisplayBuffer::NORMALS
     );
