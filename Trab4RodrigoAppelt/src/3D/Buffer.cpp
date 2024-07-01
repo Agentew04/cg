@@ -22,8 +22,6 @@ void Buffer::display(float upscale) const {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    std::cout << "diplaying buffer with upscale: " << upscale << std::endl;
-
     if(channels == 3){
         displayColor(upscale);
     }else if(channels == 1){
@@ -61,12 +59,16 @@ void Buffer::displayColor(float upscale) const {
 }
 
 void Buffer::displayGray(float upscale) const {
-    glBegin(GL_POINTS);
+    float pixelSize = 1.0 * upscale;
+    glBegin(GL_QUADS);
     for(int y = 0; y < height; y++){
         for(int x = 0; x < width; x++){
             int offset = getOffset(x, y);
             glColor3f(buffer[offset], buffer[offset], buffer[offset]);
-            glVertex2f(x, y);
+            glVertex2f(x*pixelSize, y*pixelSize);
+            glVertex2f(x*pixelSize + pixelSize, y*pixelSize);
+            glVertex2f(x*pixelSize + pixelSize, y*pixelSize + pixelSize);
+            glVertex2f(x*pixelSize, y*pixelSize + pixelSize);
         }
     }
     glEnd();

@@ -5,7 +5,7 @@
 	"Primitive.h"
 	"Perspective.h"
 
-1719594348 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\camera.h
+1719794559 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\camera.h
 	<vector>
 	"../Math/Vector2.h"
 	"../Math/Vector3.h"
@@ -91,7 +91,7 @@
 	"../Math/Vector2.h"
 	"../Math/Vector3.h"
 
-1719596297 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\camera.3d.cpp
+1719794452 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\3d\camera.3d.cpp
 	"Camera.h"
 	"../gl_canvas2d.h"
 	"Primitive.h"
@@ -190,7 +190,7 @@
 	"../Math/Vector3.h"
 	"../3D/Primitive.h"
 
-1719773855 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\sidebar.h
+1719794247 e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\sidebar.h
 	"../Math/Vector2.h"
 	"../UI/Slider.h"
 	"../UI/SliderManager.h"
@@ -282,14 +282,13 @@
 	<vector>
 	"../gl_canvas2d.h"
 
-1719792036 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.cpp
+1719794783 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\manager.cpp
 	"Manager.h"
 	"../gl_canvas2d.h"
 	"../3D/Rasterizer.h"
 	"../3D/Perspective.h"
-	<cmath>
 
-1719790966 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\sidebar.cpp
+1719794699 source:e:\universidade\cg\trabalhos\trab4rodrigoappelt\src\specific\sidebar.cpp
 	"SideBar.h"
 	<iomanip>
 	<sstream>

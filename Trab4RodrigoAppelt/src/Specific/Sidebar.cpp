@@ -59,6 +59,12 @@ void Sidebar::render() {
 
     CV::translate(*scrW-sidebarWidth, 6*15 + 8*20 + 7*30 + 19*margin);
     CV::text(Vector2(margin,margin), "Intensidade Luz Ambiente", 25, FontName::JetBrainsMono, UIPlacement::TOP_LEFT);
+
+    CV::translate(*scrW-sidebarWidth, 6*15 + 10*20 + 7*30 + 21*margin);
+    std::stringstream ss3;
+    ss3 << std::fixed << std::setprecision(2) << upscaleSlider->getValue()+1;
+    std::string upscaleText = "Upscale: " + ss3.str() + "x";
+    CV::text(Vector2(margin,margin), upscaleText, 25, FontName::JetBrainsMono, UIPlacement::TOP_LEFT);
 }
 
 void Sidebar::updateMousePos(Vector2 mousePos) {
@@ -335,6 +341,19 @@ void Sidebar::submitUI(){
     ambientLightSlider->style = sldstl;
     sliderManager.registerSlider(ambientLightSlider);
 
+    upscaleSlider = new Slider(
+        [&](){
+            return Vector2(*scrW-sidebarWidth, 6*15 + 11*20 + 7*30 + 22*margin) + Vector2(margin,margin);
+        },
+        [&](){
+            return Vector2(sidebarWidth-2*margin, 30);
+        },
+        0.0f,
+        7.0f,
+        0.0f
+    );
+    upscaleSlider->style = sldstl;
+    sliderManager.registerSlider(upscaleSlider);
 }
 
 float Sidebar::getRpm(){
@@ -361,6 +380,15 @@ float Sidebar::getAmbientLight(){
     }else{
         std::cout << "Ambient Light Slider eh null!" << std::endl;
         return 0.0f;
+    }
+}
+
+float Sidebar::getUpscaleFactor(){
+    if(upscaleSlider != nullptr){
+        return upscaleSlider->getValue()+1;
+    }else{
+        std::cout << "Upscale Slider eh null!" << std::endl;
+        return 1.0f;
     }
 }
 

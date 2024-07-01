@@ -76,6 +76,7 @@ void Manager::update(float delta) {
     sim.getValues().rpm = sidebar.getRpm();
     sim.getValues().driveshaftAngle = -sidebar.getDriveshaftAngle();
     ambientLightIntensity = sidebar.getAmbientLight();
+    renderScale = 1.0f/sidebar.getUpscaleFactor();
 
     switch(cameraMode){
         case CameraMode::PERSPECTIVE_FREE:
@@ -183,9 +184,6 @@ void Manager::drawParts() {
     if(partsVisibility[SimulationPart::DRIVESHAFT]){
         auto driveshaftparts = sim.createDriveShaft();
         auto driveshaftconn = sim.createDriveShaftConnector();
-        if(driveshaftconn.size() != 5){
-            std::cout << "ERRO NO CONECTOR: sz " << driveshaftconn.size() << std::endl;
-        }
         for(auto &p:driveshaftparts){
             draw(p);
         }
@@ -197,7 +195,6 @@ void Manager::drawParts() {
 }
 
 #include "../3D/Perspective.h"
-#include <cmath>
 void Manager::drawPixel() {
     // cria apenas as formas visiveis
     std::vector<Primitive> polys;
@@ -229,6 +226,11 @@ void Manager::drawPixel() {
 
     for(auto &poly: polys){
         poly.Triangulate();
+    }
+
+    for(auto &poly: polys){
+        poly.vertexList = P3D::scaleVector(poly.vertexList, Vector3(renderScale));
+        poly.normalList = P3D::scaleVector(poly.normalList, Vector3(renderScale));
     }
 
     colorBuffer->fill(mainBackgroundColor.x, mainBackgroundColor.y, mainBackgroundColor.z);

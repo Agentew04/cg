@@ -23,7 +23,7 @@ public:
         Vector3 position = Vector3::zero(),
         Vector3 rotation = Vector3::zero(),
         float d = 200,
-        float farPlane = 1000,
+        float farPlane = 10000,
         float nearPlane = 0.1);
 
     /// @brief Retorna a posicao da camera no mundo

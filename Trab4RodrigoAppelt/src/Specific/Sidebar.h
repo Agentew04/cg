@@ -20,6 +20,7 @@ public:
     float getRpm();
     float getDriveshaftAngle();
     float getAmbientLight();
+    float getUpscaleFactor();
 
     // ui
     float getSidebarWidth();
@@ -47,6 +48,7 @@ private:
     Slider *rpmSlider = nullptr;
     Slider *driveshaftAngleSlider = nullptr;
     Slider *ambientLightSlider = nullptr;
+    Slider *upscaleSlider = nullptr;
     SliderManager sliderManager;
     ButtonManager buttonManager;
     CheckboxManager checkboxManager;
