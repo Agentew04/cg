@@ -41,7 +41,9 @@ namespace Engine{
 
             std::list<std::shared_ptr<Mesh>> loadedMeshes;
 
-            
+            void Update();
+            void Destroy();
+            void Render();
     };
 };
 

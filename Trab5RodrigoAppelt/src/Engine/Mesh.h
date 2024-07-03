@@ -15,6 +15,22 @@ namespace Engine {
         /// @param radialResolution Quantos vezes o perfil eh rotacionado para formar a mesh
         /// @return A mesh criada.
         static Mesh fromSweep(std::vector<Vector3> profile, int radialResolution);
+
+        /// @brief Estrutura que representa uma face
+        struct Face {
+        public:
+            /// @brief O indice de cada vertice que compoe a face
+            std::vector<int> vertices;
+            /// @brief O indice de cada normal de cada vertice
+            std::vector<int> normals;
+        };
+
+        /// @brief Lista de vertices do objeto
+        std::vector<Vector3> vertexList;
+        /// @brief Lista com a normais do objeto
+        std::vector<Vector3> normalList;
+        /// @brief Lista de faces. Cada face eh composta por 3 vertices.
+        std::vector<Face> faceList;
     };
 };
 

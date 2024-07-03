@@ -121,10 +121,22 @@
 
 int polygonMode = 1;
 
-float abertura = 20.0;
-float znear = 1;
-float zfar = 23;
+float abertura = 59.0;
+float znear = 0.1;
+float zfar = 5000;
 float aspect = 16.0/9.0;
+
+#include "Math/Vector3.h"
+#include "Engine/Material.h"
+#include "Engine/Components/Skybox.h"
+#include "Keyboard.h"
+
+Engine::Components::Skybox skybox;
+
+int looking = 0;
+
+Vector3 cameraPos = Vector3(0, 0, 0);
+Vector3 cameraLookAt = Vector3(0, 0, 1);
 
 ////////////////////////////////////////////////////////////////////////////////////////
 void display(void)
@@ -134,26 +146,31 @@ void display(void)
     glMatrixMode(GL_MODELVIEW);
 
     glLoadIdentity();
-    gluLookAt(0, 0, 15, // from. Posicao onde a camera esta posicionada
-              0, 0, 0,  // to. Posicao absoluta onde a camera esta vendo
+    gluLookAt(cameraPos.x, cameraPos.y, cameraPos.z, // from. Posicao onde a camera esta posicionada
+              cameraPos.x + cameraLookAt.x, cameraPos.y + cameraLookAt.y, cameraPos.z + cameraLookAt.z,  // to. Posicao absoluta onde a camera esta vendo
               0, 1, 0); // up. Vetor Up.
-
-    
+    // std::cout << "Camera Pos: " << cameraPos << std::endl;
+    // std::cout << "Camera LookAt: " << cameraLookAt << std::endl;
+    skybox.Render();
 
     // todos os objetos estao definidos na origem do sistema global fixo
     // e sao transladados para a posicao destino.
-    glColor3f(1, 1, 1);
+    Engine::Material mat;
     glBegin(GL_POLYGON);
+    mat.setDiffuse(1,0,0,1);
+    mat.use();
     glVertex3f(-1, 0, 1);
     glVertex3f(1, 0, 1);
     glVertex3f(1, 0, -1);
     glVertex3f(-1, 0, -1);
     glEnd();
 
+
     static float angle = 0;
     // bule 1
     glPushMatrix();
-    glColor3f(1, 0, 1);
+    mat.setDiffuse(0, 1, 0, 1);
+    mat.use();
     glTranslated(-0.5, 0.15, 0.5);
     glRotated(angle, 0, 1, 0);
     glutWireTeapot(0.2);
@@ -161,7 +178,8 @@ void display(void)
 
     // bule 2
     glPushMatrix();
-    glColor3f(0, 1, 0);
+    mat.setDiffuse(0, 0, 1, 1);
+    mat.use();
     glTranslated(0.5, 0.15, -0.5);
     glRotated(90, 0, 1, 0);
     glutWireTeapot(0.2);
@@ -180,6 +198,27 @@ void keyboard(unsigned char key, int x, int y)
     {
     case 27:
         exit(0);
+        break;
+    case 'h':
+        // rotate cameraLookAt around the Z vector
+        cameraLookAt = cameraLookAt.rotate(3.1415/360.0, Vector3(0, 1, 0));
+        std::cout << "Camera LookAt: " << cameraLookAt << std::endl;
+        break;
+    case 'k':
+        // rotate cameraLookAt around the Z vector
+        cameraLookAt = cameraLookAt.rotate(-3.1415/360.0, Vector3(0, 1, 0));
+        break;
+    case 'u':
+        cameraLookAt = cameraLookAt.rotate(3.1415/360.0, Vector3(1, 0, 0));
+        break;
+    case 'j':
+        cameraLookAt = cameraLookAt.rotate(-3.1415/360.0, Vector3(1, 0, 0));
+        break;
+    case 'w':
+        cameraPos += cameraLookAt.normalized();
+        break;
+    case 's':
+        cameraPos -= cameraLookAt.normalized();
         break;
     case 'f':
         glutFullScreenToggle();
@@ -200,7 +239,7 @@ void MouseFunc(int botao, int estado, int x, int y)
 void initOpenGL(){
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(59, 16.0/9.0, 0.1, 100);
+    gluPerspective(abertura, aspect, znear, zfar);  // Set up a perspective projection matrix
     glMatrixMode(GL_MODELVIEW);
     
     glClearColor(0.0, 0.0, 0.0, 0.0); // Set background color to black and opaque
@@ -223,16 +262,8 @@ void initOpenGL(){
     glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
     glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
-    // Set material properties
-    GLfloat mat_ambient[] = { 0.7f, 0.7f, 0.7f, 1.0f };
-    GLfloat mat_diffuse[] = { 0.8f, 0.8f, 0.8f, 1.0f };
-    GLfloat mat_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-    GLfloat mat_shininess[] = { 50.0f };
-
-    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+    glEnable( GL_TEXTURE );
+    glEnable( GL_TEXTURE_2D );
 }
 
 // Function to handle window resizing
@@ -245,7 +276,7 @@ void reshape(GLsizei width, GLsizei height) {
 
     glMatrixMode(GL_PROJECTION);  // Set the aspect ratio of the clipping volume to match the viewport
     glLoadIdentity();             // Reset the projection matrix
-    gluPerspective(59, aspect, 0.1f, 100.0f);  // Set up a perspective projection matrix
+    gluPerspective(abertura, aspect, znear, zfar);  // Set up a perspective projection matrix
 
     glMatrixMode(GL_MODELVIEW);   // Return to the modelview matrix mode
     glLoadIdentity();             // Reset the modelview matrix
@@ -267,6 +298,7 @@ int main()
     // init
     initOpenGL();
 
+    skybox.Start();
 
     glutDisplayFunc(display);
     glutMotionFunc(MotionFunc);

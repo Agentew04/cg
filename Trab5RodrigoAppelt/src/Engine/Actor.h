@@ -23,7 +23,7 @@ public:
     /// @brief A escala do ator no espaco
     Vector3 scale;
     /// @brief Uma lista de componentes que este ator tem
-    std::vector<Components::Component> components;
+    std::vector<std::unique_ptr<Components::Component>> components;
     /// @brief Uma lista de atores filhos
     std::vector<Actor> children;
 

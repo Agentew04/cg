@@ -483,7 +483,7 @@
 	<cmath>
 	<iostream>
 
-1719429970 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\math\vector3.h
+1719962879 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\math\vector3.h
 	<iostream>
 	"Vector2.h"
 
@@ -637,7 +637,7 @@
 1715562380 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\math\vector2.cpp
 	"Vector2.h"
 
-1719430101 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\math\vector3.cpp
+1719962964 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\math\vector3.cpp
 	<cmath>
 	"Vector2.h"
 	"Vector3.h"
@@ -847,11 +847,16 @@
 	"CheckBoxManager.h"
 	"Chart.h"
 
-1719944407 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\main.cpp
+1719965107 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\main.cpp
 	<GL/glut.h>
+	<GL/freeglut_ext.h>
 	<stdlib.h>
 	<ctype.h>
 	<stdio.h>
+	"Math/Vector3.h"
+	"Engine/Material.h"
+	"Engine/Components/Skybox.h"
+	"Keyboard.h"
 
 1719944193 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\gl.h
 	<string>
@@ -867,4 +872,47 @@
 	<stdlib.h>
 	<ctype.h>
 	<stdio.h>
+
+1719952493 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\material.h
+
+1719952500 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\material.cpp
+	"Material.h"
+	<GL/glut.h>
+
+1719957299 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\component.cpp
+	"Component.h"
+	<iostream>
+	"../Actor.h"
+
+1719957285 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\component.h
+	<string>
+	<memory>
+
+1719952693 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\actor.h
+	<string>
+	<vector>
+	"../Math/Vector3.h"
+	"Components/Component.h"
+
+1719952989 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\actor.cpp
+	"Actor.h"
+
+1650887927 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\2d\bmp.cpp
+	"Bmp.h"
+	<string.h>
+
+1531759698 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\2d\bmp.h
+	<stdio.h>
+	<stdlib.h>
+
+1719965008 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\skybox.cpp
+	"Skybox.h"
+	<vector>
+	<string>
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	"../../2D/Bmp.h"
+
+1719965051 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\skybox.h
+	"Component.h"
 

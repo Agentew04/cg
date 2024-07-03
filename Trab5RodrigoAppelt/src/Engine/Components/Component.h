@@ -2,8 +2,11 @@
 #define __COMPONENT_H__
 
 #include <string>
+#include <memory>
 
-#include "../Actor.h"
+namespace Engine{
+    class Actor;
+};
 
 namespace Engine::Components {
     class Component {
@@ -15,13 +18,13 @@ namespace Engine::Components {
         virtual void Destroy() = 0;
         virtual void Render() = 0;
     protected:
-        enum class LogLevel {
-            INFO,
-            WARNING,
-            ERROR
-        };
+        //enum LogLevel {
+           // INFO,
+          //  WARNING,
+         //   ERROR
+        //};
 
-        void log(LogLevel level, std::string message);
+        //void log(LogLevel level, std::string message);
     };
 };
 
