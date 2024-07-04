@@ -10,6 +10,8 @@
 #include "Actor.h"
 #include "Mesh.h"
 
+#include "../Math/Vector3.h"
+
 namespace Engine{
 
     class Engine {
@@ -56,6 +58,8 @@ namespace Engine{
             /// @brief Especie de cache com todas as meshes carregadas e em uso
             std::list<std::shared_ptr<Mesh>> loadedMeshes;
 
+            /// @brief Inicializa todos os atores e prepara a engine
+            void Start();
             /// @brief Roda um tick de update em todos os componentes de todos os atores
             void Update(float delta);
             /// @brief Destroi tudo.
@@ -97,6 +101,9 @@ namespace Engine{
                 }
                 return components;
             }
+
+            Vector3 cameraPos = Vector3(0, 0, 0);
+            Vector3 cameraLookAt = Vector3(0, 0, 1);
     };
 };
 

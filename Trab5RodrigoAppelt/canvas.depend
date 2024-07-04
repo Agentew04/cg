@@ -956,3 +956,156 @@
 	"Component.h"
 	"../../Math/Vector3.h"
 
+1720055253 source:d:\universidade\cg\trab5rodrigoappelt\src\2d\bmp.cpp
+	"Bmp.h"
+	<string.h>
+
+1720055253 d:\universidade\cg\trab5rodrigoappelt\src\2d\bmp.h
+	<stdio.h>
+	<stdlib.h>
+
+1720055253 source:d:\universidade\cg\trab5rodrigoappelt\src\engine\actor.cpp
+	"Actor.h"
+
+1720055253 d:\universidade\cg\trab5rodrigoappelt\src\engine\actor.h
+	<string>
+	<vector>
+	"../Math/Vector3.h"
+	"Components/Component.h"
+
+1720055253 d:\universidade\cg\trab5rodrigoappelt\src\math\vector3.h
+	<iostream>
+	"Vector2.h"
+
+1720055253 d:\universidade\cg\trab5rodrigoappelt\src\math\vector2.h
+	<cmath>
+	<iostream>
+
+1720055253 d:\universidade\cg\trab5rodrigoappelt\src\engine\components\component.h
+	<string>
+	<memory>
+
+1720055253 source:d:\universidade\cg\trab5rodrigoappelt\src\engine\components\component.cpp
+	"Component.h"
+	<iostream>
+	"../Actor.h"
+
+1720055253 source:d:\universidade\cg\trab5rodrigoappelt\src\engine\components\skybox.cpp
+	"Skybox.h"
+	<vector>
+	<string>
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	<chrono>
+	"../../2D/Bmp.h"
+	"../../2D/lodepng.h"
+	"../Engine.h"
+	"Camera.h"
+
+1720055253 d:\universidade\cg\trab5rodrigoappelt\src\engine\components\skybox.h
+	"Component.h"
+	"../../Math/Vector3.h"
+
+1710416652 d:\universidade\cg\include\gl\glut.h
+	"freeglut_std.h"
+
+1710416652 d:\universidade\cg\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1710416652 d:\universidade\cg\include\gl\freeglut_ext.h
+	<stdarg.h>
+
+1720055253 d:\universidade\cg\trab5rodrigoappelt\src\2d\lodepng.h
+	<string.h>
+	<vector>
+	<string>
+	"lodepng.h"
+	<iostream>
+	"lodepng.h"
+
+1720095106 d:\universidade\cg\trab5rodrigoappelt\src\engine\engine.h
+	<vector>
+	<list>
+	<memory>
+	<optional>
+	"Actor.h"
+	"Mesh.h"
+	"../Math/Vector3.h"
+
+1720055253 d:\universidade\cg\trab5rodrigoappelt\src\engine\mesh.h
+	<vector>
+	"../Math/Vector3.h"
+
+1720055253 d:\universidade\cg\trab5rodrigoappelt\src\engine\components\camera.h
+	"Component.h"
+	"../../Math/Vector3.h"
+
+1720055253 source:d:\universidade\cg\trab5rodrigoappelt\src\engine\material.cpp
+	"Material.h"
+	<GL/glut.h>
+
+1720055253 d:\universidade\cg\trab5rodrigoappelt\src\engine\material.h
+
+1720095477 source:d:\universidade\cg\trab5rodrigoappelt\src\main.cpp
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	<stdlib.h>
+	<ctype.h>
+	<stdio.h>
+	"Math/Vector3.h"
+	"Engine/Material.h"
+	"Keyboard.h"
+	"Manager.h"
+
+1720055253 d:\universidade\cg\trab5rodrigoappelt\src\keyboard.h
+
+1720055253 source:d:\universidade\cg\trab5rodrigoappelt\src\math\matrix.cpp
+	"Matrix.h"
+	<string.h>
+	<iostream>
+
+1720055253 d:\universidade\cg\trab5rodrigoappelt\src\math\matrix.h
+	<string.h>
+	<iostream>
+	<vector>
+	"Vector2.h"
+	"Vector3.h"
+
+1720055253 source:d:\universidade\cg\trab5rodrigoappelt\src\math\vector2.cpp
+	"Vector2.h"
+
+1720055253 source:d:\universidade\cg\trab5rodrigoappelt\src\math\vector3.cpp
+	<cmath>
+	"Vector2.h"
+	"Vector3.h"
+
+1720055253 source:d:\universidade\cg\trab5rodrigoappelt\src\2d\lodepng.cpp
+	"lodepng.h"
+	<limits.h>
+	<stdio.h>
+	<stdlib.h>
+
+1720095157 source:d:\universidade\cg\trab5rodrigoappelt\src\engine\engine.cpp
+	"Engine.h"
+	"Actor.h"
+	"Components/Camera.h"
+	<GL/glut.h>
+
+1720095199 d:\universidade\cg\trab5rodrigoappelt\src\manager.h
+	"Keyboard.h"
+	"Engine/Engine.h"
+
+1720095582 source:d:\universidade\cg\trab5rodrigoappelt\src\manager.cpp
+	"Manager.h"
+	<memory>
+	"Engine/Actor.h"
+	"Engine/Components/Skybox.h"
+

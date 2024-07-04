@@ -1,6 +1,9 @@
 #include "Engine.h"
 
 #include "Actor.h"
+#include "Components/Camera.h"
+
+#include <GL/glut.h>
 
 Engine::Engine* Engine::Engine::instance = nullptr;
 
@@ -27,7 +30,26 @@ std::optional<std::reference_wrapper<Engine::Actor>> Engine::Engine::_FindActorB
     return std::nullopt;
 }
 
+void Engine::Engine::Start(){
+    for (auto actor : hierarchy){
+        actor.Start();
+    }
+}
+
 void Engine::Engine::Update(float delta){
+    // update camera look at
+    auto cams = GetAllComponentsOfType<Components::Camera>();
+    for(auto& cam: cams){
+        if(cam->isActive){
+            cameraPos = cam->position;
+            Vector3 dir(0,0,1);
+            dir = dir.rotate(cam->rotation.x, Vector3(1,0,0));
+            dir = dir.rotate(cam->rotation.x, Vector3(1,0,0));
+            dir = dir.rotate(cam->rotation.x, Vector3(1,0,0));
+            cameraLookAt = dir;
+        }
+    }
+
     for (auto actor : hierarchy){
         actor.Update(delta);
     }
@@ -41,7 +63,15 @@ void Engine::Engine::Destroy(){
 }
 
 void Engine::Engine::Render(){
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    gluLookAt(cameraPos.x, cameraPos.y, cameraPos.z, // from. Posicao onde a camera esta posicionada
+              cameraPos.x + cameraLookAt.x, cameraPos.y + cameraLookAt.y, cameraPos.z + cameraLookAt.z,  // to. Posicao absoluta onde a camera esta vendo
+              0, 1, 0); // up. Vetor Up.
+
     for (auto actor : hierarchy){
         actor.Render();
     }
+
+    glutSwapBuffers();
 }

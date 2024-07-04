@@ -4,6 +4,8 @@
 #include <string>
 #include <memory>
 
+#include "../../Keyboard.h"
+
 #ifdef ERROR
 #undef ERROR
 #endif
@@ -23,6 +25,7 @@ namespace Engine::Components {
         virtual void Update(float delta) = 0;
         virtual void Destroy() = 0;
         virtual void Render() = 0;
+        virtual void Key(Key key) = 0;
     protected:
         enum class LogLevel {
             INFO,

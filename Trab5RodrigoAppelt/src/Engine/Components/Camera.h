@@ -14,15 +14,13 @@ namespace Engine::Components {
         };
 
         std::string getName() const override { return "Camera"; }
-        void Start() override;
-        void Update(float delta) override;
-        void Destroy() override;
-        void Render() override;
-
+        
         Vector3 position;
         Vector3 rotation;
         ViewMode viewMode;
         bool isActive;
+
+        Vector3 direction() const;
     };
 };
 

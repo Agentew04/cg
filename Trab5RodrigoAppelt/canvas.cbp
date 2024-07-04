@@ -46,6 +46,8 @@
 		</Linker>
 		<Unit filename="src/2D/Bmp.h" />
 		<Unit filename="src/2D/bmp.cpp" />
+		<Unit filename="src/2D/lodepng.cpp" />
+		<Unit filename="src/2D/lodepng.h" />
 		<Unit filename="src/Engine/Actor.cpp" />
 		<Unit filename="src/Engine/Actor.h" />
 		<Unit filename="src/Engine/Components/Camera.h" />
@@ -57,10 +59,12 @@
 		<Unit filename="src/Engine/Components/Skybox.h" />
 		<Unit filename="src/Engine/Components/Terrain.h" />
 		<Unit filename="src/Engine/Components/TerrainBezier.h" />
+		<Unit filename="src/Engine/Engine.cpp" />
 		<Unit filename="src/Engine/Engine.h" />
 		<Unit filename="src/Engine/Material.cpp" />
 		<Unit filename="src/Engine/Material.h" />
 		<Unit filename="src/Engine/Mesh.h" />
+		<Unit filename="src/Keyboard.h" />
 		<Unit filename="src/Math/Matrix.cpp" />
 		<Unit filename="src/Math/Matrix.h" />
 		<Unit filename="src/Math/Vector2.cpp" />
