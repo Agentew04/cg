@@ -65,6 +65,8 @@
 		<Unit filename="src/Engine/Material.h" />
 		<Unit filename="src/Engine/Mesh.h" />
 		<Unit filename="src/Keyboard.h" />
+		<Unit filename="src/Manager.cpp" />
+		<Unit filename="src/Manager.h" />
 		<Unit filename="src/Math/Matrix.cpp" />
 		<Unit filename="src/Math/Matrix.h" />
 		<Unit filename="src/Math/Vector2.cpp" />
