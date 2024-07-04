@@ -23,21 +23,43 @@ public:
     /// @brief A escala do ator no espaco
     Vector3 scale;
     /// @brief Uma lista de componentes que este ator tem
-    std::vector<std::unique_ptr<Components::Component>> components;
+    std::vector<std::shared_ptr<Components::Component>> components;
     /// @brief Uma lista de atores filhos
     std::vector<Actor> children;
 
     /// @brief Inicia todos os componentes deste ator
     void Start();
     /// @brief Atualiza todos os componentes deste ator e seus filhos
-    void Update();
+    void Update(float delta);
     /// @brief Destroi todos os componentes deste ator e seus filhos
     void Destroy();
     /// @brief Renderiza todos os componentes deste ator e seus filhos
     void Render();
+
+    template <typename T>
+    bool HasComponent(){
+        static_assert(std::is_base_of<Components::Component,T>::value);
+        for (auto& component : components){
+            if (dynamic_cast<T*>(component.get())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    template <typename T>
+    const T& GetComponent(){
+        static_assert(std::is_base_of<Components::Component,T>::value);
+        for (auto& component : components){
+            if (dynamic_cast<T*>(component.get())){
+                return *dynamic_cast<T*>(component.get());
+            }
+        }
+        throw std::runtime_error("Component not found");
+    }
 private:
 };
 
-}; 
+};
 
 #endif

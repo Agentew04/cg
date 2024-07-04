@@ -8,12 +8,12 @@ void Actor::Start(){
     }
 }
 
-void Actor::Update(){
+void Actor::Update(float delta){
     for (auto& component : components){
-        component->Update();
+        component->Update(delta);
     }
     for (auto& child : children){
-        child.Update();
+        child.Update(delta);
     }
 }
 
@@ -24,6 +24,9 @@ void Actor::Destroy(){
     for (auto& component : components){
         component->Destroy();
     }
+
+    components.clear();
+    children.clear();
 }
 
 void Actor::Render(){

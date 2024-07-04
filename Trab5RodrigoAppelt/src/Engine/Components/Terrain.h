@@ -12,9 +12,9 @@ namespace Engine::Components {
 
     class Terrain : public Component {
     public:
-        std::string name = "Terrain";
+        std::string getName() const override { return "Terrain"; }
         void Start() override;
-        void Update() override;
+        void Update(float delta) override;
         void Destroy() override;
         void Render() override;
     

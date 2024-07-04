@@ -2,22 +2,27 @@
 
 #include <vector>
 #include <string>
-
-
 #include <GL/glut.h>
 #include <GL/freeglut_ext.h>
+#include <chrono>
+
 
 #include "../../2D/Bmp.h"
+#include "../../2D/lodepng.h"
+#include "../Engine.h"
+#include "Camera.h"
 
 void Engine::Components::Skybox::Start()
 {
+    auto start = std::chrono::high_resolution_clock::now();
+
     std::vector<std::string> faces = {
-        skyboxPath + "px.bmp",
-        skyboxPath + "nx.bmp",
-        skyboxPath + "py.bmp",
-        skyboxPath + "ny.bmp",
-        skyboxPath + "pz.bmp",
-        skyboxPath + "nz.bmp"
+        skyboxPath + "px.png",
+        skyboxPath + "nx.png",
+        skyboxPath + "py.png",
+        skyboxPath + "ny.png",
+        skyboxPath + "pz.png",
+        skyboxPath + "nz.png"
     };
 
     unsigned int textureID[6];
@@ -30,11 +35,27 @@ void Engine::Components::Skybox::Start()
     bottomTextureId = textureID[3];
     frontTextureId = textureID[4];
     backTextureId = textureID[5];
+
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> duration = end - start;
+
+    log(LogLevel::INFO, "Skybox loading done! (Took " + std::to_string(duration.count()) + " seconds)");
 }
 
 GLuint Engine::Components::Skybox::loadTexture(const std::string& path){
-    Bmp bmp = Bmp(path.c_str());
-    bmp.convertBGRtoRGB();
+    // Bmp bmp = Bmp(path.c_str());
+    // bmp.convertBGRtoRGB();
+    std::vector<unsigned char> image; // The raw pixels
+    unsigned width, height;
+    auto start = std::chrono::high_resolution_clock::now();
+    unsigned error = lodepng::decode(image, width, height, path);
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> duration = end - start;
+
+    if(error){
+        std::cout << "decoder error " << error << ": " << lodepng_error_text(error) << std::endl;
+        return 0;
+    }
 
     GLuint textureID;
     glGenTextures(1, &textureID);
@@ -43,12 +64,12 @@ GLuint Engine::Components::Skybox::loadTexture(const std::string& path){
         GL_TEXTURE_2D,
         0,
         GL_RGB,
-        bmp.getWidth(),
-        bmp.getHeight(),
+        width, // bmp.getWidth(),
+        height,// bmp.getHeight(),
         0,
-        GL_RGB,
+        GL_RGBA,
         GL_UNSIGNED_BYTE,
-        bmp.getImage()
+        image.data()// bmp.getImage()
     );
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
@@ -66,66 +87,73 @@ void Engine::Components::Skybox::Render(){
     glDisable(GL_LIGHTING);
 
     glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+    glTranslatef(camPos.x, camPos.y, camPos.z);
 
     glDisable(GL_DEPTH_TEST);
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, frontTextureId);
     glBegin(GL_QUADS);
-    glTexCoord2f(0, 0); glVertex3f(-distance-offset, -distance-offset, distance+offset);
-    glTexCoord2f(1, 0); glVertex3f(distance+offset, -distance, distance+offset);
-    glTexCoord2f(1, 1); glVertex3f(distance+offset, distance+offset, distance+offset);
-    glTexCoord2f(0, 1); glVertex3f(-distance-offset, distance+offset, distance+offset);
+    glTexCoord2f(0, 1); glVertex3f(-distance-offset, -distance-offset, distance+offset);
+    glTexCoord2f(0, 0); glVertex3f(-distance-offset, distance+offset, distance+offset);
+    glTexCoord2f(1, 0); glVertex3f(distance+offset, distance+offset, distance+offset);
+    glTexCoord2f(1, 1); glVertex3f(distance+offset, -distance, distance+offset);
     glEnd();
 
     glBindTexture(GL_TEXTURE_2D, backTextureId);
     glBegin(GL_QUADS);
-    glTexCoord2f(0, 0); glVertex3f(distance+offset, -distance-offset, -distance-offset);
-    glTexCoord2f(1, 0); glVertex3f(-distance-offset, -distance-offset, -distance-offset);
-    glTexCoord2f(1, 1); glVertex3f(-distance-offset, distance, -distance-offset);
-    glTexCoord2f(0, 1); glVertex3f(distance+offset, distance+offset, -distance-offset);
+    glTexCoord2f(0, 1); glVertex3f(distance+offset, -distance-offset, -distance-offset);
+    glTexCoord2f(1, 1); glVertex3f(-distance-offset, -distance-offset, -distance-offset);
+    glTexCoord2f(1, 0); glVertex3f(-distance-offset, distance, -distance-offset);
+    glTexCoord2f(0, 0); glVertex3f(distance+offset, distance+offset, -distance-offset);
     glEnd();
 
     glBindTexture(GL_TEXTURE_2D, leftTextureId);
     glBegin(GL_QUADS);
-    glTexCoord2f(0, 0); glVertex3f(distance+offset, -distance-offset, distance+offset);
-    glTexCoord2f(1, 0); glVertex3f(distance+offset, -distance-offset, -distance-offset);
-    glTexCoord2f(1, 1); glVertex3f(distance+offset, distance+offset, -distance-offset);
-    glTexCoord2f(0, 1); glVertex3f(distance+offset, distance+offset, distance+offset);
+    glTexCoord2f(0, 1); glVertex3f(distance+offset, -distance-offset, distance+offset);
+    glTexCoord2f(1, 1); glVertex3f(distance+offset, -distance-offset, -distance-offset);
+    glTexCoord2f(1, 0); glVertex3f(distance+offset, distance+offset, -distance-offset);
+    glTexCoord2f(0, 0); glVertex3f(distance+offset, distance+offset, distance+offset);
     glEnd();
 
     glBindTexture(GL_TEXTURE_2D, rightTextureId);
     glBegin(GL_QUADS);
-    glTexCoord2f(0, 0); glVertex3f(-distance-offset, -distance-offset, -distance-offset);
-    glTexCoord2f(1, 0); glVertex3f(-distance-offset, -distance-offset, distance+offset);
-    glTexCoord2f(1, 1); glVertex3f(-distance-offset, distance+offset, distance+offset);
-    glTexCoord2f(0, 1); glVertex3f(-distance-offset, distance+offset, -distance-offset);
+    glTexCoord2f(0, 1); glVertex3f(-distance-offset, -distance-offset, -distance-offset);
+    glTexCoord2f(1, 1); glVertex3f(-distance-offset, -distance-offset, distance+offset);
+    glTexCoord2f(1, 0); glVertex3f(-distance-offset, distance+offset, distance+offset);
+    glTexCoord2f(0, 0); glVertex3f(-distance-offset, distance+offset, -distance-offset);
     glEnd();
 
     glBindTexture(GL_TEXTURE_2D, topTextureId);
     glBegin(GL_QUADS);
-    glTexCoord2f(0, 1); glVertex3f(-distance-offset, distance+offset, -distance-offset);
-    glTexCoord2f(1, 1); glVertex3f(distance+offset, distance+offset, -distance-offset);
-    glTexCoord2f(1, 0); glVertex3f(distance+offset, distance+offset, distance+offset);
-    glTexCoord2f(0, 0); glVertex3f(-distance-offset, distance+offset, distance+offset);
+    glTexCoord2f(0, 0); glVertex3f(-distance-offset, distance+offset, -distance-offset);
+    glTexCoord2f(1, 0); glVertex3f(distance+offset, distance+offset, -distance-offset);
+    glTexCoord2f(1, 1); glVertex3f(distance+offset, distance+offset, distance+offset);
+    glTexCoord2f(0, 1); glVertex3f(-distance-offset, distance+offset, distance+offset);
     glEnd();
 
     glBindTexture(GL_TEXTURE_2D, bottomTextureId);
     glBegin(GL_QUADS);
-    glTexCoord2f(0, 1); glVertex3f(-distance-offset, -distance-offset, distance+offset);
-    glTexCoord2f(1, 1); glVertex3f(distance+offset, -distance-offset, distance+offset);
-    glTexCoord2f(1, 0); glVertex3f(distance+offset, -distance-offset, -distance-offset);
-    glTexCoord2f(0, 0); glVertex3f(-distance-offset, -distance-offset, -distance-offset);
+    glTexCoord2f(0, 0); glVertex3f(-distance-offset, -distance-offset, distance+offset);
+    glTexCoord2f(1, 0); glVertex3f(distance+offset, -distance-offset, distance+offset);
+    glTexCoord2f(1, 1); glVertex3f(distance+offset, -distance-offset, -distance-offset);
+    glTexCoord2f(0, 1); glVertex3f(-distance-offset, -distance-offset, -distance-offset);
     glEnd();
 
-    glPopMatrix();
 
+    glPopMatrix();
     glEnable(GL_DEPTH_TEST);
     glDisable(GL_TEXTURE_2D);
     glEnable(GL_LIGHTING);
 }
 
-void Engine::Components::Skybox::Update(){
-
+void Engine::Components::Skybox::Update(float){
+    auto cams = Engine::instance->GetAllComponentsOfType<Camera>();
+    for(auto &cam: cams){
+       if(cam->isActive){
+           camPos = cam->position;
+       }
+    }
 }
 
 void Engine::Components::Skybox::Destroy(){

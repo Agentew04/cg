@@ -4,6 +4,8 @@
 #include <vector>
 #include <list>
 #include <memory>
+#include <optional>
+
 
 #include "Actor.h"
 #include "Mesh.h"
@@ -12,38 +14,89 @@ namespace Engine{
 
     class Engine {
         public:
+            /// @brief Unica instancia usada da engine.
+            static Engine* instance;
+            /// @brief Uma lista com os atores raizes da cena.
             std::vector<Actor> hierarchy;
+
+            /// @brief Retorna o primeiro ator com o nome especificado.
+            /// @param name O nome a ser procurado
+            /// @return O ator com o nome especificado, ou std::nullopt se nao encontrar
+            std::optional<std::reference_wrapper<Actor>> FindActorByName(const std::string& name);
+
+            /// @brief Retorna o primeiro ator que contem o componente dado.
+            /// @tparam T O tipo de componente. Deve ser derivado de Engine::Components::Component
+            /// @return O primeiro ator que contem o componente dado, ou std::nullopt se nao encontrar
             template <typename T>
-            void FindActorByName(std::string name, std::vector<T> &actors){
+            std::optional<std::reference_wrapper<Actor>> FindActorWithComponent(){
+                static_assert(std::is_base_of<Components::Component,T>::value);
                 for (auto actor : hierarchy){
-                    if (actor.name == name){
-                        actors.push_back(actor);
-                    }
-                    for (auto child : actor.children){
-                        FindActorByName(name, actors);
+                    auto ret = _FindActorWithComponent<T>(actor);
+                    if (ret.has_value()){
+                        return ret;
                     }
                 }
+                return std::nullopt;
             }
 
+            /// @brief Retorna todos os componentes da cena que tem o tipo passado.
+            /// @tparam T O tipo de componente desejado
+            /// @return Uma lista com todos os componentes desse tipo achados.
             template <typename T>
-            void FindActorWithComponent(std::string type, std::vector<T> &actors){
+            std::vector<std::shared_ptr<T>> GetAllComponentsOfType() const{
+                static_assert(std::is_base_of<Components::Component,T>::value);
+                std::vector<std::shared_ptr<T>> components;
                 for (auto actor : hierarchy){
-                    for (auto component : actor.components){
-                        if (component.name == type){
-                            actors.push_back(actor);
-                        }
-                    }
-                    for (auto child : actor.children){
-                        FindActorByType(type, actors);
-                    }
+                    auto comps = _GetAllComponentsOfType<T>(actor);
+                    components.insert(components.end(), comps.begin(), comps.end());
                 }
+                return components;
             }
 
+            /// @brief Especie de cache com todas as meshes carregadas e em uso
             std::list<std::shared_ptr<Mesh>> loadedMeshes;
 
-            void Update();
+            /// @brief Roda um tick de update em todos os componentes de todos os atores
+            void Update(float delta);
+            /// @brief Destroi tudo.
             void Destroy();
+            /// @brief Renderiza um frame.
             void Render();
+
+        private:
+            // private helper
+            std::optional<std::reference_wrapper<Actor>> _FindActorByName(Actor& root, const std::string& name);
+
+            template <typename T>
+            std::optional<std::reference_wrapper<Actor>> _FindActorWithComponent(Actor& root){
+                static_assert(std::is_base_of<Components::Component,T>::value);
+                if (root.HasComponent<T>()){
+                    return std::optional(root);
+                }
+                for (auto child : root.children){
+                    auto ret = FindActorWithComponent<T>(child);
+                    if (ret.has_value()){
+                        return ret;
+                    }
+                }
+                return std::nullopt;
+            }
+
+            template <typename T>
+            std::vector<std::shared_ptr<T>> _GetAllComponentsOfType(const Actor& root) const{
+                static_assert(std::is_base_of<Components::Component,T>::value);
+                std::vector<std::shared_ptr<T>> components;
+                for (auto component : root.components){
+                    if (dynamic_cast<T*>(component.get())){
+                        components.push_back(std::dynamic_pointer_cast<T>(component));
+                    }
+                }
+                for (const auto child : root.children){
+                    auto comps = _GetAllComponentsOfType<T>(child);
+                    components.insert(components.end(), comps.begin(), comps.end());
+                }
+                return components;
+            }
     };
 };
 

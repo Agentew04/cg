@@ -129,6 +129,8 @@ float aspect = 16.0/9.0;
 #include "Math/Vector3.h"
 #include "Engine/Material.h"
 #include "Engine/Components/Skybox.h"
+#include "Engine/Components/Camera.h"
+#include "Engine/Engine.h"
 #include "Keyboard.h"
 
 Engine::Components::Skybox skybox;
@@ -137,6 +139,8 @@ int looking = 0;
 
 Vector3 cameraPos = Vector3(0, 0, 0);
 Vector3 cameraLookAt = Vector3(0, 0, 1);
+
+Engine::Engine engine;
 
 ////////////////////////////////////////////////////////////////////////////////////////
 void display(void)
@@ -151,7 +155,9 @@ void display(void)
               0, 1, 0); // up. Vetor Up.
     // std::cout << "Camera Pos: " << cameraPos << std::endl;
     // std::cout << "Camera LookAt: " << cameraLookAt << std::endl;
-    skybox.Render();
+    engine.Update(0.0);
+    engine.Render();
+    //skybox.Render();
 
     // todos os objetos estao definidos na origem do sistema global fixo
     // e sao transladados para a posicao destino.
@@ -241,7 +247,7 @@ void initOpenGL(){
     glLoadIdentity();
     gluPerspective(abertura, aspect, znear, zfar);  // Set up a perspective projection matrix
     glMatrixMode(GL_MODELVIEW);
-    
+
     glClearColor(0.0, 0.0, 0.0, 0.0); // Set background color to black and opaque
     glClearDepth(1.0);                // Set background depth to farthest
     glEnable(GL_DEPTH_TEST);
@@ -286,7 +292,6 @@ void reshape(GLsizei width, GLsizei height) {
 int main()
 {
     int argc = 0;
-    // char *argv[1] = {"teste"};
     glutInit(&argc, NULL);
 
     glutSetOption(GLUT_MULTISAMPLE, 4);
@@ -298,7 +303,11 @@ int main()
     // init
     initOpenGL();
 
-    skybox.Start();
+    ::Engine::Engine::instance = &engine;
+    Engine::Actor skyboxActor;
+    skyboxActor.components.push_back(std::move(std::make_shared<Engine::Components::Skybox>()));
+    skyboxActor.Start();
+    engine.hierarchy.push_back(std::move(skyboxActor));
 
     glutDisplayFunc(display);
     glutMotionFunc(MotionFunc);

@@ -13,9 +13,9 @@ namespace Engine::Components {
             SOLID_SHADED
         };
 
-        std::string name = "Camera";
+        std::string getName() const override { return "Camera"; }
         void Start() override;
-        void Update() override;
+        void Update(float delta) override;
         void Destroy() override;
         void Render() override;
 
