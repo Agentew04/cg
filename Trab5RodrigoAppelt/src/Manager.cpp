@@ -6,6 +6,9 @@
 #include "Engine/Components/Skybox.h"
 #include "Engine/Components/Camera.h"
 #include "Engine/Components/Character.h"
+#include "Engine/Components/MeshRenderer.h"
+#include "Engine/Mesh.h"
+#include "Engine/MeshImporter.h"
 
 
 void Manager::startloop(){
@@ -20,6 +23,13 @@ void Manager::startloop(){
     cameraActor.components.push_back(std::move(cam));
     cameraActor.components.push_back(std::move(std::make_shared<Engine::Components::Character>()));
     engine.hierarchy.push_back(std::move(cameraActor));
+
+    Engine::Actor planeActor;
+    std::shared_ptr<Engine::Components::MeshRenderer> meshRenderer = std::make_shared<Engine::Components::MeshRenderer>();
+    meshRenderer->mesh = Engine::MeshImporter::loadMesh(".\\Trab5RodrigoAppelt\\assets\\models\\aviao.obj");
+    planeActor.components.push_back(std::move(meshRenderer));
+    engine.hierarchy.push_back(std::move(planeActor));
+
 
     engine.Start();
 }

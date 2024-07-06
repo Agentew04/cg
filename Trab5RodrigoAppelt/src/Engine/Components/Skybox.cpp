@@ -151,7 +151,7 @@ void Engine::Components::Skybox::Update(float){
     auto cams = Engine::instance->GetAllComponentsOfType<Camera>();
     for(auto &cam: cams){
         if(cam->isActive){
-            camPos = cam->position;
+            // camPos = cam->position;
         }
     }
 }

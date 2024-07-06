@@ -15,9 +15,9 @@ namespace Engine {
     class MeshImporter {
     public:
         
-        static std::shared_ptr<Engine::Mesh> loadMesh(std::string path);
+        static std::shared_ptr<Mesh> loadMesh(std::string path);
 
-        static std::map<std::string, Engine::Material> loadMaterials(std::string path);
+        static std::map<std::string, Material> loadMaterials(std::string path);
 
     private:
     };

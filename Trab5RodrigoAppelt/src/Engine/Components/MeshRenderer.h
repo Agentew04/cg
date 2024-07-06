@@ -13,15 +13,10 @@ namespace Engine::Components {
     class MeshRenderer : public Component {
     public:
         std::shared_ptr<Mesh> mesh;
-        Vector3 color;
 
         std::string getName() const override { return "MeshRenderer"; }
 
-        void Start() override;
-        void Update(float delta) override;
-        void Destroy() override;
         void Render() override;
-    
     private:
     };
 };

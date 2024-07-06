@@ -637,8 +637,9 @@
 1715562380 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\math\vector2.cpp
 	"Vector2.h"
 
-1719962964 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\math\vector3.cpp
+1720234986 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\math\vector3.cpp
 	<cmath>
+	<cstdint>
 	"Vector2.h"
 	"Vector3.h"
 
@@ -907,7 +908,7 @@
 	<stdio.h>
 	<stdlib.h>
 
-1720053846 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\skybox.cpp
+1720230870 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\skybox.cpp
 	"Skybox.h"
 	<vector>
 	<string>
@@ -946,9 +947,10 @@
 	"Mesh.h"
 	"../Math/Vector3.h"
 
-1719951984 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\mesh.h
+1720232735 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\mesh.h
 	<vector>
 	"../Math/Vector3.h"
+	"Material.h"
 
 1720141270 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\engine.cpp
 	"Engine.h"
@@ -1117,13 +1119,16 @@
 	"Keyboard.h"
 	"Engine/Engine.h"
 
-1720229785 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\manager.cpp
+1720241371 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\manager.cpp
 	"Manager.h"
 	<memory>
 	"Engine/Actor.h"
 	"Engine/Components/Skybox.h"
 	"Engine/Components/Camera.h"
 	"Engine/Components/Character.h"
+	"Engine/Components/MeshRenderer.h"
+	"Engine/Mesh.h"
+	"Engine/MeshImporter.h"
 
 1720230196 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\camera.cpp
 	"Camera.h"
@@ -1137,4 +1142,34 @@
 	"Component.h"
 	"Camera.h"
 	"../../Keyboard.h"
+
+1720240600 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\meshrenderer.h
+	<memory>
+	"Component.h"
+	"../Mesh.h"
+	"../../Math/Vector3.h"
+
+1720240738 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\meshrenderer.cpp
+	"MeshRenderer.h"
+	<GL/glut.h>
+
+1720240165 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\meshimporter.cpp
+	"MeshImporter.h"
+	<iostream>
+	<string>
+	<memory>
+	<vector>
+	<optional>
+	<sstream>
+	<fstream>
+	<algorithm>
+	"Material.h"
+	"Mesh.h"
+
+1720242046 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\meshimporter.h
+	<string>
+	<map>
+	<memory>
+	"../Math/Vector3.h"
+	"Mesh.h"
 

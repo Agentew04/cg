@@ -56,6 +56,7 @@
 		<Unit filename="src/Engine/Components/Character.h" />
 		<Unit filename="src/Engine/Components/Component.cpp" />
 		<Unit filename="src/Engine/Components/Component.h" />
+		<Unit filename="src/Engine/Components/MeshRenderer.cpp" />
 		<Unit filename="src/Engine/Components/MeshRenderer.h" />
 		<Unit filename="src/Engine/Components/Skybox.cpp" />
 		<Unit filename="src/Engine/Components/Skybox.h" />
@@ -66,6 +67,8 @@
 		<Unit filename="src/Engine/Material.cpp" />
 		<Unit filename="src/Engine/Material.h" />
 		<Unit filename="src/Engine/Mesh.h" />
+		<Unit filename="src/Engine/MeshImporter.cpp" />
+		<Unit filename="src/Engine/MeshImporter.h" />
 		<Unit filename="src/Keyboard.h" />
 		<Unit filename="src/Manager.cpp" />
 		<Unit filename="src/Manager.h" />
