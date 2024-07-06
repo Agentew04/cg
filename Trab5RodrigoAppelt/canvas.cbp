@@ -50,7 +50,9 @@
 		<Unit filename="src/2D/lodepng.h" />
 		<Unit filename="src/Engine/Actor.cpp" />
 		<Unit filename="src/Engine/Actor.h" />
+		<Unit filename="src/Engine/Components/Camera.cpp" />
 		<Unit filename="src/Engine/Components/Camera.h" />
+		<Unit filename="src/Engine/Components/Character.cpp" />
 		<Unit filename="src/Engine/Components/Character.h" />
 		<Unit filename="src/Engine/Components/Component.cpp" />
 		<Unit filename="src/Engine/Components/Component.h" />

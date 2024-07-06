@@ -1,4 +1,5 @@
 #include <cmath>
+#include <cstdint>
 
 #include "Vector2.h"
 #include "Vector3.h"

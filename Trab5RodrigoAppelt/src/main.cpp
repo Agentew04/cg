@@ -132,6 +132,13 @@ void display(void)
     lastFrame = time;
     mngr.update(delta);
     mngr.render();
+
+    Engine::Material mat;
+    mat.diffuse[0] = 1;
+    mat.diffuse[1] = 1;
+    mat.diffuse[2] = 0;
+    mat.use();
+    glutSolidTeacup(10);
 }
 
 // faz a leitura da entrada do usuario
@@ -151,6 +158,12 @@ void keyboard(unsigned char key, int x, int y)
         mngr.keyboard(key);
         break;
     }
+}
+
+void keyboardUp(unsigned char key, int x, int y)
+{
+    key = tolower(key);
+    mngr.keyboardUp(key);
 }
 
 void MotionFunc(int x, int y)
@@ -230,6 +243,7 @@ int main()
     glutIdleFunc(display);
     glutReshapeFunc(reshape);
     glutKeyboardFunc(keyboard);
+    glutKeyboardUpFunc(keyboardUp);
 
     glutFullScreen();
 

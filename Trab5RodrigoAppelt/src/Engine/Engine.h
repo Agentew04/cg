@@ -67,6 +67,11 @@ namespace Engine{
             /// @brief Renderiza um frame.
             void Render();
 
+            /// @brief Repassa evento de tecla pressionada para todos os componentes
+            void KeyDown(int key);
+            /// @brief Repassa evento de tecla solta para todos os componentes
+            void KeyUp(int key);
+
         private:
             // private helper
             std::optional<std::reference_wrapper<Actor>> _FindActorByName(Actor& root, const std::string& name);

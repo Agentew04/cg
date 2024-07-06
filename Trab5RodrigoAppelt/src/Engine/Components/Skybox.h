@@ -15,7 +15,6 @@ namespace Engine::Components{
         void Destroy() override;
         void Render() override;
 
-
         float distance = 500;
     private:
         GLuint loadTexture(const std::string& path);

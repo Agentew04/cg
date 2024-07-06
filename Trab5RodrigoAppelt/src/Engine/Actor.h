@@ -35,6 +35,10 @@ public:
     void Destroy();
     /// @brief Renderiza todos os componentes deste ator e seus filhos
     void Render();
+    /// @brief Notifica componentes que uma tecla foi pressionada
+    void KeyDown(Key key);
+    /// @brief Notifica componentes que uma tecla foi solta
+    void KeyUp(Key key);
 
     template <typename T>
     bool HasComponent(){

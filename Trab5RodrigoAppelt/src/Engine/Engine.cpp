@@ -42,11 +42,7 @@ void Engine::Engine::Update(float delta){
     for(auto& cam: cams){
         if(cam->isActive){
             cameraPos = cam->position;
-            Vector3 dir(0,0,1);
-            dir = dir.rotate(cam->rotation.x, Vector3(1,0,0));
-            dir = dir.rotate(cam->rotation.x, Vector3(1,0,0));
-            dir = dir.rotate(cam->rotation.x, Vector3(1,0,0));
-            cameraLookAt = dir;
+            cameraLookAt = cam->direction();
         }
     }
 
@@ -74,4 +70,16 @@ void Engine::Engine::Render(){
     }
 
     glutSwapBuffers();
+}
+
+void Engine::Engine::KeyDown(int key){
+    for (auto actor : hierarchy){
+        actor.KeyDown(key);
+    }
+}
+
+void Engine::Engine::KeyUp(int key){
+    for (auto actor : hierarchy){
+        actor.KeyUp(key);
+    }
 }

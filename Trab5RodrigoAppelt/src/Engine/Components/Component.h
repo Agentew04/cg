@@ -18,14 +18,17 @@ namespace Engine{
 namespace Engine::Components {
     class Component {
     public:
+        virtual ~Component() = default;
+
         std::shared_ptr<Actor> actor;
-        
+
         virtual std::string getName() const;
-        virtual void Start() = 0;
-        virtual void Update(float delta) = 0;
-        virtual void Destroy() = 0;
-        virtual void Render() = 0;
-        virtual void Key(Key key) = 0;
+        virtual void Start() {};
+        virtual void Update(float delta) {};
+        virtual void Destroy() {};
+        virtual void Render() {};
+        virtual void KeyDown(Key key) {}
+        virtual void KeyUp(Key key) {}
     protected:
         enum class LogLevel {
             INFO,

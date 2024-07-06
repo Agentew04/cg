@@ -847,7 +847,7 @@
 	"CheckBoxManager.h"
 	"Chart.h"
 
-1720047021 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\main.cpp
+1720230781 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<stdlib.h>
@@ -855,9 +855,8 @@
 	<stdio.h>
 	"Math/Vector3.h"
 	"Engine/Material.h"
-	"Engine/Components/Skybox.h"
-	"Engine/Engine.h"
 	"Keyboard.h"
+	"Manager.h"
 
 1719944193 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\gl.h
 	<string>
@@ -885,18 +884,20 @@
 	<iostream>
 	"../Actor.h"
 
-1720049220 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\component.h
+1720141214 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\component.h
 	<string>
 	<memory>
+	"../../Keyboard.h"
 
-1720046467 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\actor.h
+1720139878 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\actor.h
 	<string>
 	<vector>
 	"../Math/Vector3.h"
 	"Components/Component.h"
 
-1720045101 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\actor.cpp
+1720230668 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\actor.cpp
 	"Actor.h"
+	<GL/glut.h>
 
 1650887927 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\2d\bmp.cpp
 	"Bmp.h"
@@ -906,7 +907,7 @@
 	<stdio.h>
 	<stdlib.h>
 
-1720049599 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\skybox.cpp
+1720053846 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\skybox.cpp
 	"Skybox.h"
 	<vector>
 	<string>
@@ -918,7 +919,7 @@
 	"../Engine.h"
 	"Camera.h"
 
-1720049302 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\skybox.h
+1720140928 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\skybox.h
 	"Component.h"
 	"../../Math/Vector3.h"
 
@@ -936,23 +937,26 @@
 	<iostream>
 	"lodepng.h"
 
-1720049576 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\engine.h
+1720139842 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\engine.h
 	<vector>
 	<list>
 	<memory>
 	<optional>
 	"Actor.h"
 	"Mesh.h"
+	"../Math/Vector3.h"
 
 1719951984 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\mesh.h
 	<vector>
 	"../Math/Vector3.h"
 
-1720047007 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\engine.cpp
+1720141270 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\engine.cpp
 	"Engine.h"
 	"Actor.h"
+	"Components/Camera.h"
+	<GL/glut.h>
 
-1720049328 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\camera.h
+1720132752 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\camera.h
 	"Component.h"
 	"../../Math/Vector3.h"
 
@@ -1108,4 +1112,29 @@
 	<memory>
 	"Engine/Actor.h"
 	"Engine/Components/Skybox.h"
+
+1720229696 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\manager.h
+	"Keyboard.h"
+	"Engine/Engine.h"
+
+1720229785 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\manager.cpp
+	"Manager.h"
+	<memory>
+	"Engine/Actor.h"
+	"Engine/Components/Skybox.h"
+	"Engine/Components/Camera.h"
+	"Engine/Components/Character.h"
+
+1720230196 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\camera.cpp
+	"Camera.h"
+
+1720230585 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\character.cpp
+	"Character.h"
+	"Camera.h"
+	"../Engine.h"
+
+1720230559 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\character.h
+	"Component.h"
+	"Camera.h"
+	"../../Keyboard.h"
 

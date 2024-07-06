@@ -2,7 +2,9 @@
 #define __MESH_H__
 
 #include <vector>
+
 #include "../Math/Vector3.h"
+#include "Material.h"
 
 namespace Engine {
 
@@ -23,14 +25,20 @@ namespace Engine {
             std::vector<int> vertices;
             /// @brief O indice de cada normal de cada vertice
             std::vector<int> normals;
+            std::vector<int> uv;
+            int material;
         };
 
         /// @brief Lista de vertices do objeto
         std::vector<Vector3> vertexList;
         /// @brief Lista com a normais do objeto
         std::vector<Vector3> normalList;
+        /// @brief Lista com as coordenadas de textura para cada vertice.
+        std::vector<Vector2> uvList;
         /// @brief Lista de faces. Cada face eh composta por 3 vertices.
         std::vector<Face> faceList;
+
+        std::vector<Material> materials;
     };
 };
 
