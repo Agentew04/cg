@@ -9,8 +9,8 @@ using namespace Engine::Components;
 void Component::log(LogLevel level, std::string message){
 
     std::string id;
-    if(actor != nullptr){
-        id = actor->name + "::" + getName();
+    if(auto act = actor.lock()){
+        id = act->name + "::" + getName();
     } else {
         id = getName();
     }

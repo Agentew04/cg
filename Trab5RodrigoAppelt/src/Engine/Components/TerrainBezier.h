@@ -1,16 +1,37 @@
 #ifndef __TERRAIN_BEZIER_H__
 #define __TERRAIN_BEZIER_H__
 
-#include "Terrain.h"
+#include "Component.h"
+
+#include <vector>
+#include "../../Math/Vector3.h"
 
 namespace Engine::Components {
-    class TerrainBezier : public Terrain {
+    /// @brief Componente que gera um terreno feito de nxn patches de bezier grau 3.
+    class TerrainBezier : public Component {
     public:
         std::string getName() const override { return "TerrainBezier"; }
+
+        /// @brief Gera todos os pontos de controle
         void Start() override;
-        void Update(float delta) override;
+        
+        /// @brief Libera todos os recursos
         void Destroy() override;
+
+        /// @brief Renderiza o terreno
         void Render() override;
+
+        int resolution;
+    private:
+        uint32_t textureId;
+        std::vector<Vector3> terrainPoints;
+        std::vector<Vector3> terrainNormals;
+
+        /// @brief Renderiza o terreno sem textura
+        void render_without_texture();
+
+        /// @brief Renderiza o terreno com textura
+        void render_with_texture();
     };
 };
 

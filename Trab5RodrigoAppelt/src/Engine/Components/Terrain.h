@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "Component.h"
+#include "../../Math/Vector3.h"
 
 namespace Engine::Components {
 
@@ -13,16 +14,18 @@ namespace Engine::Components {
     class Terrain : public Component {
     public:
         std::string getName() const override { return "Terrain"; }
+
+        /// @brief Cria um heightmap aleatorio
         void Start() override;
-        void Update(float delta) override;
         void Destroy() override;
         void Render() override;
-    
-        /// @brief O numero de pontos do lado do terreno.
-        /// Deve atender o requisito: (N-4)%3==0
-        int resolution;
-        std::unique_ptr<short> heightmap;
-        GLuint textureId;
+
+
+        float* controlPoints;
+        uint32_t textureId;
+    private:
+        void render_with_texture();
+        void render_without_texture();
     };
 } // namespace Engine::Components
 

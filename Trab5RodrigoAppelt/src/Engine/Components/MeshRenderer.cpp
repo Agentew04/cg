@@ -5,6 +5,7 @@
 using namespace Engine::Components;
 
 void MeshRenderer::Render() {
+    log(LogLevel::INFO, "Rendering mesh");
     glBegin(GL_TRIANGLES);
     for (auto face : mesh->faceList) {
         mesh->materials[face.material].use();

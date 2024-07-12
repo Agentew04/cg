@@ -10,7 +10,6 @@ namespace Engine::Components
 {
     class Character: public Component {
     public:
-        void Start() override;
         void KeyDown(int key) override;
         void KeyUp(int key) override;
         void Update(float delta) override;
@@ -23,10 +22,10 @@ namespace Engine::Components
             RIGHT = 1 << 1,
             UP = 1 << 2,
             DOWN = 1 << 3,
+            FRONT = 1 << 4
         };
 
         Movement mov;
-        std::shared_ptr<Camera> linkedCamera;
     };
 }; // namespace name
 

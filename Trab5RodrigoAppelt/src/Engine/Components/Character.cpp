@@ -2,53 +2,36 @@
 
 using namespace Engine::Components;
 
-#include "Camera.h"
 #include "../Engine.h"
-
-void Character::Start(){
-    // acha a camera
-    auto cams = ::Engine::Engine::instance->GetAllComponentsOfType<Camera>();
-    for(auto& cam: cams){
-        if(cam->isActive){
-            linkedCamera = cam;
-        }
-    }
-}
 
 void Character::Update(float delta){
     // move a posicao da camera
-    if(linkedCamera){
+
+    if(auto act = actor.lock()){
         if((((int)mov) & (int)Movement::LEFT) > 0){
-            linkedCamera->rotation.y = linkedCamera->rotation.y + delta;
+            act->rotation.y = act->rotation.y + delta;
         }
         if((((int)mov) & (int)Movement::RIGHT) > 0){
-            linkedCamera->rotation.y = linkedCamera->rotation.y - delta;
+            act->rotation.y = act->rotation.y - delta;
         }
         if((((int)mov) & (int)Movement::UP) > 0){
-            linkedCamera->rotation.x = linkedCamera->rotation.x + delta;
+            act->rotation.x = act->rotation.x + delta;
         }
         if((((int)mov) & (int)Movement::DOWN) > 0){
-            linkedCamera->rotation.x = linkedCamera->rotation.x - delta;
+            act->rotation.x = act->rotation.x - delta;
         }
 
         Vector3 up = Vector3(0,1,0);
-        Vector3 front = linkedCamera->direction();
+        Vector3 front = act->getForward();
         Vector3 right = up.cross(front);
 
-        // move para frente automaticamente
-        linkedCamera->position += front * (delta * forwardSpeed);
-    }else{
-        auto cams = ::Engine::Engine::instance->GetAllComponentsOfType<Camera>();
-        for(auto& cam: cams){
-            if(cam->isActive){
-                linkedCamera = cam;
-            }
+        if((((int)mov) & (int)Movement::FRONT) > 0){
+            act->position += front * (delta * forwardSpeed);
         }
     }
 }
 
 void Character::KeyDown(int key){
-    std::cout << "Character KeyDown: " << key << std::endl;
     switch(key){
         case 'a':
             mov = (Movement)((int)mov | (int)Movement::LEFT);
@@ -61,6 +44,9 @@ void Character::KeyDown(int key){
             break;
         case 's':
             mov = (Movement)((int)mov | (int)Movement::DOWN);
+            break;
+        case ' ':
+            mov = (Movement)((int)mov | (int)Movement::FRONT);
             break;
     }
 }
@@ -78,6 +64,9 @@ void Character::KeyUp(int key){
             break;
         case 's':
             mov = (Movement)((int)mov & ~(int)Movement::DOWN);
+            break;
+        case ' ':
+            mov = (Movement)((int)mov & ~(int)Movement::FRONT);
             break;
     }
     // ativa desativa o movimento

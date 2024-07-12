@@ -848,7 +848,7 @@
 	"CheckBoxManager.h"
 	"Chart.h"
 
-1720230781 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\main.cpp
+1720812257 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<stdlib.h>
@@ -880,23 +880,23 @@
 	"Material.h"
 	<GL/glut.h>
 
-1720049256 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\component.cpp
+1720287510 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\component.cpp
 	"Component.h"
 	<iostream>
 	"../Actor.h"
 
-1720141214 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\component.h
+1720287546 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\component.h
 	<string>
 	<memory>
 	"../../Keyboard.h"
 
-1720139878 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\actor.h
+1720293902 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\actor.h
 	<string>
 	<vector>
 	"../Math/Vector3.h"
 	"Components/Component.h"
 
-1720230668 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\actor.cpp
+1720293989 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\actor.cpp
 	"Actor.h"
 	<GL/glut.h>
 
@@ -908,7 +908,7 @@
 	<stdio.h>
 	<stdlib.h>
 
-1720230870 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\skybox.cpp
+1720288178 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\skybox.cpp
 	"Skybox.h"
 	<vector>
 	<string>
@@ -938,7 +938,7 @@
 	<iostream>
 	"lodepng.h"
 
-1720139842 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\engine.h
+1720294098 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\engine.h
 	<vector>
 	<list>
 	<memory>
@@ -952,13 +952,13 @@
 	"../Math/Vector3.h"
 	"Material.h"
 
-1720141270 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\engine.cpp
+1720812632 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\engine.cpp
 	"Engine.h"
 	"Actor.h"
 	"Components/Camera.h"
 	<GL/glut.h>
 
-1720132752 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\camera.h
+1720291883 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\camera.h
 	"Component.h"
 	"../../Math/Vector3.h"
 
@@ -1119,7 +1119,7 @@
 	"Keyboard.h"
 	"Engine/Engine.h"
 
-1720241371 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\manager.cpp
+1720812529 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\manager.cpp
 	"Manager.h"
 	<memory>
 	"Engine/Actor.h"
@@ -1127,18 +1127,18 @@
 	"Engine/Components/Camera.h"
 	"Engine/Components/Character.h"
 	"Engine/Components/MeshRenderer.h"
+	"Engine/Components/TerrainBezier.h"
 	"Engine/Mesh.h"
 	"Engine/MeshImporter.h"
 
 1720230196 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\camera.cpp
 	"Camera.h"
 
-1720230585 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\character.cpp
+1720292645 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\character.cpp
 	"Character.h"
-	"Camera.h"
 	"../Engine.h"
 
-1720230559 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\character.h
+1720292587 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\character.h
 	"Component.h"
 	"Camera.h"
 	"../../Keyboard.h"
@@ -1149,7 +1149,7 @@
 	"../Mesh.h"
 	"../../Math/Vector3.h"
 
-1720240738 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\meshrenderer.cpp
+1720292986 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\meshrenderer.cpp
 	"MeshRenderer.h"
 	<GL/glut.h>
 
@@ -1172,4 +1172,31 @@
 	<memory>
 	"../Math/Vector3.h"
 	"Mesh.h"
+
+1720445536 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\terrain.h
+	<string>
+	<memory>
+	"Component.h"
+	"../../Math/Vector3.h"
+
+1720291850 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\terrain.cpp
+	"Terrain.h"
+	<random>
+	<ctime>
+	<GL/glut.h>
+	"../Material.h"
+
+1720809887 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\terrainbezier.h
+	"Component.h"
+	<vector>
+	"../../Math/Vector3.h"
+
+1720812604 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\components\terrainbezier.cpp
+	"TerrainBezier.h"
+	<random>
+	<vector>
+	<ctime>
+	<GL/glut.h>
+	"../Material.h"
+	"../../Math/Vector3.h"
 

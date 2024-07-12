@@ -19,18 +19,18 @@ namespace Engine{
             /// @brief Unica instancia usada da engine.
             static Engine* instance;
             /// @brief Uma lista com os atores raizes da cena.
-            std::vector<Actor> hierarchy;
+            std::vector<std::shared_ptr<Actor>> hierarchy;
 
             /// @brief Retorna o primeiro ator com o nome especificado.
             /// @param name O nome a ser procurado
             /// @return O ator com o nome especificado, ou std::nullopt se nao encontrar
-            std::optional<std::reference_wrapper<Actor>> FindActorByName(const std::string& name);
+            std::optional<std::shared_ptr<Actor>> FindActorByName(const std::string& name);
 
             /// @brief Retorna o primeiro ator que contem o componente dado.
             /// @tparam T O tipo de componente. Deve ser derivado de Engine::Components::Component
             /// @return O primeiro ator que contem o componente dado, ou std::nullopt se nao encontrar
             template <typename T>
-            std::optional<std::reference_wrapper<Actor>> FindActorWithComponent(){
+            std::optional<std::shared_ptr<Actor>> FindActorWithComponent(){
                 static_assert(std::is_base_of<Components::Component,T>::value);
                 for (auto actor : hierarchy){
                     auto ret = _FindActorWithComponent<T>(actor);
@@ -74,15 +74,15 @@ namespace Engine{
 
         private:
             // private helper
-            std::optional<std::reference_wrapper<Actor>> _FindActorByName(Actor& root, const std::string& name);
+            std::optional<std::shared_ptr<Actor>> _FindActorByName(std::shared_ptr<Actor> root, const std::string& name);
 
             template <typename T>
-            std::optional<std::reference_wrapper<Actor>> _FindActorWithComponent(Actor& root){
+            std::optional<std::shared_ptr<Actor>> _FindActorWithComponent(std::shared_ptr<Actor> root){
                 static_assert(std::is_base_of<Components::Component,T>::value);
-                if (root.HasComponent<T>()){
+                if (root->HasComponent<T>()){
                     return std::optional(root);
                 }
-                for (auto child : root.children){
+                for (auto child : root->children){
                     auto ret = FindActorWithComponent<T>(child);
                     if (ret.has_value()){
                         return ret;
@@ -92,15 +92,15 @@ namespace Engine{
             }
 
             template <typename T>
-            std::vector<std::shared_ptr<T>> _GetAllComponentsOfType(const Actor& root) const{
+            std::vector<std::shared_ptr<T>> _GetAllComponentsOfType(std::shared_ptr<Actor> root) const{
                 static_assert(std::is_base_of<Components::Component,T>::value);
                 std::vector<std::shared_ptr<T>> components;
-                for (auto component : root.components){
+                for (auto component : root->components){
                     if (dynamic_cast<T*>(component.get())){
                         components.push_back(std::dynamic_pointer_cast<T>(component));
                     }
                 }
-                for (const auto child : root.children){
+                for (const auto child : root->children){
                     auto comps = _GetAllComponentsOfType<T>(child);
                     components.insert(components.end(), comps.begin(), comps.end());
                 }

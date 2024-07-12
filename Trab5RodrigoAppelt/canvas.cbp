@@ -50,7 +50,6 @@
 		<Unit filename="src/2D/lodepng.h" />
 		<Unit filename="src/Engine/Actor.cpp" />
 		<Unit filename="src/Engine/Actor.h" />
-		<Unit filename="src/Engine/Components/Camera.cpp" />
 		<Unit filename="src/Engine/Components/Camera.h" />
 		<Unit filename="src/Engine/Components/Character.cpp" />
 		<Unit filename="src/Engine/Components/Character.h" />
@@ -60,6 +59,7 @@
 		<Unit filename="src/Engine/Components/MeshRenderer.h" />
 		<Unit filename="src/Engine/Components/Skybox.cpp" />
 		<Unit filename="src/Engine/Components/Skybox.h" />
+		<Unit filename="src/Engine/Components/Terrain.cpp" />
 		<Unit filename="src/Engine/Components/Terrain.h" />
 		<Unit filename="src/Engine/Components/TerrainBezier.h" />
 		<Unit filename="src/Engine/Engine.cpp" />

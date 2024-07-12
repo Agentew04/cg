@@ -20,7 +20,7 @@ namespace Engine::Components {
     public:
         virtual ~Component() = default;
 
-        std::shared_ptr<Actor> actor;
+        std::weak_ptr<Actor> actor;
 
         virtual std::string getName() const;
         virtual void Start() {};

@@ -12,8 +12,16 @@ namespace Engine {
 
 /// @brief Representa um ator na hierarquia da cena.
 /// Tem nome, lista de componentes e lista de filhos.
-class Actor{
+class Actor : public std::enable_shared_from_this<Actor>{
 public:
+    Actor(std::string name = "") : 
+        name(name), 
+        position(Vector3(0,0,0)),
+        rotation(Vector3(0,0,0)),
+        scale(Vector3(1,1,1)),
+        components({}),
+        children({}) {}
+
     /// @brief O nome do ator
     std::string name;
     /// @brief A posicao do ator no espaco
@@ -25,7 +33,10 @@ public:
     /// @brief Uma lista de componentes que este ator tem
     std::vector<std::shared_ptr<Components::Component>> components;
     /// @brief Uma lista de atores filhos
-    std::vector<Actor> children;
+    std::vector<std::shared_ptr<Actor>> children;
+
+    /// @brief Ponteiro para o pai.
+    std::weak_ptr<Actor> parent;
 
     /// @brief Inicia todos os componentes deste ator
     void Start();
@@ -60,6 +71,21 @@ public:
             }
         }
         throw std::runtime_error("Component not found");
+    }
+
+    /// @brief Retorna a direcao para a frente deste ator.
+    /// Eh cumulativo com o pai.
+    Vector3 getForward() const;
+
+    /// @brief Adiciona um filho a este ator
+    /// @param child O filho a ser adicionado
+    void addChild(std::shared_ptr<Actor> child);
+
+    template <typename T>
+    void addComponent(std::shared_ptr<T> component){ 
+        static_assert(std::is_base_of<Components::Component,T>::value);
+        component->actor = shared_from_this();
+        components.push_back(component);
     }
 private:
 };
