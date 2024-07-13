@@ -42,9 +42,9 @@ void Engine::Engine::Update(float delta){
     for(auto& cam: cams){
         if(cam->isActive){
             if(auto act = cam->actor.lock()){
-                cameraPos = act->position;
-                std::cout << "Camera POS ENGINE: " << cameraPos << std::endl;
+                cameraPos = act->getGlobalPosition();
                 cameraLookAt = act->getForward();
+                std::cout << "Camera at " << cameraPos << " looking at " << act->rotation << std::endl;
             }
         }
     }

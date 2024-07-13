@@ -12,18 +12,24 @@ public:
     enum class TreeTop{
         Sphere,
         Tetrahedron,
-        Cube
+        Cube,
+        COUNT
     };
 
-    Engine::Actor createTree(TreeTop copa);
+    std::shared_ptr<Engine::Actor> createTree(TreeTop top);
 private:
+
+    std::shared_ptr<Engine::Mesh> barkMesh;
+
+    // struct soh pra caso precise add mais modelos
     struct Tree{
-        std::shared_ptr<Engine::Mesh> barkMesh;
         std::shared_ptr<Engine::Mesh> treeTopModel;
-        TreeTop treeTop;
     };
 
     std::map<TreeTop, Tree> cachedTrees;
+
+    std::shared_ptr<Engine::Mesh> createBark();
+    std::shared_ptr<Engine::Mesh> createTreeTop(TreeTop top);
 };
 
 #endif

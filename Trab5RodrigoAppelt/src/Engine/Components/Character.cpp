@@ -3,22 +3,21 @@
 using namespace Engine::Components;
 
 #include "../Engine.h"
+#include <GL/glut.h>
 
 void Character::Update(float delta){
-    // move a posicao da camera
-
     if(auto act = actor.lock()){
         if((((int)mov) & (int)Movement::LEFT) > 0){
-            act->rotation.y = act->rotation.y + delta;
+            act->rotation.y = act->rotation.y + delta * sensitivity;
         }
         if((((int)mov) & (int)Movement::RIGHT) > 0){
-            act->rotation.y = act->rotation.y - delta;
+            act->rotation.y = act->rotation.y - delta * sensitivity;
         }
         if((((int)mov) & (int)Movement::UP) > 0){
-            act->rotation.x = act->rotation.x + delta;
+            act->rotation.x = act->rotation.x + delta * sensitivity;
         }
         if((((int)mov) & (int)Movement::DOWN) > 0){
-            act->rotation.x = act->rotation.x - delta;
+            act->rotation.x = act->rotation.x - delta * sensitivity;
         }
 
         Vector3 up = Vector3(0,1,0);
@@ -48,6 +47,15 @@ void Character::KeyDown(int key){
         case ' ':
             mov = (Movement)((int)mov | (int)Movement::FRONT);
             break;
+        case 'g':
+            if(!wireframe){
+                glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+                wireframe = true;
+            }else{
+                glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+                wireframe = false;
+            }
+            break;
     }
 }
 
@@ -69,5 +77,4 @@ void Character::KeyUp(int key){
             mov = (Movement)((int)mov & ~(int)Movement::FRONT);
             break;
     }
-    // ativa desativa o movimento
 }

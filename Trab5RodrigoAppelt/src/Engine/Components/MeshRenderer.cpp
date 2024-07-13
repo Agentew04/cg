@@ -2,13 +2,24 @@
 
 #include <GL/glut.h>
 
+
 using namespace Engine::Components;
 
 void MeshRenderer::Render() {
-    log(LogLevel::INFO, "Rendering mesh");
+    if(!mesh){
+        //log(LogLevel::WARNING, "MeshRenderer has no mesh");
+        return;
+    }
+
+    Material defaultMat;
+    defaultMat.setDiffuse(1,0,0,1);
     glBegin(GL_TRIANGLES);
     for (auto face : mesh->faceList) {
+        if(face.material >= 0 && mesh->materials.size()>=face.material+1){
         mesh->materials[face.material].use();
+        }else{
+            defaultMat.use();
+        }
         for (int i = 0; i < face.vertices.size(); i++) {
             auto vertex = mesh->vertexList[face.vertices[i]];
             auto normal = mesh->normalList[face.normals[i]];

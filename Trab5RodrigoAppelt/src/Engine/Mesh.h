@@ -12,7 +12,7 @@ namespace Engine {
     /// gerenciada pela engine.
     class Mesh {
     public:
-        /// @brief Cria uma mesh a partir de um sweep rotacional.
+        /// @brief Cria uma mesh a partir de um sweep rotacional. Suporta apenas meshes convexas.
         /// @param profile A lista de pontos que formam o perfil da mesh.
         /// @param radialResolution Quantos vezes o perfil eh rotacionado para formar a mesh
         /// @return A mesh criada.

@@ -21,8 +21,11 @@ namespace Engine::Components {
         /// @brief Renderiza o terreno
         void Render() override;
 
+        float getHeightAt(float x, float z) const;
+
         int resolution;
     private:
+        std::vector<Vector3> controlPoints;
         uint32_t textureId;
         std::vector<Vector3> terrainPoints;
         std::vector<Vector3> terrainNormals;

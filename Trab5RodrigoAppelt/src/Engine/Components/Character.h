@@ -15,7 +15,9 @@ namespace Engine::Components
         void Update(float delta) override;
 
     private:
+        bool wireframe = false;
         float forwardSpeed = 10.0f;
+        float sensitivity = 50.0f;
         enum class Movement {
             NONE = 0 << 0,
             LEFT = 1 << 0,

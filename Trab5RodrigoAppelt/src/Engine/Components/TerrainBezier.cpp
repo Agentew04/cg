@@ -6,6 +6,7 @@
 #include <GL/glut.h>
 
 #include "../Material.h"
+#include "../Actor.h"
 #include "../../Math/Vector3.h"
 
 #ifdef ERROR
@@ -106,7 +107,7 @@ void TerrainBezier::Start(){
     int totalControlPoints = 4 * 4;
 
     // Create a local array for the control points
-    std::vector<Vector3> controlPoints;
+    controlPoints.clear();
     controlPoints.reserve(totalControlPoints);
 
     // Generate random control points with random heights
@@ -133,6 +134,28 @@ void TerrainBezier::Start(){
     }
 }
 
+float TerrainBezier::getHeightAt(float x, float z) const {
+    // Ensure we have points and normals to render
+    if (terrainPoints.empty() || terrainNormals.empty()) return 0.0f;
+
+    auto actor = this->actor.lock();
+    if(!actor){
+        return 0.0f;
+    }
+
+    // normalize coordinates
+    x = (x - actor->position.x) / actor->scale.x;
+    z = (z - actor->position.z) / actor->scale.z;
+
+    // evaluate the height at the given x and z coordinates
+    float step = 1.0f / (resolution - 1);
+    float u = x / step;
+    float v = z / step;
+    Vector3 point = evaluateBezierSurface(controlPoints, 0, 1, 4, u, v);
+    return point.y;
+}
+
+
 void TerrainBezier::Destroy(){
     if(textureId != 0){
         glDeleteTextures(1, &textureId);
@@ -156,24 +179,12 @@ void TerrainBezier::render_without_texture(){
     // Ensure we have points and normals to render
     if (terrainPoints.empty() || terrainNormals.empty()) return;
 
-    bool wireframe = false;
-
     Material terrainMaterial;
     terrainMaterial.setAmbient(0.0f, 0.3f, 0.0f, 1.0f);
     terrainMaterial.setDiffuse(0.1f, 0.8f, 0.1f, 1.0f);
     terrainMaterial.setSpecular(1.0f, 1.0f, 1.0f, 1.0f);
     terrainMaterial.shininess = 10;
     terrainMaterial.use();
-
-    if(wireframe){
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        glColor3f(1,1,1);
-        glLineWidth(3);
-        glDisable(GL_LIGHTING);
-    } else {
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        glShadeModel(GL_SMOOTH);
-    }
 
     glBegin(GL_TRIANGLES);
     for(int x=0; x<resolution-1; x++){

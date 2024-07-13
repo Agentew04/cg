@@ -57,15 +57,17 @@
 		<Unit filename="src/Engine/Components/Component.h" />
 		<Unit filename="src/Engine/Components/MeshRenderer.cpp" />
 		<Unit filename="src/Engine/Components/MeshRenderer.h" />
+		<Unit filename="src/Engine/Components/Rotating.h" />
 		<Unit filename="src/Engine/Components/Skybox.cpp" />
 		<Unit filename="src/Engine/Components/Skybox.h" />
-		<Unit filename="src/Engine/Components/Terrain.cpp" />
 		<Unit filename="src/Engine/Components/Terrain.h" />
+		<Unit filename="src/Engine/Components/TerrainBezier.cpp" />
 		<Unit filename="src/Engine/Components/TerrainBezier.h" />
 		<Unit filename="src/Engine/Engine.cpp" />
 		<Unit filename="src/Engine/Engine.h" />
 		<Unit filename="src/Engine/Material.cpp" />
 		<Unit filename="src/Engine/Material.h" />
+		<Unit filename="src/Engine/Mesh.cpp" />
 		<Unit filename="src/Engine/Mesh.h" />
 		<Unit filename="src/Engine/MeshImporter.cpp" />
 		<Unit filename="src/Engine/MeshImporter.h" />
@@ -78,6 +80,7 @@
 		<Unit filename="src/Math/Vector2.h" />
 		<Unit filename="src/Math/Vector3.cpp" />
 		<Unit filename="src/Math/Vector3.h" />
+		<Unit filename="src/TreeCreator.cpp" />
 		<Unit filename="src/TreeCreator.h" />
 		<Unit filename="src/main.cpp" />
 		<Extensions>

@@ -77,6 +77,14 @@ public:
     /// Eh cumulativo com o pai.
     Vector3 getForward() const;
 
+    Vector3 getRight() const;
+
+    Vector3 getUp() const;
+
+    /// @brief Retorna a posicao global do objeto. leva em consideracao o pai.
+    /// @return 
+    Vector3 getGlobalPosition() const;
+
     /// @brief Adiciona um filho a este ator
     /// @param child O filho a ser adicionado
     void addChild(std::shared_ptr<Actor> child);
