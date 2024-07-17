@@ -27,18 +27,18 @@ void UIManager::remove(Checkbox *checkbox){
     this->checkboxMngr.unregisterCheckbox(checkbox);
 }
 
-void UIManager::add(Chart *chart){
-    this->charts.push_back(chart);
-}
+// void UIManager::add(Chart *chart){
+//     this->charts.push_back(chart);
+// }
 
-void UIManager::remove(Chart *chart){
-    for(auto it = this->charts.begin(); it != this->charts.end(); it++){
-        if(*it == chart){
-            this->charts.erase(it);
-            return;
-        }
-    }
-}
+// void UIManager::remove(Chart *chart){
+//     for(auto it = this->charts.begin(); it != this->charts.end(); it++){
+//         if(*it == chart){
+//             this->charts.erase(it);
+//             return;
+//         }
+//     }
+// }
 
 //void UIManager::add(ImageRenderer *img){
 //    this->images.push_back(img);
@@ -59,18 +59,18 @@ UIManager::UIManager(){
 }
 
 UIManager::~UIManager(){
-    for(auto chart : this->charts){
-        delete chart;
-    }
+//     for(auto chart : this->charts){
+//         delete chart;
+//     }
 }
 
 void UIManager::draw(){
     this->buttonMngr.draw();
     this->sliderMngr.draw();
     this->checkboxMngr.draw();
-    for(auto chart : this->charts){
-        chart->draw();
-    }
+    // for(auto chart : this->charts){
+    //     chart->draw();
+    // }
     //for(auto img : this->images){
         //img->draw();
     //}

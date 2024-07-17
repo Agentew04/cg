@@ -8,8 +8,8 @@ Aluno: Rodrigo Appelt
 Requisitos implementados:
   - Pistao, Cilindro e Virabrequim
   - Engrenagens
-  - Visualizacao Livre em Perspectiva
-  - Visualizacao Ortografica
+  - Visualizacao Livre em Perspectiva(3D)
+  - Visualizacao Ortografica(2D)
     - Topo
     - Frente
     - Lado
