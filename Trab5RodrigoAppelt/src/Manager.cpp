@@ -53,31 +53,30 @@ void Manager::createTerrain(){
 
     // terrain
     auto terrainActor = std::make_shared<Engine::Actor>("Terrain");
-    terrainActor->scale = Vector3(1, 1, 1);
-    terrainActor->position = Vector3(-0.625,10,-0.625);
+    terrainActor->scale = Vector3(100, 1, 100);
+    terrainActor->position = Vector3(-50,-10,-50);
     terrain = std::make_shared<Engine::Components::TerrainBezier>();
     terrain->resolution = 128;
     terrainActor->addComponent(terrain); // sem std::move pois queremos que fique uma copia aqui
+    terrainActor->Start(); // forca inicializacao para as arvores
     engine.hierarchy.push_back(std::move(terrainActor));
-
-    auto cube = std::make_shared<Engine::Actor>("Cube");
-    auto mesh = std::make_shared<Engine::Components::MeshRenderer>();
-    mesh->mesh = std::move(Engine::MeshImporter::loadMesh(".\\Trab5RodrigoAppelt\\assets\\models\\cubo.obj"));
-    cube->addComponent(std::move(mesh));
-    cube->position = Vector3(0, 10, 0);
-    cube->scale = Vector3(0.25,0.25,0.25);
-    engine.hierarchy.push_back(std::move(cube));
 }
 
 void Manager::createTrees(){
-    int treeCount = 10;
+    int treeCount = 25;
 
     std::mt19937 rng(std::time(nullptr));
 
+    auto terrainActor = terrain->actor.lock();
+    if(!terrainActor){
+        std::cout << "Nao consegui dar lock no terreno" << std::endl;
+        return;
+    }
     std::uniform_int_distribution<int> treeTopDist(0, (int)TreeCreator::TreeTop::COUNT - 1);
-    std::uniform_real_distribution<float> positionDist(-25, 25);
+    std::uniform_real_distribution<float> positionDist(-terrainActor->scale.x*0.5f, terrainActor->scale.x*0.5f);
     std::uniform_real_distribution<float> rotationDist(0,360);
     
+
     for(int i = 0; i < treeCount; i++){
         TreeCreator::TreeTop top = (TreeCreator::TreeTop)treeTopDist(rng);
         auto treeActor = treeCreator.createTree(top);

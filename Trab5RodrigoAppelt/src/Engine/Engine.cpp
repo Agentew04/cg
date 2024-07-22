@@ -44,7 +44,6 @@ void Engine::Engine::Update(float delta){
             if(auto act = cam->actor.lock()){
                 cameraPos = act->getGlobalPosition();
                 cameraLookAt = act->getForward();
-                std::cout << "Camera at " << cameraPos << " looking at " << act->rotation << std::endl;
             }
         }
     }

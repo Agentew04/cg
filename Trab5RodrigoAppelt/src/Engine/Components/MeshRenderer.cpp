@@ -15,12 +15,12 @@ void MeshRenderer::Render() {
     defaultMat.setDiffuse(1,0,0,1);
     glBegin(GL_TRIANGLES);
     for (auto face : mesh->faceList) {
-        if(face.material >= 0 && mesh->materials.size()>=face.material+1){
+        if(face.material >= 0 && mesh->materials.size()>=(size_t)face.material+1){
         mesh->materials[face.material].use();
         }else{
             defaultMat.use();
         }
-        for (int i = 0; i < face.vertices.size(); i++) {
+        for (size_t i = 0; i < face.vertices.size(); i++) {
             auto vertex = mesh->vertexList[face.vertices[i]];
             auto normal = mesh->normalList[face.normals[i]];
             glNormal3f(normal.x, normal.y, normal.z);

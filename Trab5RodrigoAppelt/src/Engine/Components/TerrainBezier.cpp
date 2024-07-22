@@ -3,11 +3,13 @@
 #include <random>
 #include <vector>
 #include <ctime>
+#include <chrono>
 #include <GL/glut.h>
 
 #include "../Material.h"
 #include "../Actor.h"
 #include "../../Math/Vector3.h"
+#include "../../2D/lodepng.h"
 
 #ifdef ERROR
 #undef ERROR
@@ -96,6 +98,10 @@ Vector3 evaluateBezierSurfaceDv(const std::vector<Vector3>& controlPoints, int p
 
 
 void TerrainBezier::Start(){
+    if(initialized) {
+        log(LogLevel::WARNING, "Terreno jah inicializado. Pulando");
+        return;
+    }
     std::mt19937 gen(time(nullptr));
     std::uniform_real_distribution<> dis(0.0, 10.0);
 
@@ -112,9 +118,9 @@ void TerrainBezier::Start(){
 
     // Generate random control points with random heights
     for (int i = 0; i < totalControlPoints; ++i) {
-        float x = i % 4;
+        float x = (i % 4)/3.0;
         float y = dis(gen);
-        float z = i / 4;
+        float z = i / 4/3.0;
         controlPoints.emplace_back(x, y, z);
     }
 
@@ -132,27 +138,74 @@ void TerrainBezier::Start(){
             terrainNormals.push_back(normal); // Store the normal vector
         }
     }
+
+    for(auto& pt:terrainPoints){
+        if(pt.x > 1.0001 || pt.z > 1.0001 || pt.x < 0 || pt.z < 0){
+            log(LogLevel::ERROR, "Ponto fora do terreno! "+ std::to_string(pt.x)+", "+std::to_string(pt.z)+")");
+        }
+    }
+    loadTexture();
+    initialized = true;
 }
 
 float TerrainBezier::getHeightAt(float x, float z) const {
     // Ensure we have points and normals to render
-    if (terrainPoints.empty() || terrainNormals.empty()) return 0.0f;
+    if (terrainPoints.empty() || terrainNormals.empty()) {
+        log(LogLevel::ERROR, "Nao haviam valores nos vetores. terrainPoints.size="+std::to_string(terrainPoints.size())
+            +"; terrainNormals.size="+std::to_string(terrainNormals.size()));
+        return 0.0f;
+    }
 
     auto actor = this->actor.lock();
     if(!actor){
+        log(LogLevel::ERROR, "Nao consegui dar lock em ator");
         return 0.0f;
     }
 
     // normalize coordinates
-    x = (x - actor->position.x) / actor->scale.x;
-    z = (z - actor->position.z) / actor->scale.z;
+    x += actor->scale.x * 0.5f;
+    z += actor->scale.z * 0.5f;
+    x /= actor->scale.x;
+    z /= actor->scale.z;
+    // x e z estao no intervalo [0,1] agora
 
-    // evaluate the height at the given x and z coordinates
-    float step = 1.0f / (resolution - 1);
-    float u = x / step;
-    float v = z / step;
-    Vector3 point = evaluateBezierSurface(controlPoints, 0, 1, 4, u, v);
-    return point.y;
+    Vector3 point = evaluateBezierSurface(controlPoints, 0, 1, 4, x, z);
+    return point.y * actor->scale.y + actor->position.y;
+}
+
+void TerrainBezier::loadTexture(){
+    std::vector<unsigned char> image; // The raw pixels
+    unsigned width, height;
+    auto start = std::chrono::high_resolution_clock::now();
+    unsigned error = lodepng::decode(image, width, height, ".\\Trab5RodrigoAppelt\\assets\\images\\terrain.png");
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> duration = end - start;
+
+    if(error){
+        log(LogLevel::ERROR, "LodePNG Error: " + std::string(lodepng_error_text(error)));
+        return;
+    }
+
+    glGenTextures(1, &textureId);
+    glBindTexture(GL_TEXTURE_2D, textureId);
+    glTexImage2D(
+        GL_TEXTURE_2D,
+        0,
+        GL_RGB,
+        width, // bmp.getWidth(),
+        height,// bmp.getHeight(),
+        0,
+        GL_RGBA,
+        GL_UNSIGNED_BYTE,
+        image.data()// bmp.getImage()
+    );
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+    std::cout << "Texture ("<<textureId <<") loaded in " << duration.count() << " seconds" << std::endl;
 }
 
 
@@ -166,25 +219,32 @@ void TerrainBezier::Destroy(){
 
 void TerrainBezier::Render(){
     glPushMatrix();
-    if(textureId != 0){
-        //render_with_texture();
-    } else {
-        render_without_texture();
-    }
+    render_internal(textureId != 0);
     glPopMatrix();
 }
 
-void TerrainBezier::render_without_texture(){
+void TerrainBezier::render_internal(bool useTexture){
 
     // Ensure we have points and normals to render
     if (terrainPoints.empty() || terrainNormals.empty()) return;
 
-    Material terrainMaterial;
-    terrainMaterial.setAmbient(0.0f, 0.3f, 0.0f, 1.0f);
-    terrainMaterial.setDiffuse(0.1f, 0.8f, 0.1f, 1.0f);
-    terrainMaterial.setSpecular(1.0f, 1.0f, 1.0f, 1.0f);
-    terrainMaterial.shininess = 10;
-    terrainMaterial.use();
+    if(useTexture && textureId != 0){
+        glEnable(GL_TEXTURE_2D);
+        glBindTexture(GL_TEXTURE_2D, textureId);
+        Material terrainMaterial;
+        terrainMaterial.setAmbient(1.0f, 1.0f, 1.0f, 1.0f);
+        terrainMaterial.setDiffuse(1.0f, 1.0f, 1.0f, 1.0f);
+        terrainMaterial.setSpecular(1.0f, 1.0f, 1.0f, 1.0f);
+        terrainMaterial.shininess = 0;
+        terrainMaterial.use();
+    }else{
+        Material terrainMaterial;
+        terrainMaterial.setAmbient(0.0f, 0.3f, 0.0f, 1.0f);
+        terrainMaterial.setDiffuse(0.1f, 0.8f, 0.1f, 1.0f);
+        terrainMaterial.setSpecular(1.0f, 1.0f, 1.0f, 1.0f);
+        terrainMaterial.shininess = 10;
+        terrainMaterial.use();
+    }
 
     glBegin(GL_TRIANGLES);
     for(int x=0; x<resolution-1; x++){
@@ -192,28 +252,45 @@ void TerrainBezier::render_without_texture(){
             int linear = x * resolution + z;
             auto actual = terrainPoints[linear];
             auto actualNormal = terrainNormals[linear];
+            auto actualUv = Vector2(x/(float)resolution, z/(float)resolution);
             auto right = terrainPoints[linear + 1];
             auto rightNormal = terrainNormals[linear + 1];
+            auto rightUv = Vector2((x+1)/(float)resolution, z/(float)resolution);
             auto up = terrainPoints[linear + resolution];
             auto upNormal = terrainNormals[linear + resolution];
+            auto upUv = Vector2(x/(float)resolution, (z+1)/(float)resolution);
             auto diag = terrainPoints[linear + resolution + 1];
             auto diagNormal = terrainNormals[linear + resolution + 1];
+            auto diagUv = Vector2((x+1)/(float)resolution, (z+1)/(float)resolution);
 
             glNormal3f(actualNormal.x, actualNormal.y, actualNormal.z);
+            glTexCoord2f(actualUv.x, actualUv.y);
             glVertex3f(actual.x, actual.y, actual.z);
+
             glNormal3f(rightNormal.x, rightNormal.y, rightNormal.z);
+            glTexCoord2f(upUv.x, upUv.y);
             glVertex3f(right.x, right.y, right.z);
+
             glNormal3f(upNormal.x, upNormal.y, upNormal.z);
+            glTexCoord2f(rightUv.x, rightUv.y);
             glVertex3f(up.x, up.y, up.z);
 
             glNormal3f(rightNormal.x, rightNormal.y, rightNormal.z);
+            glTexCoord2f(upUv.x, upUv.y);
             glVertex3f(right.x, right.y, right.z);
+
             glNormal3f(diagNormal.x, diagNormal.y, diagNormal.z);
+            glTexCoord2f(diagUv.x, diagUv.y);
             glVertex3f(diag.x, diag.y, diag.z);
+
             glNormal3f(upNormal.x, upNormal.y, upNormal.z);
+            glTexCoord2f(rightUv.x, rightUv.y);
             glVertex3f(up.x, up.y, up.z);
         }
     }
     glEnd();
-    
+    if(useTexture){
+        glDisable(GL_TEXTURE_2D);
+    }
+
 }

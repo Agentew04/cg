@@ -18,6 +18,10 @@ namespace Engine {
         /// @return A mesh criada.
         static Mesh fromSweep(std::vector<Vector3> profile, int radialResolution);
 
+        /// @brief Cria um tetrahedro normalizado regular
+        /// @return A mesh do tetrahedro
+        static Mesh tetrahedron(int resolution);
+
         /// @brief Estrutura que representa uma face
         struct Face {
         public:

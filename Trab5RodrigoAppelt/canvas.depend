@@ -971,10 +971,12 @@
 	<stdio.h>
 	<stdlib.h>
 
-1720055253 source:d:\universidade\cg\trab5rodrigoappelt\src\engine\actor.cpp
+1721408643 source:d:\universidade\cg\trab5rodrigoappelt\src\engine\actor.cpp
 	"Actor.h"
+	<GL/glut.h>
+	"Components/Camera.h"
 
-1720055253 d:\universidade\cg\trab5rodrigoappelt\src\engine\actor.h
+1721408643 d:\universidade\cg\trab5rodrigoappelt\src\engine\actor.h
 	<string>
 	<vector>
 	"../Math/Vector3.h"
@@ -988,16 +990,17 @@
 	<cmath>
 	<iostream>
 
-1720055253 d:\universidade\cg\trab5rodrigoappelt\src\engine\components\component.h
+1721409445 d:\universidade\cg\trab5rodrigoappelt\src\engine\components\component.h
 	<string>
 	<memory>
+	"../../Keyboard.h"
 
-1720055253 source:d:\universidade\cg\trab5rodrigoappelt\src\engine\components\component.cpp
+1721409430 source:d:\universidade\cg\trab5rodrigoappelt\src\engine\components\component.cpp
 	"Component.h"
 	<iostream>
 	"../Actor.h"
 
-1720055253 source:d:\universidade\cg\trab5rodrigoappelt\src\engine\components\skybox.cpp
+1721408643 source:d:\universidade\cg\trab5rodrigoappelt\src\engine\components\skybox.cpp
 	"Skybox.h"
 	<vector>
 	<string>
@@ -1009,7 +1012,7 @@
 	"../Engine.h"
 	"Camera.h"
 
-1720055253 d:\universidade\cg\trab5rodrigoappelt\src\engine\components\skybox.h
+1721408643 d:\universidade\cg\trab5rodrigoappelt\src\engine\components\skybox.h
 	"Component.h"
 	"../../Math/Vector3.h"
 
@@ -1038,7 +1041,7 @@
 	<iostream>
 	"lodepng.h"
 
-1720095106 d:\universidade\cg\trab5rodrigoappelt\src\engine\engine.h
+1721408643 d:\universidade\cg\trab5rodrigoappelt\src\engine\engine.h
 	<vector>
 	<list>
 	<memory>
@@ -1047,11 +1050,12 @@
 	"Mesh.h"
 	"../Math/Vector3.h"
 
-1720055253 d:\universidade\cg\trab5rodrigoappelt\src\engine\mesh.h
+1721412149 d:\universidade\cg\trab5rodrigoappelt\src\engine\mesh.h
 	<vector>
 	"../Math/Vector3.h"
+	"Material.h"
 
-1720055253 d:\universidade\cg\trab5rodrigoappelt\src\engine\components\camera.h
+1721408643 d:\universidade\cg\trab5rodrigoappelt\src\engine\components\camera.h
 	"Component.h"
 	"../../Math/Vector3.h"
 
@@ -1061,7 +1065,7 @@
 
 1720055253 d:\universidade\cg\trab5rodrigoappelt\src\engine\material.h
 
-1720095477 source:d:\universidade\cg\trab5rodrigoappelt\src\main.cpp
+1721670028 source:d:\universidade\cg\trab5rodrigoappelt\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<stdlib.h>
@@ -1089,8 +1093,9 @@
 1720055253 source:d:\universidade\cg\trab5rodrigoappelt\src\math\vector2.cpp
 	"Vector2.h"
 
-1720055253 source:d:\universidade\cg\trab5rodrigoappelt\src\math\vector3.cpp
+1721408643 source:d:\universidade\cg\trab5rodrigoappelt\src\math\vector3.cpp
 	<cmath>
+	<cstdint>
 	"Vector2.h"
 	"Vector3.h"
 
@@ -1100,21 +1105,33 @@
 	<stdio.h>
 	<stdlib.h>
 
-1720095157 source:d:\universidade\cg\trab5rodrigoappelt\src\engine\engine.cpp
+1721410173 source:d:\universidade\cg\trab5rodrigoappelt\src\engine\engine.cpp
 	"Engine.h"
 	"Actor.h"
 	"Components/Camera.h"
 	<GL/glut.h>
 
-1720095199 d:\universidade\cg\trab5rodrigoappelt\src\manager.h
+1721408643 d:\universidade\cg\trab5rodrigoappelt\src\manager.h
 	"Keyboard.h"
 	"Engine/Engine.h"
+	"TreeCreator.h"
+	"Engine/Components/TerrainBezier.h"
+	"Engine/Components/Character.h"
 
-1720095582 source:d:\universidade\cg\trab5rodrigoappelt\src\manager.cpp
+1721412043 source:d:\universidade\cg\trab5rodrigoappelt\src\manager.cpp
 	"Manager.h"
 	<memory>
+	<random>
+	<ctime>
 	"Engine/Actor.h"
 	"Engine/Components/Skybox.h"
+	"Engine/Components/Camera.h"
+	"Engine/Components/Character.h"
+	"Engine/Components/MeshRenderer.h"
+	"Engine/Components/TerrainBezier.h"
+	"Engine/Components/Rotating.h"
+	"Engine/Mesh.h"
+	"Engine/MeshImporter.h"
 
 1720824611 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\manager.h
 	"Keyboard.h"
@@ -1227,4 +1244,83 @@
 	<map>
 	"Engine/Components/MeshRenderer.h"
 	"Engine/MeshImporter.h"
+
+1721408643 source:d:\universidade\cg\trab5rodrigoappelt\src\engine\components\character.cpp
+	"Character.h"
+	"../Engine.h"
+	<GL/glut.h>
+
+1721408643 d:\universidade\cg\trab5rodrigoappelt\src\engine\components\character.h
+	"Component.h"
+	"Camera.h"
+	"../../Keyboard.h"
+
+1721409905 source:d:\universidade\cg\trab5rodrigoappelt\src\engine\components\meshrenderer.cpp
+	"MeshRenderer.h"
+	<GL/glut.h>
+
+1721408643 d:\universidade\cg\trab5rodrigoappelt\src\engine\components\meshrenderer.h
+	<memory>
+	"Component.h"
+	"../Mesh.h"
+	"../../Math/Vector3.h"
+
+1721668088 source:d:\universidade\cg\trab5rodrigoappelt\src\engine\components\terrainbezier.cpp
+	"TerrainBezier.h"
+	<random>
+	<vector>
+	<ctime>
+	<GL/glut.h>
+	"../Material.h"
+	"../Actor.h"
+	"../../Math/Vector3.h"
+
+1721670942 d:\universidade\cg\trab5rodrigoappelt\src\engine\components\terrainbezier.h
+	"Component.h"
+	<vector>
+	"../../Math/Vector3.h"
+
+1721669675 source:d:\universidade\cg\trab5rodrigoappelt\src\engine\mesh.cpp
+	"Mesh.h"
+	<vector>
+	<cmath>
+	"../Math/Vector3.h"
+
+1721408643 source:d:\universidade\cg\trab5rodrigoappelt\src\engine\meshimporter.cpp
+	"MeshImporter.h"
+	<iostream>
+	<string>
+	<memory>
+	<vector>
+	<optional>
+	<sstream>
+	<fstream>
+	<algorithm>
+	"Material.h"
+	"Mesh.h"
+
+1721408643 d:\universidade\cg\trab5rodrigoappelt\src\engine\meshimporter.h
+	<string>
+	<map>
+	<memory>
+	"../Math/Vector3.h"
+	"Mesh.h"
+
+1721408643 d:\universidade\cg\trab5rodrigoappelt\src\treecreator.h
+	<map>
+	"Engine/Actor.h"
+	"Engine/Mesh.h"
+
+1721670232 source:d:\universidade\cg\trab5rodrigoappelt\src\treecreator.cpp
+	"TreeCreator.h"
+	<memory>
+	<map>
+	"Engine/Components/MeshRenderer.h"
+	"Engine/MeshImporter.h"
+	"Engine/Mesh.h"
+
+1721408643 d:\universidade\cg\trab5rodrigoappelt\src\engine\components\rotating.h
+	"Component.h"
+	"../Actor.h"
+	<GL/glut.h>
 

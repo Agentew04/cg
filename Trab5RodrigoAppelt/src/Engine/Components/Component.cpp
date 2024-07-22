@@ -6,7 +6,7 @@
 
 using namespace Engine::Components;
 
-void Component::log(LogLevel level, std::string message){
+void Component::log(LogLevel level, std::string message) const{
 
     std::string id;
     if(auto act = actor.lock()){

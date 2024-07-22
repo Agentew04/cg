@@ -36,7 +36,7 @@ namespace Engine::Components {
             ERROR
         };
 
-        void log(LogLevel level, std::string message);
+        void log(LogLevel level, std::string message) const;
     };
 };
 

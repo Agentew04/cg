@@ -21,20 +21,25 @@ namespace Engine::Components {
         /// @brief Renderiza o terreno
         void Render() override;
 
+        /// @brief Retorna a altura de um ponto no terreno.
+        /// Nao usa coordenadas globais mas leva em conta a escala do terreno.
+        /// @param x A coordenada X no terreno. Coordenadas locais do terreno considerando a escala.
+        /// @param z A coordenada Z no terreno. Coordenadas locais do terreno considerando a escala.
+        /// @return A altura global do terreno.
         float getHeightAt(float x, float z) const;
 
         int resolution;
     private:
+        bool initialized = false;
         std::vector<Vector3> controlPoints;
         uint32_t textureId;
         std::vector<Vector3> terrainPoints;
         std::vector<Vector3> terrainNormals;
 
-        /// @brief Renderiza o terreno sem textura
-        void render_without_texture();
+        void loadTexture();
 
-        /// @brief Renderiza o terreno com textura
-        void render_with_texture();
+        /// @brief Renderiza o terreno sem textura
+        void render_internal(bool useTexture);
     };
 };
 
