@@ -10,11 +10,21 @@
 std::shared_ptr<Engine::Actor> TreeCreator::createTree(TreeTop top){
     auto barkActor = std::make_shared<Engine::Actor>("TreeBark");
     auto topActor = std::make_shared<Engine::Actor>("TreeTop");
-    topActor->position = Vector3(0, 10, 0);
+    topActor->position = Vector3(0, 8, 0);
     topActor->scale = Vector3(3,3,3);
 
     auto barkMr = std::make_shared<Engine::Components::MeshRenderer>();
     auto topMr = std::make_shared<Engine::Components::MeshRenderer>();
+
+    if(barkTextureId == 0){
+        // barkTextureId = Engine::Mesh::loadTexture(".\\Trab5RodrigoAppelt\\assets\\images\\bark.png");
+    }
+    if(treeTopTextureId == 0){
+        // treeTopTextureId = Engine::Mesh::loadTexture(".\\Trab5RodrigoAppelt\\assets\\images\\leaves.png");
+    }
+
+    barkMr->useTexture(barkTextureId);
+    topMr->useTexture(treeTopTextureId);
 
     if(!barkMesh){
         barkMesh = createBark();
@@ -44,7 +54,15 @@ std::shared_ptr<Engine::Actor> TreeCreator::createTree(TreeTop top){
 }
 
 std::shared_ptr<Engine::Mesh> TreeCreator::createBark(){
-    return Engine::MeshImporter::loadMesh(".\\Trab5RodrigoAppelt\\assets\\models\\treebark.obj");
+    auto bark = Engine::MeshImporter::loadMesh(".\\Trab5RodrigoAppelt\\assets\\models\\treebark.3d");
+    // forcar material marrom
+    for(auto& m: bark->materials){
+        m.setDiffuse(122/255.0, 69/255.0, 0.0, 1.0);
+        m.setAmbient(63/255.0,  36/255.0, 0.0, 1.0);
+        m.setSpecular(1,1,1,1);
+        m.shininess = 100;
+    }
+    return bark;
 }
 
 std::shared_ptr<Engine::Mesh> TreeCreator::createTreeTop(TreeTop top){
@@ -52,25 +70,33 @@ std::shared_ptr<Engine::Mesh> TreeCreator::createTreeTop(TreeTop top){
     
     switch(top){
         case TreeTop::Sphere:
-            mesh = Engine::MeshImporter::loadMesh(".\\Trab5RodrigoAppelt\\assets\\models\\treetop_sphere.obj");
+            mesh = Engine::MeshImporter::loadMesh(".\\Trab5RodrigoAppelt\\assets\\models\\treetop_sphere.3d");
             break;
         case TreeTop::Tetrahedron: {
                 // runtime generation
                 auto tetra = Engine::Mesh::tetrahedron(4);
-                Engine::Material treeTopMat = Engine::Material();
-                treeTopMat.setDiffuse(0.0, 0.8, 0.0, 1.0);
-                treeTopMat.setAmbient(0.1, 0.4, 0.1, 1.0);
-                treeTopMat.shininess = 10;
-                treeTopMat.setSpecular(1,1,1,1);
-                tetra.materials.push_back(treeTopMat);
                 mesh = std::make_shared<Engine::Mesh>(tetra);
             }
             break;
         case TreeTop::Cube:
-            mesh = Engine::MeshImporter::loadMesh(".\\Trab5RodrigoAppelt\\assets\\models\\treetop_cube.obj");
+            mesh = Engine::MeshImporter::loadMesh(".\\Trab5RodrigoAppelt\\assets\\models\\treetop_cube.3d");
             break;
+        // case TreeTop::Cone:
+        //     mesh = Engine::MeshImporter::loadMesh(".\\Trab5RodrigoAppelt\\assets\\models\\treetop_cone.3d");
         default:
+            std::cout << "Unknown treetop:" << (int)top << std::endl;
             mesh = nullptr;
+            break;
+    }
+    Engine::Material treeTopMat = Engine::Material();
+    treeTopMat.setDiffuse(0.0, 0.8, 0.0, 1.0);
+    treeTopMat.setAmbient(0.1, 0.4, 0.1, 1.0);
+    treeTopMat.shininess = 10;
+    treeTopMat.setSpecular(1,1,1,1);
+    if(mesh && mesh->materials.size() == 0){
+        mesh->materials.push_back(treeTopMat);
+    }else if(mesh){
+        mesh->materials[0] = treeTopMat;
     }
     
     return mesh;

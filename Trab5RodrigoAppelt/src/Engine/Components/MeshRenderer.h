@@ -2,10 +2,13 @@
 #define __MESH_RENDERER_H__
 
 #include <memory>
+#include <string>
 
 #include "Component.h"
 #include "../Mesh.h"
 #include "../../Math/Vector3.h"
+
+typedef unsigned int GLuint;
 
 namespace Engine::Components {
 
@@ -17,7 +20,11 @@ namespace Engine::Components {
         std::string getName() const override { return "MeshRenderer"; }
 
         void Render() override;
+        void Destroy() override;
+
+        void useTexture(GLuint textureId);
     private:
+        GLuint textureId = 0;
     };
 };
 

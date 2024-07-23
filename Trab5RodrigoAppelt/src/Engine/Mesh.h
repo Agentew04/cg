@@ -2,9 +2,12 @@
 #define __MESH_H__
 
 #include <vector>
+#include <string>
 
 #include "../Math/Vector3.h"
 #include "Material.h"
+
+typedef unsigned int GLuint;
 
 namespace Engine {
 
@@ -13,6 +16,7 @@ namespace Engine {
     class Mesh {
     public:
         /// @brief Cria uma mesh a partir de um sweep rotacional. Suporta apenas meshes convexas.
+        /// Normais sao suaves.
         /// @param profile A lista de pontos que formam o perfil da mesh.
         /// @param radialResolution Quantos vezes o perfil eh rotacionado para formar a mesh
         /// @return A mesh criada.
@@ -21,6 +25,11 @@ namespace Engine {
         /// @brief Cria um tetrahedro normalizado regular
         /// @return A mesh do tetrahedro
         static Mesh tetrahedron(int resolution);
+
+        /// @brief Carrega uma textura png no openGL
+        /// @param path O caminho da textura
+        /// @return O id da textura
+        static GLuint loadTexture(std::string path);
 
         /// @brief Estrutura que representa uma face
         struct Face {

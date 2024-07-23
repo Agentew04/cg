@@ -87,7 +87,6 @@ void Manager::createTrees(){
         treeActor->scale = Vector3::one();
         treeActor->position = position;
         treeActor->rotation = Vector3(0, rotationDist(rng), 0);
-        std::cout << "create tree with top: " << (int)top << "; pos: " << position << "; rotation: " << treeActor->rotation << std::endl;
 
         engine.hierarchy.push_back(std::move(treeActor));
     }

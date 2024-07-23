@@ -28,6 +28,8 @@ private:
 
     std::map<TreeTop, Tree> cachedTrees;
 
+    GLuint barkTextureId = 0;
+    GLuint treeTopTextureId = 0;
     std::shared_ptr<Engine::Mesh> createBark();
     std::shared_ptr<Engine::Mesh> createTreeTop(TreeTop top);
 };
