@@ -6,6 +6,7 @@
 #include "Engine/Actor.h"
 #include "Engine/Mesh.h"
 
+/// @brief Classe para criar arvores e fazer caching de meshs.
 class TreeCreator {
 public:
 

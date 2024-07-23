@@ -182,20 +182,19 @@ void initOpenGL(){
 
 }
 
-// Function to handle window resizing
 void reshape(GLsizei width, GLsizei height) {
-    if (height == 0) height = 1;  // To prevent divide by zero
+    if (height == 0) height = 1;
 
     GLfloat aspect = (GLfloat)width / (GLfloat)height;
 
-    glViewport(0, 0, width, height);  // Set the viewport to cover the new window
+    glViewport(0, 0, width, height);
 
-    glMatrixMode(GL_PROJECTION);  // Set the aspect ratio of the clipping volume to match the viewport
-    glLoadIdentity();             // Reset the projection matrix
-    gluPerspective(abertura, aspect, znear, zfar);  // Set up a perspective projection matrix
+    glMatrixMode(GL_PROJECTION); 
+    glLoadIdentity();
+    gluPerspective(abertura, aspect, znear, zfar);
 
-    glMatrixMode(GL_MODELVIEW);   // Return to the modelview matrix mode
-    glLoadIdentity();             // Reset the modelview matrix
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -208,7 +207,7 @@ int main()
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_MULTISAMPLE | GLUT_DEPTH);
 
     glutInitWindowSize(SCREEN_X, SCREEN_Y);
-    glutCreateWindow("GluLookAt Demo");
+    glutCreateWindow("Trab5RodrigoAppelt - Floresta GL(Grande e Larga)");
 
     // init
     initOpenGL();

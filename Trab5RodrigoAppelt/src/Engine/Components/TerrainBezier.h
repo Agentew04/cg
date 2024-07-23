@@ -7,7 +7,9 @@
 #include "../../Math/Vector3.h"
 
 namespace Engine::Components {
-    /// @brief Componente que gera um terreno feito de nxn patches de bezier grau 3.
+    /// @brief Componente que gera um terreno feito com uma
+    /// superficie Bezier de grau 3. Suporta texturas e
+    /// tesselacao para gerar os triangulos.
     class TerrainBezier : public Component {
     public:
         std::string getName() const override { return "TerrainBezier"; }
@@ -28,6 +30,7 @@ namespace Engine::Components {
         /// @return A altura global do terreno.
         float getHeightAt(float x, float z) const;
 
+        /// @brief Quantos triangulos o lado do terreno deve ter.
         int resolution;
     private:
         bool initialized = false;

@@ -2,6 +2,8 @@
 #define __MATERIAL_H__
 
 namespace Engine {
+    /// @brief Representa um material com workflow Specular.
+    /// Facilmente representado num arquivo .mtl.
     class Material {
     public:
         float ambient[4] = {0.1f, 0.1f, 0.1f, 1.0f};
@@ -15,6 +17,8 @@ namespace Engine {
 
         Material() = default;
         Material(float ambient[4], float diffuse[4], float specular[4], float shininess);
+
+        /// @brief Aplica o material na maquina de estados do OpenGL
         void use();
     };
 };

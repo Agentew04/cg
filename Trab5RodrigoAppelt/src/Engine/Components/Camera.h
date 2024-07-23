@@ -5,16 +5,19 @@
 #include "../../Math/Vector3.h"
 
 namespace Engine::Components {
+
+    /// @brief Componente que sinaliza que um ator eh uma camera.
+    /// A logica de gluLookAt eh gerenciada na Engine.cpp.
     class Camera : public Component {
     public:
 
-        enum class ViewMode {
-            WIREFRAME,
-            SOLID_SHADED
-        };
-
         std::string getName() const override { return "Camera"; }
-    
+
+        /// @brief Define se essa camera deve ser usada. Util
+        /// para uma cena com varias camera. 
+        /// @remarks Intuito principal era
+        /// fazer multiplas perspectivas (1a, 3a) de um aviao.
+        /// Ideia foi descartada por falta de tempo.
         bool isActive;
     };
 };

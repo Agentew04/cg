@@ -51,6 +51,9 @@ public:
     /// @brief Notifica componentes que uma tecla foi solta
     void KeyUp(Key key);
 
+    /// @brief Verifica se o Ator possui uma instancia deste componente
+    /// @tparam T O tipo do componente
+    /// @return Se ele tem ou nao.
     template <typename T>
     bool HasComponent(){
         static_assert(std::is_base_of<Components::Component,T>::value);
@@ -62,6 +65,9 @@ public:
         return false;
     }
 
+    /// @brief Pega a instancia do componente T que tem nesse ator. Lanca excecao std::runtime_eror se nao tiver.
+    /// @tparam T O tipo do componente
+    /// @return A instancia do componente
     template <typename T>
     const T& GetComponent(){
         static_assert(std::is_base_of<Components::Component,T>::value);
@@ -77,8 +83,10 @@ public:
     /// Eh cumulativo com o pai.
     Vector3 getForward() const;
 
+    /// @brief Retorna a direcao para a direita deste ator.
     Vector3 getRight() const;
 
+    /// @brief Retorna a direcao para cima deste ator.
     Vector3 getUp() const;
 
     /// @brief Retorna a posicao global do objeto. leva em consideracao o pai.
@@ -89,6 +97,9 @@ public:
     /// @param child O filho a ser adicionado
     void addChild(std::shared_ptr<Actor> child);
 
+    /// @brief Adiciona um componente a este ator
+    /// @tparam T O tipo do componente
+    /// @param component O componente a ser adicionado
     template <typename T>
     void addComponent(std::shared_ptr<T> component){ 
         static_assert(std::is_base_of<Components::Component,T>::value);

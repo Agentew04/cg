@@ -15,8 +15,11 @@ namespace Engine {
     class MeshImporter {
     public:
         
+        /// @brief Carrega um mesh de um arquivo .obj
         static std::shared_ptr<Mesh> loadMesh(std::string path);
 
+        /// @brief Carrega varios materiais nomeados de um
+        /// arquivo .mtl
         static std::map<std::string, Material> loadMaterials(std::string path);
 
     private:

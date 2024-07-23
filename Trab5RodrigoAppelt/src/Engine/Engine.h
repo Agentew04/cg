@@ -14,6 +14,8 @@
 
 namespace Engine{
 
+    /// @brief Classe principal da engine. Gerencia todos os atores
+    /// e event forwarding.
     class Engine {
         public:
             /// @brief Unica instancia usada da engine.

@@ -8,6 +8,8 @@
 
 namespace Engine::Components
 {
+    /// @brief Componente que faz a movimentacao de um Ator
+    /// de acordo com entradas do teclado
     class Character: public Component {
     public:
         void KeyDown(int key) override;
