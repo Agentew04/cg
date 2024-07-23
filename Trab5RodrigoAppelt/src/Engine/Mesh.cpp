@@ -89,24 +89,23 @@ Mesh Mesh::tetrahedron(int resolution){
     return m;
 }
 
-Mesh Mesh::fromSweep(std::vector<Vector3> profile, int radialResolution){
+Mesh Mesh::fromSweep(std::vector<Vector3> profile, unsigned int radialResolution){
     Mesh m;
 
     float step = M_2_PI/radialResolution;
 
     // vertices
-    for(int i=0;i<radialResolution;i++){
+    for(size_t i=0;i<radialResolution;i++){
         for(auto& v: profile){
             m.vertexList.push_back(v.rotate(i*step, Vector3(0,1,0)));
         }
     }
 
     // calcular normais
-    for(int i=0;i<radialResolution;i++){
-        for(int j=0;j<profile.size();j++){
+    for(size_t i=0;i<radialResolution;i++){
+        for(size_t j=0;j<profile.size();j++){
             Vector3 a = m.vertexList[i*profile.size()+j];
             Vector3 b = m.vertexList[((i+1)%radialResolution)*profile.size()+j];
-            Vector3 c = m.vertexList[((i+1)%radialResolution)*profile.size()+(j+1)%profile.size()];
             Vector3 d = m.vertexList[i*profile.size()+(j+1)%profile.size()];
 
             Vector3 up = b-a;
@@ -124,13 +123,13 @@ Mesh Mesh::fromSweep(std::vector<Vector3> profile, int radialResolution){
     float minHeight = profile[0].y;
     m.vertexList.push_back(Vector3(0, minHeight, 0));
     m.vertexList.push_back(Vector3(0, maxHeight, 0));
-    int bottomCapIndex = m.vertexList.size()-2;
-    int topCapIndex = m.vertexList.size()-1;
+    size_t bottomCapIndex = m.vertexList.size()-2;
+    size_t topCapIndex = m.vertexList.size()-1;
 
     // para cada coluna de faces
-    for(int i=0;i<radialResolution;i++){
+    for(size_t i=0;i<radialResolution;i++){
         // para cada quad
-        for(int j=0; j<profile.size()-1;j++){
+        for(size_t j=0; j<profile.size()-1;j++){
             int a = i*profile.size()+j;
             int b = i*profile.size()+j+1;
             int c = ((i+1)%radialResolution)*profile.size()+j+1;
@@ -206,14 +205,10 @@ GLuint Mesh::loadTexture(std::string path){
         GL_UNSIGNED_BYTE,
         image.data()// bmp.getImage()
     );
-    auto glerr = glGetError();
-    if(glerr != GL_NO_ERROR){
-        std::cout << "!!Error loading texture at \"" << path << "\". OpenGL Error: " << gluErrorString(glerr) << std::endl;
-        return 0;
-    }
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    return textureId;
 }

@@ -13,6 +13,7 @@ public:
         Sphere,
         Tetrahedron,
         Cube,
+        Cone,
         COUNT
     };
 

@@ -22,7 +22,6 @@ void Character::Update(float delta){
 
         Vector3 up = Vector3(0,1,0);
         Vector3 front = act->getForward();
-        Vector3 right = up.cross(front);
 
         if((((int)mov) & (int)Movement::FRONT) > 0){
             act->position += front * (delta * forwardSpeed);

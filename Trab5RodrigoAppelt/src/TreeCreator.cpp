@@ -17,10 +17,10 @@ std::shared_ptr<Engine::Actor> TreeCreator::createTree(TreeTop top){
     auto topMr = std::make_shared<Engine::Components::MeshRenderer>();
 
     if(barkTextureId == 0){
-        // barkTextureId = Engine::Mesh::loadTexture(".\\Trab5RodrigoAppelt\\assets\\images\\bark.png");
+        barkTextureId = Engine::Mesh::loadTexture(".\\Trab5RodrigoAppelt\\assets\\images\\bark.png");
     }
     if(treeTopTextureId == 0){
-        // treeTopTextureId = Engine::Mesh::loadTexture(".\\Trab5RodrigoAppelt\\assets\\images\\leaves.png");
+        treeTopTextureId = Engine::Mesh::loadTexture(".\\Trab5RodrigoAppelt\\assets\\images\\leaves.png");
     }
 
     barkMr->useTexture(barkTextureId);
@@ -67,7 +67,7 @@ std::shared_ptr<Engine::Mesh> TreeCreator::createBark(){
 
 std::shared_ptr<Engine::Mesh> TreeCreator::createTreeTop(TreeTop top){
     std::shared_ptr<Engine::Mesh> mesh;
-    
+
     switch(top){
         case TreeTop::Sphere:
             mesh = Engine::MeshImporter::loadMesh(".\\Trab5RodrigoAppelt\\assets\\models\\treetop_sphere.3d");
@@ -81,8 +81,9 @@ std::shared_ptr<Engine::Mesh> TreeCreator::createTreeTop(TreeTop top){
         case TreeTop::Cube:
             mesh = Engine::MeshImporter::loadMesh(".\\Trab5RodrigoAppelt\\assets\\models\\treetop_cube.3d");
             break;
-        // case TreeTop::Cone:
-        //     mesh = Engine::MeshImporter::loadMesh(".\\Trab5RodrigoAppelt\\assets\\models\\treetop_cone.3d");
+        case TreeTop::Cone:
+            mesh = Engine::MeshImporter::loadMesh(".\\Trab5RodrigoAppelt\\assets\\models\\treetop_cone.3d");
+            break;
         default:
             std::cout << "Unknown treetop:" << (int)top << std::endl;
             mesh = nullptr;
@@ -98,6 +99,6 @@ std::shared_ptr<Engine::Mesh> TreeCreator::createTreeTop(TreeTop top){
     }else if(mesh){
         mesh->materials[0] = treeTopMat;
     }
-    
+
     return mesh;
 }

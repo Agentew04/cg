@@ -106,7 +106,7 @@ std::shared_ptr<Engine::Mesh> MeshImporter::loadMesh(std::string path){
                 mesh->faceList.push_back(face);
                 break;
             }
-            case LineType::UNKNOWN:
+            default:
                 break;
         }
     }
@@ -173,7 +173,7 @@ std::map<std::string, Engine::Material> MeshImporter::loadMaterials(std::string 
                 currentMaterial->shininess = parseSpecularExponent(line);
                 break;
             }
-            case LineType::UNKNOWN:
+            default:
                 break;
         }
 

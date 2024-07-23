@@ -20,7 +20,7 @@ namespace Engine {
         /// @param profile A lista de pontos que formam o perfil da mesh.
         /// @param radialResolution Quantos vezes o perfil eh rotacionado para formar a mesh
         /// @return A mesh criada.
-        static Mesh fromSweep(std::vector<Vector3> profile, int radialResolution);
+        static Mesh fromSweep(std::vector<Vector3> profile, unsigned int radialResolution);
 
         /// @brief Cria um tetrahedro normalizado regular
         /// @return A mesh do tetrahedro

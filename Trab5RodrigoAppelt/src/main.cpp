@@ -135,7 +135,7 @@ void display(void)
 }
 
 // faz a leitura da entrada do usuario
-void keyboard(unsigned char key, int x, int y)
+void keyboard(unsigned char key, int, int)
 {
     // printf("%c", key);
     key = tolower(key);
@@ -153,20 +153,10 @@ void keyboard(unsigned char key, int x, int y)
     }
 }
 
-void keyboardUp(unsigned char key, int x, int y)
+void keyboardUp(unsigned char key, int, int)
 {
     key = tolower(key);
     mngr.keyboardUp(key);
-}
-
-void MotionFunc(int x, int y)
-{
-
-}
-
-void MouseFunc(int botao, int estado, int x, int y)
-{
-
 }
 
 void initOpenGL(){
@@ -176,13 +166,13 @@ void initOpenGL(){
     glMatrixMode(GL_MODELVIEW);
 
     glClearColor(0.0, 0.0, 0.0, 0.0); // Set background color to black and opaque
-    glClearDepth(1.0);                // Set background depth to farthest   
+    glClearDepth(1.0);                // Set background depth to farthest
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);           // Set the type of depth-test
     glShadeModel(GL_SMOOTH);          // Enable smooth shading
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  // Nice perspective corrections
 
-    
+
 
     glEnable( GL_TEXTURE );
     glEnable( GL_TEXTURE_2D );
@@ -224,8 +214,6 @@ int main()
     initOpenGL();
 
     glutDisplayFunc(display);
-    glutMotionFunc(MotionFunc);
-    glutMouseFunc(MouseFunc);
     glutIdleFunc(display);
     glutReshapeFunc(reshape);
     glutKeyboardFunc(keyboard);

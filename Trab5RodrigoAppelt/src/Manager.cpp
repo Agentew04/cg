@@ -53,8 +53,8 @@ void Manager::createTerrain(){
 
     // terrain
     auto terrainActor = std::make_shared<Engine::Actor>("Terrain");
-    terrainActor->scale = Vector3(100, 1, 100);
-    terrainActor->position = Vector3(-50,-10,-50);
+    terrainActor->scale = Vector3(200, 2, 200);
+    terrainActor->position = Vector3(-100,-20,-100);
     terrain = std::make_shared<Engine::Components::TerrainBezier>();
     terrain->resolution = 128;
     terrainActor->addComponent(terrain); // sem std::move pois queremos que fique uma copia aqui
@@ -63,7 +63,7 @@ void Manager::createTerrain(){
 }
 
 void Manager::createTrees(){
-    int treeCount = 25;
+    int treeCount = 50;
 
     std::mt19937 rng(std::time(nullptr));
 

@@ -16,7 +16,10 @@ void MeshRenderer::Render() {
     }
 
     Material defaultMat;
-    defaultMat.setDiffuse(1,0,0,1);
+    defaultMat.setDiffuse(1,1,1,1);
+    defaultMat.setAmbient(0.5, 0.5, 0.5, 1);
+    defaultMat.setSpecular(1,1,1,1);
+    defaultMat.shininess = 100;
 
     if(textureId != 0){
         glEnable(GL_TEXTURE_2D);
@@ -25,7 +28,7 @@ void MeshRenderer::Render() {
 
     glBegin(GL_TRIANGLES);
     for (auto face : mesh->faceList) {
-        if(face.material >= 0 && mesh->materials.size()>=(size_t)face.material+1){
+        if(textureId == 0 && face.material >= 0 && mesh->materials.size()>=(size_t)face.material+1){
         mesh->materials[face.material].use();
         }else{
             defaultMat.use();
