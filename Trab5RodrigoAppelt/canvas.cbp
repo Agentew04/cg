@@ -44,8 +44,6 @@
 			<Add library="winmm" />
 			<Add library="ws2_32" />
 		</Linker>
-		<Unit filename="src/2D/Bmp.h" />
-		<Unit filename="src/2D/bmp.cpp" />
 		<Unit filename="src/2D/lodepng.cpp" />
 		<Unit filename="src/2D/lodepng.h" />
 		<Unit filename="src/Engine/Actor.cpp" />
@@ -57,10 +55,8 @@
 		<Unit filename="src/Engine/Components/Component.h" />
 		<Unit filename="src/Engine/Components/MeshRenderer.cpp" />
 		<Unit filename="src/Engine/Components/MeshRenderer.h" />
-		<Unit filename="src/Engine/Components/Rotating.h" />
 		<Unit filename="src/Engine/Components/Skybox.cpp" />
 		<Unit filename="src/Engine/Components/Skybox.h" />
-		<Unit filename="src/Engine/Components/Terrain.h" />
 		<Unit filename="src/Engine/Components/TerrainBezier.cpp" />
 		<Unit filename="src/Engine/Components/TerrainBezier.h" />
 		<Unit filename="src/Engine/Engine.cpp" />
