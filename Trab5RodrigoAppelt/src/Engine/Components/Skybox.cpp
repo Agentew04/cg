@@ -6,8 +6,6 @@
 #include <GL/freeglut_ext.h>
 #include <chrono>
 
-
-#include "../../2D/Bmp.h"
 #include "../../2D/lodepng.h"
 #include "../Engine.h"
 #include "Camera.h"
