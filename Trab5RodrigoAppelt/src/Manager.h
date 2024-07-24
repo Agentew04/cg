@@ -9,38 +9,39 @@
 
 /// @brief Gerencia toda a interacao com a engine e o usuario.
 /// Vai ter o codigo do jogo.
-class Manager {
+class Manager
+{
 public:
+   /// @brief sinaliza que o jogo vai comecar
+   void startloop();
 
-    /// @brief sinaliza que o jogo vai comecar
-    void startloop();
+   /// @brief Chamado a todo pedido de render do openGL
+   void render();
+   /// @brief Chamado imediatamente antes da render()
+   /// @param delta O tempo desde o ultimo update
+   void update(float delta);
+   /// @brief Chamado quando uma tecla eh pressionada
+   /// @param key A tecla pressionada
+   void keyboard(Key key);
+   /// @brief Chamado quando uma tecla eh solta
+   /// @param key A tecla solta
+   void keyboardUp(Key key);
 
-    /// @brief Chamado a todo pedido de render do openGL
-    void render();
-    /// @brief Chamado imediatamente antes da render()
-    /// @param delta O tempo desde o ultimo update
-    void update(float delta);
-    /// @brief Chamado quando uma tecla eh pressionada
-    /// @param key A tecla pressionada
-    void keyboard(Key key);
-    /// @brief Chamado quando uma tecla eh solta
-    /// @param key A tecla solta
-    void keyboardUp(Key key);
 private:
-    Engine::Engine engine;
-    TreeCreator treeCreator;
-    std::shared_ptr<Engine::Components::TerrainBezier> terrain;
-    std::shared_ptr<Engine::Components::Character> player;
+   Engine::Engine engine;
+   TreeCreator treeCreator;
+   std::shared_ptr<Engine::Components::TerrainBezier> terrain;
+   std::shared_ptr<Engine::Components::Character> player;
 
-    /// @brief inicializa tudo
-    void createWorld();
+   /// @brief inicializa tudo
+   void createWorld();
 
-    /// @brief Cria o terreno
-    void createTerrain();
-    /// @brief Cria as arvores
-    void createTrees();
-    /// @brief Cria o personagem
-    void createCharacter();
+   /// @brief Cria o terreno
+   void createTerrain();
+   /// @brief Cria as arvores
+   void createTrees();
+   /// @brief Cria o personagem
+   void createCharacter();
 };
 
 #endif
