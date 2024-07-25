@@ -16,13 +16,13 @@ void Component::log(LogLevel level, std::string message) const{
     }
     switch (level){
         case LogLevel::INFO:
-            std::cout << "[INFO] [" << id << "] " << message << std::endl;
+            //std::cout << "[INFO] [" << id << "] " << message << std::endl;
             break;
         case LogLevel::WARNING:
-            std::cout << "[WARNING] [" << id << "] " << message << std::endl;
+            //std::cout << "[WARNING] [" << id << "] " << message << std::endl;
             break;
         case LogLevel::ERROR:
-            std::cout << "[ERROR] [" << id << "] " << message << std::endl;
+            //std::cout << "[ERROR] [" << id << "] " << message << std::endl;
             break;
     }
 }

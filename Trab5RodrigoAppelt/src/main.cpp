@@ -143,6 +143,8 @@ int main()
    // init
    initOpenGL();
 
+   ((BOOL(WINAPI*)(int))wglGetProcAddress("wglSwapIntervalEXT"))(1);
+
    glutDisplayFunc(display);
    glutIdleFunc(display);
    glutReshapeFunc(reshape);

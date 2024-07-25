@@ -205,7 +205,7 @@ void TerrainBezier::loadTexture(){
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-    std::cout << "Texture ("<<textureId <<") loaded in " << duration.count() << " seconds" << std::endl;
+    //std::cout << "Texture ("<<textureId <<") loaded in " << duration.count() << " seconds" << std::endl;
 }
 
 

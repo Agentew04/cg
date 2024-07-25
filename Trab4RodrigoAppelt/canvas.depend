@@ -457,3 +457,312 @@
 	<limits>
 	"Perspective.h"
 
+1720055253 source:d:\universidade\cg\trab4rodrigoappelt\src\3d\buffer.cpp
+	"Buffer.h"
+	<iostream>
+	<GL/glut.h>
+
+1719504727 d:\universidade\cg\trab4rodrigoappelt\src\3d\buffer.h
+
+1710416652 d:\universidade\cg\include\gl\glut.h
+	"freeglut_std.h"
+
+1710416652 d:\universidade\cg\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1719177438 source:d:\universidade\cg\trab4rodrigoappelt\src\3d\camera.2d.cpp
+	"Camera.h"
+	"../gl_canvas2d.h"
+	"Primitive.h"
+	"Perspective.h"
+
+1720055253 d:\universidade\cg\trab4rodrigoappelt\src\3d\camera.h
+	<vector>
+	"../Math/Vector2.h"
+	"../Math/Vector3.h"
+	"../Keyboard.h"
+	"Primitive.h"
+
+1719177439 d:\universidade\cg\trab4rodrigoappelt\src\math\vector2.h
+	<cmath>
+	<iostream>
+
+1719504727 d:\universidade\cg\trab4rodrigoappelt\src\math\vector3.h
+	<iostream>
+	"Vector2.h"
+
+1719177438 d:\universidade\cg\trab4rodrigoappelt\src\keyboard.h
+
+1720055253 d:\universidade\cg\trab4rodrigoappelt\src\3d\primitive.h
+	<vector>
+	"../Math/Vector3.h"
+	"../Misc/Tuple.h"
+
+1719177439 d:\universidade\cg\trab4rodrigoappelt\src\misc\tuple.h
+
+1721408643 d:\universidade\cg\trab4rodrigoappelt\src\gl_canvas2d.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	"Math/Vector2.h"
+	"Math/Vector3.h"
+	"Math/Polygon2D.h"
+	"UI/UIDefinitions.h"
+	"3D/ObjLoader.h"
+	"Fonts/FontManager.h"
+
+1710416652 d:\universidade\cg\include\gl\freeglut_ext.h
+	<stdarg.h>
+
+1719177438 d:\universidade\cg\trab4rodrigoappelt\src\math\polygon2d.h
+	<vector>
+	<map>
+	"Vector2.h"
+
+1719177439 d:\universidade\cg\trab4rodrigoappelt\src\ui\uidefinitions.h
+	"../Math/Vector2.h"
+
+1719177438 d:\universidade\cg\trab4rodrigoappelt\src\3d\objloader.h
+	<string>
+	<vector>
+	<map>
+	"../Math/Vector3.h"
+
+1719177438 d:\universidade\cg\trab4rodrigoappelt\src\fonts\fontmanager.h
+	<string>
+	<vector>
+	"../3D/ObjLoader.h"
+	"../Math/Vector2.h"
+
+1719504727 d:\universidade\cg\trab4rodrigoappelt\src\3d\perspective.h
+	<vector>
+	"../Math/Vector2.h"
+	"../Math/Vector3.h"
+
+1720055253 source:d:\universidade\cg\trab4rodrigoappelt\src\3d\camera.3d.cpp
+	"Camera.h"
+	"../gl_canvas2d.h"
+	"Primitive.h"
+	"Perspective.h"
+
+1720055253 source:d:\universidade\cg\trab4rodrigoappelt\src\3d\objloader.cpp
+	"ObjLoader.h"
+	<iostream>
+	<vector>
+	<fstream>
+
+1719504727 source:d:\universidade\cg\trab4rodrigoappelt\src\3d\perspective.cpp
+	"Perspective.h"
+	<vector>
+	<algorithm>
+	"../Math/Vector3.h"
+
+1720055253 source:d:\universidade\cg\trab4rodrigoappelt\src\3d\primitive.cpp
+	"Primitive.h"
+
+1720055253 source:d:\universidade\cg\trab4rodrigoappelt\src\3d\rasterizer.cpp
+	"Rasterizer.h"
+	<limits>
+	"Perspective.h"
+
+1720055253 d:\universidade\cg\trab4rodrigoappelt\src\3d\rasterizer.h
+	<vector>
+	<functional>
+	"Primitive.h"
+	"Buffer.h"
+	"Camera.h"
+
+1719177438 source:d:\universidade\cg\trab4rodrigoappelt\src\fonts\fontmanager.cpp
+	"FontManager.h"
+	<map>
+	"../3D/ObjLoader.h"
+
+1719177439 source:d:\universidade\cg\trab4rodrigoappelt\src\gl_canvas2d.cpp
+	"gl_canvas2d.h"
+	<GL/glut.h>
+	<string>
+	"Fonts/FontManager.h"
+	"Math/Matrix.h"
+
+1719177438 d:\universidade\cg\trab4rodrigoappelt\src\math\matrix.h
+	<string.h>
+	<iostream>
+	<vector>
+	"Vector2.h"
+	"Vector3.h"
+
+1721408643 source:d:\universidade\cg\trab4rodrigoappelt\src\main.cpp
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	<math.h>
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	<sstream>
+	<iomanip>
+	"gl_canvas2d.h"
+	"Fonts/FontManager.h"
+	"UI/CursorManager.h"
+	"Specific/Manager.h"
+	"3D/Buffer.h"
+
+1719177439 d:\universidade\cg\trab4rodrigoappelt\src\ui\cursormanager.h
+	<windows.h>
+	<map>
+
+1720055253 d:\universidade\cg\trab4rodrigoappelt\src\specific\manager.h
+	"../Math/Vector2.h"
+	"../Keyboard.h"
+	"Simulator.h"
+	"Sidebar.h"
+	"../3D/Camera.h"
+	"../3D/Buffer.h"
+
+1719504727 d:\universidade\cg\trab4rodrigoappelt\src\specific\simulator.h
+	<vector>
+	"../Math/Vector3.h"
+	"../3D/Primitive.h"
+
+1720055253 d:\universidade\cg\trab4rodrigoappelt\src\specific\sidebar.h
+	"../Math/Vector2.h"
+	"../UI/Slider.h"
+	"../UI/SliderManager.h"
+	"../UI/ButtonManager.h"
+	"../UI/CheckBoxManager.h"
+
+1719177439 d:\universidade\cg\trab4rodrigoappelt\src\ui\slider.h
+	<map>
+	<functional>
+	"../Math/Vector2.h"
+	"../Math/Vector3.h"
+
+1719177439 d:\universidade\cg\trab4rodrigoappelt\src\ui\slidermanager.h
+	<vector>
+	"Slider.h"
+
+1719177439 d:\universidade\cg\trab4rodrigoappelt\src\ui\buttonmanager.h
+	<vector>
+	"Button.h"
+
+1719177439 d:\universidade\cg\trab4rodrigoappelt\src\ui\button.h
+	<string>
+	<functional>
+	<map>
+	"../Math/Vector2.h"
+	"../Math/Vector3.h"
+	"UIDefinitions.h"
+
+1719177439 d:\universidade\cg\trab4rodrigoappelt\src\ui\checkboxmanager.h
+	<vector>
+	"CheckBox.h"
+
+1719177439 d:\universidade\cg\trab4rodrigoappelt\src\ui\checkbox.h
+	<map>
+	<functional>
+	"../Math/Vector2.h"
+	"../Math/Vector3.h"
+
+1719177438 source:d:\universidade\cg\trab4rodrigoappelt\src\math\polygon2d.cpp
+	"Polygon2D.h"
+	<map>
+	<chrono>
+	<algorithm>
+	"../Misc/Tuple.h"
+
+1719177439 source:d:\universidade\cg\trab4rodrigoappelt\src\math\vector2.cpp
+	"Vector2.h"
+
+1719504727 source:d:\universidade\cg\trab4rodrigoappelt\src\math\vector3.cpp
+	<cmath>
+	"Vector2.h"
+	"Vector3.h"
+
+1720055253 source:d:\universidade\cg\trab4rodrigoappelt\src\specific\manager.cpp
+	"Manager.h"
+	"../gl_canvas2d.h"
+	"../3D/Rasterizer.h"
+	"../3D/Perspective.h"
+
+1720055253 source:d:\universidade\cg\trab4rodrigoappelt\src\specific\sidebar.cpp
+	"SideBar.h"
+	<iomanip>
+	<sstream>
+	"../gl_canvas2d.h"
+	"../Math/Vector2.h"
+	"Manager.h"
+
+1720055253 source:d:\universidade\cg\trab4rodrigoappelt\src\specific\simulator.cpp
+	"Simulator.h"
+	"../gl_canvas2d.h"
+	"../3D/Primitive.h"
+	"../3D/Perspective.h"
+
+1719177439 source:d:\universidade\cg\trab4rodrigoappelt\src\ui\button.cpp
+	"Button.h"
+	<iostream>
+	"../gl_canvas2d.h"
+	"UIDefinitions.h"
+
+1719177439 source:d:\universidade\cg\trab4rodrigoappelt\src\ui\buttonmanager.cpp
+	<vector>
+	<iostream>
+	<algorithm>
+	"ButtonManager.h"
+	"CursorManager.h"
+
+1719177439 source:d:\universidade\cg\trab4rodrigoappelt\src\ui\checkbox.cpp
+	<iostream>
+	<cmath>
+	"CheckBox.h"
+	"../gl_canvas2d.h"
+
+1719177439 source:d:\universidade\cg\trab4rodrigoappelt\src\ui\checkboxmanager.cpp
+	<vector>
+	<iostream>
+	<algorithm>
+	"CheckBoxManager.h"
+	"CursorManager.h"
+
+1719177439 source:d:\universidade\cg\trab4rodrigoappelt\src\ui\cursormanager.cpp
+	<windows.h>
+	<map>
+	<iostream>
+	"CursorManager.h"
+
+1719177439 source:d:\universidade\cg\trab4rodrigoappelt\src\ui\slider.cpp
+	"Slider.h"
+	"../gl_canvas2d.h"
+	<iostream>
+	<cmath>
+
+1719177439 source:d:\universidade\cg\trab4rodrigoappelt\src\ui\slidermanager.cpp
+	<vector>
+	<iostream>
+	<algorithm>
+	"SliderManager.h"
+
+1721408643 source:d:\universidade\cg\trab4rodrigoappelt\src\ui\uimanager.cpp
+	<vector>
+	<iostream>
+	"UIManager.h"
+
+1721408643 d:\universidade\cg\trab4rodrigoappelt\src\ui\uimanager.h
+	<vector>
+	"Button.h"
+	"Slider.h"
+	"CheckBox.h"
+	"ButtonManager.h"
+	"SliderManager.h"
+	"CheckBoxManager.h"
+
