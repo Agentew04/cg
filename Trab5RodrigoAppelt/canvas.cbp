@@ -53,6 +53,8 @@
 		<Unit filename="src/Engine/Components/Character.h" />
 		<Unit filename="src/Engine/Components/Component.cpp" />
 		<Unit filename="src/Engine/Components/Component.h" />
+		<Unit filename="src/Engine/Components/Lod.cpp" />
+		<Unit filename="src/Engine/Components/Lod.h" />
 		<Unit filename="src/Engine/Components/MeshRenderer.cpp" />
 		<Unit filename="src/Engine/Components/MeshRenderer.h" />
 		<Unit filename="src/Engine/Components/Skybox.cpp" />

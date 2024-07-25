@@ -31,6 +31,7 @@ private:
    };
 
    std::map<TreeTop, Tree> cachedTrees;
+   std::map<int, std::shared_ptr<Engine::Mesh>> cachedLODs;
 
    GLuint barkTextureId = 0;
    GLuint treeTopTextureId = 0;

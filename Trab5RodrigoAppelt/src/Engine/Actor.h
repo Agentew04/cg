@@ -73,14 +73,14 @@ namespace Engine
       /// @tparam T O tipo do componente
       /// @return A instancia do componente
       template <typename T>
-      const T &GetComponent()
+      std::shared_ptr<T> GetComponent()
       {
          static_assert(std::is_base_of<Components::Component, T>::value);
          for (auto &component : components)
          {
             if (dynamic_cast<T *>(component.get()))
             {
-               return *dynamic_cast<T *>(component.get());
+               return std::dynamic_pointer_cast<T>(component);
             }
          }
          throw std::runtime_error("Component not found");

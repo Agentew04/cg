@@ -479,11 +479,11 @@
 	"../Keyboard.h"
 	"Primitive.h"
 
-1713118550 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\math\vector2.h
+1721844649 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\math\vector2.h
 	<cmath>
 	<iostream>
 
-1719962879 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\math\vector3.h
+1721844656 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\math\vector3.h
 	<iostream>
 	"Vector2.h"
 
@@ -874,7 +874,7 @@
 	<ctype.h>
 	<stdio.h>
 
-1721775639 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\material.h
+1721844613 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\material.h
 
 1719952500 source:e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\material.cpp
 	"Material.h"
@@ -890,7 +890,7 @@
 	<memory>
 	"../../Keyboard.h"
 
-1721775567 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\actor.h
+1721844593 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\actor.h
 	<string>
 	<vector>
 	"../Math/Vector3.h"
@@ -939,7 +939,7 @@
 	<iostream>
 	"lodepng.h"
 
-1721775595 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\engine.h
+1721844603 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\engine.h
 	<vector>
 	<list>
 	<memory>
@@ -948,7 +948,7 @@
 	"Mesh.h"
 	"../Math/Vector3.h"
 
-1721774646 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\mesh.h
+1721844620 e:\universidade\cg\trabalhos\trab5rodrigoappelt\src\engine\mesh.h
 	<vector>
 	<string>
 	"../Math/Vector3.h"

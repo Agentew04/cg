@@ -12,6 +12,8 @@ namespace Engine::Components
     /// de acordo com entradas do teclado
     class Character: public Component {
     public:
+
+        std::string getName() const override { return "Character"; }
         void KeyDown(int key) override;
         void KeyUp(int key) override;
         void Update(float delta) override;

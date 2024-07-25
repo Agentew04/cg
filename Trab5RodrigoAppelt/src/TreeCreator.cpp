@@ -5,7 +5,12 @@
 
 #include "Engine/Components/MeshRenderer.h"
 #include "Engine/MeshImporter.h"
+#include "Engine/Components/Lod.h"
 #include "Engine/Mesh.h"
+
+std::shared_ptr<Engine::Mesh> createTetra(int resolution){
+   
+}
 
 std::shared_ptr<Engine::Actor> TreeCreator::createTree(TreeTop top)
 {
@@ -55,6 +60,34 @@ std::shared_ptr<Engine::Actor> TreeCreator::createTree(TreeTop top)
    // add mesh renderers for each
    barkActor->addComponent(std::move(barkMr));
    topActor->addComponent(std::move(topMr));
+
+   if(top == TreeTop::Tetrahedron){
+      // adicionar componente de LOD
+      std::vector<float> lodDistances = {5, 50, 100};
+      auto lod = std::make_shared<Engine::Components::Lod>();
+      lod->distances = lodDistances;
+
+      // has lod 0
+      if(cachedLODs.find(0) != cachedLODs.end()){
+         cachedLODs[0] = std::make_shared<Engine::Mesh>(Engine::Mesh::tetrahedron(6));
+      }
+      if(cachedLODs.find(1) != cachedLODs.end()){
+         cachedLODs[1] = std::make_shared<Engine::Mesh>(Engine::Mesh::tetrahedron(4));
+      }
+      if(cachedLODs.find(2) != cachedLODs.end()){
+         cachedLODs[2] = std::make_shared<Engine::Mesh>(Engine::Mesh::tetrahedron(2));
+      }
+      if(cachedLODs.find(3) != cachedLODs.end()){
+         cachedLODs[3] = std::make_shared<Engine::Mesh>(Engine::Mesh::tetrahedron(1));
+      }
+
+      lod->meshes.push_back(cachedLODs[0]);
+      lod->meshes.push_back(cachedLODs[1]);
+      lod->meshes.push_back(cachedLODs[2]);
+      lod->meshes.push_back(cachedLODs[3]);
+
+      topActor->addComponent(std::move(lod));
+   }
 
    barkActor->addChild(std::move(topActor));
    return barkActor;
