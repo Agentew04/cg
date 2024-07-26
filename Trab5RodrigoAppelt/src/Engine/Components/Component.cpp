@@ -14,16 +14,21 @@ void Component::log(LogLevel level, std::string message) const{
     } else {
         id = getName();
     }
-    switch (level){
-        case LogLevel::INFO:
-            //std::cout << "[INFO] [" << id << "] " << message << std::endl;
-            break;
-        case LogLevel::WARNING:
-            //std::cout << "[WARNING] [" << id << "] " << message << std::endl;
-            break;
-        case LogLevel::ERROR:
-            //std::cout << "[ERROR] [" << id << "] " << message << std::endl;
-            break;
+    
+    bool doLogs = false;
+
+    if(doLogs){
+        switch (level){
+            case LogLevel::INFO:
+                std::cout << "[INFO] [" << id << "] " << message << std::endl;
+                break;
+            case LogLevel::WARNING:
+                std::cout << "[WARNING] [" << id << "] " << message << std::endl;
+                break;
+            case LogLevel::ERROR:
+                std::cout << "[ERROR] [" << id << "] " << message << std::endl;
+                break;
+        }
     }
 }
 

@@ -11,7 +11,7 @@ using namespace Engine::Components;
 
 void MeshRenderer::Render() {
     if(!mesh){
-        //log(LogLevel::WARNING, "MeshRenderer has no mesh");
+        log(LogLevel::WARNING, "MeshRenderer has no mesh");
         return;
     }
 
@@ -53,7 +53,7 @@ void MeshRenderer::Render() {
 
 void MeshRenderer::useTexture(GLuint textureId){
     this->textureId = textureId;
-    log(LogLevel::INFO, "Using texture: " + std::to_string(textureId));
+    // log(LogLevel::INFO, "Using texture: " + std::to_string(textureId));
 }
 
 void MeshRenderer::Destroy(){

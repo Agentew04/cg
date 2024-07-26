@@ -47,6 +47,7 @@ void Manager::createWorld()
    createTerrain();
    createTrees();
    createCharacter();
+   createSweep();
 }
 
 void Manager::createTerrain()
@@ -110,4 +111,30 @@ void Manager::createCharacter()
    cameraActor->addComponent(player); // tbm sem std::move
 
    engine.hierarchy.push_back(std::move(cameraActor));
+}
+
+void Manager::createSweep(){
+   // create Sweep example
+   auto sweepActor = std::make_shared<Engine::Actor>("Sweep");
+   auto sweepMr = std::make_shared<Engine::Components::MeshRenderer>();
+   std::vector<Vector3> sweepProfile = {
+      { 1,    0,   0 },
+      { 1,    0.5, 0 },
+      { 0.625, 0.75,0 },
+      { 0.25, 1,   0 },
+      { 0.25, 1.5, 0 },
+      { 0.25, 2,   0 },
+      { 0.25, 2.5, 0 },
+      { 0.25, 3,   0 },
+      { 0.775, 3.25, 0},
+      { 1.3,  3.5, 0 },
+      { 1.3,  4.5, 0 }
+   };
+   auto cup = std::make_shared<Engine::Mesh>(Engine::Mesh::fromSweep(sweepProfile, 16));
+   sweepMr->mesh = std::move(cup);
+   sweepActor->addComponent(std::move(sweepMr));
+   sweepActor->position = Vector3(105, 5, 105);
+   sweepActor->scale = Vector3(4,4,4);
+
+   engine.hierarchy.push_back(std::move(sweepActor));
 }

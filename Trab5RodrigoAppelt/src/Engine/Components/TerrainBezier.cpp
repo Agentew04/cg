@@ -54,13 +54,11 @@ Vector3 evaluateBezierSurface(const std::vector<Vector3>& controlPoints, int pat
     int rowIndex = patchIndex / patches;
     int colIndex = patchIndex % patches;
 
-    // Get control points for the current patch
     for (int i = 0; i < 4; ++i) {
         int index = (rowIndex * controlPointsPerPatch + i) * (patches * controlPointsPerPatch) + (colIndex * controlPointsPerPatch);
         uCurve[i] = evaluateBezierCurve(controlPoints[index], controlPoints[index + 1], controlPoints[index + 2], controlPoints[index + 3], u);
     }
 
-    // Evaluate the Bezier surface at (u, v)
     return evaluateBezierCurve(uCurve[0], uCurve[1], uCurve[2], uCurve[3], v);
 }
 
@@ -70,13 +68,11 @@ Vector3 evaluateBezierSurfaceDu(const std::vector<Vector3>& controlPoints, int p
     int rowIndex = patchIndex / patches;
     int colIndex = patchIndex % patches;
 
-    // Get control points for the current patch
     for (int i = 0; i < 4; ++i) {
         int index = (rowIndex * controlPointsPerPatch + i) * (patches * controlPointsPerPatch) + (colIndex * controlPointsPerPatch);
         uCurve[i] = evaluateBezierCurve(controlPoints[index], controlPoints[index + 1], controlPoints[index + 2], controlPoints[index + 3], u);
     }
 
-    // Evaluate the derivative of the Bezier surface in the u direction at (u, v)
     return evaluateBezierCurveDerivative(uCurve[0], uCurve[1], uCurve[2], uCurve[3], v);
 }
 
@@ -86,37 +82,31 @@ Vector3 evaluateBezierSurfaceDv(const std::vector<Vector3>& controlPoints, int p
         int rowIndex = patchIndex / patches;
         int colIndex = patchIndex % patches;
 
-        // Get control points for the current patch
         for (int i = 0; i < 4; ++i) {
             int index = (rowIndex * controlPointsPerPatch) * (patches * controlPointsPerPatch) + (colIndex * controlPointsPerPatch + i);
             vCurve[i] = evaluateBezierCurve(controlPoints[index], controlPoints[index + patches * controlPointsPerPatch], controlPoints[index + 2 * patches * controlPointsPerPatch], controlPoints[index + 3 * patches * controlPointsPerPatch], v);
         }
 
-        // Evaluate the derivative of the Bezier surface in the v direction at (u, v)
         return evaluateBezierCurveDerivative(vCurve[0], vCurve[1], vCurve[2], vCurve[3], u);
     }
 
 
 void TerrainBezier::Start(){
     if(initialized) {
-        log(LogLevel::WARNING, "Terreno jah inicializado. Pulando");
+        //log(LogLevel::WARNING, "Terreno jah inicializado. Pulando");
         return;
     }
     std::mt19937 gen(time(nullptr));
     std::uniform_real_distribution<> dis(0.0, 10.0);
 
-    // Clear the existing terrain points and normals
     terrainPoints.clear();
     terrainNormals.clear();
 
-    // Number of patches in the terrain
     int totalControlPoints = 4 * 4;
-
-    // Create a local array for the control points
     controlPoints.clear();
     controlPoints.reserve(totalControlPoints);
 
-    // Generate random control points with random heights
+    // gera os pts de cotnrole com altura aleatorias
     for (int i = 0; i < totalControlPoints; ++i) {
         float x = (i % 4)/3.0;
         float y = dis(gen);
@@ -124,7 +114,7 @@ void TerrainBezier::Start(){
         controlPoints.emplace_back(x, y, z);
     }
 
-    // Generate tessellated points and their normals
+    // faz a tesselacao do terrneo
     float step = 1.0f / (resolution - 1);
     for (int i = 0; i < resolution; ++i) {
         for (int j = 0; j < resolution; ++j) {
@@ -133,9 +123,9 @@ void TerrainBezier::Start(){
             Vector3 point = evaluateBezierSurface(controlPoints, 0, 1, 4, u, v);
             Vector3 du = evaluateBezierSurfaceDu(controlPoints, 0, 1, 4, u, v);
             Vector3 dv = evaluateBezierSurfaceDv(controlPoints, 0, 1, 4, u, v);
-            Vector3 normal = du.cross(dv).normalized(); // Calculate the normal vector
+            Vector3 normal = du.cross(dv).normalized();
             terrainPoints.push_back(point);
-            terrainNormals.push_back(normal); // Store the normal vector
+            terrainNormals.push_back(normal);
         }
     }
 
@@ -149,7 +139,6 @@ void TerrainBezier::Start(){
 }
 
 float TerrainBezier::getHeightAt(float x, float z) const {
-    // Ensure we have points and normals to render
     if (terrainPoints.empty() || terrainNormals.empty()) {
         log(LogLevel::ERROR, "Nao haviam valores nos vetores. terrainPoints.size="+std::to_string(terrainPoints.size())
             +"; terrainNormals.size="+std::to_string(terrainNormals.size()));
@@ -205,7 +194,7 @@ void TerrainBezier::loadTexture(){
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-    //std::cout << "Texture ("<<textureId <<") loaded in " << duration.count() << " seconds" << std::endl;
+    log(LogLevel::INFO, "Texture ("+std::to_string(textureId)+") loaded in " + std::to_string(duration.count()) + " seconds");
 }
 
 

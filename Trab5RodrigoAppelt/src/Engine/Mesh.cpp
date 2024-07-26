@@ -98,6 +98,13 @@ Mesh Mesh::tetrahedron(int resolution)
 Mesh Mesh::fromSweep(std::vector<Vector3> profile, unsigned int radialResolution)
 {
    Mesh m;
+   Material defaultMat = Material();
+   defaultMat.setAmbient(0.2,0.2,0.2,1);
+   defaultMat.setDiffuse(1.0,1.0,1.0,1);
+   defaultMat.setSpecular(1,1,1,1);
+   defaultMat.shininess = 100;
+
+   m.materials.push_back(defaultMat);
 
    float step = M_2_PI / radialResolution;
 
@@ -122,6 +129,7 @@ Mesh Mesh::fromSweep(std::vector<Vector3> profile, unsigned int radialResolution
          Vector3 up = b - a;
          Vector3 right = d - a;
          Vector3 normal = up.cross(right);
+         normal.normalize();
          m.normalList.push_back(normal);
          float u = i / radialResolution;
          float v = j / profile.size();
@@ -133,6 +141,10 @@ Mesh Mesh::fromSweep(std::vector<Vector3> profile, unsigned int radialResolution
    float minHeight = profile[0].y;
    m.vertexList.push_back(Vector3(0, minHeight, 0));
    m.vertexList.push_back(Vector3(0, maxHeight, 0));
+   m.normalList.push_back(Vector3(0, -1, 0));
+   m.normalList.push_back(Vector3(0, 1, 0));
+   m.uvList.push_back(Vector2(0, 0));
+   m.uvList.push_back(Vector2(0, 1));
    size_t bottomCapIndex = m.vertexList.size() - 2;
    size_t topCapIndex = m.vertexList.size() - 1;
 
@@ -188,6 +200,29 @@ Mesh Mesh::fromSweep(std::vector<Vector3> profile, unsigned int radialResolution
       m.faceList.push_back(topFace);
       m.faceList.push_back(bottomFace);
    }
+
+   int vSize = m.vertexList.size();
+   int nSize = m.normalList.size();
+   int uvSize = m.uvList.size();
+   //std::cout <<"Vertice Count: " << vSize << "; Normal Count: " << nSize << "; UV Count: " << uvSize << std::endl;
+   for(auto &face: m.faceList){
+      for(auto &v: face.vertices){
+         if(v>=vSize){
+            std::cout << "Invalid vertex index: " << v << std::endl;
+         }
+      }
+      for(auto &n: face.normals){
+         if(n>=nSize){
+            std::cout << "Invalid normal index: " << n << std::endl;
+         }
+      }
+      for(auto &uv: face.uv){
+         if(uv>=uvSize){
+            std::cout << "Invalid uv index: " << uv << std::endl;
+         }
+      }
+   }
+   return m;
 }
 
 GLuint Mesh::loadTexture(std::string path)

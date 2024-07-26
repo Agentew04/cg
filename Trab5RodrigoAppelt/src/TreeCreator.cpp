@@ -8,14 +8,13 @@
 #include "Engine/Components/Lod.h"
 #include "Engine/Mesh.h"
 
-std::shared_ptr<Engine::Mesh> createTetra(int resolution){
-   
-}
+int treesCreated = 0;
 
 std::shared_ptr<Engine::Actor> TreeCreator::createTree(TreeTop top)
 {
    auto barkActor = std::make_shared<Engine::Actor>("TreeBark");
-   auto topActor = std::make_shared<Engine::Actor>("TreeTop");
+   auto topActor = std::make_shared<Engine::Actor>("TreeTop " + std::to_string(treesCreated) + " - " + std::to_string((int)top));
+   treesCreated++;
    topActor->position = Vector3(0, 8, 0);
    topActor->scale = Vector3(3, 3, 3);
 
@@ -67,24 +66,17 @@ std::shared_ptr<Engine::Actor> TreeCreator::createTree(TreeTop top)
       auto lod = std::make_shared<Engine::Components::Lod>();
       lod->distances = lodDistances;
 
-      // has lod 0
-      if(cachedLODs.find(0) != cachedLODs.end()){
-         cachedLODs[0] = std::make_shared<Engine::Mesh>(Engine::Mesh::tetrahedron(6));
-      }
-      if(cachedLODs.find(1) != cachedLODs.end()){
-         cachedLODs[1] = std::make_shared<Engine::Mesh>(Engine::Mesh::tetrahedron(4));
-      }
-      if(cachedLODs.find(2) != cachedLODs.end()){
-         cachedLODs[2] = std::make_shared<Engine::Mesh>(Engine::Mesh::tetrahedron(2));
-      }
-      if(cachedLODs.find(3) != cachedLODs.end()){
-         cachedLODs[3] = std::make_shared<Engine::Mesh>(Engine::Mesh::tetrahedron(1));
+      if(!lodsCreated){
+         createLODs();
+         lodsCreated = true;
       }
 
-      lod->meshes.push_back(cachedLODs[0]);
-      lod->meshes.push_back(cachedLODs[1]);
-      lod->meshes.push_back(cachedLODs[2]);
-      lod->meshes.push_back(cachedLODs[3]);
+      for(int i=0;i<lodLevel;i++){
+         if(!cachedLODs[i]){
+            std::cout << "LOD nivel " << i << "nao existe!!" << std::endl;
+         }
+         lod->meshes.push_back(cachedLODs[i]);
+      }
 
       topActor->addComponent(std::move(lod));
    }
@@ -149,4 +141,29 @@ std::shared_ptr<Engine::Mesh> TreeCreator::createTreeTop(TreeTop top)
    }
 
    return mesh;
+}
+
+void TreeCreator::createLODs(){
+   for(int i=0; i<lodLevel;i++){
+      int detail;
+      switch(i){
+         case 0:
+            detail=6;
+            break;
+         case 1:
+            detail=4;
+            break;
+         case 2:
+            detail=2;
+            break;
+         case 3:
+            detail=1;
+            break;
+         default:
+            std::cout << "LOD fora do range" << std::endl;
+            detail=1;
+            break;
+      }
+      cachedLODs[i] = std::make_shared<Engine::Mesh>(Engine::Mesh::tetrahedron(detail));
+   }
 }

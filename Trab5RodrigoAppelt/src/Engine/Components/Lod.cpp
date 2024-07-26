@@ -34,13 +34,11 @@ void Lod::Update(float delta)
     {
         if (distance < distances[i])
         {
-            log(LogLevel::INFO, "Usando LOD " + std::to_string(i+1));
             mesh = meshes[i];
             break;
         }
     }
     if(distance > distances[levels-1]){
-        log(LogLevel::INFO, "Usando LOD " + std::to_string(levels+1));
         mesh = meshes[levels];
     }
 

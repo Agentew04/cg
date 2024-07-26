@@ -31,12 +31,16 @@ private:
    };
 
    std::map<TreeTop, Tree> cachedTrees;
-   std::map<int, std::shared_ptr<Engine::Mesh>> cachedLODs;
 
    GLuint barkTextureId = 0;
    GLuint treeTopTextureId = 0;
    std::shared_ptr<Engine::Mesh> createBark();
    std::shared_ptr<Engine::Mesh> createTreeTop(TreeTop top);
+
+   std::map<int, std::shared_ptr<Engine::Mesh>> cachedLODs;
+   int lodLevel = 4;
+   bool lodsCreated = false;
+   void createLODs();
 };
 
 #endif

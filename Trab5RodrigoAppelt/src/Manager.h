@@ -42,6 +42,8 @@ private:
    void createTrees();
    /// @brief Cria o personagem
    void createCharacter();
+   /// @brief Cria um ator de exemplo de Sweep
+   void createSweep();
 };
 
 #endif
